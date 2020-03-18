@@ -1,0 +1,26 @@
+plugins {
+    id 'com.github.node-gradle.node' version '2.2.3'
+}
+
+group = 'org.arhor'
+version = '0.0.1-SNAPSHOT'
+description = 'diploma-client'
+
+node {
+    version  = '13.11.0'
+    download = true
+}
+
+def jsRootDir = "${project.projectDir}"
+
+task npmAuditFix (type: NpmTask, dependsOn: npmInstall) {
+    description = 'Verify and fix vulnerabilities in dependencies'
+    workingDir = file(jsRootDir)
+    args = ['audit', 'fix']
+}
+
+task clientBuild (type: NpmTask, dependsOn: npmAuditFix) {
+    description = 'Builds production version of the university standalone app client'
+    workingDir = file(jsRootDir)
+    args = ['run', 'build']
+}
