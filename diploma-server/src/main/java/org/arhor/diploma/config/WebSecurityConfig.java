@@ -1,5 +1,6 @@
 package org.arhor.diploma.config;
 
+import org.arhor.diploma.service.UserService;
 import org.arhor.diploma.web.filter.JwtAuthTokenFilter;
 import org.arhor.diploma.web.security.JwtAuthEntryPoint;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +12,11 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
 @Configuration
 @EnableWebSecurity
@@ -23,13 +25,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired private JwtAuthEntryPoint unauthorizedHandler;
   @Autowired private JwtAuthTokenFilter jwtAuthTokenFilter;
-  @Autowired private PasswordEncoder encoder;
-  @Autowired private UserDetailsService userService;
+  @Autowired private UserService userService;
+
+  @Bean
+  public PasswordEncoder passwordEncoder() {
+    return new BCryptPasswordEncoder(5);
+  }
 
   @Override
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth.userDetailsService(userService)
-        .passwordEncoder(encoder);
+        .passwordEncoder(passwordEncoder());
   }
 
   @Bean
@@ -43,7 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     http.csrf().disable()
         .cors()
         .and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .sessionManagement().sessionCreationPolicy(STATELESS)
         .and()
         .authorizeRequests().anyRequest().permitAll()
         .and()

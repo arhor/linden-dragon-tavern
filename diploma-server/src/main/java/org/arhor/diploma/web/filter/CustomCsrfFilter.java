@@ -27,8 +27,8 @@ import java.util.regex.Pattern;
 public class CustomCsrfFilter extends OncePerRequestFilter {
 
   private static final String ERROR_MSG = "CSRF token is missing or not matching";
-  private static final String CSRF_COOKIE = "xsrf-token";
-  private static final String CSRF_HEADER = "x-xsrf-token";
+  private static final String CSRF_COOKIE = "csrf-token";
+  private static final String CSRF_HEADER = "x-csrf-token";
 
   private final AccessDeniedHandler accessDeniedHandler = new AccessDeniedHandlerImpl();
   private final Supplier<Pattern> safeMethod = Lazy.evalSafe(() -> Pattern.compile("^(GET|HEAD|TRACE|OPTIONS)$"));
@@ -56,9 +56,9 @@ public class CustomCsrfFilter extends OncePerRequestFilter {
   private String getCsrfCookieToken(HttpServletRequest req) {
     final var cookies = req.getCookies();
     if (cookies != null) {
-      for (var c : cookies) {
-        if ((c != null) && CSRF_COOKIE.equals(c.getName())) {
-          return c.getValue();
+      for (var cookie : cookies) {
+        if ((cookie != null) && CSRF_COOKIE.equals(cookie.getName())) {
+          return cookie.getValue();
         }
       }
     }

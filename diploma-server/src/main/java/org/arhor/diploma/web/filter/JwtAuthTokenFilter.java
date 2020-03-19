@@ -2,12 +2,11 @@ package org.arhor.diploma.web.filter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.arhor.diploma.service.UserService;
 import org.arhor.diploma.web.security.JwtProvider;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -24,7 +23,7 @@ import java.io.IOException;
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
   private final JwtProvider tokenProvider;
-  private final UserDetailsService userService;
+  private final UserService userService;
 
   @Override
   protected void doFilterInternal(
@@ -32,11 +31,12 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
       @NonNull HttpServletResponse res,
       @NonNull FilterChain filterChain) throws ServletException, IOException {
     try {
-      String jwt = getJwt(req);
-      if (jwt != null && tokenProvider.tokenIsValid(jwt)) {
-        String username = tokenProvider.getUserNameFromJwtToken(jwt);
+      final String jwt = extractJwt(req);
 
-        UserDetails userDetails = userService.loadUserByUsername(username);
+      if (jwt != null && tokenProvider.tokenIsValid(jwt)) {
+        final String username = tokenProvider.getUserNameFromJwtToken(jwt);
+
+        final var userDetails = userService.loadUserByUsername(username);
 
         // if (SecurityContextHolder.getContext().getAuthentication() == null) { ... }
 
@@ -57,7 +57,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
     filterChain.doFilter(req, res);
   }
 
-  private String getJwt(HttpServletRequest request) {
+  private String extractJwt(HttpServletRequest request) {
     final String authHeader = request.getHeader("Authorization");
 
     if (authHeader != null && authHeader.startsWith("Bearer ")) {

@@ -9,6 +9,7 @@ public class User extends AbstractEntity<Long> {
   private String username;
   private String password;
   private String email;
+  private String role;
 
   public static final User SUPER_ADMIN;
   static {
