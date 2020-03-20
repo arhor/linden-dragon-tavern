@@ -19,12 +19,18 @@ public class UserServiceImpl implements UserService {
   @Override
   public UserDetails loadUserByUsername(String username) {
     return repository.findByUsername(username)
-        .map(user ->
-            new org.springframework.security.core.userdetails.User(
-                user.getUsername(),
-                user.getPassword(),
-                List.of(new SimpleGrantedAuthority(user.getRole()))
-        ))
+        .map(user -> {
+          boolean status = !user.isDeleted();
+          return new org.springframework.security.core.userdetails.User(
+              user.getUsername(),
+              user.getPassword(),
+              status,
+              status,
+              status,
+              status,
+              List.of(new SimpleGrantedAuthority(user.getRole()))
+          );
+        })
         .orElseThrow(() -> new UsernameNotFoundException(username));
   }
 }

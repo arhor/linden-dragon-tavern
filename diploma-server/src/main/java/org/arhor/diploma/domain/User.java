@@ -5,18 +5,11 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class User extends AbstractEntity<Long> {
+public class User extends DeletableAbstractEntity<Long> {
   private String username;
   private String password;
   private String email;
+  private String firstName;
+  private String lastName;
   private String role;
-
-  public static final User SUPER_ADMIN;
-  static {
-    final var goddess = new User();
-    goddess.setId(Long.MIN_VALUE);
-    goddess.setUsername("");
-    goddess.setPassword("");
-    SUPER_ADMIN = goddess;
-  }
 }

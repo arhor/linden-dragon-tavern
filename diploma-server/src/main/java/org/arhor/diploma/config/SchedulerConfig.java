@@ -17,11 +17,4 @@ public class SchedulerConfig {
   public void reportUsersCacheEvict() {
     log.info("Flush `users` cache");
   }
-
-//  /** Scheduled task to clear caches `langs` and `roles` every 24 hours. */
-//  @CacheEvict(allEntries = true, value = { CACHE_LANGS, CACHE_ROLES })
-//  @Scheduled(fixedDelay = 24 * 60 * 60 * 1000, initialDelay = 500)
-//  public void reportLangsRolesCacheEvict() {
-//    log.info("Flush `langs` and `roles` caches");
-//  }
 }
