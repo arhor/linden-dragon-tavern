@@ -1,6 +1,5 @@
 rootProject.name = 'diploma'
 
-include 'diploma-server'
+include 'diploma-rest-api'
 include 'diploma-client'
 include 'diploma-commons'
-
