@@ -1,8 +1,13 @@
 package org.arhor.diploma.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.arhor.diploma.domain.User;
+import org.arhor.diploma.dto.UserDTO;
+import org.arhor.diploma.exception.EntityNotFoundException;
 import org.arhor.diploma.repository.UserRepository;
 import org.arhor.diploma.service.UserService;
+import org.arhor.diploma.util.Converter;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,6 +20,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
   private final UserRepository repository;
+  private final Converter converter;
 
   @Override
   public UserDetails loadUserByUsername(String username) {
@@ -32,5 +38,21 @@ public class UserServiceImpl implements UserService {
           );
         })
         .orElseThrow(() -> new UsernameNotFoundException(username));
+  }
+
+  @Override
+  public UserDTO getUserById(Long id) {
+    return repository
+        .findById(id)
+        .map(user -> converter.convert(user, UserDTO.class))
+        .orElseThrow(() -> new EntityNotFoundException(User.class, "id", id));
+  }
+
+  @Override
+  public List<UserDTO> getUsers(int page, int size) {
+    return repository
+        .findAll(PageRequest.of(page, size))
+        .map(user -> converter.convert(user, UserDTO.class))
+        .toList();
   }
 }
