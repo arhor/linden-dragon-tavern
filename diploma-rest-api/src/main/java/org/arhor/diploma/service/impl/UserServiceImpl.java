@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
     return repository
         .findById(id)
         .map(user -> converter.convert(user, UserDTO.class))
-        .orElseThrow(() -> new EntityNotFoundException(User.class, "id", id));
+        .orElseThrow(() -> new EntityNotFoundException("User", "id", id));
   }
 
   @Override
