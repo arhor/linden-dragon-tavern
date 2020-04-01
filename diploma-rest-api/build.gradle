@@ -17,9 +17,6 @@ configurations {
     runtimeClasspath {
         extendsFrom developmentOnly
     }
-    implementation {
-        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
-    }
     testImplementation {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
@@ -42,7 +39,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-undertow'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
     testImplementation 'com.h2database:h2'
@@ -59,4 +55,4 @@ task clientCopy(type: Copy, dependsOn: ':diploma-client:clientBuild') {
     into 'build/resources/main/static/'
 }
 
-compileJava.dependsOn(clientCopy)
+//compileJava.dependsOn(clientCopy)

@@ -10,7 +10,7 @@
 
     <v-app-bar app dark fixed>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
-      <v-toolbar-title>University app</v-toolbar-title>
+      <v-toolbar-title>Diploma app</v-toolbar-title>
     </v-app-bar>
 
     <v-content>

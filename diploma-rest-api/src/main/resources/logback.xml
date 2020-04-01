@@ -16,7 +16,7 @@
         </encoder>
     </appender>
 
-    <logger name="by.arhor.university" level="debug"/>
+    <logger name="org.arhor.diploma" level="debug"/>
 
     <root level="info">
         <appender-ref ref="console"/>

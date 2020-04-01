@@ -12,10 +12,15 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
@@ -51,8 +56,8 @@ public class UserServiceImpl implements UserService {
   @Override
   public List<UserDTO> getUsers(int page, int size) {
     return repository
-        .findAll(PageRequest.of(page, size))
+        .findAll(PageRequest.of(page, size)).stream()
         .map(user -> converter.convert(user, UserDTO.class))
-        .toList();
+        .collect(toList());
   }
 }

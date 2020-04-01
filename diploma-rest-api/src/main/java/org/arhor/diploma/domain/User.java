@@ -6,10 +6,11 @@ import lombok.EqualsAndHashCode;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "tblUsers")
+@Table(name = "tbl_users")
 @EqualsAndHashCode(callSuper = true)
 public class User extends DeletableAbstractEntity<Long> {
 
@@ -30,4 +31,10 @@ public class User extends DeletableAbstractEntity<Long> {
 
   @Column(nullable = false, length = 10)
   private String role;
+
+  @Column(nullable = false)
+  private LocalDateTime created;
+
+  @Column(nullable = false)
+  private LocalDateTime updated;
 }
