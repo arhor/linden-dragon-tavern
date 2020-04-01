@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.arhor.commons.Deletable;
 
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 
 @Data
@@ -13,5 +14,6 @@ public abstract class DeletableAbstractEntity<T>
     extends AbstractEntity<T>
     implements Deletable {
 
+  @Column(nullable = false)
   private boolean deleted;
 }

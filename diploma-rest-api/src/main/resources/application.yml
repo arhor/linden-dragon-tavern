@@ -7,15 +7,15 @@ spring:
     name: diploma-app
 
   datasource:
-    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    url: jdbc:sqlserver://localhost:1433;database=university;encrypt=false;loginTimeout=30;
-    username: UniversitySA
-    password: 1university@SECRET!
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/diploma_db
+    username: postgres
+    password: password
 
   jpa:
     open-in-view: false
     show-sql: true
-    database-platform: org.hibernate.dialect.SQLServer2012Dialect
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     hibernate:
       ddl-auto: none
     properties:
