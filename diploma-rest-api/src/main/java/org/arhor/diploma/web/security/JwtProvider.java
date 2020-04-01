@@ -2,6 +2,7 @@ package org.arhor.diploma.web.security;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
@@ -47,11 +48,8 @@ public class JwtProvider {
     var payload = objectMapper.createObjectNode();
     var roles = objectMapper.createArrayNode();
 
-    final Collection<? extends GrantedAuthority> authorities = principal.getAuthorities();
-    if (authorities != null) {
-      for (GrantedAuthority authority : authorities) {
-        roles.add(authority.getAuthority());
-      }
+    for (var authority : principal.getAuthorities()) {
+      roles.add(authority.getAuthority());
     }
 
     payload.put("email", principal.getUsername());

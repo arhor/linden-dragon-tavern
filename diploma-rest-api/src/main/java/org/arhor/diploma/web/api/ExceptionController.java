@@ -6,6 +6,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.arhor.diploma.web.model.ApiError;
+import org.arhor.diploma.web.model.ErrorResponse;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -26,20 +28,22 @@ public class ExceptionController {
 
   private final MessageSource messageSource;
 
-//  @ResponseStatus(HttpStatus.BAD_REQUEST)
-//  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-//  public ApiError typeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request) {
-//    log.error("Argument class cast exception", ex);
-//    return new ApiError(
-//        ApiError.WRONG_METHOD_PARAMS,
-//        messageSource.getMessage(
-//            "error.wrong.argument",
-//            new Object[] { ex.getName(), ex.getValue() },
-//            request.getLocale()
-//        )
-//    );
-//  }
-//
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ErrorResponse typeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request) {
+    log.error("Argument class cast exception", ex);
+    return ErrorResponse.of(
+        new ApiError(
+            1,
+            messageSource.getMessage(
+                "error.wrong.argument",
+                new Object[] { ex.getName(), ex.getValue() },
+                request.getLocale()
+            )
+        )
+    );
+  }
+
 //  @ResponseStatus(HttpStatus.NOT_FOUND)
 //  @ExceptionHandler(EntityNotFoundException.class)
 //  public ApiError entityNotFoundException(EntityNotFoundException ex, WebRequest request) {
