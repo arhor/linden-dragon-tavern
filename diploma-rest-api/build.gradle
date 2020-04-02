@@ -55,4 +55,4 @@ task clientCopy(type: Copy, dependsOn: ':diploma-client:clientBuild') {
     into 'build/resources/main/static/'
 }
 
-//compileJava.dependsOn(clientCopy)
+compileJava.dependsOn(clientCopy)

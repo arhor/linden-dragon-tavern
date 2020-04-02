@@ -19,7 +19,7 @@ task npmAuditFix (type: NpmTask, dependsOn: npmInstall) {
     args = ['audit', 'fix']
 }
 
-task clientBuild (type: NpmTask, dependsOn: npmAuditFix) {
+task clientBuild (type: NpmTask, dependsOn: npmInstall) {
     description = 'Builds production version of the university standalone app client'
     workingDir = file(jsRootDir)
     args = ['run', 'build']

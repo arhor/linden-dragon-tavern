@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import http from '@/util/http.js'
+
 export default {
   name: 'App',
   components: {
@@ -41,6 +43,11 @@ export default {
   methods: {
   },
   beforeCreate() {
+    console.log(this)
+
+    http.post('/api/v1/users', 'Hello from the Client!')
+        .then(res => console.log(res))
+        .catch(err => console.error(err))
   }
 }
 </script>

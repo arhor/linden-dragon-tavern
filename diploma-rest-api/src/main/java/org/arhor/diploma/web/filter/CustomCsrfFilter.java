@@ -44,7 +44,11 @@ public class CustomCsrfFilter extends OncePerRequestFilter {
     final var method = req.getMethod();
 
     if (!safeMethods.contains(method)) {
+      log.debug("validating CSRF request");
+
       final var csrfCookieValue = getCsrfCookieToken(req);
+
+      log.debug("CSRF cookie value: {}", csrfCookieValue);
 
       if ((csrfCookieValue == null) || !csrfCookieValue.equals(req.getHeader(CSRF_HEADER_NAME))) {
         accessDeniedHandler

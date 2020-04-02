@@ -6,6 +6,7 @@ import org.arhor.diploma.dto.UserDTO;
 import org.arhor.diploma.service.UserService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,5 +30,10 @@ public class UserController {
       @RequestParam(required = false) Integer page,
       @RequestParam(required = false) Integer size) {
     return bound(service::getUsers).apply(page, size);
+  }
+
+  @PostMapping
+  public String test() {
+    return "success";
   }
 }
