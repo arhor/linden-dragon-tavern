@@ -4,6 +4,7 @@ import router from '@/router'
 import store from '@/store'
 import vuetify from '@/plugins/vuetify'
 import filters from '@/filters'
+import '@/plugins/vueCookies'
 
 for (const [name, filter] of Object.entries(filters)) {
   Vue.filter(name, filter)

@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import http from '@/util/http.js'
+import generalApi from '@/api/generalApi'
 
 export default {
   name: 'App',
@@ -43,11 +43,7 @@ export default {
   methods: {
   },
   beforeCreate() {
-    console.log(this)
-
-    http.post('/api/v1/users', 'Hello from the Client!')
-        .then(res => console.log(res))
-        .catch(err => console.error(err))
+    generalApi.post('/api/v1/users', 'Opapa').then(res => console.log(res))
   }
 }
 </script>
