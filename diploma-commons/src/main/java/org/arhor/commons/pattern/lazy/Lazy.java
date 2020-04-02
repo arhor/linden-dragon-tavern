@@ -3,6 +3,7 @@ package org.arhor.commons.pattern.lazy;
 import org.arhor.commons.function.RichSupplier;
 
 import javax.annotation.Nonnull;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public interface Lazy<T> extends RichSupplier<T> {
@@ -13,6 +14,8 @@ public interface Lazy<T> extends RichSupplier<T> {
    * @return `true` if associated context is computed, otherwise `false`
    */
   boolean isComputed();
+
+  <R> R using(Function<T, R> mapper);
 
   /**
    * Create lazy evaluation context which uses provided source to compute value.

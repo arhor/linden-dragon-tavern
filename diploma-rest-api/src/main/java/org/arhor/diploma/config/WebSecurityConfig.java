@@ -1,9 +1,9 @@
 package org.arhor.diploma.config;
 
+import lombok.RequiredArgsConstructor;
 import org.arhor.diploma.service.UserService;
 import org.arhor.diploma.web.filter.JwtAuthTokenFilter;
 import org.arhor.diploma.web.security.JwtAuthEntryPoint;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -20,13 +19,14 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  @Autowired private JwtAuthEntryPoint unauthorizedHandler;
-  @Autowired private JwtAuthTokenFilter jwtAuthTokenFilter;
-  @Autowired private UserService userService;
-  @Autowired private PasswordEncoder encoder;
+  private final JwtAuthEntryPoint unauthorizedHandler;
+  private final JwtAuthTokenFilter jwtAuthTokenFilter;
+  private final UserService userService;
+  private final PasswordEncoder encoder;
 
   @Override
   public void configure(AuthenticationManagerBuilder auth) throws Exception {

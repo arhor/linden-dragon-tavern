@@ -1,19 +1,20 @@
 package org.arhor.diploma.web.filter;
 
-import org.arhor.commons.pattern.lazy.Lazy;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.function.Supplier;
-import java.util.regex.Pattern;
+import java.util.Set;
 
 /**
   * Class CustomCsrfFilter implements stateless CSRF protection. To successfully
@@ -24,14 +25,15 @@ import java.util.regex.Pattern;
   * @author Maksim Buryshynets
   * @version 1.0 11 March 2019
   */
+@Slf4j
+@Component
 public class CustomCsrfFilter extends OncePerRequestFilter {
 
-  private static final String ERROR_MSG = "CSRF token is missing or not matching";
-  private static final String CSRF_COOKIE = "csrf-token";
-  private static final String CSRF_HEADER = "x-csrf-token";
+  private static final String CSRF_COOKIE_NAME = "csrf-token";
+  private static final String CSRF_HEADER_NAME = "x-csrf-token";
 
   private final AccessDeniedHandler accessDeniedHandler = new AccessDeniedHandlerImpl();
-  private final Supplier<Pattern> safeMethod = Lazy.evalSafe(() -> Pattern.compile("^(GET|HEAD|TRACE|OPTIONS)$"));
+  private final Set<String> safeMethods = Set.of("GET", "HEAD", "TRACE", "OPTIONS");
 
   @Override
   protected void doFilterInternal(
@@ -40,25 +42,25 @@ public class CustomCsrfFilter extends OncePerRequestFilter {
       @NonNull FilterChain filterChain) throws IOException, ServletException {
 
     final var method = req.getMethod();
-    final var isTokenRequired = safeMethod.get().matcher(method).matches();
 
-    if (isTokenRequired) {
-      final var csrfHeaderToken = req.getHeader(CSRF_HEADER);
-      final var csrfCookieToken = getCsrfCookieToken(req);
+    if (!safeMethods.contains(method)) {
+      final var csrfCookieValue = getCsrfCookieToken(req);
 
-      if ((csrfCookieToken == null) || !csrfCookieToken.equals(csrfHeaderToken)) {
-        accessDeniedHandler.handle(req, res, new AccessDeniedException(ERROR_MSG));
+      if ((csrfCookieValue == null) || !csrfCookieValue.equals(req.getHeader(CSRF_HEADER_NAME))) {
+        accessDeniedHandler
+            .handle(req, res, new AccessDeniedException("CSRF token is missing or not matching"));
+        return;
       }
     }
     filterChain.doFilter(req, res);
   }
 
   private String getCsrfCookieToken(HttpServletRequest req) {
-    final var cookies = req.getCookies();
+    final Cookie[] cookies = req.getCookies();
     if (cookies != null) {
-      for (var cookie : cookies) {
-        if ((cookie != null) && CSRF_COOKIE.equals(cookie.getName())) {
-          return cookie.getValue();
+      for (Cookie c : cookies) {
+        if ((c != null) && CSRF_COOKIE_NAME.equals(c.getName())) {
+          return c.getValue();
         }
       }
     }

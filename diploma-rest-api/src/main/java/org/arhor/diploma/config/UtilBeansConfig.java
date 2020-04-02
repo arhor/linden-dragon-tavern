@@ -1,9 +1,12 @@
 package org.arhor.diploma.config;
 
+import org.arhor.diploma.web.filter.CustomCsrfFilter;
 import org.modelmapper.ModelMapper;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,14 +29,15 @@ public class UtilBeansConfig {
     return messageSource;
   }
 
-//  @Bean
-//  @Profile({"!dev"})
-//  public FilterRegistrationBean<CustomCsrfFilter> csrfFilter() {
-//    final var registrationBean = new FilterRegistrationBean<CustomCsrfFilter>();
-//    registrationBean.setFilter(new CustomCsrfFilter());
-//    registrationBean.addUrlPatterns("/api/*");
-//    return registrationBean;
-//  }
+  @Bean
+  @Profile({"!dev"})
+  public FilterRegistrationBean<CustomCsrfFilter> csrfFilter(CustomCsrfFilter csrfFilter) {
+    final var registrationBean = new FilterRegistrationBean<CustomCsrfFilter>();
+    registrationBean.setOrder(1);
+    registrationBean.setFilter(csrfFilter);
+    registrationBean.addUrlPatterns("/api/*");
+    return registrationBean;
+  }
 
   @Bean
   public PasswordEncoder passwordEncoder() {
