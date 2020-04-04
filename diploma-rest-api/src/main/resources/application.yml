@@ -1,8 +1,10 @@
 server:
   port: 8080
+  error:
+    whitelabel:
+      enabled: false
 
 spring:
-
   application:
     name: diploma-app
 

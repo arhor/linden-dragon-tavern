@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.arhor.diploma.web.model.ApiError;
 import org.arhor.diploma.web.model.ErrorResponse;
+import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.HttpMediaTypeNotAcceptableException;
@@ -18,14 +19,15 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.io.IOException;
 
 @Slf4j
 @RestControllerAdvice
 @RequiredArgsConstructor
-public class ExceptionController {
-
+public class ExceptionController extends ResponseEntityExceptionHandler {
+  
   private final MessageSource messageSource;
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)

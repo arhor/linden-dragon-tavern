@@ -5,6 +5,7 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -37,4 +38,9 @@ public class User extends DeletableAbstractEntity<Long> {
 
   @Column(nullable = false)
   private LocalDateTime updated;
+
+  @PreUpdate
+  public void onUpdate() {
+    updated = LocalDateTime.now();
+  }
 }
