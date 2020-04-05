@@ -7,7 +7,10 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.arhor.diploma.web.model.ApiError;
+import org.arhor.diploma.web.model.Details;
 import org.arhor.diploma.web.model.ErrorResponse;
+import org.arhor.diploma.web.model.Message;
+import org.arhor.diploma.web.model.MessageResponse;
 import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -32,18 +35,23 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-  public ErrorResponse typeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request) {
+  public MessageResponse typeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request) {
     log.error("Argument class cast exception", ex);
-    return ErrorResponse.of(
-        new ApiError(
-            1,
-            messageSource.getMessage(
-                "error.wrong.argument",
-                new Object[] { ex.getName(), ex.getValue() },
-                request.getLocale()
-            )
-        )
-    );
+    return MessageResponse.of(
+        Message.error()
+            .withCode(400)
+            .withText(
+                messageSource.getMessage(
+                    "error.wrong.argument",
+                    null,
+                    request.getLocale()))
+            .withDetails(
+                Details.of(
+                    messageSource.getMessage(
+                        "error.wrong.argument.details",
+                        new Object[] { ex.getName(), ex.getValue() },
+                        request.getLocale())))
+            .build());
   }
 
 //  @ResponseStatus(HttpStatus.NOT_FOUND)
