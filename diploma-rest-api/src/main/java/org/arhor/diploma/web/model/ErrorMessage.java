@@ -2,9 +2,9 @@ package org.arhor.diploma.web.model;
 
 import java.util.List;
 
-final class ErrorMessage extends AbstractMessage {
+public final class ErrorMessage extends Message {
 
-  ErrorMessage(int code, String text, List<Details> details) {
+  ErrorMessage(int code, String text, List<String> details) {
     super(code, text, details);
   }
 

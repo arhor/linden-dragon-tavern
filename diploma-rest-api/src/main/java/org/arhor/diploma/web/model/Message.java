@@ -1,22 +1,57 @@
 package org.arhor.diploma.web.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Data;
+
 import java.util.List;
 
-public interface Message {
+@Data
+@JsonPropertyOrder({"code", "type", "text", "details"})
+public abstract class Message {
 
-  static AbstractMessage.Builder error() {
-    return new AbstractMessage.ErrorBuilder();
+  private final int code;
+  private final String text;
+  private final List<String> details;
+
+  public static Builder error() {
+    return new ErrorBuilder();
   }
 
-  int getCode();
+  public abstract String getType();
 
-  String getText();
+  public abstract static class Builder {
 
-  String getType();
+    protected int code;
+    protected String text;
+    protected List<String> details;
 
-  List<Details> getDetails();
+    private Builder() {}
 
-  interface Details {
-    String getText();
+    public abstract Message build();
+
+    public Builder withCode(int code) {
+      this.code = code;
+      return this;
+    }
+
+    public Builder withText(String text) {
+      this.text = text;
+      return this;
+    }
+
+    public Builder withDetails(String... details) {
+      this.details = List.of(details);
+      return this;
+    }
+  }
+
+  private static class ErrorBuilder extends Builder {
+
+    private ErrorBuilder() {}
+
+    @Override
+    public Message build() {
+      return new ErrorMessage(code, text, details);
+    }
   }
 }

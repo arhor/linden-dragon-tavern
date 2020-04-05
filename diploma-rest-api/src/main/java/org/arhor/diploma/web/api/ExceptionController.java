@@ -1,30 +1,17 @@
 package org.arhor.diploma.web.api;
 
-import com.fasterxml.jackson.core.JsonLocation;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.arhor.diploma.web.model.ApiError;
-import org.arhor.diploma.web.model.Details;
-import org.arhor.diploma.web.model.ErrorResponse;
 import org.arhor.diploma.web.model.Message;
 import org.arhor.diploma.web.model.MessageResponse;
-import org.springframework.boot.web.servlet.error.DefaultErrorAttributes;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.HttpMediaTypeNotAcceptableException;
-import org.springframework.web.HttpMediaTypeNotSupportedException;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
-
-import java.io.IOException;
 
 @Slf4j
 @RestControllerAdvice
@@ -46,11 +33,10 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
                     null,
                     request.getLocale()))
             .withDetails(
-                Details.of(
-                    messageSource.getMessage(
-                        "error.wrong.argument.details",
-                        new Object[] { ex.getName(), ex.getValue() },
-                        request.getLocale())))
+                messageSource.getMessage(
+                    "error.wrong.argument.details",
+                    new Object[] {ex.getName(), ex.getValue()},
+                    request.getLocale()))
             .build());
   }
 
