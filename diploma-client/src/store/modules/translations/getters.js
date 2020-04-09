@@ -1,6 +1,9 @@
 const getDictionary = (state, actions) => (lang, label) => {
-
   const dictionary = state.dictionaries.find(d => d.lang === lang);
+
+  if (dictionary === null || dictionary === undefined) {
+    return null;
+  }
 
   return dictionary.data[label];
 };
