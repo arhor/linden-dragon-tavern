@@ -4,22 +4,26 @@ import modules from '@/store/modules'
 
 Vue.use(Vuex)
 
-const state = {
-}
-
-const mutations = {
-}
-
-const actions = {
-}
-
-const getters = {
-}
-
 export default new Vuex.Store({
-  state,
-  mutations,
-  actions,
-  getters,
   modules,
-})
+
+  state: {
+    currLang: 'RU',
+    theme: {
+      dark: false,
+    },
+  },
+
+  mutations: {
+    SWITCH_DARK_MODE: (state) => {
+      state.theme.dark = !state.theme.dark
+    },
+  },
+
+  actions: {
+    changeTheme: ({ commit }) => commit('SWITCH_DARK_MODE'),
+  },
+
+  getters: {
+  },
+});

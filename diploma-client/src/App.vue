@@ -8,9 +8,10 @@
       v-model="drawer"
     />
 
-    <v-app-bar app dark fixed>
+    <v-app-bar app fixed>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
       <v-toolbar-title>Diploma app</v-toolbar-title>
+      <v-switch v-model="$vuetify.theme.dark" primary label="Dark"/>
     </v-app-bar>
 
     <v-content>
@@ -19,7 +20,7 @@
       </v-container>
     </v-content>
     
-    <v-footer app dark fixed>
+    <v-footer app fixed>
       <v-spacer/>
       <span class="px-3">Maksim Buryshynets &copy; {{ new Date().getFullYear() }}</span>
     </v-footer>
@@ -27,8 +28,6 @@
 </template>
 
 <script>
-import generalApi from '@/api/generalApi'
-
 export default {
   name: 'App',
   components: {
@@ -36,15 +35,15 @@ export default {
   data() {
     return {
       drawer: false,
-    }
+    };
   },
   computed: {
   },
   methods: {
   },
   beforeCreate() {
-    generalApi.post('/api/v1/users', 'Opapa').then(res => console.log(res))
-  }
+    this.$store.dispatch('translations/loadLang', 'RU');
+  },
 }
 </script>
 
