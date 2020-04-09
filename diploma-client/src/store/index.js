@@ -4,9 +4,7 @@ import modules from '@/store/modules'
 
 Vue.use(Vuex)
 
-export default new Vuex.Store({
-  modules,
-
+const store = new Vuex.Store({
   state: {
     currLang: 'RU',
     theme: {
@@ -27,3 +25,9 @@ export default new Vuex.Store({
   getters: {
   },
 });
+
+for (const [name, module] of Object.entries(modules)) {
+  store.registerModule(name, module);
+}
+
+export default store;
