@@ -42,7 +42,6 @@ export default {
   methods: {
   },
   beforeCreate() {
-    this.$store.dispatch('translations/loadLang', 'RU');
   },
 }
 </script>

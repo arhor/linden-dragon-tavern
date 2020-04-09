@@ -6,11 +6,13 @@ import vuetify from '@/plugins/vuetify'
 import filters from '@/filters'
 import '@/plugins/vueCookies'
 
+Vue.config.productionTip = false
+
+store.dispatch('translations/loadLang', 'RU');
+
 for (const [name, filter] of Object.entries(filters)) {
   Vue.filter(name, filter)
 }
-
-Vue.config.productionTip = false
 
 new Vue({
   router,
