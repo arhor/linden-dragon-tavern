@@ -3,6 +3,17 @@ server:
   error:
     whitelabel:
       enabled: false
+  compression:
+    enabled: true
+    mime-types:
+      - application/json
+      - application/xml
+      - application/javascript
+      - text/html
+      - text/xml
+      - text/plain
+      - text/css
+    min-response-size: 10240
 
 spring:
   application:

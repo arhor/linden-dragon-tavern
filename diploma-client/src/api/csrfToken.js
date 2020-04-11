@@ -1,4 +1,4 @@
-import uuid from '@/util/uuid.js';
+import { uuid } from '@/util/uuid.js';
 
 /**
  * generated at starup unique CSRF token.
