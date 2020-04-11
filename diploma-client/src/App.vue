@@ -11,7 +11,6 @@
     <v-app-bar app fixed>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer"/>
       <v-toolbar-title>Diploma app</v-toolbar-title>
-      <v-switch v-model="$vuetify.theme.dark" primary label="Dark"/>
     </v-app-bar>
 
     <v-content>

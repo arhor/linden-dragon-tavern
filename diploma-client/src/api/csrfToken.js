@@ -1,3 +1,6 @@
-import uuid from '@/util/uuid.js'
+import uuid from '@/util/uuid.js';
 
-export const csrfToken = uuid()
+/**
+ * generated at starup unique CSRF token.
+ */
+export const csrfToken = uuid();

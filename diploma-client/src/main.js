@@ -8,8 +8,6 @@ import '@/plugins/vueCookies'
 
 Vue.config.productionTip = false
 
-store.dispatch('translations/loadLang', 'RU');
-
 for (const [name, filter] of Object.entries(filters)) {
   Vue.filter(name, filter)
 }

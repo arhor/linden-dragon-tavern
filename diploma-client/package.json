@@ -5,6 +5,7 @@
     "name": "Maksim Buryshynets",
     "email": "arhor18@gmail.com"
   },
+  "sideEffects": false,
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",

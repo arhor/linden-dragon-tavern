@@ -1,12 +1,11 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import modules from '@/store/modules'
+import Vue from 'vue';
+import Vuex from 'vuex';
+import modules from '@/store/modules';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    currLang: 'RU',
     theme: {
       dark: false,
     },
@@ -14,7 +13,7 @@ const store = new Vuex.Store({
 
   mutations: {
     SWITCH_DARK_MODE: (state) => {
-      state.theme.dark = !state.theme.dark
+      state.theme.dark = !state.theme.dark;
     },
   },
 

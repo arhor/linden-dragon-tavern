@@ -1,10 +1,10 @@
 import store from '@/store';
+import { refExists } from '@/util/helpers.js';
 
 export default function translate(label) {
-  const { currLang } = store.state;
-  const dictionary = store.getters['translations/getDictionary'];
-  const translation = dictionary(currLang, label);
-  return (translation === undefined || translation === null)
-      ? 'ERROR: missing label'
-      : translation;
+  const translation = store.getters['localization/dictionary'](label);
+
+  return refExists(translation)
+      ? translation
+      : 'ERROR: missing label';
 }

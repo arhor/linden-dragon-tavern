@@ -1,8 +1,6 @@
-import { pipe } from '@/util/functions'
-import { addCsrfToken } from '@/api/interceptors/addCsrfToken'
-
-const intercept = pipe(addCsrfToken)
+import { pipe } from '@/util/functions';
+import { addCsrfToken } from '@/api/interceptors/addCsrfToken';
 
 export const requestInterceptor = (config) => {
-  return intercept(config)
-}
+  return pipe(addCsrfToken)(config);
+};

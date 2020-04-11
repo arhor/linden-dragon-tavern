@@ -1,5 +1,5 @@
-import translations from '@/store/modules/translations';
+import localization from '@/store/modules/localization';
 
 export default {
-  translations,
+  localization,
 };

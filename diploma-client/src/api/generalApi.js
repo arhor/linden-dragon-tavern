@@ -1,5 +1,5 @@
-import axios from 'axios'
-import { requestInterceptor } from '@/api/interceptors/requestInterceptor'
+import axios from 'axios';
+import { requestInterceptor } from '@/api/interceptors/requestInterceptor';
 
 const generalApi = axios.create({
   baseURL: 'http://localhost:8080',
@@ -8,8 +8,8 @@ const generalApi = axios.create({
     'Content-Type': 'application/json',
     'Cache': 'no-cache',
   }
-})
+});
 
-generalApi.interceptors.request.use(requestInterceptor)
+generalApi.interceptors.request.use(requestInterceptor);
 
-export default generalApi
+export default generalApi;
