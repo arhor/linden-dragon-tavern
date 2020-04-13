@@ -33,11 +33,6 @@ final class Internals {
       return computed;
     }
 
-    @Override
-    public <R> R using(Function<T, R> mapper) {
-      return mapper.apply(get());
-    }
-
     protected final T compute() {
       if (!computed) {
         value = source.get();

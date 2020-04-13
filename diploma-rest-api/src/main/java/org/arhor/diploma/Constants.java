@@ -8,6 +8,8 @@ public final class Constants {
 
   public static final long SERIAL_VERSION = 1L;
 
-  public static final String CACHE_USERS = "dp_users_cache";
+  // dp_{...} - `dp` means `diploma`
+
+  public static final String CACHE_USER_BY_USERNAME = "dp_user_cache_by_username";
 
 }

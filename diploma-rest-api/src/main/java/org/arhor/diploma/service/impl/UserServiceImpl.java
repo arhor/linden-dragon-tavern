@@ -1,7 +1,6 @@
 package org.arhor.diploma.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.arhor.diploma.domain.User;
 import org.arhor.diploma.dto.UserDTO;
 import org.arhor.diploma.exception.EntityNotFoundException;
 import org.arhor.diploma.repository.UserRepository;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -49,7 +47,7 @@ public class UserServiceImpl implements UserService {
   public UserDTO getUserById(Long id) {
     return repository
         .findById(id)
-        .map(user -> converter.convert(user, UserDTO.class))
+        .map(account -> converter.convert(account, UserDTO.class))
         .orElseThrow(() -> new EntityNotFoundException("User", "id", id));
   }
 
@@ -57,7 +55,7 @@ public class UserServiceImpl implements UserService {
   public List<UserDTO> getUsers(int page, int size) {
     return repository
         .findAll(PageRequest.of(page, size)).stream()
-        .map(user -> converter.convert(user, UserDTO.class))
+        .map(account -> converter.convert(account, UserDTO.class))
         .collect(toList());
   }
 }

@@ -2,18 +2,21 @@ package org.arhor.diploma.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.arhor.diploma.Auditable;
+import org.arhor.diploma.Deletable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "tbl_users")
+@Table(name = "User")
 @EqualsAndHashCode(callSuper = true)
-public class User extends DeletableAbstractEntity<Long> {
+public class User extends AbstractEntity<Long> implements Auditable, Deletable {
 
   @Column(unique = true, nullable = false, length = 30)
   private String username;
@@ -38,6 +41,14 @@ public class User extends DeletableAbstractEntity<Long> {
 
   @Column(nullable = false)
   private LocalDateTime updated;
+
+  @Column(nullable = false)
+  private boolean deleted;
+
+  @PrePersist
+  public void onCreate() {
+    created = LocalDateTime.now();
+  }
 
   @PreUpdate
   public void onUpdate() {

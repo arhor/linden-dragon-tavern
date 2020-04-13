@@ -9,16 +9,16 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-import static org.arhor.diploma.Constants.CACHE_USERS;
+import static org.arhor.diploma.Constants.CACHE_USER_BY_USERNAME;
 
 @Repository
 public interface UserRepository extends BaseRepository<User, Long> {
 
-  @Cacheable(cacheNames = CACHE_USERS, key = "#username")
   @Query("SELECT u FROM User u WHERE u.username = :username")
+  @Cacheable(cacheNames = CACHE_USER_BY_USERNAME, key = "#username")
   Optional<User> findByUsername(String username);
 
   @Override
-  @CacheEvict(value = CACHE_USERS, key = "#user.username")
+  @CacheEvict(cacheNames = CACHE_USER_BY_USERNAME, key = "#user.username")
   void delete(@NonNull User user);
 }

@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS tbl_users
+CREATE TABLE IF NOT EXISTS Account
 (
     id            BIGSERIAL        NOT NULL PRIMARY KEY,
     username      VARCHAR(30)      NOT NULL UNIQUE,
@@ -16,5 +16,5 @@ WITH
     OIDS = FALSE
 );
 
-ALTER TABLE tbl_users
+ALTER TABLE Account
 OWNER to postgres;

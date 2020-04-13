@@ -15,8 +15,6 @@ public interface Lazy<T> extends RichSupplier<T> {
    */
   boolean isComputed();
 
-  <R> R using(Function<T, R> mapper);
-
   /**
    * Create lazy evaluation context which uses provided source to compute value.
    * Not thread-safe.
