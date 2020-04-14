@@ -1,4 +1,4 @@
-package org.arhor.diploma;
+package org.arhor.diploma.domain;
 
 public interface Deletable {
 

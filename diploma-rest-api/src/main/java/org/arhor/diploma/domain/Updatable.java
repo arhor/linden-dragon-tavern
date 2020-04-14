@@ -1,4 +1,4 @@
-package org.arhor.diploma;
+package org.arhor.diploma.domain;
 
 import java.time.temporal.TemporalAccessor;
 

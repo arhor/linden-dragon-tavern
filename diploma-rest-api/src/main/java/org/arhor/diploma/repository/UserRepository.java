@@ -14,7 +14,7 @@ import static org.arhor.diploma.Constants.CACHE_USER_BY_USERNAME;
 @Repository
 public interface UserRepository extends BaseRepository<User, Long> {
 
-  @Query("SELECT u FROM User u WHERE u.username = :username")
+  @Query("SELECT u FROM User u WHERE u.deleted = false AND u.username = :username")
   @Cacheable(cacheNames = CACHE_USER_BY_USERNAME, key = "#username")
   Optional<User> findByUsername(String username);
 

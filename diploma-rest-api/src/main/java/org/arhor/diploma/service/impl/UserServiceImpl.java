@@ -54,7 +54,8 @@ public class UserServiceImpl implements UserService {
   @Override
   public List<UserDTO> getUsers(int page, int size) {
     return repository
-        .findAll(PageRequest.of(page, size)).stream()
+        .findAll(PageRequest.of(page, size))
+        .stream()
         .map(account -> converter.convert(account, UserDTO.class))
         .collect(toList());
   }
