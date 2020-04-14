@@ -1,10 +1,10 @@
 package org.arhor.diploma.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.arhor.diploma.dto.UserDTO;
+import org.arhor.diploma.dto.AccountDTO;
 import org.arhor.diploma.exception.EntityNotFoundException;
-import org.arhor.diploma.repository.UserRepository;
-import org.arhor.diploma.service.UserService;
+import org.arhor.diploma.repository.AccountRepository;
+import org.arhor.diploma.service.AccountService;
 import org.arhor.diploma.util.Converter;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,43 +20,43 @@ import static java.util.stream.Collectors.toList;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class AccountServiceImpl implements AccountService {
 
-  private final UserRepository repository;
+  private final AccountRepository repository;
   private final Converter converter;
 
   @Override
   public UserDetails loadUserByUsername(String username) {
     return repository.findByUsername(username)
-        .map(user -> {
-          boolean status = !user.isDeleted();
+        .map(account -> {
+          boolean status = !account.isDeleted();
           return new org.springframework.security.core.userdetails.User(
-              user.getUsername(),
-              user.getPassword(),
+              account.getUsername(),
+              account.getPassword(),
               status,
               status,
               status,
               status,
-              List.of(new SimpleGrantedAuthority(user.getRole()))
+              List.of(new SimpleGrantedAuthority(account.getRole()))
           );
         })
         .orElseThrow(() -> new UsernameNotFoundException(username));
   }
 
   @Override
-  public UserDTO getUserById(Long id) {
+  public AccountDTO getAccountById(Long id) {
     return repository
         .findById(id)
-        .map(account -> converter.convert(account, UserDTO.class))
-        .orElseThrow(() -> new EntityNotFoundException("User", "id", id));
+        .map(account -> converter.convert(account, AccountDTO.class))
+        .orElseThrow(() -> new EntityNotFoundException("Account", "id", id));
   }
 
   @Override
-  public List<UserDTO> getUsers(int page, int size) {
+  public List<AccountDTO> getAccounts(int page, int size) {
     return repository
         .findAll(PageRequest.of(page, size))
         .stream()
-        .map(account -> converter.convert(account, UserDTO.class))
+        .map(account -> converter.convert(account, AccountDTO.class))
         .collect(toList());
   }
 }

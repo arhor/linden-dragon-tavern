@@ -2,8 +2,8 @@ package org.arhor.diploma.web.api.v1;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.arhor.diploma.dto.UserDTO;
-import org.arhor.diploma.service.UserService;
+import org.arhor.diploma.dto.AccountDTO;
+import org.arhor.diploma.service.AccountService;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,19 +21,19 @@ import static org.arhor.diploma.web.util.PageUtils.bound;
     path = "/api/v1/users",
     produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
-public class UserController {
+public class AccountController {
 
-  private final UserService service;
+  private final AccountService service;
 
   @GetMapping
-  public List<UserDTO> getUsers(
+  public List<AccountDTO> getAccounts(
       @RequestParam(required = false) Integer page,
       @RequestParam(required = false) Integer size) {
-    return bound(service::getUsers).apply(page, size);
+    return bound(service::getAccounts).apply(page, size);
   }
 
   @GetMapping(path = "/{id}")
-  public Long getUsers(@PathVariable Long id) {
+  public Long getAccount(@PathVariable Long id) {
     return id;
   }
 }

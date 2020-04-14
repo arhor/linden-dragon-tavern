@@ -2,7 +2,7 @@ package org.arhor.diploma.web.filter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.arhor.diploma.service.UserService;
+import org.arhor.diploma.service.AccountService;
 import org.arhor.diploma.web.security.JwtProvider;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +23,7 @@ import java.io.IOException;
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
   private final JwtProvider tokenProvider;
-  private final UserService userService;
+  private final AccountService accountService;
 
   @Override
   protected void doFilterInternal(
@@ -36,7 +36,7 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
       if (jwt != null && tokenProvider.tokenIsValid(jwt)) {
         final String username = tokenProvider.getUserNameFromJwtToken(jwt);
 
-        final var userDetails = userService.loadUserByUsername(username);
+        final var userDetails = accountService.loadUserByUsername(username);
 
         // if (SecurityContextHolder.getContext().getAuthentication() == null) { ... }
 

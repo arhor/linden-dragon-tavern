@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "User")
 @EqualsAndHashCode(callSuper = true)
-public class User extends DomainObject<Long> implements Auditable {
+public class Account extends DomainObject<Long> implements Auditable {
 
   @Column(unique = true, nullable = false, length = 30)
   private String username;

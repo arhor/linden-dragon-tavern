@@ -45,11 +45,6 @@ public class AuthController {
     return jwtProvider.generateJwtToken(auth, JwtResponse::of);
   }
 
-  @PostMapping("/register")
-  public JwtResponse register() {
-    return null;
-  }
-
   @GetMapping("/refresh")
   @PreAuthorize("isAuthenticated()")
   public JwtResponse refresh(Authentication auth) {

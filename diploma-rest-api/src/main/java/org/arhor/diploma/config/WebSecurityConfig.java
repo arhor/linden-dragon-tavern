@@ -1,7 +1,7 @@
 package org.arhor.diploma.config;
 
 import lombok.RequiredArgsConstructor;
-import org.arhor.diploma.service.UserService;
+import org.arhor.diploma.service.AccountService;
 import org.arhor.diploma.web.filter.JwtAuthTokenFilter;
 import org.arhor.diploma.web.security.JwtAuthEntryPoint;
 import org.springframework.context.annotation.Bean;
@@ -24,12 +24,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final JwtAuthEntryPoint unauthorizedHandler;
   private final JwtAuthTokenFilter jwtAuthTokenFilter;
-  private final UserService userService;
+  private final AccountService accountService;
   private final PasswordEncoder encoder;
 
   @Override
   public void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userService)
+    auth.userDetailsService(accountService)
         .passwordEncoder(encoder);
   }
 
