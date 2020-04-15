@@ -10,9 +10,9 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "User")
+@Table(name = "Account")
 @EqualsAndHashCode(callSuper = true)
-public class Account extends DomainObject<Long> implements Auditable {
+public class Account extends AuditableDomainObject<Long> {
 
   @Column(unique = true, nullable = false, length = 30)
   private String username;
@@ -29,12 +29,12 @@ public class Account extends DomainObject<Long> implements Auditable {
   @Column(nullable = false, length = 60)
   private String lastName;
 
-  @Column(nullable = false, length = 10)
+  @Column(length = 10)
   private String role;
 
-  @Column(nullable = false)
+  @Column
   private LocalDateTime created;
 
-  @Column(nullable = false)
+  @Column
   private LocalDateTime updated;
 }

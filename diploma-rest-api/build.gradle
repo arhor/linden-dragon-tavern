@@ -41,7 +41,11 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    testImplementation 'com.h2database:h2'
+    testImplementation 'org.flywaydb:flyway-core'
+
+    testImplementation 'org.testcontainers:postgresql:1.14.0'
+    testImplementation 'org.testcontainers:junit-jupiter:1.14.0'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 }
@@ -55,4 +59,4 @@ task clientCopy(type: Copy, dependsOn: ':diploma-client:clientBuild') {
     into 'build/resources/main/static/'
 }
 
-compileJava.dependsOn(clientCopy)
+//compileJava.dependsOn(clientCopy)
