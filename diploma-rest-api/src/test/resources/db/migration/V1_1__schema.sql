@@ -1,4 +1,5 @@
-CREATE TABLE IF NOT EXISTS Account (
+CREATE TABLE IF NOT EXISTS Account
+(
     id            BIGSERIAL        NOT NULL PRIMARY KEY,
     username      VARCHAR(30)      NOT NULL UNIQUE,
     password      VARCHAR(1024)    NOT NULL,

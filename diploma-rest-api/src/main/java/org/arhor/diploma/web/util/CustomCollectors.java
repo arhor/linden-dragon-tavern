@@ -5,13 +5,15 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import java.util.stream.Collector;
 
-public class CustomCollectors {
+public final class CustomCollectors {
+
+  private CustomCollectors() {}
 
   public static Collector<String, ArrayNode, ArrayNode> toArrayNode(ObjectMapper objectMapper) {
     return Collector.of(
         objectMapper::createArrayNode,
-        (arrayNode, value) -> arrayNode.add(value),
-        (arrayNode, other) -> arrayNode.addAll(other)
+        ArrayNode::add,
+        ArrayNode::addAll
     );
   }
 }
