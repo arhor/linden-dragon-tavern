@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -20,12 +21,15 @@ import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.function.Function;
 
+import static org.arhor.diploma.web.util.CustomCollectors.toArrayNode;
+
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtProvider {
 
   private static final String FIELD_USERNAME = "username";
+  private static final String FIELD_ROLES = "roles";
 
   private final ObjectMapper objectMapper;
 
@@ -45,14 +49,14 @@ public class JwtProvider {
   public <T> T generateJwtToken(Authentication auth, Function<String, T> converter) {
     var principal = (UserDetails) auth.getPrincipal();
     var payload = objectMapper.createObjectNode();
-    var roles = objectMapper.createArrayNode();
-
-    for (var authority : principal.getAuthorities()) {
-      roles.add(authority.getAuthority());
-    }
 
     payload.put(FIELD_USERNAME, principal.getUsername());
-    payload.set("roles", roles);
+    payload.set(
+        FIELD_ROLES,
+        principal.getAuthorities()
+            .stream()
+            .map(GrantedAuthority::getAuthority)
+            .collect(toArrayNode(objectMapper)));
 
     return converter.apply(
         Jwts.builder()
