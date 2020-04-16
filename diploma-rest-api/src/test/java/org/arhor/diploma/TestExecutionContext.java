@@ -8,7 +8,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 public abstract class TestExecutionContext {
 
   @Container
-  public static PostgreSQLContainer<?> postgres =
+  public static final PostgreSQLContainer<?> postgres =
       new PostgreSQLContainer<>("postgres:11.7")
           .withDatabaseName("diploma_test_db")
           .withUsername("postgres")

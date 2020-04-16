@@ -25,6 +25,8 @@ import java.util.function.Function;
 @RequiredArgsConstructor
 public class JwtProvider {
 
+  private static final String FIELD_USERNAME = "username";
+
   private final ObjectMapper objectMapper;
 
   @Value("${security.jwt.secret}")
@@ -49,7 +51,7 @@ public class JwtProvider {
       roles.add(authority.getAuthority());
     }
 
-    payload.put("email", principal.getUsername());
+    payload.put(FIELD_USERNAME, principal.getUsername());
     payload.set("roles", roles);
 
     return converter.apply(
@@ -62,12 +64,12 @@ public class JwtProvider {
     );
   }
 
-  public String getUserNameFromJwtToken(String token) throws JsonProcessingException {
+  public String getUsernameFromJwtToken(String token) throws JsonProcessingException {
     final var subject = jwtParser.parseClaimsJws(token)
         .getBody()
         .getSubject();
     return objectMapper.readTree(subject)
-        .findValue("email")
+        .findValue(FIELD_USERNAME)
         .asText();
   }
 

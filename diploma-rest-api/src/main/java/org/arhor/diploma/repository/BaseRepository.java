@@ -70,7 +70,7 @@ public interface BaseRepository<T extends DomainObject<K>, K> extends JpaReposit
 
   @Override
   @Transactional
-  default void delete(@NonNull T entity) {
+  default void delete(T entity) {
     deleteById(entity.getId());
   }
 
