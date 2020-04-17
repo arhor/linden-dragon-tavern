@@ -20,24 +20,19 @@ public interface AccountRepository extends BaseRepository<Account, Long> {
 
   @Transactional(readOnly = true)
   @Query("SELECT a FROM Account a WHERE a.deleted = false AND a.username = :username")
-  @Caching(cacheable = {
-      @Cacheable(CACHE_ACCOUNT_BY_ID),
-      @Cacheable(CACHE_ACCOUNT_BY_USERNAME)
-  })
+  @Cacheable(cacheNames = CACHE_ACCOUNT_BY_USERNAME, key = "#username")
   Optional<Account> findByUsername(String username);
 
   @Override
   @Modifying
   @Transactional
   @Query("UPDATE Account a SET a.deleted = true WHERE a.id = :id")
-  @Caching(evict = {
-      @CacheEvict(CACHE_ACCOUNT_BY_ID),
-      @CacheEvict(CACHE_ACCOUNT_BY_USERNAME)
-  })
+  @CacheEvict(cacheNames = CACHE_ACCOUNT_BY_ID, key = "#id")
   void deleteById(@NonNull Long id);
 
   @Override
   @Transactional
+  @CacheEvict(cacheNames = CACHE_ACCOUNT_BY_USERNAME, key = "#account.username")
   default void delete(Account account) {
     deleteById(account.getId());
   }
