@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 import java.util.Date;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static org.arhor.diploma.web.util.CustomCollectors.toArrayNode;
 
@@ -47,31 +48,21 @@ public class JwtProvider {
   }
 
   public <T> T generateJwtToken(Authentication auth, Function<String, T> converter) {
-    var principal = (UserDetails) auth.getPrincipal();
-    var payload = objectMapper.createObjectNode();
-
-    payload.put(FIELD_USERNAME, principal.getUsername());
-    payload.set(
-        FIELD_ROLES,
-        principal.getAuthorities()
-            .stream()
-            .map(GrantedAuthority::getAuthority)
-            .collect(toArrayNode(objectMapper)));
-
     return converter.apply(
         Jwts.builder()
-            .setSubject(payload.toString())
+            .setSubject(asJsonString(auth::getPrincipal))
             .setIssuedAt(new Date())
             .setExpiration(new Date(System.currentTimeMillis() + expire))
             .signWith(SignatureAlgorithm.HS512, secret)
-            .compact()
-    );
+            .compact());
   }
 
   public String getUsernameFromJwtToken(String token) throws JsonProcessingException {
-    final var subject = jwtParser.parseClaimsJws(token)
-        .getBody()
-        .getSubject();
+    final var subject =
+        jwtParser.parseClaimsJws(token)
+            .getBody()
+            .getSubject();
+
     return objectMapper.readTree(subject)
         .findValue(FIELD_USERNAME)
         .asText();
@@ -95,5 +86,19 @@ public class JwtProvider {
       log.error("JWT claims string is empty -> Message: {}", e.getMessage());
     }
     return false;
+  }
+
+  private String asJsonString(Supplier<?> principalSource) {
+    final var principal = (UserDetails) principalSource.get();
+
+    final var roles =
+        principal.getAuthorities().stream()
+            .map(GrantedAuthority::getAuthority)
+            .collect(toArrayNode(objectMapper));
+
+    return objectMapper.createObjectNode()
+        .put(FIELD_USERNAME, principal.getUsername())
+        .set(FIELD_ROLES, roles)
+        .toString();
   }
 }

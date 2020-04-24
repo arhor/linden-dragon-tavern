@@ -1,0 +1,12 @@
+allprojects {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs.addAll([
+                '-Xlint:unchecked',
+                '-Xlint:deprecation'
+        ])
+    }
+
+    ext {
+        set('springCloudVersion', 'Hoxton.SR3')
+    }
+}
