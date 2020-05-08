@@ -1,4 +1,4 @@
-export default function(token) {
+export default (token) => {
   const base64Url = token.split('.')[1];
   const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
   
@@ -12,4 +12,4 @@ export default function(token) {
   );
 
   return { ...payload, sub: JSON.parse(payload.sub) };
-}
+};
