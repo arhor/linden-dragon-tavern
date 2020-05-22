@@ -1,32 +1,8 @@
-import Vue from 'vue';
-import Vuex from 'vuex';
-import modules from '@/store/modules';
+import { configureStore } from '@reduxjs/toolkit';
+import auth from '@/store/auth';
 
-Vue.use(Vuex);
-
-const store = new Vuex.Store({
-  state: {
-    theme: {
-      dark: false,
-    },
-  },
-
-  mutations: {
-    SWITCH_DARK_MODE: (state) => {
-      state.theme.dark = !state.theme.dark;
-    },
-  },
-
-  actions: {
-    changeTheme: ({ commit }) => commit('SWITCH_DARK_MODE'),
-  },
-
-  getters: {
-  },
+export default configureStore({
+  reducer: {
+    auth
+  }
 });
-
-for (const [name, module] of Object.entries(modules)) {
-  store.registerModule(name, module);
-}
-
-export default store;
