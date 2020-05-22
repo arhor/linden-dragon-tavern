@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
-export const TYPE = {
+export const TYPE = Object.freeze({
   PAGE: 'page',
   CARD: 'card',
-};
+});
 
-export const SIZE = {
+export const SIZE = Object.freeze({
   SMALL: 'small',
   MEDIUM: 'medium',
   LARGE: 'large',
-};
+});
 
 const StatelessContainer = ({
   type = TYPE.PAGE,
@@ -53,70 +53,51 @@ const StatelessContainer = ({
       break;
   }
 
-  const displayImage = () => {
-    return image && (
-      <Box
-        clone
-        mb={title || description ? 2 : 0}
-        width={`${imageWidth}%`}
-        height={`${imageHeight}%`}
-      >
-        {image}
-      </Box>
-    );
-  };
+  const BOX_PROPS = (type === TYPE.PAGE)
+    ? {
+      style: { transform: "translate(-50%, -50%)" },
+      position:"absolute",
+      top:"50%",
+      left:"50%",
+    }
+    : {
+      padding: padding,
+    };
 
-  const displayTitle = () => {
-    return title && (
-      <Box mb={!description && button ? 2 : 0}>
-        <Typography variant={variant}>{title}</Typography>
-      </Box>
-    );
-  };
-
-  const displayDescription = () => {
-    return description && (
-      <Box mb={button && 2}>
-        <Typography variant="body1">{description}</Typography>
-      </Box>
-    ); 
-  };
-
-  const displayButton = () => {
-    return button && button;
-  };
-
-  if (type === TYPE.PAGE) {
+  if (type === TYPE.PAGE || type === TYPE.CARD) {
     return (
-      <Box
-        style={{ transform: "translate(-50%, -50%)" }}
-        position="absolute"
-        top="50%"
-        left="50%"
-        textAlign="center"
-      >
-        {displayImage()}
-        {displayTitle()}
-        {displayDescription()}
-        {displayButton()}
-      </Box>
-    );
-  }
+      <Box textAlign="center" {...BOX_PROPS}>
 
-  if (type === TYPE.CARD) {
-    return (
-      <Box padding={padding} textAlign="center">
-        {displayImage()}
-        {displayTitle()}
-        {displayDescription()}
-        {displayButton()}
+        {image && (
+          <Box
+            clone
+            mb={title || description ? 2 : 0}
+            width={`${imageWidth}%`}
+            height={`${imageHeight}%`}
+          >
+            {image}
+          </Box>
+        )}
+
+        {title && (
+          <Box mb={!description && button ? 2 : 0}>
+            <Typography variant={variant}>{title}</Typography>
+          </Box>
+        )}
+
+        {description && (
+          <Box mb={button && 2}>
+            <Typography variant="body1">{description}</Typography>
+          </Box>
+        )}
+
+        {button && button}
       </Box>
     );
   }
 
   return null;
 };
-
 
 StatelessContainer.propTypes = {
   type: PropTypes.oneOf(Object.values(TYPE)),

@@ -1,7 +1,9 @@
 import React from 'react';
 import StatelessContainer, { TYPE, SIZE } from '@/components/StatelessContainer';
 
+// TODO: implement popup window for not critical errors
 class ErrorBoundary extends React.Component {
+
   state = {
     hasError: false
   }

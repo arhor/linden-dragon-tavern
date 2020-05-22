@@ -10,14 +10,22 @@ const App = () => {
       <BrowserRouter>
         <Link to="/">Home</Link>
         <Link to="/about">About</Link>
-        <Link to="/not_existing_path">To Not Found</Link>
         <main>
           <Suspense fallback={<Loader />}>
           <LangSelector />
             <Switch>
-              <Route component={Home} path="/" exact />
-              <Route component={lazy(() => import('@/routes/about'))} path="/about" />
-              <Route component={lazy(() => import('@/components/NotFound'))} />
+              <Route
+                exact
+                path="/"
+                component={Home}
+              />
+              <Route
+                path="/about"
+                component={lazy(() => import('@/routes/about'))}
+              />
+              <Route
+                component={lazy(() => import('@/components/NotFound'))}
+              />
             </Switch>
           </Suspense>
         </main>
