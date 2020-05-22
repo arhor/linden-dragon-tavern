@@ -1,12 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import StatelessContainer, { TYPE, SIZE } from '@/components/StatelessContainer';
 
 class ErrorBoundary extends React.Component {
-  static propTypes = {
-    children: PropTypes.object.isRequired
-  }
-
   state = {
     hasError: false
   }
@@ -19,21 +14,21 @@ class ErrorBoundary extends React.Component {
 
   }
 
-  render() {
+  errorView = () => {
     return (
-      <>
-        {
-          this.state.hasError
-            ? <StatelessContainer
-                type={TYPE.PAGE}
-                size={SIZE.LARGE}
-                title="Ups, something went wrong..."
-                description="Please, contact system administrator if you have nothing else to do"
-              />
-            : this.props.children
-        }
-      </>
+      <StatelessContainer
+        type={TYPE.PAGE}
+        size={SIZE.LARGE}
+        title="Ups, something went wrong..."
+        description="Please, contact system administrator if you have nothing else to do"
+      />
     );
+  }
+
+  render() {
+    return this.state.hasError
+      ? this.errorView()
+      : this.props.children;
   }
 }
 
