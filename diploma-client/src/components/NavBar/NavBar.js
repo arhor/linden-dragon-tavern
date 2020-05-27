@@ -11,11 +11,16 @@ import Divider from '@material-ui/core/Divider';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useSelector } from 'react-redux';
+import UserAvatar from '@/components/UserAvatar';
 import { isAuthenticated, getRole } from '@/store/user';
 
-const NavBar = () => {
+const NavBar = ({
+  menuItems,
+}) => {
   const authenticated = useSelector(isAuthenticated);
   const role = useSelector(getRole);
+
+  console.log(menuItems)
 
   const onSignUpClick = () => {
     // TODO: implement
@@ -51,18 +56,21 @@ const NavBar = () => {
 
             <IconButton
               color="inherit"
-              disabled={performingAction}
+              // disabled={performingAction}
               onClick={this.openMenu}
             >
-              <UserAvatar user={Object.assign(user, userData)} />
+              {/* <UserAvatar user={Object.assign(user, userData)} /> */}
             </IconButton>
 
             <Menu
-              anchorEl={menu.anchorEl}
-              open={Boolean(menu.anchorEl)}
+              // anchorEl={menu.anchorEl}
+              // open={Boolean(menu.anchorEl)}
               onClose={this.closeMenu}
             >
               {menuItems.map((menuItem, index) => {
+
+                console.log(menuItem);
+
                 if (menuItem.hasOwnProperty("condition") &&!menuItem.condition) {
                   return null;
                 }
@@ -113,7 +121,7 @@ const NavBar = () => {
         {!authenticated && (
           <ButtonGroup
             color="inherit"
-            disabled={performingAction}
+            // disabled={performingAction}
             variant="outlined"
           >
             <Button onClick={onSignUpClick}>Sign up</Button>

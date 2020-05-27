@@ -1,6 +1,17 @@
 import React from 'react';
 import StatelessContainer, { TYPE, SIZE } from '@/components/StatelessContainer';
 
+const ErrorView = () => {
+  return (
+    <StatelessContainer
+      type={TYPE.PAGE}
+      size={SIZE.LARGE}
+      title="Ups, something went wrong..."
+      description="Please, contact system administrator if you have nothing else to do"
+    />
+  );
+};
+
 // TODO: implement popup window for not critical errors
 class ErrorBoundary extends React.Component {
 
@@ -16,20 +27,9 @@ class ErrorBoundary extends React.Component {
 
   }
 
-  errorView = () => {
-    return (
-      <StatelessContainer
-        type={TYPE.PAGE}
-        size={SIZE.LARGE}
-        title="Ups, something went wrong..."
-        description="Please, contact system administrator if you have nothing else to do"
-      />
-    );
-  }
-
   render() {
     return this.state.hasError
-      ? this.errorView()
+      ? <ErrorView />
       : this.props.children;
   }
 }

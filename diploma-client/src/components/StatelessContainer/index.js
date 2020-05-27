@@ -1,1 +1,2 @@
-export { default, TYPE, SIZE } from '@/components/StatelessContainer/StatelessContainer.js';
+export { default } from '@/components/StatelessContainer/StatelessContainer.js';
+export { SIZE, TYPE } from '@/components/StatelessContainer/constants';

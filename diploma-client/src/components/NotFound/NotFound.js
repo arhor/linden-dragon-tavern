@@ -7,8 +7,8 @@ const NotFound = () => {
       <StatelessContainer
         type={TYPE.PAGE}
         size={SIZE.LARGE}
-        title="Ups, page not found..."
-        description="Please, try to find somewhere else :)"
+        title='Ups, page not found...'
+        description='Please, try to find it somewhere else :)'
       />
     </>
   );

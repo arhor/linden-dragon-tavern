@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { CircularProgress } from '@material-ui/core';
 
-const CSS = {
+const useStyles = makeStyles({
   center: {
     position: 'absolute',
     top: '50%',
@@ -10,13 +10,11 @@ const CSS = {
     transform: 'translate(-50%, -50%)',
     textAlign: 'center',
   },
-};
+});
 
-const useStyles = makeStyles(CSS);
+const classes = useStyles();
 
 const Loader = () => {
-  const classes = useStyles();
-
   return (
     <div className={classes.center}>
       <CircularProgress />

@@ -2,47 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-
-export const TYPE = Object.freeze({
-  PAGE: Symbol('page'),
-  CARD: Symbol('card'),
-});
-
-export const SIZE = Object.freeze({
-  SMALL : Symbol('small'),
-  MEDIUM: Symbol('medium'),
-  LARGE : Symbol('large'),
-});
-
-const PAGE_PROPS = Object.freeze({
-  style: { transform: 'translate(-50%, -50%)' },
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-});
-
-function calcProps(size) {
-  switch (size) {
-    case SIZE.SMALL:
-      return {
-        imageWidth: 40,
-        imageHeight: 40,
-        variant: 'h6',
-      };
-    case SIZE.LARGE:
-      return {
-        imageWidth: 100,
-        imageHeight: 100,
-        variant: 'h4',
-      };
-    default:
-      return {
-        imageWidth: 60,
-        imageHeight: 60,
-        variant: 'h5',
-      };
-  }
-}
+import { SIZE, TYPE, PAGE_PROPS } from '@/components/StatelessContainer/constants';
+import { calcProps } from '@/components/StatelessContainer/utils';
 
 const StatelessContainer = ({
   type = TYPE.PAGE,
@@ -56,7 +17,7 @@ const StatelessContainer = ({
   const { imageWidth, imageHeight, variant } = calcProps(size);
 
   const BOX_PROPS = (type === TYPE.PAGE) ? PAGE_PROPS : { padding };
-    
+
   if (Object.values(TYPE).includes(type)) {
     return (
       <Box textAlign='center' {...BOX_PROPS}>

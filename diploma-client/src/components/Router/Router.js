@@ -1,37 +1,23 @@
-import React, { Suspense, lazy } from 'react';
-import { BrowserRouter, Link, Switch, Route } from 'react-router-dom';
-import Home from '@/routes/home';
+import React, { Suspense } from 'react';
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import Container from '@material-ui/core/Container';
+import NavBar from '@/components/NavBar';
 import LangSelector from '@/components/LangSelector';
 import Loader from '@/components/Loader';
+import { ROUTES, LINKS } from '@/components/Router/constants';
 
 const Router = () => {
   return (
     <BrowserRouter>
-      <Link to="/">Home</Link>
-      <Link to="/about">About</Link>
-      <main>
+      <NavBar />
+      <Container component='main'>
         <Suspense fallback={<Loader />}>
           <LangSelector />
           <Switch>
-
-            <Route
-              exact
-              path="/"
-              component={Home}
-            />
-
-            <Route
-              path="/about"
-              component={lazy(() => import('@/routes/about'))}
-            />
-
-            <Route
-              component={lazy(() => import('@/components/NotFound'))}
-            />
-
+            {ROUTES.map(route => <Route {...route} />)}
           </Switch>
         </Suspense>
-      </main>
+      </Container>
     </BrowserRouter>
   );
 };
