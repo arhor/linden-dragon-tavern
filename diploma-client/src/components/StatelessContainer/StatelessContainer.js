@@ -4,15 +4,45 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 
 export const TYPE = Object.freeze({
-  PAGE: 'page',
-  CARD: 'card',
+  PAGE: Symbol('page'),
+  CARD: Symbol('card'),
 });
 
 export const SIZE = Object.freeze({
-  SMALL: 'small',
-  MEDIUM: 'medium',
-  LARGE: 'large',
+  SMALL : Symbol('small'),
+  MEDIUM: Symbol('medium'),
+  LARGE : Symbol('large'),
 });
+
+const PAGE_PROPS = Object.freeze({
+  style: { transform: 'translate(-50%, -50%)' },
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+});
+
+function calcProps(size) {
+  switch (size) {
+    case SIZE.SMALL:
+      return {
+        imageWidth: 40,
+        imageHeight: 40,
+        variant: 'h6',
+      };
+    case SIZE.LARGE:
+      return {
+        imageWidth: 100,
+        imageHeight: 100,
+        variant: 'h4',
+      };
+    default:
+      return {
+        imageWidth: 60,
+        imageHeight: 60,
+        variant: 'h5',
+      };
+  }
+}
 
 const StatelessContainer = ({
   type = TYPE.PAGE,
@@ -23,51 +53,14 @@ const StatelessContainer = ({
   description,
   button,
 }) => {  
-  let imageWidth;
-  let imageHeight;
-  let variant;
+  const { imageWidth, imageHeight, variant } = calcProps(size);
 
-  switch (size) {
-    case SIZE.SMALL:
-      imageWidth = 40;
-      imageHeight = 40;
-      variant = "h6";
-      break;
-
-    case SIZE.MEDIUM:
-      imageWidth = 60;
-      imageHeight = 60;
-      variant = "h5";
-      break;
-
-    case SIZE.LARGE:
-      imageWidth = 100;
-      imageHeight = 100;
-      variant = "h4";
-      break;
-
-    default:
-      imageWidth = 60;
-      imageHeight = 60;
-      variant = "h5";
-      break;
-  }
-
-  const BOX_PROPS = (type === TYPE.PAGE)
-    ? {
-      style: { transform: "translate(-50%, -50%)" },
-      position:"absolute",
-      top:"50%",
-      left:"50%",
-    }
-    : {
-      padding: padding,
-    };
-
-  if (type === TYPE.PAGE || type === TYPE.CARD) {
+  const BOX_PROPS = (type === TYPE.PAGE) ? PAGE_PROPS : { padding };
+    
+  if (Object.values(TYPE).includes(type)) {
     return (
-      <Box textAlign="center" {...BOX_PROPS}>
-
+      <Box textAlign='center' {...BOX_PROPS}>
+        
         {image && (
           <Box
             clone
@@ -87,7 +80,7 @@ const StatelessContainer = ({
 
         {description && (
           <Box mb={button && 2}>
-            <Typography variant="body1">{description}</Typography>
+            <Typography variant='body1'>{description}</Typography>
           </Box>
         )}
 

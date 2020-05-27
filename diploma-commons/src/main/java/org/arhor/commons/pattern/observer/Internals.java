@@ -103,7 +103,7 @@ final class Internals {
     ObservableRefImpl(R reference) { super(reference); }
 
     @Override
-    public final <V> void mutate(BiConsumer<R, V> setter, V value) {
+    public final <V> void mutate(V value, BiConsumer<R, V> setter) {
       setter.accept(observable, value);
       noticeObservers();
     }
@@ -115,7 +115,7 @@ final class Internals {
 
     @Override
     public final <V> Consumer<V> buildSetter(BiConsumer<R, V> setter) {
-      return (value) -> {
+      return value -> {
         setter.accept(observable, value);
         noticeObservers();
       };
@@ -139,7 +139,10 @@ final class Internals {
 
     @Override
     public final void setValue(byte value) {
-      observers.forEach(observer -> observer.notice(this.value = value));
+      this.value = value;
+      for (Observer<Byte> observer : observers) {
+        observer.notice(this.value);
+      }
     }
 
     @Override
@@ -156,7 +159,7 @@ final class Internals {
 
     @Override
     public final Byte get() {
-      return value;
+      return getValue();
     }
   }
 
@@ -170,7 +173,10 @@ final class Internals {
 
     @Override
     public final void setValue(short value) {
-      observers.forEach(observer -> observer.notice(this.value = value));
+      this.value = value;
+      for (Observer<Short> observer : observers) {
+        observer.notice(this.value);
+      }
     }
 
     @Override
@@ -187,7 +193,7 @@ final class Internals {
 
     @Override
     public final Short get() {
-      return value;
+      return getValue();
     }
   }
 
@@ -201,7 +207,10 @@ final class Internals {
 
     @Override
     public final void setValue(int value) {
-      observers.forEach(observer -> observer.notice(this.value = value));
+      this.value = value;
+      for (Observer<Integer> observer : observers) {
+        observer.notice(this.value);
+      }
     }
 
     @Override
@@ -218,7 +227,7 @@ final class Internals {
 
     @Override
     public final Integer get() {
-      return value;
+      return getValue();
     }
   }
 
@@ -232,7 +241,10 @@ final class Internals {
 
     @Override
     public final void setValue(long value) {
-      observers.forEach(observer -> observer.notice(this.value = value));
+      this.value = value;
+      for (Observer<Long> observer : observers) {
+        observer.notice(this.value);
+      }
     }
 
     @Override
@@ -249,7 +261,7 @@ final class Internals {
 
     @Override
     public final Long get() {
-      return value;
+      return getValue();
     }
   }
 
@@ -263,7 +275,10 @@ final class Internals {
 
     @Override
     public final void setValue(float value) {
-      observers.forEach(observer -> observer.notice(this.value = value));
+      this.value = value;
+      for (Observer<Float> observer : observers) {
+        observer.notice(this.value);
+      }
     }
 
     @Override
@@ -280,7 +295,7 @@ final class Internals {
 
     @Override
     public final Float get() {
-      return value;
+      return getValue();
     }
   }
 
@@ -294,7 +309,10 @@ final class Internals {
 
     @Override
     public final void setValue(double value) {
-      observers.forEach(observer -> observer.notice(this.value = value));
+      this.value = value;
+      for (Observer<Double> observer : observers) {
+        observer.notice(this.value);
+      }
     }
 
     @Override
@@ -311,7 +329,7 @@ final class Internals {
 
     @Override
     public final Double get() {
-      return value;
+      return getValue();
     }
   }
 
@@ -325,7 +343,10 @@ final class Internals {
 
     @Override
     public final void setValue(char value) {
-      observers.forEach(observer -> observer.notice(this.value = value));
+      this.value = value;
+      for (Observer<Character> observer : observers) {
+        observer.notice(this.value);
+      }
     }
 
     @Override
@@ -342,7 +363,7 @@ final class Internals {
 
     @Override
     public final Character get() {
-      return value;
+      return getValue();
     }
   }
 
@@ -356,7 +377,10 @@ final class Internals {
 
     @Override
     public void setValue(boolean value) {
-      observers.forEach(observer -> observer.notice(this.value = value));
+      this.value = value;
+      for (Observer<Boolean> observer : observers) {
+        observer.notice(this.value);
+      }
     }
 
     @Override
@@ -373,7 +397,7 @@ final class Internals {
 
     @Override
     public Boolean get() {
-      return value;
+      return getValue();
     }
   }
 }

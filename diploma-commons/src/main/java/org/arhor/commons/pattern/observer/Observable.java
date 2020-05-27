@@ -18,7 +18,7 @@ public interface Observable<T> {
     return Internals.observableVal(value);
   }
 
-
+  /* ------------------------------------------------------------------------ */
 
   static <T extends Number & Comparable<T>> ObservableVal<T> of(@Nonnull T value) {
     return ofVal(value);

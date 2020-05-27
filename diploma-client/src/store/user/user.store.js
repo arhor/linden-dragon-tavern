@@ -2,11 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import { notEmpty } from '@/utils/core';
 
 const ACCESS_TOKEN = 'accessToken';
+const ROLE = 'role';
 
-export const authSlice = createSlice({
-  name: 'auth',
+export const userSlice = createSlice({
+  name: 'user',
   initialState: {
     [ACCESS_TOKEN]: '',
+    [ROLE]: '',
   },
   reducers: {
     setAccessToken: (state, action) => {
@@ -16,8 +18,10 @@ export const authSlice = createSlice({
   },
 });
 
-export const { setAccessToken } = authSlice.actions;
+export const { setAccessToken } = userSlice.actions;
 
-export const isAuthenticated = (state) => notEmpty(state[ACCESS_TOKEN]);
+export const isAuthenticated = state => notEmpty(state[ACCESS_TOKEN]);
 
-export default authSlice.reducer;
+export const getRole = state => state[ROLE];
+
+export default userSlice.reducer;

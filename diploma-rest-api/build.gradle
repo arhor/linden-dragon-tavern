@@ -85,4 +85,4 @@ task clientCopy(type: Copy, dependsOn: ':diploma-client:clientBuild') {
     into 'build/resources/main/static/'
 }
 
-bootJar.dependsOn(clientCopy)
+processResources.dependsOn(clientCopy)

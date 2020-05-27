@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 public interface ObservableRef<T> extends Observable<T> {
 
-  <V> void mutate(BiConsumer<T, V> setter, V value);
+  <V> void mutate(V value, BiConsumer<T, V> setter);
 
   <V> V access(Function<T, V> getter);
 
