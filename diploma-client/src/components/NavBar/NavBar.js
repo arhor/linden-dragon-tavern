@@ -13,22 +13,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { useSelector } from 'react-redux';
 import UserAvatar from '@/components/UserAvatar';
 import { isAuthenticated, getRole } from '@/store/user';
+import { onSignInClick, onSignUpClick } from '@/components/NavBar/handlers';
 
-const NavBar = ({
-  menuItems,
-}) => {
+const eligibleItem = item => !item.hasOwnProperty('condition') || item.condition;
+
+const NavBar = ({ menuItems }) => {
   const authenticated = useSelector(isAuthenticated);
   const role = useSelector(getRole);
-
-  console.log(menuItems)
-
-  const onSignUpClick = () => {
-    // TODO: implement
-  };
-
-  const onSignInClick = () => {
-    // TODO: implement
-  };
       
   return (
     <AppBar color="primary" position="static">
@@ -67,13 +58,7 @@ const NavBar = ({
               // open={Boolean(menu.anchorEl)}
               onClose={this.closeMenu}
             >
-              {menuItems.map((menuItem, index) => {
-
-                console.log(menuItem);
-
-                if (menuItem.hasOwnProperty("condition") &&!menuItem.condition) {
-                  return null;
-                }
+              {menuItems.filter(eligibleItem).map((menuItem, index) => {
 
                 let component = null;
 
