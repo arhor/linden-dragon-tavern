@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { notEmpty } from '@/utils/core';
 import { USER, INITIAL_STATE } from '@/store/user/model';
 
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: 'user',
   initialState: {
     ...INITIAL_STATE
@@ -23,16 +23,16 @@ export const userSlice = createSlice({
   },
 });
 
+export default userSlice.reducer;
+
 export const { resetState, setProp } = userSlice.actions;
 
-export const authenticated = state => notEmpty(state[USER.ACCESS_TOKEN]);
+export const isAuthenticated = state => notEmpty(state[USER.ACCESS_TOKEN]);
 
-export const role = state => state[USER.ROLE];
+export const getRole = state => state[USER.ROLE];
 
-export const firstName = state => state[USER.FIRST_NAME];
+export const getFirstName = state => state[USER.FIRST_NAME];
 
-export const lastName = state => state[USER.LAST_NAME];
+export const getLastName = state => state[USER.LAST_NAME];
 
-export const email = state => state[USER.EMAIL];
-
-export default userSlice.reducer;
+export const getEmail = state => state[USER.EMAIL];
