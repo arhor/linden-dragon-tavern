@@ -44,9 +44,9 @@ const AlertDialog = ({
 
       {(dismissiveAction || confirmingAction || acknowledgementAction) && (
         <DialogActions>
-         {dismissiveAction}
-         {confirmingAction}
-         {acknowledgementAction}
+          {dismissiveAction}
+          {confirmingAction}
+          {acknowledgementAction}
         </DialogActions>
       )}
     </Dialog>

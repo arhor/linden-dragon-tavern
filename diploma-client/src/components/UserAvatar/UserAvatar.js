@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Avatar from '@material-ui/core/Avatar';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import PersonIcon from '@material-ui/icons/PersonIcon';
+import PersonIcon from '@material-ui/icons/Person';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
-import authentication from '../../services/authentication';
+// import authentication from '../../services/authentication';
 
 const useStyles = makeStyles({
   nameInitials: {
@@ -33,19 +33,19 @@ const UserAvatar = ({
       return <Avatar alt='Avatar' src={photoUrl} />;
     }
 
-    const nameInitials = authentication.getNameInitials({
-      ...user,
-    });
+    // const nameInitials = authentication.getNameInitials({
+    //   ...user,
+    // });
 
-    if (nameInitials) {
-      return (
-        <Avatar alt='Avatar'>
-          <span className={defaultCursor && classes.nameInitials}>
-            {nameInitials}
-          </span>
-        </Avatar>
-      );
-    }
+    // if (nameInitials) {
+    //   return (
+    //     <Avatar alt='Avatar'>
+    //       <span className={defaultCursor && classes.nameInitials}>
+    //         {nameInitials}
+    //       </span>
+    //     </Avatar>
+    //   );
+    // }
 
     return <AccountCircleIcon />;
   }
@@ -71,21 +71,21 @@ const UserAvatar = ({
       );
     }
 
-    const nameInitials = authentication.getNameInitials({
-      ...user,
-    });
+    // const nameInitials = authentication.getNameInitials({
+    //   ...user,
+    // });
 
-    if (nameInitials) {
-      return (
-        <ListItemAvatar>
-          <Avatar alt='Avatar'>
-            <span className={defaultCursor && classes.nameInitials}>
-              {nameInitials}
-            </span>
-          </Avatar>
-        </ListItemAvatar>
-      );
-    }
+    // if (nameInitials) {
+    //   return (
+    //     <ListItemAvatar>
+    //       <Avatar alt='Avatar'>
+    //         <span className={defaultCursor && classes.nameInitials}>
+    //           {nameInitials}
+    //         </span>
+    //       </Avatar>
+    //     </ListItemAvatar>
+    //   );
+    // }
 
     return (
       <ListItemAvatar>
