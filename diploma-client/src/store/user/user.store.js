@@ -14,17 +14,25 @@ export const userSlice = createSlice({
         localStorage.removeItem(prop);
       }
     },
-    setAccessToken: (state, action) => {
-      state[USER.ACCESS_TOKEN] = action.payload;
-      localStorage.setItem(USER.ACCESS_TOKEN, state[USER.ACCESS_TOKEN]);
+    setProp: (state, { prop, value }) => {
+      if (Object.keys(USER).includes(prop)) {
+        state[prop] = value ?? INITIAL_STATE[prop];
+        localStorage.setItem(prop, state[prop]);
+      }
     },
   },
 });
 
-export const { setAccessToken } = userSlice.actions;
+export const { resetState, setProp } = userSlice.actions;
 
-export const isAuthenticated = state => notEmpty(state[USER.ACCESS_TOKEN]);
+export const authenticated = state => notEmpty(state[USER.ACCESS_TOKEN]);
 
-export const getRole = state => state[USER.ROLE];
+export const role = state => state[USER.ROLE];
+
+export const firstName = state => state[USER.FIRST_NAME];
+
+export const lastName = state => state[USER.LAST_NAME];
+
+export const email = state => state[USER.EMAIL];
 
 export default userSlice.reducer;
