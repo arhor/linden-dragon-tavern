@@ -14,7 +14,7 @@ export const ROUTES = Object.freeze([
     component: lazy(() => import('@/routes/about')),
   },
   {
-    component: lazy(() => import('@/components/NotFound')),
+    component: lazy(() => import('@/routes/not-found')),
   },
 ]);
 

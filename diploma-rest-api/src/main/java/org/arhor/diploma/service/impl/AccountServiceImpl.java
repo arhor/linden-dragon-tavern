@@ -22,6 +22,8 @@ import static java.util.stream.Collectors.toList;
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
+  private final CommonServiceExecutor executor;
+
   private final AccountRepository repository;
   private final Converter converter;
 
@@ -45,10 +47,7 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public AccountDTO getAccountById(Long id) {
-    return repository
-        .findById(id)
-        .map(account -> converter.convert(account, AccountDTO.class))
-        .orElseThrow(() -> new EntityNotFoundException("Account", "id", id));
+    return executor.getById(repository, AccountDTO.class, id);
   }
 
   @Override

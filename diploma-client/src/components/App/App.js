@@ -1,9 +1,9 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import { ThemeProvider } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import ErrorBoundary from '@/components/ErrorBoundary';
-import Router from '@/components/Router';
+import AppLayout from '@/components/AppLayout';
 import store from '@/store';
 
 const App = ({theme}) => {
@@ -12,7 +12,7 @@ const App = ({theme}) => {
       <CssBaseline />
       <ErrorBoundary>
         <Provider store={store}>
-          <Router />
+          <AppLayout />
         </Provider>
       </ErrorBoundary>
     </ThemeProvider>

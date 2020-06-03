@@ -1,12 +1,12 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Container from '@material-ui/core/Container';
 import NavBar from '@/components/NavBar';
 import LangSelector from '@/components/LangSelector';
 import Loader from '@/components/Loader';
-import { ROUTES, LINKS } from '@/components/Router/constants';
+import { ROUTES } from '@/components/AppLayout/constants';
 
-const Router = () => {
+const AppLayout = () => {
   return (
     <BrowserRouter>
       <NavBar />
@@ -22,4 +22,4 @@ const Router = () => {
   );
 };
 
-export default Router;
+export default AppLayout;

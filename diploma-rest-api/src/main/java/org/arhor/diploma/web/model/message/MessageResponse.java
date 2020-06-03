@@ -1,4 +1,4 @@
-package org.arhor.diploma.web.model;
+package org.arhor.diploma.web.model.message;
 
 import lombok.Data;
 
@@ -13,7 +13,7 @@ import java.util.List;
  *   messages: [
  *     {
  *       code: 400,
- *       type: error,
+ *       severity: error,
  *       text: "Validation failed",
  *       details: [
  *         "field 'username' should not be blank",

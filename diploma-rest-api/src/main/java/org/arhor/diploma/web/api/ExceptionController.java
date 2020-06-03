@@ -2,8 +2,8 @@ package org.arhor.diploma.web.api;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.arhor.diploma.web.model.Message;
-import org.arhor.diploma.web.model.MessageResponse;
+import org.arhor.diploma.web.model.message.Message;
+import org.arhor.diploma.web.model.message.MessageResponse;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
