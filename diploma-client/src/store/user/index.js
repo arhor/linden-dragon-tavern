@@ -1,11 +1,10 @@
 export {
   default,
-  userSlice,
+  resetState,
+  setProp,
   isAuthenticated,
   getRole,
   getFirstName,
   getLastName,
   getEmail,
-  resetState,
-  setProp,
 } from '@/store/user/user.store.js';

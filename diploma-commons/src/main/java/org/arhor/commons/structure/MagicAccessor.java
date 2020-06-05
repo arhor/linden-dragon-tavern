@@ -1,4 +1,4 @@
-package org.arhor.commons.structure;//package by.arhor.core.structure;
+//package org.arhor.commons.structure;//package by.arhor.core.structure;
 //
 //import java.lang.annotation.Annotation;
 //import java.lang.invoke.MethodHandles;

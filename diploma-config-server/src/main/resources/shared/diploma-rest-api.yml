@@ -17,7 +17,7 @@ server:
 
 spring:
   application:
-    name: diploma-app
+    name: diploma-rest-api
 
   datasource:
     driverClassName: org.postgresql.Driver
