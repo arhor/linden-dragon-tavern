@@ -20,7 +20,13 @@ task npmAuditFix (type: NpmTask, dependsOn: npmInstall) {
 }
 
 task clientBuild (type: NpmTask, dependsOn: npmAuditFix) {
-    description = 'Builds production version of the university standalone app client'
+    description = 'Builds production version of the app client'
     workingDir = file(jsRootDir)
     args = ['run', 'build']
+}
+
+task clientStart (type: NpmTask, dependsOn: npmAuditFix) {
+    description = 'Starts client development server'
+    workingDir = file(jsRootDir)
+    args = ['run', 'start']
 }

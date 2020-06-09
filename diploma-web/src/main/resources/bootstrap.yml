@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: diploma-rest-api
-  cloud:
-    config:
-      uri: http://localhost:8888
-      fail-fast: true
-      password: password # ${CONFIG_SERVICE_PASSWORD}
-      username: user

@@ -12,9 +12,9 @@ const useStyles = makeStyles({
   },
 });
 
-const classes = useStyles();
-
 const Loader = () => {
+  const classes = useStyles();
+
   return (
     <div className={classes.center}>
       <CircularProgress />

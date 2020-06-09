@@ -3,7 +3,6 @@ package org.arhor.commons.pattern.lazy;
 import org.arhor.commons.function.RichSupplier;
 
 import javax.annotation.Nonnull;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 public interface Lazy<T> extends RichSupplier<T> {
