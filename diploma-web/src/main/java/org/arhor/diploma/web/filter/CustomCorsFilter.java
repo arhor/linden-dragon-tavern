@@ -2,6 +2,7 @@ package org.arhor.diploma.web.filter;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Component;
@@ -33,6 +34,17 @@ public class CustomCorsFilter extends OncePerRequestFilter {
       "x-requested-with"
   );
 
+  private static final String ALLOWED_METHODS = String.join(",",
+      "GET",
+      "POST",
+      "PUT",
+      "PATCH",
+      "OPTIONS",
+      "DELETE"
+  );
+
+  private static final String MAX_AGE = Integer.toString(3600);
+
   @Override
   protected void doFilterInternal(
       @NonNull HttpServletRequest req,
@@ -40,9 +52,9 @@ public class CustomCorsFilter extends OncePerRequestFilter {
       @NonNull FilterChain filterChain) throws ServletException, IOException {
 
     res.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, req.getHeader(ORIGIN));
-    res.setHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
-    res.setHeader(ACCESS_CONTROL_ALLOW_METHODS, "PATCH,POST,PUT,GET,OPTIONS,DELETE");
-    res.setHeader(ACCESS_CONTROL_MAX_AGE, "3600");
+    res.setHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS, Boolean.TRUE.toString());
+    res.setHeader(ACCESS_CONTROL_ALLOW_METHODS, ALLOWED_METHODS);
+    res.setHeader(ACCESS_CONTROL_MAX_AGE, MAX_AGE);
     res.setHeader(ACCESS_CONTROL_ALLOW_HEADERS, ALLOWED_HEADERS);
 
     if ("OPTIONS".equalsIgnoreCase(req.getMethod())) {

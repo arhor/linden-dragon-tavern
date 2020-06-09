@@ -10,7 +10,7 @@ import java.util.function.BiFunction;
 public final class PageUtils {
 
   public static final int DEFAULT_PAGE = 0;
-  public static final int DEFAULT_SIZE = 50;
+  public static final int DEFAULT_SIZE = 200;
 
   private PageUtils() {}
 

@@ -1,10 +1,14 @@
 package org.arhor.diploma.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.arhor.diploma.repository.domain.Account;
+import org.arhor.diploma.service.action.GetEntities;
+import org.arhor.diploma.service.action.GetEntity;
 import org.arhor.diploma.service.dto.AccountDTO;
-import org.arhor.diploma.data.repository.AccountRepository;
+import org.arhor.diploma.repository.AccountRepository;
 import org.arhor.diploma.service.AccountService;
 import org.arhor.commons.util.Converter;
+import org.arhor.diploma.service.exception.EntityNotFoundException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,8 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static java.util.stream.Collectors.toList;
 
 @Service
 @Transactional
@@ -28,33 +30,42 @@ public class AccountServiceImpl implements AccountService {
 
   @Override
   public UserDetails loadUserByUsername(String username) {
-    return repository.findByUsername(username)
-        .map(account -> {
-          boolean status = !account.isDeleted();
-          return new org.springframework.security.core.userdetails.User(
-              account.getUsername(),
-              account.getPassword(),
-              status,
-              status,
-              status,
-              status,
-              List.of(new SimpleGrantedAuthority(account.getRole()))
-          );
-        })
-        .orElseThrow(() -> new UsernameNotFoundException(username));
+    return GetEntity.apply(
+        username,
+        repository::findByUsername,
+        this::accountToUserDetails
+    ).orElseThrow(() -> new UsernameNotFoundException(username));
   }
 
   @Override
   public AccountDTO getAccountById(Long id) {
-    return executor.getById(repository, AccountDTO.class, id);
+    return GetEntity.apply(
+        id,
+        repository::findById,
+        this::accountToDTO
+    ).orElseThrow(() -> new EntityNotFoundException("account", "id", id));
   }
 
   @Override
   public List<AccountDTO> getAccounts(int page, int size) {
-    return repository
-        .findAll(PageRequest.of(page, size))
-        .stream()
-        .map(account -> converter.convert(account, AccountDTO.class))
-        .collect(toList());
+    return GetEntities.apply(PageRequest.of(page, size), repository::findAll, this::accountToDTO);
+  }
+
+  private AccountDTO accountToDTO(Account a) {
+    return converter.convert(a, AccountDTO.class);
+  }
+
+  private UserDetails accountToUserDetails(Account a) {
+    final boolean status = !a.isDeleted();
+
+    return new org.springframework.security.core.userdetails.User(
+        a.getUsername(),
+        a.getPassword(),
+        status,
+        status,
+        status,
+        status,
+        List.of(new SimpleGrantedAuthority(a.getRole()))
+    );
   }
 }

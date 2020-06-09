@@ -1,9 +1,9 @@
 package org.arhor.diploma.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.arhor.diploma.data.domain.DomainObject;
+import org.arhor.diploma.repository.domain.DomainObject;
 import org.arhor.diploma.service.exception.EntityNotFoundException;
-import org.arhor.diploma.data.repository.BaseRepository;
+import org.arhor.diploma.repository.BaseRepository;
 import org.arhor.commons.util.Converter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

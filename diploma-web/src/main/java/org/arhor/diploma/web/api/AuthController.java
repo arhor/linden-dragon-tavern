@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.arhor.diploma.web.model.JwtResponse;
 import org.arhor.diploma.web.model.SignInRequest;
 import org.arhor.diploma.web.security.JwtProvider;
+import org.arhor.diploma.web.security.TokenProvider;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
   private final AuthenticationManager authManager;
-  private final JwtProvider jwtProvider;
+  private final TokenProvider<Authentication> tokenProvider;
 
   @PostMapping("/token")
   public JwtResponse authenticate(@RequestBody SignInRequest signIn) {
@@ -42,12 +43,18 @@ public class AuthController {
         .getContext()
         .setAuthentication(auth);
 
-    return jwtProvider.generateJwtToken(auth, JwtResponse::of);
+    return JwtResponse.of(
+        tokenProvider.generate(auth),
+        JwtProvider.TOKEN_TYPE
+    );
   }
 
   @GetMapping("/refresh")
   @PreAuthorize("isAuthenticated()")
   public JwtResponse refresh(Authentication auth) {
-    return jwtProvider.generateJwtToken(auth, JwtResponse::of);
+    return JwtResponse.of(
+        tokenProvider.generate(auth),
+        JwtProvider.TOKEN_TYPE
+    );
   }
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.function.BiFunction;
 
 import static org.arhor.diploma.web.util.PageUtils.bound;
 
@@ -33,7 +34,7 @@ public class AccountController {
   }
 
   @GetMapping(path = "/{id}")
-  public Long getAccount(@PathVariable Long id) {
-    return id;
+  public AccountDTO getAccount(@PathVariable Long id) {
+    return service.getAccountById(id);
   }
 }

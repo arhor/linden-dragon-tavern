@@ -9,9 +9,9 @@ public final class CustomCollectors {
 
   private CustomCollectors() {}
 
-  public static Collector<String, ArrayNode, ArrayNode> toArrayNode(ObjectMapper objectMapper) {
+  public static Collector<String, ArrayNode, ArrayNode> toArrayNode(final ObjectMapper mapper) {
     return Collector.of(
-        objectMapper::createArrayNode,
+        mapper::createArrayNode,
         ArrayNode::add,
         ArrayNode::addAll
     );

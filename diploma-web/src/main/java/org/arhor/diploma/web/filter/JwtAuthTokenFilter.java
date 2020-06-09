@@ -3,7 +3,7 @@ package org.arhor.diploma.web.filter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.arhor.diploma.service.AccountService;
-import org.arhor.diploma.web.security.JwtProvider;
+import org.arhor.diploma.web.security.TokenProvider;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,13 +16,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 @Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthTokenFilter extends OncePerRequestFilter {
 
-  private final JwtProvider tokenProvider;
+  private final TokenProvider<?> tokenProvider;
   private final AccountService accountService;
 
   @Override
@@ -31,39 +32,29 @@ public class JwtAuthTokenFilter extends OncePerRequestFilter {
       @NonNull HttpServletResponse res,
       @NonNull FilterChain filterChain) throws ServletException, IOException {
     try {
-      final String jwt = extractJwt(req);
+      final String authHeader = req.getHeader("Authentication");
+      final Optional<String> jwt = tokenProvider.parse(authHeader);
 
-      if (jwt != null && tokenProvider.tokenIsValid(jwt)) {
-        final String username = tokenProvider.getUsernameFromJwtToken(jwt);
+      if (jwt.isPresent() && tokenProvider.validate(jwt.get())) {
+        tokenProvider
+            .parseUsername(jwt.get())
+            .map(accountService::loadUserByUsername)
+            .ifPresent(userDetails -> {
+              final var auth =
+                  new UsernamePasswordAuthenticationToken(
+                      userDetails,
+                      null,
+                      userDetails.getAuthorities());
 
-        final var userDetails = accountService.loadUserByUsername(username);
+              auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
 
-        // if (SecurityContextHolder.getContext().getAuthentication() == null) { ... }
-
-        final var auth =
-            new UsernamePasswordAuthenticationToken(
-                userDetails,
-                null,
-                userDetails.getAuthorities());
-
-        auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-
-        SecurityContextHolder.getContext().setAuthentication(auth);
+              SecurityContextHolder.getContext().setAuthentication(auth);
+            });
       }
     } catch (Exception e) {
       log.error("Can NOT set user authentication -> Message: {}", e.getMessage());
     }
 
     filterChain.doFilter(req, res);
-  }
-
-  private String extractJwt(HttpServletRequest request) {
-    final String authHeader = request.getHeader("Authorization");
-
-    if (authHeader != null && authHeader.startsWith("Bearer ")) {
-      return authHeader.replace("Bearer ", "");
-    }
-
-    return null;
   }
 }

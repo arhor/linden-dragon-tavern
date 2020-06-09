@@ -11,6 +11,7 @@ import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.arhor.diploma.web.model.JwtResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.util.Date;
+import java.util.Optional;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -27,7 +30,9 @@ import static org.arhor.diploma.web.util.CustomCollectors.toArrayNode;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class JwtProvider {
+public class JwtProvider implements TokenProvider<Authentication> {
+
+  public static final String TOKEN_TYPE = "Bearer";
 
   private static final String FIELD_USERNAME = "username";
   private static final String FIELD_ROLES = "roles";
@@ -47,28 +52,38 @@ public class JwtProvider {
     jwtParser = Jwts.parser().setSigningKey(secret);
   }
 
-  public <T> T generateJwtToken(Authentication auth, Function<String, T> converter) {
-    return converter.apply(
-        Jwts.builder()
-            .setSubject(asJsonString(auth::getPrincipal))
-            .setIssuedAt(new Date())
-            .setExpiration(new Date(System.currentTimeMillis() + expire))
-            .signWith(SignatureAlgorithm.HS512, secret)
-            .compact());
+  @Override
+  public String generate(Authentication auth) {
+    return Jwts.builder()
+        .setSubject(asJsonString(auth::getPrincipal))
+        .setIssuedAt(new Date())
+        .setExpiration(new Date(System.currentTimeMillis() + expire))
+        .signWith(SignatureAlgorithm.HS512, secret)
+        .compact();
   }
 
-  public String getUsernameFromJwtToken(String token) throws JsonProcessingException {
-    final var subject =
-        jwtParser.parseClaimsJws(token)
-            .getBody()
-            .getSubject();
-
-    return objectMapper.readTree(subject)
-        .findValue(FIELD_USERNAME)
-        .asText();
+  @Override
+  public Optional<String> parse(String token) {
+    if (token != null) {
+      return Optional.of(
+          token.startsWith(JwtProvider.TOKEN_TYPE)
+              ? token.replace(JwtProvider.TOKEN_TYPE, "").trim()
+              : token);
+    }
+    return Optional.empty();
   }
 
-  public boolean tokenIsValid(String authToken) {
+  @Override
+  public Optional<String> parseUsername(String token) throws JsonProcessingException {
+    final var subject = jwtParser.parseClaimsJws(token).getBody().getSubject();
+
+    return subject != null
+        ? Optional.ofNullable(objectMapper.readTree(subject).findValue(FIELD_USERNAME).asText())
+        : Optional.empty();
+  }
+
+  @Override
+  public boolean validate(String authToken) {
     try {
       return jwtParser.parseClaimsJws(authToken)
           .getBody()

@@ -51,8 +51,10 @@ public class CustomCsrfFilter extends OncePerRequestFilter {
       log.debug("CSRF cookie value: {}", csrfCookieValue);
 
       if ((csrfCookieValue == null) || !csrfCookieValue.equals(req.getHeader(CSRF_HEADER_NAME))) {
-        accessDeniedHandler
-            .handle(req, res, new AccessDeniedException("CSRF token is missing or not matching"));
+        accessDeniedHandler.handle(
+            req,
+            res,
+            new AccessDeniedException("CSRF token is missing or not matching"));
         return;
       }
     }
