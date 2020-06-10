@@ -39,7 +39,7 @@ class CustomCsrfFilter : OncePerRequestFilter() {
   override fun doFilterInternal(
       req: HttpServletRequest,
       res: HttpServletResponse,
-      filterChain: FilterChain
+      next: FilterChain
   ) {
     if (!SAFE_METHODS.contains(req.method)) {
       val csrfCookieValue = getCsrfCookieToken(req)
@@ -51,7 +51,7 @@ class CustomCsrfFilter : OncePerRequestFilter() {
         return
       }
     }
-    filterChain.doFilter(req, res)
+    next.doFilter(req, res)
   }
 
   private fun getCsrfCookieToken(req: HttpServletRequest): String? {

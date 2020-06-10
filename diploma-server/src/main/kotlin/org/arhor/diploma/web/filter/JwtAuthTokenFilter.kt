@@ -27,7 +27,7 @@ class JwtAuthTokenFilter(
   override fun doFilterInternal(
       req: HttpServletRequest,
       res: HttpServletResponse,
-      filterChain: FilterChain
+      next: FilterChain
   ) {
     try {
       req.getHeader("Authentication")
@@ -47,7 +47,6 @@ class JwtAuthTokenFilter(
     } catch (e: Exception) {
       log.error("Can NOT set user authentication -> Message: {}", e.message)
     }
-
-    filterChain.doFilter(req, res)
+    next.doFilter(req, res)
   }
 }
