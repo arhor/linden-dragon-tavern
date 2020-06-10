@@ -1,7 +1,6 @@
-package org.arhor.diploma.util;
+package org.arhor.diploma.util
 
-@FunctionalInterface
-public interface Converter {
+interface Converter {
 
   /**
    * General method to convert object of one type to another.
@@ -13,5 +12,5 @@ public interface Converter {
    * @param <R> return type
    * @return converted object
    */
-  <T, R> R convert(T item, Class<R> targetClass);
+  fun <T, R> convert(item: T, targetClass: Class<R>): R
 }

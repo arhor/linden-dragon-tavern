@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static org.arhor.diploma.web.util.PageUtils.bound;
+import static org.arhor.diploma.util.PageUtils.bound;
 
 @Slf4j
 @RestController
