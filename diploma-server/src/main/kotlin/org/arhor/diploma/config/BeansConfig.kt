@@ -30,35 +30,29 @@ class BeansConfig {
   }
 
   @Bean
-  fun modelMapperConverter(mapper: ModelMapper): Converter {
-    return object : Converter {
-      override fun <T, R> convert(item: T, targetClass: Class<R>): R {
-        return mapper.map(item, targetClass)
-      }
+  fun modelMapperConverter(mapper: ModelMapper) = object : Converter {
+    override fun <T, R> convert(source: T, target: Class<R>): R {
+      return mapper.map(source, target)
     }
   }
 
   @Bean
-  fun messageSource(): MessageSource {
-    val messageSource = ResourceBundleMessageSource()
-    messageSource.setBasename("messages")
-    return messageSource
+  fun messageSource(): MessageSource = object : ResourceBundleMessageSource() {
+    init {
+      setBasename("messages")
+    }
   }
 
   @Bean
   @Profile("!dev")
-  fun csrfFilter(csrfFilter: CustomCsrfFilter): FilterRegistrationBean<CustomCsrfFilter> {
-    return object : FilterRegistrationBean<CustomCsrfFilter>() {
-      init {
-        order = 1
-        filter = csrfFilter
-        addUrlPatterns("/api/*")
-      }
+  fun csrfFilter(csrfFilter: CustomCsrfFilter) = object : FilterRegistrationBean<CustomCsrfFilter>() {
+    init {
+      order = 1
+      filter = csrfFilter
+      addUrlPatterns("/api/*")
     }
   }
 
   @Bean
-  fun passwordEncoder(): PasswordEncoder {
-    return BCryptPasswordEncoder(5)
-  }
+  fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder(5)
 }

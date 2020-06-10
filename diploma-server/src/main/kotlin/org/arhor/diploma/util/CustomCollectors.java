@@ -1,4 +1,4 @@
-package org.arhor.diploma.web.util;
+package org.arhor.diploma.util;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;

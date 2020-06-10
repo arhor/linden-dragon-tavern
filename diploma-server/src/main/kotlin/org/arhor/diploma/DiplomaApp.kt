@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Bean
 class DiplomaApp {
 
   @Bean
-  fun run() = CommandLineRunner { args ->
-    for (arg in args) {
+  fun run() = CommandLineRunner {
+    for (arg in it) {
       println(arg)
     }
   }

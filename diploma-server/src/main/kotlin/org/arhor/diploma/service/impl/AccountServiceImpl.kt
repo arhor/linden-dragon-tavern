@@ -1,27 +1,25 @@
 package org.arhor.diploma.service.impl;
 
-import org.arhor.diploma.domain.Account;
-import org.arhor.diploma.service.dto.AccountDTO;
-import org.arhor.diploma.repository.AccountRepository;
-import org.arhor.diploma.service.AccountService;
-import org.arhor.diploma.util.Converter;
-import org.arhor.diploma.service.exception.EntityNotFoundException;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.arhor.diploma.domain.Account
+import org.arhor.diploma.repository.AccountRepository
+import org.arhor.diploma.service.AccountService
+import org.arhor.diploma.service.dto.AccountDTO
+import org.arhor.diploma.service.exception.EntityNotFoundException
+import org.arhor.diploma.util.Converter
+import org.springframework.data.domain.PageRequest
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import kotlin.contracts.InvocationKind
-import kotlin.contracts.contract
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
 class AccountServiceImpl(
     private val repository: AccountRepository,
-    private val converter: Converter
-) : AccountService {
+    converter: Converter
+) : AbstractService<Account, AccountDTO, Long>(converter, repository), AccountService {
 
   override fun loadUserByUsername(username: String?): UserDetails {
     return username?.let {
@@ -56,9 +54,5 @@ class AccountServiceImpl(
         .findAll(PageRequest.of(page, size))
         .map<AccountDTO> { convert(it) }
         .toList()
-  }
-
-  private inline fun <T, reified D> convert(item: T): D {
-    return converter.convert(item, D::class.java)
   }
 }

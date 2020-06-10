@@ -1,43 +1,48 @@
-package org.arhor.diploma.web.api;
+package org.arhor.diploma.web.api
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.arhor.diploma.web.model.message.Message;
-import org.arhor.diploma.web.model.message.MessageResponse;
-import org.springframework.context.MessageSource;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.arhor.diploma.web.model.MessageResponse
+import org.arhor.diploma.web.model.messageResponse
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
+import org.springframework.context.MessageSource
+import org.springframework.http.HttpStatus
+import org.springframework.web.bind.annotation.ExceptionHandler
+import org.springframework.web.bind.annotation.ResponseStatus
+import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
+import java.util.*
 
-@Slf4j
 @RestControllerAdvice
-@RequiredArgsConstructor
-public class ExceptionController extends ResponseEntityExceptionHandler {
-  
-  private final MessageSource messageSource;
+class ExceptionController(
+    private val messageSource: MessageSource
+) : ResponseEntityExceptionHandler() {
+
+  companion object {
+    @JvmStatic
+    private val log: Logger = LoggerFactory.getLogger(ExceptionController::class.java)
+  }
 
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-  public MessageResponse typeMismatchException(MethodArgumentTypeMismatchException ex, WebRequest request) {
-    log.error("Argument class cast exception", ex);
-    return MessageResponse.of(
-        Message.error()
-            .withCode(400)
-            .withText(
-                messageSource.getMessage(
-                    "error.wrong.argument",
-                    null,
-                    request.getLocale()))
-            .withDetails(
-                messageSource.getMessage(
-                    "error.wrong.argument.details",
-                    new Object[] {ex.getName(), ex.getValue()},
-                    request.getLocale()))
-            .build());
+  @ExceptionHandler(MethodArgumentTypeMismatchException::class)
+  fun argumentClassCastException(e: MethodArgumentTypeMismatchException, l: Locale): MessageResponse {
+    return messageResponse {
+      error {
+        code = 400
+        text = localize("error.wrong.argument", l)
+        details = listOf(
+            localize("error.wrong.argument.details", l, arrayOf(e.name, e.value))
+        )
+      }
+    }
+  }
+
+  private fun localize(
+      label: String,
+      locale: Locale,
+      args: Array<Any?>? = null
+  ): String {
+    return messageSource.getMessage(label, args, locale)
   }
 
 //  @ResponseStatus(HttpStatus.NOT_FOUND)

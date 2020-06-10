@@ -18,6 +18,7 @@ import java.util.concurrent.Executor
 class AsyncConfig(private val props: TaskExecutionProperties) : AsyncConfigurer {
 
   companion object {
+    @JvmStatic
     private val log: Logger = LoggerFactory.getLogger(AsyncConfig::class.java)
   }
 

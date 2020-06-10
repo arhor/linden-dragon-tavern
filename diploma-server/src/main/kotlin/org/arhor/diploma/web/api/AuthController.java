@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+
+import javax.annotation.PostConstruct;
 
 @Slf4j
 @RestController
@@ -43,7 +46,7 @@ public class AuthController {
         .getContext()
         .setAuthentication(auth);
 
-    return JwtResponse.of(
+    return new JwtResponse(
         tokenProvider.generate(auth),
         JwtProvider.TOKEN_TYPE
     );
@@ -52,7 +55,7 @@ public class AuthController {
   @GetMapping("/refresh")
   @PreAuthorize("isAuthenticated()")
   public JwtResponse refresh(Authentication auth) {
-    return JwtResponse.of(
+    return new JwtResponse(
         tokenProvider.generate(auth),
         JwtProvider.TOKEN_TYPE
     );
