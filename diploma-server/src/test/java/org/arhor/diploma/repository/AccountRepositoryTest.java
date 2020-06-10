@@ -25,6 +25,8 @@ public class AccountRepositoryTest extends TestExecutionContext {
     final Account account = repository.save(generateAccount());
     assertFalse(account.isDeleted());
 
+    System.out.println(account);
+
     // when
     repository.delete(account);
 

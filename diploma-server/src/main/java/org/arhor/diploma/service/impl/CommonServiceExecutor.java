@@ -8,6 +8,7 @@ import org.arhor.diploma.util.Converter;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +24,7 @@ public class CommonServiceExecutor {
 
   private final Converter converter;
 
-  public <E extends DomainObject<K>, D, K> D getById(
+  public <E extends DomainObject<K>, D, K extends Serializable> D getById(
       BaseRepository<E, K> repository,
       Class<D> dtoClass,
       K id) {
@@ -36,7 +37,7 @@ public class CommonServiceExecutor {
     );
   }
 
-  public <E extends DomainObject<K>, D, K> List<D> getAll(
+  public <E extends DomainObject<K>, D, K extends Serializable> List<D> getAll(
       BaseRepository<E, K> repository,
       Class<D> dtoClass) {
     return getList(
@@ -45,7 +46,7 @@ public class CommonServiceExecutor {
     );
   }
 
-  private <E extends DomainObject<K>, D, K>
+  private <E extends DomainObject<K>, D, K extends Serializable>
   Optional<D> getOne(
       Function<K, Optional<E>> entityLookup,
       Function<E, D> resultMapper,
@@ -53,7 +54,7 @@ public class CommonServiceExecutor {
     return entityLookup.apply(id).map(resultMapper);
   }
 
-  private <E extends DomainObject<K>, D, K>
+  private <E extends DomainObject<K>, D, K extends Serializable>
   List<D> getList(
       Supplier<Collection<E>> entitiesLookup,
       Function<E, D> resultMapper) {

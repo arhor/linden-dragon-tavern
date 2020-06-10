@@ -52,7 +52,7 @@ class WebSecurityConfig(
     ).joinToString(separator = "; ")
   }
 
-  override fun configure(auth: AuthenticationManagerBuilder) {
+  override fun configure(auth: AuthenticationManagerBuilder) {java.lang.String.join(",", "")
     auth.userDetailsService(accountService)
         .passwordEncoder(encoder)
   }
