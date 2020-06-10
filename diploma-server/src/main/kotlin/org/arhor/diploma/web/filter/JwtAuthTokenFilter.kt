@@ -30,26 +30,20 @@ class JwtAuthTokenFilter(
       filterChain: FilterChain
   ) {
     try {
-      val authHeader = req.getHeader("Authentication")
-
-      tokenProvider.parse(authHeader)?.let {
-        if (tokenProvider.validate(it)) {
-          tokenProvider
-              .parseUsername(it)
-              ?.let(accountService::loadUserByUsername)
-              ?.let { userDetails ->
-                val auth =
-                    UsernamePasswordAuthenticationToken(
-                        userDetails,
-                        null,
-                        userDetails.authorities)
-
-                auth.details = WebAuthenticationDetailsSource().buildDetails(req)
-
-                SecurityContextHolder.getContext().authentication = auth
-              }
-        }
-      }
+      req.getHeader("Authentication")
+          ?.let(tokenProvider::parse)
+          ?.takeIf(tokenProvider::validate)
+          ?.let(tokenProvider::parseUsername)
+          ?.let(accountService::loadUserByUsername)
+          ?.let { userDetails ->
+            val auth =
+                UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    null,
+                    userDetails.authorities)
+            auth.details = WebAuthenticationDetailsSource().buildDetails(req)
+            SecurityContextHolder.getContext().authentication = auth
+          }
     } catch (e: Exception) {
       log.error("Can NOT set user authentication -> Message: {}", e.message)
     }
