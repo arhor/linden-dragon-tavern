@@ -26,23 +26,20 @@ class ExceptionController(
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(MethodArgumentTypeMismatchException::class)
   fun argumentClassCastException(e: MethodArgumentTypeMismatchException, l: Locale): MessageResponse {
+    log.error("Argument class cast exception", e)
     return messageResponse {
       error {
         code = 400
-        text = localize("error.wrong.argument", l)
+        text = localize(l, "error.wrong.argument")
         details = listOf(
-            localize("error.wrong.argument.details", l, arrayOf(e.name, e.value))
+            localize(l, "error.wrong.argument.details", e.name, e.value)
         )
       }
     }
   }
 
-  private fun localize(
-      label: String,
-      locale: Locale,
-      args: Array<Any?>? = null
-  ): String {
-    return messageSource.getMessage(label, args, locale)
+  private fun localize(l: Locale, label: String, vararg args: Any?): String {
+    return messageSource.getMessage(label, args, l)
   }
 
 //  @ResponseStatus(HttpStatus.NOT_FOUND)

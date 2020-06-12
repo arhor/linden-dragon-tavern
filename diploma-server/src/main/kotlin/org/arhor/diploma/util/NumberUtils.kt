@@ -8,12 +8,7 @@ import java.util.function.ToIntFunction;
  * @author Maksim_Buryshynets
  * @version 1
  */
-@SuppressWarnings("unused")
-public final class NumberUtils {
-
-  private NumberUtils() {
-    throw new UnsupportedOperationException("Must not be instantiated");
-  }
+object NumberUtils {
 
   /**
    * Method supposed to be used for creation number bounding function,
@@ -24,12 +19,11 @@ public final class NumberUtils {
    * @param <N> any number type
    * @return closure with min bound value
    */
-  public static
-  <N extends Number> ToIntFunction<N> minBound(final int bound) {
-    return arg ->
-        ((arg == null) || (arg.longValue() <= bound))
-            ? bound
-            : arg.intValue();
+  @JvmStatic
+  fun <N : Number> minBound(bound: Int): ToIntFunction<N> {
+    return ToIntFunction { arg ->
+      if ((arg == null) || (arg.toLong() <= bound)) bound else arg.toInt()
+    }
   }
 
   /**
@@ -41,12 +35,11 @@ public final class NumberUtils {
    * @param <N> any number type
    * @return closure with max bound value
    */
-  public static
-  <N extends Number> ToIntFunction<N> maxBound(final int bound) {
-    return arg ->
-        ((arg == null) || (arg.longValue() >= bound))
-            ? bound
-            : arg.intValue();
+  @JvmStatic
+  fun <N : Number> maxBound(bound: Int): ToIntFunction<N> {
+    return ToIntFunction { arg ->
+      if ((arg == null) || (arg.toLong() >= bound)) bound else arg.toInt()
+    }
   }
 
 }

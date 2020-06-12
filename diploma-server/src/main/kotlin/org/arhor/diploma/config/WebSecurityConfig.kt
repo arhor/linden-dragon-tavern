@@ -1,6 +1,5 @@
 package org.arhor.diploma.config
 
-import lombok.RequiredArgsConstructor
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.web.filter.JwtAuthTokenFilter
 import org.arhor.diploma.web.security.JwtAuthEntryPoint
@@ -19,7 +18,6 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurityConfig(
     private val unauthorizedHandler: JwtAuthEntryPoint,

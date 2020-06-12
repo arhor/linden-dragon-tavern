@@ -20,7 +20,7 @@ class LoggingAspect {
   fun logExceptionHandling(joinPoint: JoinPoint) {
     for (arg in joinPoint.args) {
       if (arg is Throwable) {
-        log.error("Handled exception: {}", arg)
+        log.error(arg.message, arg)
       }
     }
   }

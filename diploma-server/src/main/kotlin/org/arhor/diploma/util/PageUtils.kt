@@ -1,8 +1,6 @@
 package org.arhor.diploma.util
 
 
-import org.arhor.diploma.util.NumberUtils
-
 import java.util.function.BiFunction
 
 object PageUtils {
