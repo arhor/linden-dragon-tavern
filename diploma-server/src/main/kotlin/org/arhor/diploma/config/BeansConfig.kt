@@ -18,15 +18,11 @@ import org.springframework.security.crypto.password.PasswordEncoder
 class BeansConfig {
 
   @Bean
-  fun modelMapper(): ModelMapper {
-    return object : ModelMapper() {
-      init {
-        configuration.matchingStrategy = MatchingStrategies.LOOSE
-        configuration.fieldAccessLevel = MapperConfig.AccessLevel.PRIVATE
-        configuration.isFieldMatchingEnabled = true
-        configuration.isSkipNullEnabled = true
-      }
-    }
+  fun modelMapper() = ModelMapper().apply {
+    configuration.matchingStrategy = MatchingStrategies.LOOSE
+    configuration.fieldAccessLevel = MapperConfig.AccessLevel.PRIVATE
+    configuration.isFieldMatchingEnabled = true
+    configuration.isSkipNullEnabled = true
   }
 
   @Bean
@@ -37,20 +33,16 @@ class BeansConfig {
   }
 
   @Bean
-  fun messageSource(): MessageSource = object : ResourceBundleMessageSource() {
-    init {
-      setBasename("messages")
-    }
+  fun messageSource() = ResourceBundleMessageSource().apply {
+    setBasename("messages")
   }
 
   @Bean
   @Profile("!dev")
-  fun csrfFilter(csrfFilter: CustomCsrfFilter) = object : FilterRegistrationBean<CustomCsrfFilter>() {
-    init {
-      order = 1
-      filter = csrfFilter
-      addUrlPatterns("/api/*")
-    }
+  fun csrfFilter(csrfFilter: CustomCsrfFilter) = FilterRegistrationBean<CustomCsrfFilter>().apply {
+    order = 1
+    filter = csrfFilter
+    addUrlPatterns("/api/*")
   }
 
   @Bean

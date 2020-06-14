@@ -1,7 +1,7 @@
 package org.arhor.diploma.config
 
 import org.arhor.diploma.service.AccountService
-import org.arhor.diploma.web.filter.JwtAuthTokenFilter
+import org.arhor.diploma.web.filter.CustomAuthFilter
 import org.arhor.diploma.web.security.JwtAuthEntryPoint
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -21,7 +21,7 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurityConfig(
     private val unauthorizedHandler: JwtAuthEntryPoint,
-    private val jwtAuthTokenFilter: JwtAuthTokenFilter,
+    private val authFilter: CustomAuthFilter,
     private val accountService: AccountService,
     private val encoder: PasswordEncoder
 ) : WebSecurityConfigurerAdapter() {
@@ -85,6 +85,6 @@ class WebSecurityConfig(
         .and()
             .httpBasic()
         .and()
-            .addFilterBefore(jwtAuthTokenFilter, UsernamePasswordAuthenticationFilter::class.java)
+            .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter::class.java)
   }
 }

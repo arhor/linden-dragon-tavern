@@ -91,4 +91,8 @@ class JwtProvider(private val objectMapper: ObjectMapper) : TokenProvider<Authen
         .set<ArrayNode>(FIELD_ROLES, roles)
         .toString()
   }
+
+  override fun authHeaderName(): String {
+    return "Authentication"
+  }
 }

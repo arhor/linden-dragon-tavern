@@ -6,6 +6,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
@@ -14,14 +15,14 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 @Component
-class JwtAuthTokenFilter(
+class CustomAuthFilter(
     private val tokenProvider: TokenProvider<*>,
     private val accountService: AccountService
 ) : OncePerRequestFilter() {
 
   companion object {
     @JvmStatic
-    private val log: Logger = LoggerFactory.getLogger(JwtAuthTokenFilter::class.java)
+    private val log: Logger = LoggerFactory.getLogger(CustomAuthFilter::class.java)
   }
 
   override fun doFilterInternal(
@@ -30,17 +31,17 @@ class JwtAuthTokenFilter(
       next: FilterChain
   ) {
     try {
-      req.getHeader("Authentication")
+      req.getHeader(tokenProvider.authHeaderName())
           ?.let(tokenProvider::parse)
           ?.takeIf(tokenProvider::validate)
           ?.let(tokenProvider::parseUsername)
           ?.let(accountService::loadUserByUsername)
-          ?.let { userDetails ->
+          ?.let { user ->
             val auth =
                 UsernamePasswordAuthenticationToken(
-                    userDetails,
-                    null,
-                    userDetails.authorities)
+                    user,
+                    null, // TODO: what should be placed here? token, password or null?
+                    user.authorities)
             auth.details = WebAuthenticationDetailsSource().buildDetails(req)
             SecurityContextHolder.getContext().authentication = auth
           }

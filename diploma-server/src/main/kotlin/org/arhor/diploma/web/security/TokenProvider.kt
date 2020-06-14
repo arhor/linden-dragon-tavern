@@ -9,4 +9,6 @@ interface TokenProvider<A> {
   fun parseUsername(token: String): String?
 
   fun validate(token: String): Boolean
+
+  fun authHeaderName(): String
 }
