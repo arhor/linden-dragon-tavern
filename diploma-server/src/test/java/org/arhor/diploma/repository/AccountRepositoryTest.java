@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Objects;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -33,7 +35,7 @@ public class AccountRepositoryTest extends TestExecutionContext {
     // then
     assertAll(
         () -> assertThat(account.getId()).isNotNull(),
-        () -> assertThat(repository.findById(account.getId())).isEmpty(),
+        () -> assertThat(repository.findById(Objects.requireNonNull(account.getId()))).isEmpty(),
         () -> assertThat(repository.findDeleted()).contains(account)
     );
   }
