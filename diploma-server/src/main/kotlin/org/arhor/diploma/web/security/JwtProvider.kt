@@ -42,15 +42,19 @@ class JwtProvider(private val objectMapper: ObjectMapper) : TokenProvider<Authen
 
   override fun generate(auth: Authentication): String {
     return Jwts.builder()
-        .setSubject(asJsonString(auth::getPrincipal))
+        .setSubject(auth.generateSubject())
         .setIssuedAt(Date())
         .setExpiration(Date(System.currentTimeMillis() + (expire ?: DEFAULT_EXPIRE)))
         .signWith(SignatureAlgorithm.HS512, secret)
         .compact()
   }
 
+  private fun Authentication.generateSubject(): String {
+    return asJsonString { principal }
+  }
+
   override fun parse(token: String): String? {
-    return token.replace(TOKEN_TYPE, "").trim()
+    return token.replace(authTokenType(), "").trim()
   }
 
   override fun parseUsername(token: String): String? {
@@ -94,5 +98,9 @@ class JwtProvider(private val objectMapper: ObjectMapper) : TokenProvider<Authen
 
   override fun authHeaderName(): String {
     return "Authentication"
+  }
+
+  override fun authTokenType(): String {
+    return "Bearer"
   }
 }

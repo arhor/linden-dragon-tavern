@@ -11,4 +11,6 @@ interface TokenProvider<A> {
   fun validate(token: String): Boolean
 
   fun authHeaderName(): String
+
+  fun authTokenType(): String
 }

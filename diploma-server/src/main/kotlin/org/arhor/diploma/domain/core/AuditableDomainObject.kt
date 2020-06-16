@@ -1,4 +1,4 @@
-package org.arhor.diploma.domain;
+package org.arhor.diploma.domain.core;
 
 import java.io.Serializable
 import java.time.LocalDateTime
@@ -11,35 +11,19 @@ import javax.persistence.PreUpdate
 abstract class AuditableDomainObject<T : Serializable> : DomainObject<T>(), Auditable {
 
   @Column
-  private var created: LocalDateTime? = null
+  override var created: LocalDateTime? = null
 
   @Column
-  private var updated: LocalDateTime? = null
+  override var updated: LocalDateTime? = null
 
   @PrePersist
   override fun onCreate() {
-    setCreated(LocalDateTime.now())
+    created = LocalDateTime.now()
   }
 
   @PreUpdate
   override fun onUpdate() {
-    setUpdated(LocalDateTime.now())
-  }
-
-  override fun getCreated(): LocalDateTime? {
-    return created
-  }
-
-  override fun setCreated(created: LocalDateTime?) {
-    this.created = created
-  }
-
-  override fun getUpdated(): LocalDateTime? {
-    return updated
-  }
-
-  override fun setUpdated(updated: LocalDateTime?) {
-    this.updated = updated
+    updated = LocalDateTime.now()
   }
 
   override fun equals(other: Any?): Boolean {

@@ -1,4 +1,4 @@
-package org.arhor.diploma.domain
+package org.arhor.diploma.domain.core
 
 import java.time.LocalDateTime
 

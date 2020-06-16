@@ -3,6 +3,7 @@ package org.arhor.diploma.repository;
 import net.bytebuddy.utility.RandomString;
 import org.arhor.diploma.TestExecutionContext;
 import org.arhor.diploma.domain.Account;
+import org.arhor.diploma.domain.core.Deletable;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,8 +27,6 @@ public class AccountRepositoryTest extends TestExecutionContext {
     // given
     final Account account = repository.save(generateAccount());
     assertFalse(account.isDeleted());
-
-    System.out.println(account);
 
     // when
     repository.delete(account);

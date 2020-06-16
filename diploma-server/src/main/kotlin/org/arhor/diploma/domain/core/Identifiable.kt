@@ -1,10 +1,8 @@
-package org.arhor.diploma.domain
+package org.arhor.diploma.domain.core
 
 import java.io.Serializable
 
 interface Identifiable<T : Serializable> {
 
-  fun getId(): T?
-
-  fun setId(id: T?)
+  var id: T?
 }

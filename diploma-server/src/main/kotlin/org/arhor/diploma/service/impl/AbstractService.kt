@@ -1,6 +1,6 @@
 package org.arhor.diploma.service.impl
 
-import org.arhor.diploma.domain.DomainObject
+import org.arhor.diploma.domain.core.DomainObject
 import org.arhor.diploma.repository.BaseRepository
 import org.arhor.diploma.util.Converter
 import java.io.Serializable

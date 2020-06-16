@@ -1,8 +1,7 @@
 package org.arhor.diploma.domain
 
-import javax.persistence.Column
-import javax.persistence.Entity
-import javax.persistence.Table
+import org.arhor.diploma.domain.core.AuditableDomainObject
+import javax.persistence.*
 
 @Entity
 @Table(name = "Account")
@@ -22,6 +21,10 @@ class Account : AuditableDomainObject<Long>() {
 
   @Column(nullable = false, length = 60)
   var lastName: String? = null
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "account_id", nullable = false)
+  var securityProfile: SecurityProfile? = null
 
   @Column(length = 10)
   var role: String? = null

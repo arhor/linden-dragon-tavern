@@ -1,6 +1,6 @@
 package org.arhor.diploma.repository
 
-import org.arhor.diploma.domain.DomainObject
+import org.arhor.diploma.domain.core.DomainObject
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -57,7 +57,7 @@ interface BaseRepository<T : DomainObject<K>, K : Serializable> : JpaRepository<
   @JvmDefault
   @Transactional
   override fun delete(entity: T) {
-    entity.getId()?.let { deleteById(it) }
+    entity.id?.let { deleteById(it) }
   }
 
   @JvmDefault

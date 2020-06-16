@@ -2,10 +2,13 @@ package org.arhor.diploma.web.api.v1;
 
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
+import org.arhor.diploma.util.ACCOUNT_EDIT
+import org.arhor.diploma.util.ACCOUNT_VIEW
 import org.arhor.diploma.util.PageUtils.bound
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -20,6 +23,7 @@ class AccountController(private val service: AccountService) {
   }
 
   @GetMapping
+  @PreAuthorize("hasScopes($ACCOUNT_VIEW, $ACCOUNT_EDIT)")
   fun getAccounts(
       @RequestParam(required = false) page: Int,
       @RequestParam(required = false) size: Int

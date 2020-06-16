@@ -26,17 +26,16 @@ class AccountServiceImpl(
       repository
           .findByUsername(it)
           .map { account ->
-            with(!account.isDeleted()) {
-              User(
-                  account.username,
-                  account.password,
-                  this,
-                  this,
-                  this,
-                  this,
-                  listOf(SimpleGrantedAuthority(account.role))
-              )
-            }
+            val status = !account.isDeleted
+            User(
+                account.username,
+                account.password,
+                status,
+                status,
+                status,
+                status,
+                listOf(SimpleGrantedAuthority(account.role))
+            )
           }
           .orElseThrow { UsernameNotFoundException(username) }
     } ?: throw IllegalArgumentException(username)

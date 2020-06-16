@@ -1,12 +1,10 @@
-package org.arhor.diploma.domain
+package org.arhor.diploma.domain.core
 
 import java.time.temporal.TemporalAccessor
 
 interface Updatable<T : TemporalAccessor> {
 
-  fun getUpdated(): T?
-
-  fun setUpdated(updated: T?)
+  var updated: T?
 
   @JvmDefault
   fun onUpdate() { /* do nothing by default */ }

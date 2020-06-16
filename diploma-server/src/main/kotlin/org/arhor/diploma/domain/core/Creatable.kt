@@ -1,12 +1,10 @@
-package org.arhor.diploma.domain
+package org.arhor.diploma.domain.core
 
 import java.time.temporal.TemporalAccessor
 
 interface Creatable<T : TemporalAccessor> {
 
-  fun getCreated(): T?
-
-  fun setCreated(created: T?)
+  var created: T?
 
   @JvmDefault
   fun onCreate() { /* do nothing by default */ }

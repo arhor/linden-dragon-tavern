@@ -1,8 +1,7 @@
 package org.arhor.diploma.web.api
 
-import org.arhor.diploma.web.model.JwtResponse
+import org.arhor.diploma.web.model.SignInResponse
 import org.arhor.diploma.web.model.SignInRequest
-import org.arhor.diploma.web.security.JwtProvider
 import org.arhor.diploma.web.security.TokenProvider
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -30,7 +29,7 @@ class AuthController(
   }
 
   @PostMapping("/token")
-  fun authenticate(@RequestBody signIn: SignInRequest): JwtResponse {
+  fun authenticate(@RequestBody signIn: SignInRequest): SignInResponse {
     val auth = authManager.authenticate(
         UsernamePasswordAuthenticationToken(
             signIn.username,
@@ -38,18 +37,18 @@ class AuthController(
         )
     )
     SecurityContextHolder.getContext().authentication = auth
-    return JwtResponse(
+    return SignInResponse(
         tokenProvider.generate(auth),
-        JwtProvider.TOKEN_TYPE
+        tokenProvider.authTokenType()
     )
   }
 
   @GetMapping("/refresh")
   @PreAuthorize("isAuthenticated()")
-  fun refresh(auth: Authentication): JwtResponse {
-    return JwtResponse(
+  fun refresh(auth: Authentication): SignInResponse {
+    return SignInResponse(
         tokenProvider.generate(auth),
-        JwtProvider.TOKEN_TYPE
+        tokenProvider.authTokenType()
     )
   }
 }

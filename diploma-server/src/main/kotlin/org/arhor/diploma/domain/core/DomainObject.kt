@@ -1,4 +1,4 @@
-package org.arhor.diploma.domain
+package org.arhor.diploma.domain.core
 
 import java.io.Serializable
 import javax.persistence.*
@@ -8,26 +8,10 @@ abstract class DomainObject<T : Serializable> : Identifiable<T>, Deletable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private var id: T? = null
+  override var id: T? = null
 
   @Column(name = "deleted", nullable = false)
-  private var isDeleted: Boolean = false
-
-  override fun getId(): T? {
-    return id
-  }
-
-  override fun setId(id: T?) {
-    this.id = id
-  }
-
-  override fun isDeleted(): Boolean {
-    return isDeleted
-  }
-
-  override fun setDeleted(isDeleted: Boolean) {
-    this.isDeleted = isDeleted
-  }
+  override var isDeleted: Boolean = false
 
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
