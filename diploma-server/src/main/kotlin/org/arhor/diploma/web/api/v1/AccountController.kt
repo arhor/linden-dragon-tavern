@@ -23,7 +23,7 @@ class AccountController(private val service: AccountService) {
   }
 
   @GetMapping
-  @PreAuthorize("hasScopes($ACCOUNT_VIEW, $ACCOUNT_EDIT)")
+  @PreAuthorize("hasScopes('$ACCOUNT_VIEW','$ACCOUNT_EDIT')")
   fun getAccounts(
       @RequestParam(required = false) page: Int,
       @RequestParam(required = false) size: Int

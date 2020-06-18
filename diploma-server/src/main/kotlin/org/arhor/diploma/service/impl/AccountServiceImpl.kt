@@ -7,6 +7,7 @@ import org.arhor.diploma.service.dto.AccountDTO
 import org.arhor.diploma.service.exception.EntityNotFoundException
 import org.arhor.diploma.util.Converter
 import org.springframework.data.domain.PageRequest
+import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
@@ -34,7 +35,7 @@ class AccountServiceImpl(
                 status,
                 status,
                 status,
-                listOf(SimpleGrantedAuthority(account.role))
+                account.extractAuthorities()
             )
           }
           .orElseThrow { UsernameNotFoundException(username) }
@@ -54,4 +55,13 @@ class AccountServiceImpl(
         .map<AccountDTO> { convert(it) }
         .toList()
   }
+}
+
+private fun Account.extractAuthorities(): Collection<GrantedAuthority> {
+  return securityProfile
+      ?.securityAuthorities
+      ?.map { it.authority }
+      ?.mapNotNull { it?.name }
+      ?.map { SimpleGrantedAuthority(it) }
+      ?: emptyList()
 }

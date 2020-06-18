@@ -28,7 +28,7 @@ interface BaseRepository<T : DomainObject<K>, K : Serializable> : JpaRepository<
   override fun findAll(sort: Sort): MutableList<T>
 
   @Transactional(readOnly = true)
-  @Query("SELECT e FROM #{#entityName} e WHERE e.id in :ids AND e.isDeleted = false")
+  @Query("SELECT e FROM #{#entityName} e WHERE e.id IN :ids AND e.isDeleted = false")
   override fun findAllById(ids: Iterable<K>): MutableList<T>
 
   @Transactional(readOnly = true)
@@ -63,11 +63,22 @@ interface BaseRepository<T : DomainObject<K>, K : Serializable> : JpaRepository<
   @JvmDefault
   @Transactional
   override fun deleteAll(entities: Iterable<T>) {
-    entities.forEach(this::delete)
+    deleteAllById(entities.mapNotNull { it.id })
+  }
+
+  @JvmDefault
+  @Transactional
+  override fun deleteInBatch(entities: Iterable<T>) {
+    deleteAllById(entities.mapNotNull { it.id })
   }
 
   @Modifying
   @Transactional
   @Query("UPDATE #{#entityName} e SET e.isDeleted = true")
   override fun deleteAll()
+
+  @Modifying
+  @Transactional
+  @Query("UPDATE #{#entityName} e SET e.isDeleted = true WHERE e.id IN :ids")
+  fun deleteAllById(ids: Iterable<K>)
 }

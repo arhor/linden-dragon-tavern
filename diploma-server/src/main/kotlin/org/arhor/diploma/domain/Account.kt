@@ -4,7 +4,7 @@ import org.arhor.diploma.domain.core.AuditableDomainObject
 import javax.persistence.*
 
 @Entity
-@Table(name = "Account")
+@Table(name = "accounts")
 class Account : AuditableDomainObject<Long>() {
 
   @Column(unique = true, nullable = false, length = 30)
@@ -23,11 +23,9 @@ class Account : AuditableDomainObject<Long>() {
   var lastName: String? = null
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "account_id", nullable = false)
+  @JoinColumn(name = "profile_id")
   var securityProfile: SecurityProfile? = null
 
-  @Column(length = 10)
-  var role: String? = null
   override fun equals(other: Any?): Boolean {
     if (this === other) return true
     if (other !is Account) return false
@@ -38,7 +36,6 @@ class Account : AuditableDomainObject<Long>() {
     if (email != other.email) return false
     if (firstName != other.firstName) return false
     if (lastName != other.lastName) return false
-    if (role != other.role) return false
 
     return true
   }
@@ -50,12 +47,11 @@ class Account : AuditableDomainObject<Long>() {
     result = 31 * result + (email?.hashCode() ?: 0)
     result = 31 * result + (firstName?.hashCode() ?: 0)
     result = 31 * result + (lastName?.hashCode() ?: 0)
-    result = 31 * result + (role?.hashCode() ?: 0)
     return result
   }
 
   override fun toString(): String {
-    return "Account(username=$username, password=$password, email=$email, firstName=$firstName, lastName=$lastName, role=$role)"
+    return "Account(username=$username, password=$password, email=$email, firstName=$firstName, lastName=$lastName)"
   }
 
 

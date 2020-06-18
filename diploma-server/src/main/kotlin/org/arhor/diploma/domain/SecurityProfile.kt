@@ -1,21 +1,21 @@
 package org.arhor.diploma.domain
 
+import org.arhor.diploma.domain.core.AuditableDomainObject
 import org.arhor.diploma.domain.core.DomainObject
 import javax.persistence.*
 
 
 @Entity
-@Table(name = "SecurityProfile")
-class SecurityProfile: DomainObject<Long>() {
+@Table(name = "security_profiles")
+class SecurityProfile: AuditableDomainObject<Long>() {
 
-  @OneToMany(
-      mappedBy = "certificate",
-      fetch = FetchType.LAZY,
-      cascade = [CascadeType.ALL],
-      orphanRemoval = true)
-  var accounts: List<Account> = listOf()
+  @Column(unique = true, nullable = false)
+  var name: String? = null
 
+  @OneToMany(mappedBy = "securityProfile", cascade = [CascadeType.ALL], orphanRemoval = true)
+  var accounts: List<Account>? = null
 
-  var authorities : List<String> = listOf()
+  @OneToMany(mappedBy = "securityProfile", cascade = [CascadeType.ALL], orphanRemoval = true)
+  var securityAuthorities: List<SecurityProfileAuthority>? = null
 
 }
