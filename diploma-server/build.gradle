@@ -1,22 +1,22 @@
 plugins {
-    id 'org.springframework.boot'
-    id 'io.spring.dependency-management'
-    id 'org.jetbrains.kotlin.jvm'
-    id 'org.jetbrains.kotlin.plugin.noarg'
-    id 'org.jetbrains.kotlin.plugin.spring'
-    id 'org.jetbrains.kotlin.plugin.jpa'
+    id "org.springframework.boot"
+    id "io.spring.dependency-management"
+    id "org.jetbrains.kotlin.jvm"
+    id "org.jetbrains.kotlin.plugin.noarg"
+    id "org.jetbrains.kotlin.plugin.spring"
+    id "org.jetbrains.kotlin.plugin.jpa"
 }
 
-group = 'org.arhor'
-version = '0.0.1-SNAPSHOT'
-description = 'diploma-server'
+group = "org.arhor"
+version = "0.0.1-SNAPSHOT"
+description = "diploma-server"
 
 java.sourceCompatibility = JavaVersion.VERSION_11
 java.targetCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/milestone' }
+    maven { url "https://repo.spring.io/milestone" }
 }
 
 configurations {
@@ -25,61 +25,63 @@ configurations {
         extendsFrom developmentOnly
     }
     implementation {
-        exclude module: 'spring-boot-starter-tomcat'
+        exclude module: "spring-boot-starter-tomcat"
     }
     testImplementation {
-        exclude module: 'junit-vintage-engine'
+        exclude module: "junit-vintage-engine"
     }
 }
 
 dependencies {
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
-    implementation 'org.jetbrains.kotlin:kotlin-reflect'
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+    runtimeOnly "org.postgresql:postgresql"
 
-    implementation 'com.hazelcast:hazelcast'
-    implementation 'com.hazelcast:hazelcast-hibernate53'
-    implementation 'com.hazelcast:hazelcast-spring'
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-    implementation 'org.postgresql:postgresql'
-    implementation 'org.modelmapper:modelmapper:2.3.7'
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
 
-    implementation 'org.springframework.boot:spring-boot-starter-cache'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-jetty'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-//    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
 
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation "com.hazelcast:hazelcast"
+    implementation "com.hazelcast:hazelcast-hibernate53"
+    implementation "com.hazelcast:hazelcast-spring"
+    implementation "io.jsonwebtoken:jjwt:${jsonwebtoken_version}"
+    implementation "org.modelmapper:modelmapper:${modelmapper_version}"
 
-    testImplementation 'org.flywaydb:flyway-core'
-    testImplementation 'org.testcontainers:postgresql:1.14.0'
-    testImplementation 'org.testcontainers:junit-jupiter:1.14.0'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+    implementation "org.springframework.security:spring-security-config"
+    implementation "org.springframework.security:spring-security-data"
+    implementation "org.springframework.security:spring-security-web"
+    implementation "org.springframework.security:spring-security-messaging"
+
+    implementation "org.springframework.boot:spring-boot-starter-cache"
+    implementation "org.springframework.boot:spring-boot-starter-data-jpa"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-undertow"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-websocket"
+
+    testImplementation "org.flywaydb:flyway-core"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.security:spring-security-test"
+    testImplementation "org.testcontainers:postgresql:${testcontainers_version}"
+    testImplementation "org.testcontainers:junit-jupiter:${testcontainers_version}"
 }
 
 compileKotlin {
     kotlinOptions {
-        freeCompilerArgs = ['-Xjsr305=strict', '-Xjvm-default=enable']
+        freeCompilerArgs = ["-Xjsr305=strict", "-Xjvm-default=enable"]
         jvmTarget = JavaVersion.VERSION_11
     }
 }
 
-springBoot {
-    mainClassName = 'org.arhor.diploma.DiplomaApp'
-}
-
 bootRun {
     jvmArgs += [
-            '--add-modules=java.se',
-            '--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED',
-            '--add-opens=java.base/java.lang=ALL-UNNAMED',
-            '--add-opens=java.base/java.nio=ALL-UNNAMED',
-            '--add-opens=java.base/sun.nio.ch=ALL-UNNAMED',
-            '--add-opens=java.management/sun.management=ALL-UNNAMED',
-            '--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED'
+            "--add-modules=java.se",
+            "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
+            "--add-opens=java.base/java.lang=ALL-UNNAMED",
+            "--add-opens=java.base/java.nio=ALL-UNNAMED",
+            "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+            "--add-opens=java.management/sun.management=ALL-UNNAMED",
+            "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
     ]
 }
 
@@ -87,13 +89,13 @@ test {
     useJUnitPlatform()
 
     testLogging {
-        events 'FAILED', 'SKIPPED'
+        events "FAILED", "SKIPPED"
     }
 }
 
-task clientCopy(type: Copy, dependsOn: ':diploma-client:clientBuild') {
-    from '../diploma-client/build/'
-    into 'build/resources/main/static/'
+task clientCopy(type: Copy, dependsOn: ":diploma-client:clientBuild") {
+    from "../diploma-client/build/"
+    into "build/resources/main/static/"
 }
 
-//processResources.dependsOn(clientCopy)
+processResources.dependsOn(clientCopy)
