@@ -4,7 +4,7 @@ import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
 import org.arhor.diploma.util.ACCOUNT_EDIT
 import org.arhor.diploma.util.ACCOUNT_VIEW
-import org.arhor.diploma.util.PageUtils.bound
+import org.arhor.diploma.util.bound
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType

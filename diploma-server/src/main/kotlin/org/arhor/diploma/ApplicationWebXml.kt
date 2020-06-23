@@ -1,5 +1,6 @@
 package org.arhor.diploma
 
+import org.arhor.diploma.util.addDefaultProfile
 import org.springframework.boot.builder.SpringApplicationBuilder
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 
@@ -11,7 +12,7 @@ open class ApplicationWebXml : SpringBootServletInitializer() {
 
   override fun configure(builder: SpringApplicationBuilder): SpringApplicationBuilder {
     // set a default to use when no profile is configured.
-    DefaultProfileUtil.addDefaultProfile(builder.application())
+    addDefaultProfile(builder.application())
     return builder.sources(DiplomaApp::class.java)
   }
 }

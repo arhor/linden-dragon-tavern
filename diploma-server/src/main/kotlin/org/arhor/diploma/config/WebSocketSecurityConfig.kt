@@ -1,6 +1,6 @@
 package org.arhor.diploma.config
 
-import org.arhor.diploma.BasicAuthorities
+import org.arhor.diploma.util.BasicAuthorities
 import org.springframework.context.annotation.Configuration
 import org.springframework.messaging.simp.SimpMessageType
 import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry

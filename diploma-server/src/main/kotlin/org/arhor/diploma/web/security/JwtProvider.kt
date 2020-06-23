@@ -3,7 +3,7 @@ package org.arhor.diploma.web.security
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ArrayNode
 import io.jsonwebtoken.*
-import org.arhor.diploma.util.CustomCollectors.toArrayNode
+import org.arhor.diploma.util.toArrayNode
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value

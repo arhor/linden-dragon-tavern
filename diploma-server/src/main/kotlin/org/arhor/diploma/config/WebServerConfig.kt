@@ -1,6 +1,6 @@
 package org.arhor.diploma.config
 
-import org.arhor.diploma.CustomProperties
+import org.arhor.diploma.util.CustomProperties
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.web.server.MimeMappings

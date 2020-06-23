@@ -1,18 +1,14 @@
 package org.arhor.diploma.config
 
-import org.arhor.diploma.BasicAuthorities.ADMIN
-import org.arhor.diploma.BasicAuthorities.ANONYMOUS
-import org.arhor.diploma.CustomProperties
+import org.arhor.diploma.util.BasicAuthorities.ANONYMOUS
+import org.arhor.diploma.util.CustomProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.server.ServerHttpRequest
 import org.springframework.http.server.ServerHttpResponse
 import org.springframework.http.server.ServletServerHttpRequest
-import org.springframework.messaging.simp.SimpMessageType
 import org.springframework.messaging.simp.config.MessageBrokerRegistry
 import org.springframework.security.authentication.AnonymousAuthenticationToken
-import org.springframework.security.config.annotation.web.messaging.MessageSecurityMetadataSourceRegistry
-import org.springframework.security.config.annotation.web.socket.AbstractSecurityWebSocketMessageBrokerConfigurer
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.web.socket.WebSocketHandler
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker

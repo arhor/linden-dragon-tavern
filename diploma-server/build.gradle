@@ -73,16 +73,22 @@ compileKotlin {
     }
 }
 
+springBoot {
+    mainClassName = "org.arhor.diploma.DiplomaApp"
+}
+
+def openAccessOnJDK9 = [
+        "--add-modules=java.se",
+        "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
+        "--add-opens=java.base/java.lang=ALL-UNNAMED",
+        "--add-opens=java.base/java.nio=ALL-UNNAMED",
+        "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
+        "--add-opens=java.management/sun.management=ALL-UNNAMED",
+        "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
+]
+
 bootRun {
-    jvmArgs += [
-            "--add-modules=java.se",
-            "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
-            "--add-opens=java.base/java.lang=ALL-UNNAMED",
-            "--add-opens=java.base/java.nio=ALL-UNNAMED",
-            "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
-            "--add-opens=java.management/sun.management=ALL-UNNAMED",
-            "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
-    ]
+    jvmArgs += openAccessOnJDK9
 }
 
 test {
@@ -91,6 +97,8 @@ test {
     testLogging {
         events "FAILED", "SKIPPED"
     }
+
+    jvmArgs += openAccessOnJDK9
 }
 
 task clientCopy(type: Copy, dependsOn: ":diploma-client:clientBuild") {
