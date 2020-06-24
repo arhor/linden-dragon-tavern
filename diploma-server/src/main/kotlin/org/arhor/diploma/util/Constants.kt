@@ -2,6 +2,10 @@ package org.arhor.diploma.util
 
 object Common {
   const val SERIAL_VERSION = 1L
+
+  // Because of Hibernate entities with generated ID should have fixed hashCode value
+  const val STATIC_HASH_CODE = 31
+
   // Regex for acceptable logins
   const val LOGIN_REGEX = "^(?>[a-zA-Z0-9!$&*+=?^_`{|}~.-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*)|(?>[_.@A-Za-z0-9-]+)$"
 
@@ -21,4 +25,25 @@ object SpringProfile {
   const val SWAGGER = "swagger"
   const val NO_LIQUIBASE = "no-liquibase"
   const val K8S = "k8s"
+  const val HAZELCAST = "hazelcast"
+}
+
+object Cache {
+
+  object Names {
+    const val ACCOUNT = "dp_cache_account"
+    const val ACCOUNT_BY_ID = "dp_account_cache_by_id"
+    const val ACCOUNT_BY_USERNAME = "dp_account_cache_by_username"
+  }
+
+  object Hazelcast {
+    const val TIME_TO_LIVE_SECONDS = 3600
+    const val BACKUP_COUNT = 1
+
+    object ManagementCenter {
+      const val ENABLED = false
+      const val URL = ""
+      const val UPDATE_INTERVAL = 3
+    }
+  }
 }

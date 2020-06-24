@@ -1,10 +1,14 @@
 package org.arhor.diploma.domain
 
 import org.arhor.diploma.domain.core.AuditableDomainObject
+import org.arhor.diploma.util.Common.STATIC_HASH_CODE
+import org.hibernate.annotations.Cache
+import org.hibernate.annotations.CacheConcurrencyStrategy
 import javax.persistence.*
 
 @Entity
 @Table(name = "accounts")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 class Account : AuditableDomainObject<Long>() {
 
   @Column(unique = true, nullable = false, length = 30)
@@ -41,13 +45,7 @@ class Account : AuditableDomainObject<Long>() {
   }
 
   override fun hashCode(): Int {
-    var result = super.hashCode()
-    result = 31 * result + (username?.hashCode() ?: 0)
-    result = 31 * result + (password?.hashCode() ?: 0)
-    result = 31 * result + (email?.hashCode() ?: 0)
-    result = 31 * result + (firstName?.hashCode() ?: 0)
-    result = 31 * result + (lastName?.hashCode() ?: 0)
-    return result
+    return STATIC_HASH_CODE
   }
 
   override fun toString(): String {

@@ -1,12 +1,16 @@
 package org.arhor.diploma.domain
 
 import org.arhor.diploma.domain.core.DomainObject
+import org.arhor.diploma.util.Common.STATIC_HASH_CODE
+import org.hibernate.annotations.Cache
+import org.hibernate.annotations.CacheConcurrencyStrategy
 import javax.persistence.Column
 import javax.persistence.Entity
 import javax.persistence.Table
 
 @Entity
 @Table(name = "authorities")
+@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 class Authority: DomainObject<Long>() {
 
   @Column(unique = true, nullable = false)
@@ -21,9 +25,7 @@ class Authority: DomainObject<Long>() {
   }
 
   override fun hashCode(): Int {
-    var result = super.hashCode()
-    result = 31 * result + (name?.hashCode() ?: 0)
-    return result
+    return STATIC_HASH_CODE
   }
 
   override fun toString(): String {

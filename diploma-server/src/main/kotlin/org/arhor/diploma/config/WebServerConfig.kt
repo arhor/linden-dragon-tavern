@@ -1,6 +1,6 @@
 package org.arhor.diploma.config
 
-import org.arhor.diploma.util.CustomProperties
+import org.arhor.diploma.config.properties.CustomProperties
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.web.server.MimeMappings
@@ -28,11 +28,6 @@ class WebServerConfig(
     private val env: Environment,
     private val props: CustomProperties
 ): ServletContextInitializer, WebServerFactoryCustomizer<WebServerFactory> {
-
-  companion object {
-    @JvmStatic
-    private val log: Logger = LoggerFactory.getLogger(WebServerConfig::class.java)
-  }
 
   @Throws(ServletException::class)
   override fun onStartup(servletContext: ServletContext?) {
@@ -90,13 +85,11 @@ class WebServerConfig(
     val extractedPath = fullExecutablePath.replace(rootPath, "")
     val extractionEndIndex = extractedPath.indexOf("build/")
 
-    return if (extractionEndIndex <= 0) {
-      ""
-    } else {
-      extractedPath.substring(0, extractionEndIndex)
+    return when {
+      extractionEndIndex <= 0 -> ""
+      else -> extractedPath.substring(0, extractionEndIndex)
     }
   }
-
 
   @Bean
   fun corsFilter(): CorsFilter? {
@@ -111,5 +104,10 @@ class WebServerConfig(
     }
 
     return CorsFilter(source)
+  }
+
+  companion object {
+    @JvmStatic
+    private val log: Logger = LoggerFactory.getLogger(WebServerConfig::class.java)
   }
 }

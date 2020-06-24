@@ -1,5 +1,6 @@
-package org.arhor.diploma.util
+package org.arhor.diploma.config.properties
 
+import org.arhor.diploma.util.Cache
 import org.springframework.stereotype.Component
 import org.springframework.web.cors.CorsConfiguration
 

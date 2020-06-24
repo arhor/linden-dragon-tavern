@@ -1,18 +1,17 @@
 package org.arhor.diploma.config
 
 import org.arhor.diploma.util.Converter
+import org.arhor.diploma.util.SpringProfile
 import org.arhor.diploma.web.filter.CustomCsrfFilter
 import org.modelmapper.ModelMapper
-import org.modelmapper.config.Configuration as MapperConfig
 import org.modelmapper.convention.MatchingStrategies
 import org.springframework.boot.web.servlet.FilterRegistrationBean
-import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
-import org.springframework.context.support.ResourceBundleMessageSource
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.modelmapper.config.Configuration as MapperConfig
 
 @Configuration
 class BeansConfig {
@@ -33,12 +32,7 @@ class BeansConfig {
   }
 
   @Bean
-  fun messageSource() = ResourceBundleMessageSource().apply {
-    setBasename("messages")
-  }
-
-  @Bean
-  @Profile("!dev")
+  @Profile("!${SpringProfile.DEVELOPMENT}")
   fun csrfFilter(csrfFilter: CustomCsrfFilter) = FilterRegistrationBean<CustomCsrfFilter>().apply {
     order = 1
     filter = csrfFilter

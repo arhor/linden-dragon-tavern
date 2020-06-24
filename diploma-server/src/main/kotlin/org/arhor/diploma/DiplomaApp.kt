@@ -1,6 +1,9 @@
 package org.arhor.diploma
 
-import org.arhor.diploma.config.ApplicationProperties
+import org.arhor.diploma.config.properties.ApplicationProperties
+import org.arhor.diploma.startup.Failure
+import org.arhor.diploma.startup.StartupVerifier
+import org.arhor.diploma.startup.Success
 import org.arhor.diploma.util.SpringProfile
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -8,53 +11,21 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.core.env.Environment
+import java.net.InetAddress
+import java.net.UnknownHostException
+import java.text.DecimalFormat
 import javax.annotation.PostConstruct
+import kotlin.system.exitProcess
 
 @SpringBootApplication
 @EnableConfigurationProperties(ApplicationProperties::class)
-class DiplomaApp(private val env: Environment) {
-
-  companion object {
-    const val MISCONFIGURED_MSG = "You have misconfigured your application! " +
-        "It should not run with both the '{}' and '{}' profiles at the same time."
-
-    @JvmStatic
-    private val log: Logger = LoggerFactory.getLogger(DiplomaApp::class.java)
-
-    @JvmStatic
-    fun main(args: Array<String>) {
-      SpringApplication.run(DiplomaApp::class.java, *args)
-    }
-
-//    @JvmStatic
-//    fun logApplicationStartup(env: Environment) {
-//      var protocol = "http"
-//      if (env.getProperty("server.ssl.key-store") != null) {
-//        protocol = "https"
-//      }
-//      val serverPort = env.getProperty("server.port")
-//      var contextPath = env.getProperty("server.servlet.context-path") ?: ""
-//
-//      if (contextPath.isBlank()) {
-//        contextPath = "/"
-//      }
-//      var hostAddress: String? = "localhost"
-//      try {
-//        hostAddress = InetAddress.getLocalHost().hostAddress
-//      } catch (e: UnknownHostException) {
-//        log.warn("The host name could not be determined, using `localhost` as fallback")
-//      }
-//      log.info("""
-//----------------------------------------------------------
-//  Application ${env.getProperty("spring.application.name")} is running! Access URLs:
-//  Local: 		  ${protocol}://localhost:${serverPort}${contextPath}
-//  External: 	${protocol}://${hostAddress}:${serverPort}${contextPath}
-//  Profile(s): ${env.activeProfiles}
-//----------------------------------------------------------""")
-//    }
-  }
+class DiplomaApp(
+    private val env: Environment,
+    private val verifiers: List<StartupVerifier>
+) {
 
   /**
    * Initializes DiplomaApp.
@@ -75,13 +46,75 @@ class DiplomaApp(private val env: Environment) {
 
   @Bean
   fun run() = CommandLineRunner {
-    for (arg in it) {
-      println(arg)
+    verifyStartUp()
+    logSuccessfulStartup()
+  }
+
+  private fun verifyStartUp() {
+    val verifiersCount = verifiers.size
+
+    if (verifiersCount <= 0) {
+      return
+    }
+
+    log.info("Starting app verification")
+    log.info("Found [${verifiersCount}] verifiers to run")
+
+    val width = DecimalFormat("0".repeat(verifiersCount.toString().length))
+
+    var startupFailed = false
+
+    for (i in verifiers.indices) {
+      when (val result = verifiers[i].verify()) {
+        is Success -> log.info("${width.format(i)}: ${result.message}")
+        is Failure -> {
+          log.error(result.message)
+          startupFailed = true
+        }
+      }
+    }
+
+    if (startupFailed) {
+      exitProcess(0)
     }
   }
 
-  private fun wrongConfigMessage(profile1: String, profile2: String) = """
-You have misconfigured your application!
-It should not run with both the '$profile1' and '$profile2' profiles at the same time.
-"""
+  private fun logSuccessfulStartup() {
+    val appName = env.getProperty("spring.application.name")
+    val serverPort = env.getProperty("server.port")
+    val contextPath = env.getProperty("server.servlet.context-path")?.takeIf { it.isNotBlank() } ?: "/"
+
+    val protocol = when (env.getProperty("server.ssl.key-store")) {
+      null -> "http"
+      else -> "https"
+    }
+
+    val hostAddress = try {
+      InetAddress.getLocalHost().hostAddress
+    } catch (e: UnknownHostException) {
+      log.warn("The host name could not be determined, using `localhost` as fallback")
+      "localhost"
+    }
+
+    log.info("""
+--------------------------------------------------------------------------------
+  Application `${appName}` is running! Access URLs:
+  - Local:      ${protocol}://localhost:${serverPort}${contextPath}
+  - External:   ${protocol}://${hostAddress}:${serverPort}${contextPath}
+  - Profile(s): ${env.activeProfiles.asList()}
+--------------------------------------------------------------------------------"""
+    )
+  }
+
+  companion object {
+    const val MISCONFIGURED_MSG = "Profiles '{}' and '{}' should not run both at the same time!"
+
+    @JvmStatic
+    private val log: Logger = LoggerFactory.getLogger(DiplomaApp::class.java)
+
+    @JvmStatic
+    fun main(args: Array<String>) {
+      runApplication<DiplomaApp>(*args)
+    }
+  }
 }

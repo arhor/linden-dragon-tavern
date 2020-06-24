@@ -39,7 +39,14 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-reflect"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+
+    implementation "com.fasterxml.jackson.core:jackson-databind"
+    implementation "com.fasterxml.jackson.core:jackson-annotations"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
+    implementation "com.fasterxml.jackson.module:jackson-module-jaxb-annotations"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-hppc"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310"
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-hibernate5"
 
     implementation "com.hazelcast:hazelcast"
     implementation "com.hazelcast:hazelcast-hibernate53"
@@ -52,6 +59,7 @@ dependencies {
     implementation "org.springframework.security:spring-security-web"
     implementation "org.springframework.security:spring-security-messaging"
 
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-cache"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.springframework.boot:spring-boot-starter-security"
@@ -87,8 +95,14 @@ def openAccessOnJDK9 = [
         "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
 ]
 
+def springProfiles = "-Dspring.profiles.active=" + [
+        "default",
+//        "hazelcast",
+].join(",")
+
 bootRun {
     jvmArgs += openAccessOnJDK9
+    jvmArgs += springProfiles
 }
 
 test {
@@ -106,4 +120,4 @@ task clientCopy(type: Copy, dependsOn: ":diploma-client:clientBuild") {
     into "build/resources/main/static/"
 }
 
-processResources.dependsOn(clientCopy)
+//processResources.dependsOn(clientCopy)

@@ -1,4 +1,4 @@
-package org.arhor.diploma.config
+package org.arhor.diploma.config.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 

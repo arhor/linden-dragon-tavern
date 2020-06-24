@@ -1,7 +1,7 @@
 package org.arhor.diploma.config
 
+import org.arhor.diploma.config.properties.CustomProperties
 import org.arhor.diploma.util.BasicAuthorities.ANONYMOUS
-import org.arhor.diploma.util.CustomProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.server.ServerHttpRequest

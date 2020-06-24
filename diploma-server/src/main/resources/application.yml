@@ -66,12 +66,6 @@ spring:
       hibernate.order_updates: true
       hibernate.query.fail_on_pagination_over_collection_fetch: true
       hibernate.query.in_clause_parameter_padding: true
-      hibernate.cache.region.factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
-      hibernate.cache.use_minimal_puts: true
-      hibernate.cache.hazelcast.instance_name: diploma-server
-      hibernate.cache.hazelcast.use_lite_member: true
-      hibernate.cache.use_second_level_cache: true
-      hibernate.cache.use_query_cache: false
 
   messages:
     basename: messages

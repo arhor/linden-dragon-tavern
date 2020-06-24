@@ -26,7 +26,5 @@ class WebSocketSecurityConfig : AbstractSecurityWebSocketMessageBrokerConfigurer
   /**
    * Disables CSRF for web-sockets.
    */
-  override fun sameOriginDisabled(): Boolean {
-    return true
-  }
+  override fun sameOriginDisabled(): Boolean = true
 }

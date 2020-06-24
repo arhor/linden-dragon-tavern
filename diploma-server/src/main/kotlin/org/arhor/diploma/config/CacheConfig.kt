@@ -5,9 +5,10 @@ import com.hazelcast.core.Hazelcast
 import com.hazelcast.core.HazelcastInstance
 import com.hazelcast.spring.cache.HazelcastCacheManager
 import net.bytebuddy.utility.RandomString
-import org.arhor.diploma.util.CustomProperties
+import org.arhor.diploma.config.properties.CustomProperties
+import org.arhor.diploma.util.Cache
 import org.arhor.diploma.util.SpringProfile
-import org.arhor.diploma.repository.Constants
+import org.arhor.diploma.util.SpringProfile.HAZELCAST
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,6 +20,7 @@ import org.springframework.cache.annotation.EnableCaching
 import org.springframework.cache.interceptor.KeyGenerator
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import org.springframework.core.env.Environment
 import org.springframework.core.env.Profiles
 import org.springframework.scheduling.annotation.Scheduled
@@ -43,17 +45,21 @@ class CacheConfig(private val env: Environment) {
 
   @PreDestroy
   fun destroy() {
-    log.info("Closing Cache Manager")
-    Hazelcast.shutdownAll()
+    if (env.activeProfiles.contains(HAZELCAST)) {
+      log.info("Closing Cache Manager")
+      Hazelcast.shutdownAll()
+    }
   }
 
   @Bean
+  @Profile(HAZELCAST)
   fun cacheManager(hazelcastInstance: HazelcastInstance): CacheManager {
     log.debug("Starting HazelcastCacheManager")
     return HazelcastCacheManager(hazelcastInstance)
   }
 
   @Bean
+  @Profile(HAZELCAST)
   fun hazelcastInstance(props: CustomProperties): HazelcastInstance {
     log.debug("Configuring Hazelcast")
 
@@ -137,10 +143,10 @@ class CacheConfig(private val env: Environment) {
   /**
    * Scheduled task to clear account caches every 5 minutes.
    */
-  @CacheEvict(allEntries = true, value = [Constants.CACHE_ACCOUNT])
+  @CacheEvict(allEntries = true, value = [Cache.Names.ACCOUNT])
   @Scheduled(fixedDelay = 5 * 60 * 1000, initialDelay = 500)
   fun accountCacheEvict() {
-    log.info("Flush {} cache(s)", listOf(Constants.CACHE_ACCOUNT))
+    log.info("Flush {} cache(s)", listOf(Cache.Names.ACCOUNT))
   }
 
   private fun initializeDomainMapConfig(props: CustomProperties): MapConfig? {
@@ -160,7 +166,6 @@ class CacheConfig(private val env: Environment) {
       // LFU (Least Frequently Used).
       // NONE is the default.
       evictionPolicy = EvictionPolicy.LRU
-
 
       // Maximum size of the map. When max size is reached,
       // map is evicted based on the policy defined.
