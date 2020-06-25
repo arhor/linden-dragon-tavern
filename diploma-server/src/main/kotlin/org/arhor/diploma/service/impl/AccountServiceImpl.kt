@@ -13,14 +13,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-typealias BaseService = AbstractService<Account, AccountDTO, Long>
-
 @Service
 @Transactional
 class AccountServiceImpl(
     private val repository: AccountRepository,
     converter: Converter
-) : BaseService(converter, repository), AccountService {
+) : AbstractService<Account, AccountDTO, Long>(converter, repository), AccountService {
 
   override fun loadUserByUsername(username: String?): UserDetails {
     return username?.let {
@@ -35,7 +33,7 @@ class AccountServiceImpl(
                 status,
                 status,
                 status,
-                account.extractAuthorities()
+                account.springAuthorities
             )
           }
           .orElseThrow { UsernameNotFoundException(username) }
@@ -47,11 +45,12 @@ class AccountServiceImpl(
   override fun getAccounts(page: Int, size: Int) = getList<AccountDTO>(page, size)
 }
 
-private fun Account.extractAuthorities(): Collection<GrantedAuthority> {
-  return securityProfile
+private inline val Account.springAuthorities: Collection<GrantedAuthority>
+  get() {
+    return securityProfile
       ?.securityAuthorities
-      ?.map { it.authority }
-      ?.mapNotNull { it?.name }
-      ?.map { SimpleGrantedAuthority(it) }
+      ?.map { auth -> auth.authority }
+      ?.mapNotNull { auth -> auth?.name }
+      ?.map { name -> SimpleGrantedAuthority(name) }
       ?: emptyList()
-}
+  }

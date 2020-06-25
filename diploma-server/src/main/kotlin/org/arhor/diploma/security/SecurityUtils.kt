@@ -9,36 +9,39 @@ import org.springframework.security.core.userdetails.UserDetails
  *
  * @return the login of the current user.
  */
-internal fun currentUserLogin(): String? {
-  return SecurityContextHolder.getContext().authentication?.principal
-      ?.let {
-        when (it) {
-          is UserDetails -> it.username
-          is String -> it
-          else -> null
+internal inline val currentUserLogin: String?
+  get() {
+    return SecurityContextHolder.getContext().authentication?.principal
+        ?.let {
+          when (it) {
+            is UserDetails -> it.username
+            is String -> it
+            else -> null
+          }
         }
-      }
-}
+  }
 
 /**
  * Get the JWT of the current user.
  *
  * @return the JWT of the current user.
  */
-internal fun currentUserJWT(): String? {
-  return SecurityContextHolder.getContext().authentication?.credentials
-      ?.takeIf { it is String }
-      ?.let { it as String }
-}
+internal inline val currentUserJWT: String?
+  get() {
+    return SecurityContextHolder.getContext().authentication?.credentials
+        ?.takeIf { it is String }
+        ?.let { it as String }
+  }
 
 /**
  * Check if a user is authenticated.
  *
  * @return true if the user is authenticated, false otherwise.
  */
-internal fun isAuthenticated(): Boolean {
-  return currUserAuthorities().none { BasicAuthorities.ANONYMOUS.role == it }
-}
+internal inline val isAuthenticated: Boolean
+  get() {
+    return currUserAuthorities.none { BasicAuthorities.ANONYMOUS.role == it }
+  }
 
 /**
  * If the current user has a specific authority (security role).
@@ -50,11 +53,12 @@ internal fun isAuthenticated(): Boolean {
  * @return true if the current user has the authority, false otherwise.
  */
 internal fun isCurrentUserInRole(authority: String): Boolean {
-  return currUserAuthorities().any { authority == it }
+  return currUserAuthorities.any { authority == it }
 }
 
-private fun currUserAuthorities(): Collection<String> {
-  return SecurityContextHolder.getContext().authentication?.authorities
-      ?.map { it.authority }
-      ?: emptyList()
-}
+private inline val currUserAuthorities: Collection<String>
+  get() {
+    return SecurityContextHolder.getContext().authentication?.authorities
+        ?.map { it.authority }
+        ?: emptyList()
+  }

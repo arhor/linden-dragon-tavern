@@ -11,6 +11,6 @@ import java.util.*
 @Component
 class SpringSecurityAuditorAware : AuditorAware<String> {
   override fun getCurrentAuditor(): Optional<String> {
-    return Optional.of(currentUserLogin() ?: Common.SYSTEM_ACCOUNT)
+    return Optional.of(currentUserLogin ?: Common.SYSTEM_ACCOUNT)
   }
 }
