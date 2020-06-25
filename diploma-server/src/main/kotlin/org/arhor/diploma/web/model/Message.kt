@@ -9,14 +9,14 @@ data class Message(
     val severity: Severity,
     val code: Int?,
     val text: String?,
-    val details: List<String>?
+    val details: List<Any>?
 )
 
 class MessageBuilder(
     val severity: Severity,
     var code: Int? = null,
     var text: String? = null,
-    var details: List<String>? = null
+    var details: List<Any>? = null
 )
 
 /**

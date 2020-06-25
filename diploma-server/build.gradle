@@ -113,6 +113,7 @@ test {
     }
 
     jvmArgs += openAccessOnJDK9
+    jvmArgs += springProfiles
 }
 
 task clientCopy(type: Copy, dependsOn: ":diploma-client:clientBuild") {
@@ -120,4 +121,4 @@ task clientCopy(type: Copy, dependsOn: ":diploma-client:clientBuild") {
     into "build/resources/main/static/"
 }
 
-//processResources.dependsOn(clientCopy)
+processResources.dependsOn(clientCopy)

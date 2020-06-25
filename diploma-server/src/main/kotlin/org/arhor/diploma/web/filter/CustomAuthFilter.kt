@@ -1,12 +1,11 @@
 package org.arhor.diploma.web.filter
 
 import org.arhor.diploma.service.AccountService
+import org.arhor.diploma.util.createLogger
 import org.arhor.diploma.web.security.TokenProvider
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
@@ -22,7 +21,7 @@ class CustomAuthFilter(
 
   companion object {
     @JvmStatic
-    private val log: Logger = LoggerFactory.getLogger(CustomAuthFilter::class.java)
+    private val log: Logger = createLogger<CustomAuthFilter>()
   }
 
   override fun doFilterInternal(

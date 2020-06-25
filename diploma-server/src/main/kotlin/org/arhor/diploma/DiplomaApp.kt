@@ -1,14 +1,13 @@
 package org.arhor.diploma
 
 import org.arhor.diploma.config.properties.ApplicationProperties
-import org.arhor.diploma.startup.Failure
+import org.arhor.diploma.util.Failure
 import org.arhor.diploma.startup.StartupVerifier
-import org.arhor.diploma.startup.Success
+import org.arhor.diploma.util.Success
 import org.arhor.diploma.util.SpringProfile
+import org.arhor.diploma.util.createLogger
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.boot.CommandLineRunner
-import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
@@ -110,7 +109,7 @@ class DiplomaApp(
     const val MISCONFIGURED_MSG = "Profiles '{}' and '{}' should not run both at the same time!"
 
     @JvmStatic
-    private val log: Logger = LoggerFactory.getLogger(DiplomaApp::class.java)
+    private val log: Logger = createLogger<DiplomaApp>()
 
     @JvmStatic
     fun main(args: Array<String>) {

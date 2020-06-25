@@ -1,5 +1,6 @@
 server:
   port: 8080
+
   servlet:
     session:
       cookie:
@@ -7,6 +8,7 @@ server:
   error:
     whitelabel:
       enabled: false
+
   compression:
     enabled: true
     mime-types:
