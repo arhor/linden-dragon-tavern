@@ -1,6 +1,5 @@
 package org.arhor.diploma.web.api
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.arhor.diploma.web.model.MessageResponse
 import org.arhor.diploma.web.model.messageResponse
 import org.springframework.boot.web.error.ErrorAttributeOptions
@@ -12,9 +11,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.context.request.WebRequest
 
 @RestController
-class CustomErrorController(private val mapper: ObjectMapper, attrs: ErrorAttributes?) : ErrorController {
-
-  private val attributes: ErrorAttributes = attrs ?: throw IllegalArgumentException("ErrorAttributes must not be null")
+class CustomErrorController(private val attributes: ErrorAttributes) : ErrorController {
 
   override fun getErrorPath(): String = ERROR_PATH
 
@@ -24,32 +21,28 @@ class CustomErrorController(private val mapper: ObjectMapper, attrs: ErrorAttrib
       error {
         code = 500
         text = "Unhandled error. Please, create proper exception handler for it."
-        details = listOf(req.errorAttributes)
+        details = listOf(errorAttributes(req))
       }
     }
   }
 
-  private inline val WebRequest.errorAttributes: Map<String, Any?>
-    get() {
-      val includeStackTrace = this.getParameter("trace")?.toLowerCase() != "false"
-
-      val springErrorAttributes = attributes.getErrorAttributes(
-          this,
-          errorOptions {
-            if (includeStackTrace) {
-              including(STACK_TRACE)
-            }
+  private fun errorAttributes(req: WebRequest): Map<String, Any?> {
+    val includeStackTrace = req.getParameter("trace")?.toLowerCase() != "false"
+    val springErrorAttributes = attributes.getErrorAttributes(
+        req,
+        errorOptions {
+          if (includeStackTrace) {
+            including(STACK_TRACE)
           }
-      )
-
-      for ((key, value) in springErrorAttributes) {
-        if (key == "trace" && value is String) {
-          springErrorAttributes[key] = value.split("\n\t").toTypedArray()
         }
+    )
+    for ((key, value) in springErrorAttributes) {
+      if (key == "trace" && value is String) {
+        springErrorAttributes[key] = value.split("\n\t").toTypedArray()
       }
-
-      return springErrorAttributes.toMap()
     }
+    return springErrorAttributes.toMap()
+  }
 
   private inline fun errorOptions(init: ErrorAttributeOptions.() -> Unit): ErrorAttributeOptions {
     val options = ErrorAttributeOptions.defaults()
@@ -58,6 +51,7 @@ class CustomErrorController(private val mapper: ObjectMapper, attrs: ErrorAttrib
   }
 
   companion object {
-    const val ERROR_PATH = "/api/error"
+    private const val DEFAULT_ERROR_PATH = "/api/error"
+    private const val ERROR_PATH = "\${server.error.path:\${error.path:$DEFAULT_ERROR_PATH}}"
   }
 }

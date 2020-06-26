@@ -1,39 +1,39 @@
 plugins {
-    id 'com.github.node-gradle.node'
-    id 'idea'
+    id "com.github.node-gradle.node"
+    id "idea"
 }
 
-group = 'org.arhor'
-version = '0.0.1-SNAPSHOT'
-description = 'diploma-client'
+group = "org.arhor"
+version = "0.0.1-SNAPSHOT"
+description = "diploma-client"
 
 node {
-    version  = '13.11.0'
+    version  = "${node_version}"
     download = true
 }
 
 idea {
     module {
-        excludeDirs += files('node_modules')
+        excludeDirs += files("node_modules")
     }
 }
 
 def jsRootDir = "${project.projectDir}"
 
 task npmAuditFix (type: NpmTask, dependsOn: npmInstall) {
-    description = 'Verify and fix vulnerabilities in dependencies'
+    description = "Verify and fix vulnerabilities in dependencies"
     workingDir = file(jsRootDir)
-    args = ['audit', 'fix']
+    args = ["audit", "fix"]
 }
 
 task clientBuild (type: NpmTask, dependsOn: npmAuditFix) {
-    description = 'Builds production version of the app client'
+    description = "Builds production version of the app client"
     workingDir = file(jsRootDir)
-    args = ['run', 'build']
+    args = ["run", "build"]
 }
 
 task clientStart (type: NpmTask, dependsOn: npmAuditFix) {
-    description = 'Starts client development server'
+    description = "Starts client development server"
     workingDir = file(jsRootDir)
-    args = ['run', 'start']
+    args = ["run", "start"]
 }
