@@ -21,7 +21,6 @@ class JwtProvider(private val objectMapper: ObjectMapper) : TokenProvider<Authen
     @JvmStatic
     private val log: Logger = LoggerFactory.getLogger(JwtProvider::class.java)
 
-    const val TOKEN_TYPE = "Bearer"
     const val FIELD_USERNAME = "username"
     const val FIELD_ROLES = "roles"
     const val DEFAULT_EXPIRE = 600
@@ -37,7 +36,13 @@ class JwtProvider(private val objectMapper: ObjectMapper) : TokenProvider<Authen
 
   @PostConstruct
   fun initialize() {
-    jwtParser = Jwts.parser().setSigningKey(secret ?: UUID.randomUUID().toString())
+    jwtParser = Jwts.parser().setSigningKey(secret ?: generateRandomKey())
+  }
+
+  private fun generateRandomKey(): String {
+    val key = UUID.randomUUID().toString()
+    log.debug("Using randomly generated signing key for JWT: ${key}.")
+    return key
   }
 
   override fun generate(auth: Authentication): String {
@@ -53,7 +58,7 @@ class JwtProvider(private val objectMapper: ObjectMapper) : TokenProvider<Authen
     return asJsonString { principal }
   }
 
-  override fun parse(token: String): String? {
+  override fun parse(token: String): String {
     return token.replace(authTokenType(), "").trim()
   }
 

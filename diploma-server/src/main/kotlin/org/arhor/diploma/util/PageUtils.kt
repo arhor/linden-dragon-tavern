@@ -2,8 +2,8 @@ package org.arhor.diploma.util
 
 import java.util.function.BiFunction
 
-private const val DEFAULT_PAGE = 0
-private const val DEFAULT_SIZE = 200
+const val DEFAULT_PAGE = 0
+const val DEFAULT_SIZE = 200
 
 /**
  * IntBiFunction MUST be returned as BiFunction to be able handle `null` arguments.
@@ -13,7 +13,7 @@ private const val DEFAULT_SIZE = 200
  * @param <T> return type of resulting function
  * @return bounded Function which consumes bounded arguments
  */
-internal inline fun <N : Number, T> bound(crossinline request: (Int, Int) -> T): BiFunction<N, N, T> {
+internal inline fun <N : Number, T> bound(crossinline request: (Int?, Int?) -> T): BiFunction<N, N, T> {
   return BiFunction { p, s ->
     request(boundPage(p), boundSize(s))
   }

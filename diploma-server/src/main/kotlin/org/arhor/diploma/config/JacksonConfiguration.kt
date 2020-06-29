@@ -1,6 +1,5 @@
 package org.arhor.diploma.config
 
-import com.fasterxml.jackson.datatype.hibernate5.Hibernate5Module
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
 import org.springframework.context.annotation.Bean
@@ -14,7 +13,4 @@ class JacksonConfiguration {
 
   @Bean
   fun jdk8TimeModule() = Jdk8Module()
-
-  @Bean
-  fun hibernate5Module() = Hibernate5Module()
 }

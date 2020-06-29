@@ -6,6 +6,9 @@ server:
       cookie:
         http-only: true
   error:
+    # must be declared explicitly in case of providing custom error controller!
+    path: /api/error
+
     whitelabel:
       enabled: false
 

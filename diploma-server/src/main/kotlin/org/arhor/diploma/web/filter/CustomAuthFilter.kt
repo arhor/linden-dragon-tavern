@@ -30,20 +30,20 @@ class CustomAuthFilter(
       next: FilterChain
   ) {
     try {
-      req.getHeader(tokenProvider.authHeaderName())
-          ?.let(tokenProvider::parse)
-          ?.takeIf(tokenProvider::validate)
-          ?.let(tokenProvider::parseUsername)
-          ?.let(accountService::loadUserByUsername)
-          ?.let { user ->
-            val auth =
-                UsernamePasswordAuthenticationToken(
-                    user,
-                    null, // TODO: what should be placed here? token, password or null?
-                    user.authorities)
-            auth.details = WebAuthenticationDetailsSource().buildDetails(req)
-            SecurityContextHolder.getContext().authentication = auth
-          }
+      val authHeader: String? = req.getHeader(tokenProvider.authHeaderName())
+
+      if (authHeader != null) {
+        val token = tokenProvider.parse(authHeader)
+        if (tokenProvider.validate(token)) {
+          tokenProvider.parseUsername(token)
+              ?.let(accountService::loadUserByUsername)
+              ?.let { user -> UsernamePasswordAuthenticationToken(user, token, user.authorities) }
+              ?.let { auth ->
+                auth.details = WebAuthenticationDetailsSource().buildDetails(req)
+                SecurityContextHolder.getContext().authentication = auth
+              }
+        }
+      }
     } catch (e: Exception) {
       log.error("Can NOT set user authentication -> Message: {}", e.message)
     }
