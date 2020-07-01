@@ -12,9 +12,10 @@ class ForwardController {
   fun forward() = "forward:/"
 
   companion object {
-    private const val API_PATH = "/{path:[^\\.]*}"
+    private const val API_PATH = "/**/{path:[^.]*}"
     private const val WEBSOCKET_PATH = "/{path:^(?!websocket).*}/**/{path:[^\\.]*}"
 
-    // "/**/{path:[^.]*}"
+    // "/**/{path:[^.]*}" - initial
+    // "/{path:[^\\.]*}"  - from jHipster
   }
 }

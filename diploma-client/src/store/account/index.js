@@ -3,8 +3,9 @@ export {
   resetState,
   setProp,
   isAuthenticated,
-  getRole,
+  getAuthorities,
   getFirstName,
   getLastName,
   getEmail,
-} from '@/store/user/user.store.js';
+  getAvatarUrl,
+} from '@/store/account/account.store.js';

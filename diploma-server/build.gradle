@@ -34,6 +34,8 @@ configurations {
 }
 
 dependencies {
+    implementation project(":diploma-shared")
+
     runtimeOnly "org.postgresql:postgresql"
 
     developmentOnly "org.springframework.boot:spring-boot-devtools"
@@ -116,4 +118,4 @@ task clientCopy(type: Copy, dependsOn: ":diploma-client:clientBuild") {
     into "build/resources/main/static/"
 }
 
-//processResources.dependsOn(clientCopy)
+processResources.dependsOn(clientCopy)

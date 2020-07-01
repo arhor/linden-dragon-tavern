@@ -18,7 +18,16 @@ idea {
     }
 }
 
+dependencies {
+    project(":diploma-shared")
+}
+
 def jsRootDir = "${project.projectDir}"
+
+task injectSharedLib(type: Copy, dependsOn: ":diploma-shared:build") {
+    from "../diploma-shared/build/compiled-js/"
+    into "src/lib/"
+}
 
 task npmAuditFix (type: NpmTask, dependsOn: npmInstall) {
     description = "Verify and fix vulnerabilities in dependencies"
@@ -26,7 +35,7 @@ task npmAuditFix (type: NpmTask, dependsOn: npmInstall) {
     args = ["audit", "fix"]
 }
 
-task clientBuild (type: NpmTask, dependsOn: npmAuditFix) {
+task clientBuild (type: NpmTask, dependsOn: [npmAuditFix, injectSharedLib]) {
     description = "Builds production version of the app client"
     workingDir = file(jsRootDir)
     args = ["run", "build"]
