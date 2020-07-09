@@ -47,3 +47,7 @@ object Cache {
     }
   }
 }
+
+object JWT {
+  const val EXPIRE_SECONDS = 600
+}

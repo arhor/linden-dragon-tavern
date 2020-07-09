@@ -1,10 +1,9 @@
 package org.arhor.diploma
 
 import org.arhor.diploma.config.properties.ApplicationProperties
-import org.arhor.diploma.util.Failure
 import org.arhor.diploma.startup.StartupVerifier
+import org.arhor.diploma.util.Failure
 import org.arhor.diploma.util.Success
-import org.arhor.diploma.util.SpringProfile
 import org.arhor.diploma.util.createLogger
 import org.slf4j.Logger
 import org.springframework.boot.CommandLineRunner
@@ -26,59 +25,42 @@ class DiplomaApp(
     private val verifiers: List<StartupVerifier>
 ) {
 
-  /**
-   * Initializes DiplomaApp.
-   *
-   * Spring profiles can be configured with a program argument --spring.profiles.active=your-active-profile
-   */
-  @PostConstruct
-  fun initApplication() {
-    val isDev = env.activeProfiles.contains(SpringProfile.DEVELOPMENT)
+  companion object {
+    @JvmStatic
+    private val log: Logger = createLogger<DiplomaApp>()
 
-    if (isDev && env.activeProfiles.contains(SpringProfile.PRODUCTION)) {
-      log.error(MISCONFIGURED_MSG, SpringProfile.DEVELOPMENT, SpringProfile.PRODUCTION)
+    @JvmStatic
+    fun main(args: Array<String>) {
+      runApplication<DiplomaApp>(*args)
     }
-    if (isDev && env.activeProfiles.contains(SpringProfile.CLOUD)) {
-      log.error(MISCONFIGURED_MSG, SpringProfile.DEVELOPMENT, SpringProfile.CLOUD)
+  }
+
+  @PostConstruct
+  fun verifyStartup() {
+    log.info("Starting app verification")
+    log.info("Found [${verifiers.size}] verifiers to run")
+
+    val width = DecimalFormat("0".repeat(verifiers.size.toString().length))
+
+    val success = verifiers.sorted().mapIndexed { i, verifier ->
+      val result = verifier.verify()
+      when (result) {
+        is Success -> log.info("${width.format(i)}: ${result.value}")
+        is Failure -> log.error("${width.format(i)}: ${result.error.message}")
+      }
+      result
+    }.all { it is Success }
+
+    if (!success) {
+      log.error("An error occurred during startup verification")
+      exitProcess(0)
     }
+
+    log.info("App verification finished successfully")
   }
 
   @Bean
   fun run() = CommandLineRunner {
-    verifyStartUp()
-    logSuccessfulStartup()
-  }
-
-  private fun verifyStartUp() {
-    val verifiersCount = verifiers.size
-
-    if (verifiersCount <= 0) {
-      return
-    }
-
-    log.info("Starting app verification")
-    log.info("Found [${verifiersCount}] verifiers to run")
-
-    val width = DecimalFormat("0".repeat(verifiersCount.toString().length))
-
-    var startupFailed = false
-
-    for (i in verifiers.indices) {
-      when (val result = verifiers[i].verify()) {
-        is Success -> log.info("${width.format(i)}: ${result.message}")
-        is Failure -> {
-          log.error(result.message)
-          startupFailed = true
-        }
-      }
-    }
-
-    if (startupFailed) {
-      exitProcess(0)
-    }
-  }
-
-  private fun logSuccessfulStartup() {
     val appName = env.getProperty("spring.application.name")
     val serverPort = env.getProperty("server.port")
     val contextPath = env.getProperty("server.servlet.context-path")?.takeIf { it.isNotBlank() } ?: "/"
@@ -97,23 +79,11 @@ class DiplomaApp(
 
     log.info("""
 --------------------------------------------------------------------------------
-  Application `${appName}` is running! Access URLs:
-  - Local:      ${protocol}://localhost:${serverPort}${contextPath}
-  - External:   ${protocol}://${hostAddress}:${serverPort}${contextPath}
-  - Profile(s): ${env.activeProfiles.asList()}
+    Application `${appName}` is running! Access URLs:
+    - Local:      ${protocol}://localhost:${serverPort}${contextPath}
+    - External:   ${protocol}://${hostAddress}:${serverPort}${contextPath}
+    - Profile(s): ${env.activeProfiles.asList()}
 --------------------------------------------------------------------------------"""
     )
-  }
-
-  companion object {
-    const val MISCONFIGURED_MSG = "Profiles '{}' and '{}' should not run both at the same time!"
-
-    @JvmStatic
-    private val log: Logger = createLogger<DiplomaApp>()
-
-    @JvmStatic
-    fun main(args: Array<String>) {
-      runApplication<DiplomaApp>(*args)
-    }
   }
 }

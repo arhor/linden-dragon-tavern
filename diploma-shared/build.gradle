@@ -6,10 +6,6 @@ group = "org.arhor"
 version = "0.0.1-SNAPSHOT"
 description = "diploma-shared"
 
-repositories {
-    mavenCentral()
-}
-
 kotlin {
 
     jvm {

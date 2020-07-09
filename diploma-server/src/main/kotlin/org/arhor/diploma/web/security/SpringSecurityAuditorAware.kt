@@ -1,6 +1,7 @@
-package org.arhor.diploma.security
+package org.arhor.diploma.web.security
 
 import org.arhor.diploma.util.Common
+import org.arhor.diploma.web.security.currentUserLogin
 import org.springframework.data.domain.AuditorAware
 import org.springframework.stereotype.Component
 import java.util.*

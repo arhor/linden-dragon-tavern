@@ -2,8 +2,14 @@ package org.arhor.diploma.startup
 
 import org.arhor.diploma.util.ActionResult
 
-interface StartupVerifier {
+interface StartupVerifier : Comparable<StartupVerifier> {
 
-  fun verify(): ActionResult
+  val order: Int
 
+  fun verify(): ActionResult<String>
+
+  @JvmDefault
+  override operator fun compareTo(other: StartupVerifier): Int {
+    return order.compareTo(other.order)
+  }
 }

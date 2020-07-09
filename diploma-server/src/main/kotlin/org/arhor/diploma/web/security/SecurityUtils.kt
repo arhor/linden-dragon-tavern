@@ -1,4 +1,4 @@
-package org.arhor.diploma.security
+package org.arhor.diploma.web.security
 
 import org.arhor.diploma.util.BasicAuthorities
 import org.springframework.security.core.context.SecurityContextHolder

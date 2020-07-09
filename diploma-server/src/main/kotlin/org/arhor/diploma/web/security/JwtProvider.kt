@@ -12,10 +12,13 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import java.util.*
-import javax.annotation.PostConstruct
 
 @Component
-class JwtProvider(private val objectMapper: ObjectMapper) : TokenProvider<Authentication> {
+class JwtProvider(
+    private val objectMapper: ObjectMapper
+) : TokenProvider<Authentication> {
+
+  private val jwtParser: JwtParser by lazy(LazyThreadSafetyMode.NONE) { Jwts.parser().setSigningKey(secret ?: generateRandomKey()) }
 
   companion object {
     @JvmStatic
@@ -31,13 +34,6 @@ class JwtProvider(private val objectMapper: ObjectMapper) : TokenProvider<Authen
 
   @Value("\${security.jwt.expire}")
   var expire: Int? = null
-
-  private lateinit var jwtParser: JwtParser
-
-  @PostConstruct
-  fun initialize() {
-    jwtParser = Jwts.parser().setSigningKey(secret ?: generateRandomKey())
-  }
 
   private fun generateRandomKey(): String {
     val key = UUID.randomUUID().toString()

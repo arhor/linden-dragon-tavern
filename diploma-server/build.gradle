@@ -2,6 +2,7 @@ plugins {
     id "org.springframework.boot"
     id "io.spring.dependency-management"
     id "org.jetbrains.kotlin.jvm"
+    id "org.jetbrains.kotlin.kapt"
     id "org.jetbrains.kotlin.plugin.noarg"
     id "org.jetbrains.kotlin.plugin.spring"
     id "org.jetbrains.kotlin.plugin.jpa"
@@ -13,12 +14,6 @@ description = "diploma-server"
 
 java.sourceCompatibility = JavaVersion.VERSION_11
 java.targetCompatibility = JavaVersion.VERSION_11
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url "https://repo.spring.io/milestone" }
-}
 
 configurations {
     developmentOnly
@@ -39,6 +34,8 @@ dependencies {
     runtimeOnly "org.postgresql:postgresql"
 
     developmentOnly "org.springframework.boot:spring-boot-devtools"
+
+    kapt "org.springframework:spring-context-indexer"
 
     implementation "org.jetbrains.kotlin:kotlin-reflect"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
@@ -73,7 +70,11 @@ dependencies {
 
 compileKotlin {
     kotlinOptions {
-        freeCompilerArgs = ["-Xjsr305=strict", "-Xjvm-default=enable"]
+        freeCompilerArgs = [
+                "-Xjsr305=strict",
+                "-Xjvm-default=enable",
+//                "-XXLanguage:+InlineClasses"
+        ]
         jvmTarget = JavaVersion.VERSION_11
     }
 }
@@ -93,7 +94,7 @@ def openAccessOnJDK9 = [
 ]
 
 def springProfiles = "-Dspring.profiles.active=" + [
-        "default",
+        "default","dev","cloud"
 //        "hazelcast",
 ].join(",")
 

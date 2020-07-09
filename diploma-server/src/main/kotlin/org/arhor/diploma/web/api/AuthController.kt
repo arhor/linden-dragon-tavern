@@ -1,5 +1,6 @@
 package org.arhor.diploma.web.api
 
+import org.arhor.diploma.util.createLogger
 import org.arhor.diploma.web.model.SignInResponse
 import org.arhor.diploma.web.model.SignInRequest
 import org.arhor.diploma.web.security.TokenProvider
@@ -23,11 +24,6 @@ class AuthController(
     private val tokenProvider: TokenProvider<Authentication>
 ) {
 
-  companion object {
-    @JvmStatic
-    private val log: Logger = LoggerFactory.getLogger(AuthController::class.java)
-  }
-
   @PostMapping("/token")
   fun authenticate(@RequestBody signIn: SignInRequest): SignInResponse {
     val auth = authManager.authenticate(
@@ -50,5 +46,10 @@ class AuthController(
         tokenProvider.generate(auth),
         tokenProvider.authTokenType()
     )
+  }
+
+  companion object {
+    @JvmStatic
+    private val log: Logger = createLogger<AuthController>()
   }
 }
