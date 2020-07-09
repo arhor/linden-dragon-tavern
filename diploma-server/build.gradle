@@ -94,7 +94,7 @@ def openAccessOnJDK9 = [
 ]
 
 def springProfiles = "-Dspring.profiles.active=" + [
-        "default","dev","cloud"
+        "default",
 //        "hazelcast",
 ].join(",")
 
