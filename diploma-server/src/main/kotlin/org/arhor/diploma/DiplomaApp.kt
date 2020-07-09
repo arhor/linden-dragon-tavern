@@ -49,7 +49,7 @@ class DiplomaApp(
         is Failure -> log.error("${width.format(i)}: ${result.error.message}")
       }
       result
-    }.all { it is Success }
+    }.all { it.isSuccess }
 
     if (!success) {
       log.error("An error occurred during startup verification")
