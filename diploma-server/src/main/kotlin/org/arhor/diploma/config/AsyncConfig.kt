@@ -12,6 +12,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @Configuration
 class AsyncConfig(private val props: TaskExecutionProperties) : AsyncConfigurer {
 
-  @Override
-  override fun getAsyncUncaughtExceptionHandler() = SimpleAsyncUncaughtExceptionHandler()
+    @Override
+    override fun getAsyncUncaughtExceptionHandler() = SimpleAsyncUncaughtExceptionHandler()
 }

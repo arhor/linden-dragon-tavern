@@ -6,7 +6,6 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.MessageSource
 import org.springframework.http.HttpStatus
-import org.springframework.security.core.AuthenticationException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -19,29 +18,29 @@ class ExceptionController(
     private val messageSource: MessageSource
 ) : ResponseEntityExceptionHandler() {
 
-  companion object {
-    @JvmStatic
-    private val log: Logger = LoggerFactory.getLogger(ExceptionController::class.java)
-  }
-
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
-  @ExceptionHandler(MethodArgumentTypeMismatchException::class)
-  fun argumentClassCastException(e: MethodArgumentTypeMismatchException, l: Locale): MessageResponse {
-    log.error("Argument class cast exception", e)
-    return messageResponse {
-      error {
-        code = 400
-        text = localize(l, "error.wrong.argument")
-        details = listOf(
-            localize(l, "error.wrong.argument.details", e.name, e.value)
-        )
-      }
+    companion object {
+        @JvmStatic
+        private val log: Logger = LoggerFactory.getLogger(ExceptionController::class.java)
     }
-  }
 
-  private fun localize(l: Locale, label: String, vararg args: Any?): String {
-    return messageSource.getMessage(label, args, l)
-  }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentTypeMismatchException::class)
+    fun argumentClassCastException(e: MethodArgumentTypeMismatchException, l: Locale): MessageResponse {
+        log.error("Argument class cast exception", e)
+        return messageResponse {
+            error {
+                code = 400
+                text = localize(l, "error.wrong.argument")
+                details = listOf(
+                    localize(l, "error.wrong.argument.details", e.name, e.value)
+                )
+            }
+        }
+    }
+
+    private fun localize(l: Locale, label: String, vararg args: Any?): String {
+        return messageSource.getMessage(label, args, l)
+    }
 
 //  @ResponseStatus(HttpStatus.NOT_FOUND)
 //  @ExceptionHandler(EntityNotFoundException.class)

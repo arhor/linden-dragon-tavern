@@ -4,18 +4,18 @@ import java.io.Serializable
 
 interface AuthToken : Serializable {
 
-  /**
-   * Raw token representation.
-   */
-  val token: String
+    /**
+     * Raw token representation.
+     */
+    val token: String
 
-  /**
-   * Identifier of the token owner entity.
-   */
-  val ownerId: Long
+    /**
+     * Identifier of the token owner entity.
+     */
+    val ownerId: Long
 
-  /**
-   * Owner authorities list.
-   */
-  val authorities: List<String>
+    /**
+     * Owner authorities list.
+     */
+    val authorities: List<String>
 }

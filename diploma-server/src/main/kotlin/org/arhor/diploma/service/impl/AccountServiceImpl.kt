@@ -1,4 +1,4 @@
-package org.arhor.diploma.service.impl;
+package org.arhor.diploma.service.impl
 
 import org.arhor.diploma.domain.Account
 import org.arhor.diploma.repository.AccountRepository
@@ -20,37 +20,37 @@ class AccountServiceImpl(
     converter: Converter
 ) : AbstractService<Account, AccountDTO, Long>(converter, repository), AccountService {
 
-  override fun loadUserByUsername(username: String?): UserDetails {
-    return username?.let {
-      repository
-          .findByUsername(it)
-          .map { account ->
-            val status = !account.isDeleted
-            User(
-                account.username,
-                account.password,
-                status,
-                status,
-                status,
-                status,
-                account.springAuthorities
-            )
-          }
-          .orElseThrow { UsernameNotFoundException(username) }
-    } ?: throw IllegalArgumentException(username)
-  }
+    override fun loadUserByUsername(username: String?): UserDetails {
+        return username?.let {
+            repository
+                .findByUsername(it)
+                .map { account ->
+                    val status = !account.isDeleted
+                    User(
+                        account.username,
+                        account.password,
+                        status,
+                        status,
+                        status,
+                        status,
+                        account.springAuthorities
+                    )
+                }
+                .orElseThrow { UsernameNotFoundException(username) }
+        } ?: throw IllegalArgumentException(username)
+    }
 
-  override fun getAccountById(id: Long) = getOne<AccountDTO>(id)
+    override fun getAccountById(id: Long) = getOne<AccountDTO>(id)
 
-  override fun getAccounts(page: Int, size: Int) = getList<AccountDTO>(page, size)
+    override fun getAccounts(page: Int, size: Int) = getList<AccountDTO>(page, size)
+
+    private inline val Account.springAuthorities: Collection<GrantedAuthority>
+        get() {
+            return securityProfile
+                ?.securityAuthorities
+                ?.map { auth -> auth.authority }
+                ?.mapNotNull { auth -> auth?.name }
+                ?.map { name -> SimpleGrantedAuthority(name) }
+                ?: emptyList()
+        }
 }
-
-private inline val Account.springAuthorities: Collection<GrantedAuthority>
-  get() {
-    return securityProfile
-      ?.securityAuthorities
-      ?.map { auth -> auth.authority }
-      ?.mapNotNull { auth -> auth?.name }
-      ?.map { name -> SimpleGrantedAuthority(name) }
-      ?: emptyList()
-  }

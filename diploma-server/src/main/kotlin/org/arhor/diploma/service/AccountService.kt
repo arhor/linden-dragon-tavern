@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 
 interface AccountService : UserDetailsService {
 
-  fun getAccountById(id: Long): AccountDTO
+    fun getAccountById(id: Long): AccountDTO
 
-  fun getAccounts(page: Int, size: Int): List<AccountDTO>
+    fun getAccounts(page: Int, size: Int): List<AccountDTO>
 }

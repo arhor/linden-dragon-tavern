@@ -22,61 +22,61 @@ import java.security.Principal
 @EnableWebSocketMessageBroker
 class WebSocketConfig(private val props: CustomProperties) : WebSocketMessageBrokerConfigurer {
 
-  override fun configureMessageBroker(config: MessageBrokerRegistry) {
-    config.enableSimpleBroker("/topic")
-  }
+    override fun configureMessageBroker(config: MessageBrokerRegistry) {
+        config.enableSimpleBroker("/topic")
+    }
 
-  override fun registerStompEndpoints(registry: StompEndpointRegistry) {
-    val allowedOrigins = props.cors.allowedOrigins?.toTypedArray() ?: arrayOf()
+    override fun registerStompEndpoints(registry: StompEndpointRegistry) {
+        val allowedOrigins = props.cors.allowedOrigins?.toTypedArray() ?: arrayOf()
 
-    registry.addEndpoint("/websocket/tracker")
-        .setHandshakeHandler(defaultHandshakeHandler())
-        .setAllowedOrigins(*allowedOrigins)
-        .withSockJS()
-        .setInterceptors(httpSessionHandshakeInterceptor())
-  }
+        registry.addEndpoint("/websocket/tracker")
+            .setHandshakeHandler(defaultHandshakeHandler())
+            .setAllowedOrigins(*allowedOrigins)
+            .withSockJS()
+            .setInterceptors(httpSessionHandshakeInterceptor())
+    }
 
-  @Bean
-  fun httpSessionHandshakeInterceptor(): HandshakeInterceptor {
-    return object : HandshakeInterceptor {
+    @Bean
+    fun httpSessionHandshakeInterceptor(): HandshakeInterceptor {
+        return object : HandshakeInterceptor {
 
-      @Throws(Exception::class)
-      override fun beforeHandshake(
-          request: ServerHttpRequest,
-          response: ServerHttpResponse,
-          wsHandler: WebSocketHandler,
-          attributes: MutableMap<String, Any>
-      ): Boolean {
-        if (request is ServletServerHttpRequest) {
-          attributes["IP_ADDRESS"] = request.remoteAddress
+            @Throws(Exception::class)
+            override fun beforeHandshake(
+                request: ServerHttpRequest,
+                response: ServerHttpResponse,
+                wsHandler: WebSocketHandler,
+                attributes: MutableMap<String, Any>
+            ): Boolean {
+                if (request is ServletServerHttpRequest) {
+                    attributes["IP_ADDRESS"] = request.remoteAddress
+                }
+                return true
+            }
+
+            override fun afterHandshake(
+                request: ServerHttpRequest,
+                response: ServerHttpResponse,
+                wsHandler: WebSocketHandler,
+                exception: Exception?
+            ) {
+                // do nothing...
+            }
         }
-        return true
-      }
-
-      override fun afterHandshake(
-          request: ServerHttpRequest,
-          response: ServerHttpResponse,
-          wsHandler: WebSocketHandler,
-          exception: Exception?
-      ) {
-        // do nothing...
-      }
     }
-  }
 
-  private fun defaultHandshakeHandler(): DefaultHandshakeHandler {
-    return object : DefaultHandshakeHandler() {
-      override fun determineUser(
-          request: ServerHttpRequest,
-          wsHandler: WebSocketHandler,
-          attributes: Map<String, Any>
-      ): Principal {
-        return request.principal ?: AnonymousAuthenticationToken(
-            "WebsocketConfiguration",
-            "anonymous",
-            listOf(SimpleGrantedAuthority(ANONYMOUS.role))
-        )
-      }
+    private fun defaultHandshakeHandler(): DefaultHandshakeHandler {
+        return object : DefaultHandshakeHandler() {
+            override fun determineUser(
+                request: ServerHttpRequest,
+                wsHandler: WebSocketHandler,
+                attributes: Map<String, Any>
+            ): Principal {
+                return request.principal ?: AnonymousAuthenticationToken(
+                    "WebsocketConfiguration",
+                    "anonymous",
+                    listOf(SimpleGrantedAuthority(ANONYMOUS.role))
+                )
+            }
+        }
     }
-  }
 }

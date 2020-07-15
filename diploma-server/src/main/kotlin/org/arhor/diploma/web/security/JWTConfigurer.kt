@@ -12,7 +12,7 @@ class JWTConfigurer(
     private val authFilter: CustomAuthFilter
 ) : SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity>() {
 
-  override fun configure(http: HttpSecurity) {
-    http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter::class.java)
-  }
+    override fun configure(http: HttpSecurity) {
+        http.addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter::class.java)
+    }
 }

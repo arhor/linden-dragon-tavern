@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class JacksonConfiguration {
 
-  @Bean
-  fun javaTimeModule() = JavaTimeModule()
+    @Bean
+    fun javaTimeModule() = JavaTimeModule()
 
-  @Bean
-  fun jdk8TimeModule() = Jdk8Module()
+    @Bean
+    fun jdk8TimeModule() = Jdk8Module()
 }

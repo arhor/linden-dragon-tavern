@@ -10,16 +10,16 @@ import org.springframework.security.core.userdetails.UserDetails
  * @return the login of the current user.
  */
 internal inline val currentUserLogin: String?
-  get() {
-    return SecurityContextHolder.getContext().authentication?.principal
-        ?.let {
-          when (it) {
-            is UserDetails -> it.username
-            is String -> it
-            else -> null
-          }
-        }
-  }
+    get() {
+        return SecurityContextHolder.getContext().authentication?.principal
+            ?.let {
+                when (it) {
+                    is UserDetails -> it.username
+                    is String -> it
+                    else -> null
+                }
+            }
+    }
 
 /**
  * Get the JWT of the current user.
@@ -27,11 +27,11 @@ internal inline val currentUserLogin: String?
  * @return the JWT of the current user.
  */
 internal inline val currentUserJWT: String?
-  get() {
-    return SecurityContextHolder.getContext().authentication?.credentials
-        ?.takeIf { it is String }
-        ?.let { it as String }
-  }
+    get() {
+        return SecurityContextHolder.getContext().authentication?.credentials
+            ?.takeIf { it is String }
+            ?.let { it as String }
+    }
 
 /**
  * Check if a user is authenticated.
@@ -39,9 +39,9 @@ internal inline val currentUserJWT: String?
  * @return true if the user is authenticated, false otherwise.
  */
 internal inline val isAuthenticated: Boolean
-  get() {
-    return currUserAuthorities.none { BasicAuthorities.ANONYMOUS.role == it }
-  }
+    get() {
+        return currUserAuthorities.none { BasicAuthorities.ANONYMOUS.role == it }
+    }
 
 /**
  * If the current user has a specific authority (security role).
@@ -53,12 +53,12 @@ internal inline val isAuthenticated: Boolean
  * @return true if the current user has the authority, false otherwise.
  */
 internal fun isCurrentUserInRole(authority: String): Boolean {
-  return currUserAuthorities.any { authority == it }
+    return currUserAuthorities.any { authority == it }
 }
 
 private inline val currUserAuthorities: Collection<String>
-  get() {
-    return SecurityContextHolder.getContext().authentication?.authorities
-        ?.map { it.authority }
-        ?: emptyList()
-  }
+    get() {
+        return SecurityContextHolder.getContext().authentication?.authorities
+            ?.map { it.authority }
+            ?: emptyList()
+    }

@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.boot.SpringApplication
 
 internal inline fun <reified T> createLogger(): Logger {
-  return LoggerFactory.getLogger(T::class.java)
+    return LoggerFactory.getLogger(T::class.java)
 }
 
 /**
@@ -16,10 +16,10 @@ internal inline fun <reified T> createLogger(): Logger {
  * @param app the Spring application.
  */
 internal fun addDefaultProfile(app: SpringApplication) {
-  val defProperties: MutableMap<String, Any> = HashMap()
-  // The default profile to use when no other profiles are defined
-  // This cannot be set in the application.yml file.
-  // See https://github.com/spring-projects/spring-boot/issues/1219
-  defProperties["spring.profiles.default"] = SpringProfile.DEVELOPMENT
-  app.setDefaultProperties(defProperties)
+    val defProperties: MutableMap<String, Any> = HashMap()
+    // The default profile to use when no other profiles are defined
+    // This cannot be set in the application.yml file.
+    // See https://github.com/spring-projects/spring-boot/issues/1219
+    defProperties["spring.profiles.default"] = SpringProfile.DEVELOPMENT
+    app.setDefaultProperties(defProperties)
 }

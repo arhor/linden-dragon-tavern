@@ -8,9 +8,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 @Configuration
 class DateTimeFormatConfiguration : WebMvcConfigurer {
 
-  override fun addFormatters(registry: FormatterRegistry) {
-    val registrar = DateTimeFormatterRegistrar()
-    registrar.setUseIsoFormat(true)
-    registrar.registerFormatters(registry)
-  }
+    override fun addFormatters(registry: FormatterRegistry) {
+        val registrar = DateTimeFormatterRegistrar()
+        registrar.setUseIsoFormat(true)
+        registrar.registerFormatters(registry)
+    }
 }

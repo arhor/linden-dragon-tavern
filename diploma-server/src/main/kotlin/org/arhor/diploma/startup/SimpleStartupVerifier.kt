@@ -10,9 +10,9 @@ import org.springframework.stereotype.Component
 @Component
 class SimpleStartupVerifier : StartupVerifier {
 
-  override val order: Int = 0
+    override val order: Int = 0
 
-  override fun verify(): ActionResult<String> {
-    return Success("Simple startup verification complete. It should be always first.")
-  }
+    override fun verify(): ActionResult<String> {
+        return Success("Simple startup verification complete. It should be always first.")
+    }
 }

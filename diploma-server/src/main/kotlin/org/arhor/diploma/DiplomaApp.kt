@@ -25,65 +25,66 @@ class DiplomaApp(
     private val verifiers: List<StartupVerifier>
 ) {
 
-  companion object {
-    @JvmStatic
-    private val log: Logger = createLogger<DiplomaApp>()
+    companion object {
+        @JvmStatic
+        private val log: Logger = createLogger<DiplomaApp>()
 
-    @JvmStatic
-    fun main(args: Array<String>) {
-      runApplication<DiplomaApp>(*args)
-    }
-  }
-
-  @PostConstruct
-  fun verifyStartup() {
-    log.info("Starting app verification")
-    log.info("Found [${verifiers.size}] verifiers to run")
-
-    val width = DecimalFormat("0".repeat(verifiers.size.toString().length))
-
-    val success = verifiers.sorted().mapIndexed { i, verifier ->
-      val result = verifier.verify()
-      when (result) {
-        is Success -> log.info("${width.format(i)}: ${result.value}")
-        is Failure -> log.error("${width.format(i)}: ${result.error.message}")
-      }
-      result
-    }.all { it.isSuccess }
-
-    if (!success) {
-      log.error("An error occurred during startup verification")
-      exitProcess(0)
+        @JvmStatic
+        fun main(args: Array<String>) {
+            runApplication<DiplomaApp>(*args)
+        }
     }
 
-    log.info("App verification finished successfully")
-  }
+    @PostConstruct
+    fun verifyStartup() {
+        log.info("Starting app verification")
+        log.info("Found [${verifiers.size}] verifiers to run")
 
-  @Bean
-  fun run() = CommandLineRunner {
-    val appName = env.getProperty("spring.application.name")
-    val serverPort = env.getProperty("server.port")
-    val contextPath = env.getProperty("server.servlet.context-path")?.takeIf { it.isNotBlank() } ?: "/"
+        val width = DecimalFormat("0".repeat(verifiers.size.toString().length))
 
-    val protocol = when (env.getProperty("server.ssl.key-store")) {
-      null -> "http"
-      else -> "https"
+        val success = verifiers.sorted().mapIndexed { i, verifier ->
+            val result = verifier.verify()
+            when (result) {
+                is Success -> log.info("${width.format(i)}: ${result.value}")
+                is Failure -> log.error("${width.format(i)}: ${result.error.message}")
+            }
+            result
+        }.all { it.isSuccess }
+
+        if (!success) {
+            log.error("An error occurred during startup verification")
+            exitProcess(0)
+        }
+
+        log.info("App verification finished successfully")
     }
 
-    val hostAddress = try {
-      InetAddress.getLocalHost().hostAddress
-    } catch (e: UnknownHostException) {
-      log.warn("The host name could not be determined, using `localhost` as fallback")
-      "localhost"
-    }
+    @Bean
+    fun run() = CommandLineRunner {
+        val appName = env.getProperty("spring.application.name")
+        val serverPort = env.getProperty("server.port")
+        val contextPath = env.getProperty("server.servlet.context-path")?.takeIf { it.isNotBlank() } ?: "/"
 
-    log.info("""
+        val protocol = when (env.getProperty("server.ssl.key-store")) {
+            null -> "http"
+            else -> "https"
+        }
+
+        val hostAddress = try {
+            InetAddress.getLocalHost().hostAddress
+        } catch (e: UnknownHostException) {
+            log.warn("The host name could not be determined, using `localhost` as fallback")
+            "localhost"
+        }
+
+        log.info(
+            """
 --------------------------------------------------------------------------------
     Application `${appName}` is running! Access URLs:
     - Local:      ${protocol}://localhost:${serverPort}${contextPath}
     - External:   ${protocol}://${hostAddress}:${serverPort}${contextPath}
     - Profile(s): ${env.activeProfiles.asList()}
 --------------------------------------------------------------------------------"""
-    )
-  }
+        )
+    }
 }

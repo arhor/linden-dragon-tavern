@@ -11,37 +11,37 @@ import javax.persistence.*
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 class SecurityProfileAuthority {
 
-  @EmbeddedId
-  @AttributeOverrides(
-      AttributeOverride(name = "firstId",  column = Column(name = "profile_id", nullable = false)),
-      AttributeOverride(name = "secondId", column = Column(name = "authority_id", nullable = false))
-  )
-  var id: CompositeId? = null
+    @EmbeddedId
+    @AttributeOverrides(
+        AttributeOverride(name = "firstId", column = Column(name = "profile_id", nullable = false)),
+        AttributeOverride(name = "secondId", column = Column(name = "authority_id", nullable = false))
+    )
+    var id: CompositeId? = null
 
-  @ManyToOne(optional = false)
-  @MapsId("profile_id")
-  var securityProfile: SecurityProfile? = null
+    @ManyToOne(optional = false)
+    @MapsId("profile_id")
+    var securityProfile: SecurityProfile? = null
 
-  @ManyToOne(optional = false)
-  @MapsId("authority_id")
-  var authority: Authority? = null
+    @ManyToOne(optional = false)
+    @MapsId("authority_id")
+    var authority: Authority? = null
 
-  override fun equals(other: Any?): Boolean {
-    if (this === other) return true
-    if (other !is SecurityProfileAuthority) return false
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is SecurityProfileAuthority) return false
 
-    if (id != other.id) return false
-    if (securityProfile != other.securityProfile) return false
-    if (authority != other.authority) return false
+        if (id != other.id) return false
+        if (securityProfile != other.securityProfile) return false
+        if (authority != other.authority) return false
 
-    return true
-  }
+        return true
+    }
 
-  override fun hashCode(): Int {
-    return STATIC_HASH_CODE
-  }
+    override fun hashCode(): Int {
+        return STATIC_HASH_CODE
+    }
 
-  override fun toString(): String {
-    return "SecurityProfileAuthority(id=$id, securityProfile=$securityProfile, authority=$authority)"
-  }
+    override fun toString(): String {
+        return "SecurityProfileAuthority(id=$id, securityProfile=$securityProfile, authority=$authority)"
+    }
 }

@@ -1,6 +1,4 @@
-package org.arhor.diploma.util;
-
-import java.util.function.ToIntFunction;
+package org.arhor.diploma.util
 
 /**
  * Method supposed to be used for creation number bounding function,
@@ -11,10 +9,8 @@ import java.util.function.ToIntFunction;
  * @param <N> any number type
  * @return closure with min bound value
  */
-internal fun <N : Number> minBound(bound: Int): ToIntFunction<N> {
-  return ToIntFunction { arg ->
-    if ((arg == null) || (arg.toLong() <= bound)) bound else arg.toInt()
-  }
+internal fun <N : Number> N?.minBound(bound: Int): Int {
+    return if ((this == null) || (this.toLong() <= bound)) bound else this.toInt()
 }
 
 /**
@@ -26,8 +22,6 @@ internal fun <N : Number> minBound(bound: Int): ToIntFunction<N> {
  * @param <N> any number type
  * @return closure with max bound value
  */
-internal fun <N : Number> maxBound(bound: Int): ToIntFunction<N> {
-  return ToIntFunction { arg ->
-    if ((arg == null) || (arg.toLong() >= bound)) bound else arg.toInt()
-  }
+internal fun <N : Number> N?.maxBound(bound: Int): Int {
+    return if ((this == null) || (this.toLong() >= bound)) bound else this.toInt()
 }

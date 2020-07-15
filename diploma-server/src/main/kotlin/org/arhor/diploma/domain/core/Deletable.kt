@@ -2,8 +2,8 @@ package org.arhor.diploma.domain.core
 
 interface Deletable {
 
-  var isDeleted: Boolean
+    var isDeleted: Boolean
 
-  @JvmDefault
-  fun onDelete() { /* do nothing by default */ }
+    @JvmDefault
+    fun onDelete() { /* do nothing by default */ }
 }

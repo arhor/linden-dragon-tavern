@@ -10,24 +10,24 @@ import org.springframework.stereotype.Component
 @Component
 class ActiveProfilesVerifier(private val env: Environment) : StartupVerifier {
 
-  override val order: Int = 1
+    override val order: Int = 1
 
-  override fun verify(): ActionResult<String> {
-    val activeProfiles = env.activeProfiles
+    override fun verify(): ActionResult<String> {
+        val activeProfiles = env.activeProfiles
 
-    val isDev = activeProfiles.contains(SpringProfile.DEVELOPMENT)
+        val isDev = activeProfiles.contains(SpringProfile.DEVELOPMENT)
 
-    if (isDev && activeProfiles.contains(SpringProfile.PRODUCTION)) {
-      return Failure(createError(SpringProfile.DEVELOPMENT, SpringProfile.PRODUCTION))
+        if (isDev && activeProfiles.contains(SpringProfile.PRODUCTION)) {
+            return Failure(createError(SpringProfile.DEVELOPMENT, SpringProfile.PRODUCTION))
+        }
+        if (isDev && activeProfiles.contains(SpringProfile.CLOUD)) {
+            return Failure(createError(SpringProfile.DEVELOPMENT, SpringProfile.CLOUD))
+        }
+
+        return Success("There are no mutually exclusive profiles.")
     }
-    if (isDev && activeProfiles.contains(SpringProfile.CLOUD)) {
-      return Failure(createError(SpringProfile.DEVELOPMENT, SpringProfile.CLOUD))
+
+    private fun createError(p1: String, p2: String): Throwable {
+        return IllegalStateException("Profiles '${p1}' and '${p2}' should not run both at the same time!")
     }
-
-    return Success("There are no mutually exclusive profiles.")
-  }
-
-  private fun createError(p1: String, p2: String): Throwable {
-    return IllegalStateException("Profiles '${p1}' and '${p2}' should not run both at the same time!")
-  }
 }

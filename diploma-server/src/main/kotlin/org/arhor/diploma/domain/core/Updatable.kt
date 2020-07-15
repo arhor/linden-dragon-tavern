@@ -4,8 +4,8 @@ import java.time.temporal.TemporalAccessor
 
 interface Updatable<T : TemporalAccessor> {
 
-  var updated: T?
+    var updated: T?
 
-  @JvmDefault
-  fun onUpdate() { /* do nothing by default */ }
+    @JvmDefault
+    fun onUpdate() { /* do nothing by default */ }
 }

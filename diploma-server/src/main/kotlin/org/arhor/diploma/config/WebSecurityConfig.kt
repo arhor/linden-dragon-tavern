@@ -1,7 +1,6 @@
 package org.arhor.diploma.config
 
 import org.arhor.diploma.service.AccountService
-import org.arhor.diploma.web.filter.CustomAuthFilter
 import org.arhor.diploma.web.security.JWTConfigurer
 import org.arhor.diploma.web.security.JwtAuthEntryPoint
 import org.springframework.context.annotation.Bean
@@ -14,7 +13,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
 
 @Configuration
@@ -27,65 +25,65 @@ class WebSecurityConfig(
     private val encoder: PasswordEncoder
 ) : WebSecurityConfigurerAdapter() {
 
-  companion object {
-    private val SECURITY_POLICY_DIRECTIVES = arrayOf(
-        "default-src 'self'",
-        "frame-src 'self' data:",
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com",
-        "style-src 'self' 'unsafe-inline'",
-        "img-src 'self' data:",
-        "font-src 'self' data:"
-    ).joinToString(separator = "; ")
+    companion object {
+        private val SECURITY_POLICY_DIRECTIVES = arrayOf(
+            "default-src 'self'",
+            "frame-src 'self' data:",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com",
+            "style-src 'self' 'unsafe-inline'",
+            "img-src 'self' data:",
+            "font-src 'self' data:"
+        ).joinToString(separator = "; ")
 
-    private val FEATURE_POLICY_DIRECTIVES = arrayOf(
-        "geolocation 'none'",
-        "midi 'none'",
-        "sync-xhr 'none'",
-        "microphone 'none'",
-        "camera 'none'",
-        "magnetometer 'none'",
-        "gyroscope 'none'",
-        "speaker 'none'",
-        "fullscreen 'self'",
-        "payment 'none'"
-    ).joinToString(separator = "; ")
-  }
+        private val FEATURE_POLICY_DIRECTIVES = arrayOf(
+            "geolocation 'none'",
+            "midi 'none'",
+            "sync-xhr 'none'",
+            "microphone 'none'",
+            "camera 'none'",
+            "magnetometer 'none'",
+            "gyroscope 'none'",
+            "speaker 'none'",
+            "fullscreen 'self'",
+            "payment 'none'"
+        ).joinToString(separator = "; ")
+    }
 
-  override fun configure(auth: AuthenticationManagerBuilder) {
-    auth.userDetailsService(accountService)
-        .passwordEncoder(encoder)
-  }
+    override fun configure(auth: AuthenticationManagerBuilder) {
+        auth.userDetailsService(accountService)
+            .passwordEncoder(encoder)
+    }
 
-  @Bean
-  override fun authenticationManagerBean(): AuthenticationManager {
-    return super.authenticationManagerBean()
-  }
+    @Bean
+    override fun authenticationManagerBean(): AuthenticationManager {
+        return super.authenticationManagerBean()
+    }
 
-  override fun configure(http: HttpSecurity) {
-    http.csrf().disable()
-        .cors()
-        .and()
+    override fun configure(http: HttpSecurity) {
+        http.csrf().disable()
+            .cors()
+            .and()
             .headers()
             .contentSecurityPolicy(SECURITY_POLICY_DIRECTIVES)
-        .and()
+            .and()
             .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
-        .and()
+            .and()
             .featurePolicy(FEATURE_POLICY_DIRECTIVES)
-        .and()
+            .and()
             .frameOptions()
             .deny()
-        .and()
+            .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-        .and()
+            .and()
             .authorizeRequests()
             .anyRequest().permitAll()
-        .and()
+            .and()
             .exceptionHandling()
             .authenticationEntryPoint(unauthorizedHandler)
-        .and()
+            .and()
             .httpBasic().disable()
             .formLogin().disable()
             .apply(jwtConfigurer)
-  }
+    }
 }

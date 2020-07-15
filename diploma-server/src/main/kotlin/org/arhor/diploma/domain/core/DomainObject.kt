@@ -6,20 +6,20 @@ import javax.persistence.*
 @MappedSuperclass
 abstract class DomainObject<T : Serializable> : Identifiable<T> {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  override var id: T? = null
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    override var id: T? = null
 
-  override fun equals(other: Any?): Boolean {
-    if (this === other) return true
-    if (other !is DomainObject<*>) return false
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is DomainObject<*>) return false
 
-    if (id != other.id) return false
+        if (id != other.id) return false
 
-    return true
-  }
+        return true
+    }
 
-  override fun hashCode(): Int {
-    return id?.hashCode() ?: 0
-  }
+    override fun hashCode(): Int {
+        return id?.hashCode() ?: 0
+    }
 }

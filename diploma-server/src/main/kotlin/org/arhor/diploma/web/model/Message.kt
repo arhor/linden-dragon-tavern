@@ -48,35 +48,35 @@ annotation class MessageResponseMaker
 @MessageResponseMaker
 class MessageResponseBuilder {
 
-  private val messages = mutableListOf<Message>()
+    private val messages = mutableListOf<Message>()
 
-  fun info(init: MessageBuilder.() -> Unit) = initMessage(Severity.INFO, init)
+    fun info(init: MessageBuilder.() -> Unit) = initMessage(Severity.INFO, init)
 
-  fun warn(init: MessageBuilder.() -> Unit) = initMessage(Severity.WARN, init)
+    fun warn(init: MessageBuilder.() -> Unit) = initMessage(Severity.WARN, init)
 
-  fun error(init: MessageBuilder.() -> Unit) = initMessage(Severity.ERROR, init)
+    fun error(init: MessageBuilder.() -> Unit) = initMessage(Severity.ERROR, init)
 
-  fun build(): MessageResponse {
-    return MessageResponse(messages.toList())
-  }
+    fun build(): MessageResponse {
+        return MessageResponse(messages.toList())
+    }
 
-  private inline fun initMessage(severity: Severity, init: MessageBuilder.() -> Unit) {
-    val builder = MessageBuilder(severity)
-    builder.init()
+    private inline fun initMessage(severity: Severity, init: MessageBuilder.() -> Unit) {
+        val builder = MessageBuilder(severity)
+        builder.init()
 
-    messages.add(
-        Message(
-            severity = builder.severity,
-            code = builder.code,
-            text = builder.text,
-            details = builder.details
+        messages.add(
+            Message(
+                severity = builder.severity,
+                code = builder.code,
+                text = builder.text,
+                details = builder.details
+            )
         )
-    )
-  }
+    }
 }
 
 inline fun messageResponse(init: MessageResponseBuilder.() -> Unit): MessageResponse {
-  val builder = MessageResponseBuilder()
-  builder.init()
-  return builder.build()
+    val builder = MessageResponseBuilder()
+    builder.init()
+    return builder.build()
 }

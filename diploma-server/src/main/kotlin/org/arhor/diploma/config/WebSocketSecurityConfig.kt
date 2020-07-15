@@ -8,23 +8,23 @@ import org.springframework.security.config.annotation.web.socket.AbstractSecurit
 
 @Configuration
 class WebSocketSecurityConfig : AbstractSecurityWebSocketMessageBrokerConfigurer() {
-  override fun configureInbound(messages: MessageSecurityMetadataSourceRegistry) {
-    messages
-        .nullDestMatcher().authenticated()
-        .simpDestMatchers("/topic/tracker").hasAuthority(BasicAuthorities.ADMIN.role)
-        // matches any destination that starts with /topic/
-        // (i.e. cannot send messages directly to /topic/)
-        // (i.e. cannot subscribe to /topic/messages/* to get messages sent to
-        // /topic/messages-user<id>)
-        .simpDestMatchers("/topic/**").authenticated()
+    override fun configureInbound(messages: MessageSecurityMetadataSourceRegistry) {
+        messages
+            .nullDestMatcher().authenticated()
+            .simpDestMatchers("/topic/tracker").hasAuthority(BasicAuthorities.ADMIN.role)
+            // matches any destination that starts with /topic/
+            // (i.e. cannot send messages directly to /topic/)
+            // (i.e. cannot subscribe to /topic/messages/* to get messages sent to
+            // /topic/messages-user<id>)
+            .simpDestMatchers("/topic/**").authenticated()
 
-        // message types other than MESSAGE and SUBSCRIBE
-        .simpTypeMatchers(SimpMessageType.MESSAGE, SimpMessageType.SUBSCRIBE).denyAll() // catch all
-        .anyMessage().denyAll()
-  }
+            // message types other than MESSAGE and SUBSCRIBE
+            .simpTypeMatchers(SimpMessageType.MESSAGE, SimpMessageType.SUBSCRIBE).denyAll() // catch all
+            .anyMessage().denyAll()
+    }
 
-  /**
-   * Disables CSRF for web-sockets.
-   */
-  override fun sameOriginDisabled(): Boolean = true
+    /**
+     * Disables CSRF for web-sockets.
+     */
+    override fun sameOriginDisabled(): Boolean = true
 }

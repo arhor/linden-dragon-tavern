@@ -12,21 +12,21 @@ import org.springframework.web.cors.CorsConfiguration
 @Component
 class CustomProperties {
 
-  val cors: CorsConfiguration = CorsConfiguration()
+    val cors: CorsConfiguration = CorsConfiguration()
 
-//  @Value("cache.hazelcast.timeToLiveSeconds")
-  var timeToLiveSeconds: Int = Cache.Hazelcast.TIME_TO_LIVE_SECONDS
+    //  @Value("cache.hazelcast.timeToLiveSeconds")
+    var timeToLiveSeconds: Int = Cache.Hazelcast.TIME_TO_LIVE_SECONDS
 
-//  @Value("cache.hazelcast.backupCount")
-  var backupCount: Int = Cache.Hazelcast.BACKUP_COUNT
+    //  @Value("cache.hazelcast.backupCount")
+    var backupCount: Int = Cache.Hazelcast.BACKUP_COUNT
 
-//  @Value("cache.hazelcast.managementCenter.enabled")
-  var isManagementCenterEnabled: Boolean = Cache.Hazelcast.ManagementCenter.ENABLED
+    //  @Value("cache.hazelcast.managementCenter.enabled")
+    var isManagementCenterEnabled: Boolean = Cache.Hazelcast.ManagementCenter.ENABLED
 
-//  @Value("cache.hazelcast.managementCenter.url")
-  var managementCenterUrl: String = Cache.Hazelcast.ManagementCenter.URL
+    //  @Value("cache.hazelcast.managementCenter.url")
+    var managementCenterUrl: String = Cache.Hazelcast.ManagementCenter.URL
 
-//  @Value("cache.hazelcast.managementCenter.updateInterval")
-  var managementCenterUpdateInterval: Int = Cache.Hazelcast.ManagementCenter.UPDATE_INTERVAL
+    //  @Value("cache.hazelcast.managementCenter.updateInterval")
+    var managementCenterUpdateInterval: Int = Cache.Hazelcast.ManagementCenter.UPDATE_INTERVAL
 
 }

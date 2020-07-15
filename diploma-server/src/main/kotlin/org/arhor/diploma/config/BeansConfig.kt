@@ -16,29 +16,31 @@ import org.modelmapper.config.Configuration as MapperConfig
 @Configuration
 class BeansConfig {
 
-  @Bean
-  fun modelMapper() = ModelMapper().apply {
-    configuration.matchingStrategy = MatchingStrategies.LOOSE
-    configuration.fieldAccessLevel = MapperConfig.AccessLevel.PRIVATE
-    configuration.isFieldMatchingEnabled = true
-    configuration.isSkipNullEnabled = true
-  }
-
-  @Bean
-  fun modelMapperConverter(mapper: ModelMapper) = object : Converter {
-    override fun <T, R> convert(source: T, target: Class<R>): R {
-      return mapper.map(source, target)
+    @Bean
+    fun modelMapper() = ModelMapper().apply {
+        configuration.matchingStrategy = MatchingStrategies.LOOSE
+        configuration.fieldAccessLevel = MapperConfig.AccessLevel.PRIVATE
+        configuration.isFieldMatchingEnabled = true
+        configuration.isSkipNullEnabled = true
     }
-  }
 
-  @Bean
-  @Profile("!${SpringProfile.DEVELOPMENT}")
-  fun csrfFilter(csrfFilter: CustomCsrfFilter) = FilterRegistrationBean<CustomCsrfFilter>().apply {
-    order = 1
-    filter = csrfFilter
-    addUrlPatterns("/api/*")
-  }
+    @Bean
+    fun modelMapperConverter(mapper: ModelMapper): Converter {
+        return object : Converter {
+            override fun <T, R> convert(source: T, target: Class<R>): R {
+                return mapper.map(source, target)
+            }
+        }
+    }
 
-  @Bean
-  fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder(5)
+    @Bean
+    @Profile("!${SpringProfile.DEVELOPMENT}")
+    fun csrfFilter(csrfFilter: CustomCsrfFilter) = FilterRegistrationBean<CustomCsrfFilter>().apply {
+        order = 1
+        filter = csrfFilter
+        addUrlPatterns("/api/*")
+    }
+
+    @Bean
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder(5)
 }

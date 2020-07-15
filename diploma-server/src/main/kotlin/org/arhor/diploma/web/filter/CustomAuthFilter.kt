@@ -19,34 +19,34 @@ class CustomAuthFilter(
     private val accountService: AccountService
 ) : OncePerRequestFilter() {
 
-  companion object {
-    @JvmStatic
-    private val log: Logger = createLogger<CustomAuthFilter>()
-  }
+    override fun doFilterInternal(
+        req: HttpServletRequest,
+        res: HttpServletResponse,
+        next: FilterChain
+    ) {
+        try {
+            val authHeader: String? = req.getHeader(tokenProvider.authHeaderName())
 
-  override fun doFilterInternal(
-      req: HttpServletRequest,
-      res: HttpServletResponse,
-      next: FilterChain
-  ) {
-    try {
-      val authHeader: String? = req.getHeader(tokenProvider.authHeaderName())
-
-      if (authHeader != null) {
-        val token = tokenProvider.parse(authHeader)
-        if (tokenProvider.validate(token)) {
-          tokenProvider.parseUsername(token)
-              ?.let(accountService::loadUserByUsername)
-              ?.let { user -> UsernamePasswordAuthenticationToken(user, token, user.authorities) }
-              ?.let { auth ->
-                auth.details = WebAuthenticationDetailsSource().buildDetails(req)
-                SecurityContextHolder.getContext().authentication = auth
-              }
+            if (authHeader != null) {
+                val token = tokenProvider.parse(authHeader)
+                if (tokenProvider.validate(token)) {
+                    tokenProvider.parseUsername(token)
+                        ?.let(accountService::loadUserByUsername)
+                        ?.let { user -> UsernamePasswordAuthenticationToken(user, token, user.authorities) }
+                        ?.let { auth ->
+                            auth.details = WebAuthenticationDetailsSource().buildDetails(req)
+                            SecurityContextHolder.getContext().authentication = auth
+                        }
+                }
+            }
+        } catch (e: Exception) {
+            log.error("Can NOT set user authentication -> Message: {}", e.message)
         }
-      }
-    } catch (e: Exception) {
-      log.error("Can NOT set user authentication -> Message: {}", e.message)
+        next.doFilter(req, res)
     }
-    next.doFilter(req, res)
-  }
+
+    companion object {
+        @JvmStatic
+        private val log: Logger = createLogger<CustomAuthFilter>()
+    }
 }
