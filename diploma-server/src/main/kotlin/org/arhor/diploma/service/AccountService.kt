@@ -8,4 +8,8 @@ interface AccountService : UserDetailsService {
     fun getAccountById(id: Long): AccountDTO
 
     fun getAccounts(page: Int, size: Int): List<AccountDTO>
+
+    fun createAccount(accountDTO: AccountDTO): Long
+
+    fun deleteAccount(id: Long)
 }

@@ -8,30 +8,30 @@ import lib from '@/lib/diploma-shared';
 
 const { Account } = lib.org.arhor.diploma.Authorities;
 
+/* prettier-ignore */
 const AppRouter = () => {
-  return (
-    <Suspense fallback={<Loader />}>
-      <LangSelector />
-      <Switch>
-        <Route
-          path="/" exact
-          component={Home}
-        />
-        <Route
-          path="/about"
-          component={lazy(() => import('@/routes/about'))}
-        />
-        <SecuredRoute
-          path="/account"
-          component={lazy(() => import('@/routes/account'))}
-          hasAuthorities={[Account.VIEW]}
-        />
-        <Route
-          component={lazy(() => import('@/routes/not-found'))}
-        />
-      </Switch>
-    </Suspense>
-  );
+    return (
+        <Suspense fallback={<Loader />}>
+            <LangSelector />
+            <Switch>
+                <Route
+                    path="/"
+                    component={Home}
+                    exact
+                />
+                <Route
+                    path="/about"
+                    component={lazy(() => import('@/routes/about'))}
+                />
+                <SecuredRoute
+                    path="/account"
+                    component={lazy(() => import('@/routes/account'))}
+                    hasAuthorities={[Account.VIEW]}
+                />
+                <Route component={lazy(() => import('@/routes/not-found'))} />
+            </Switch>
+        </Suspense>
+    );
 };
 
 export default AppRouter;

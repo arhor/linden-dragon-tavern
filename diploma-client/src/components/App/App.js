@@ -6,17 +6,17 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import AppLayout from '@/components/AppLayout';
 import store from '@/store';
 
-const App = ({theme}) => {
-  return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <ErrorBoundary>
-        <Provider store={store}>
-          <AppLayout />
-        </Provider>
-      </ErrorBoundary>
-    </ThemeProvider>
-  );
+const App = ({ theme }) => {
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <ErrorBoundary>
+                <Provider store={store}>
+                    <AppLayout />
+                </Provider>
+            </ErrorBoundary>
+        </ThemeProvider>
+    );
 };
 
 export default App;

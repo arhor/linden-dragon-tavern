@@ -1,23 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <base href="/">
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
-    <meta name="theme-color" content="#000000"/>
-    <meta name="description" content="Diploma client app"/>
-    <meta name="google" content="notranslate">
-    <title>Diploma client app</title>
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
-</head>
-<body>
-  <!--[if lt IE 9]>
-    <p>You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-  <![endif]-->
-  <noscript>You need to enable JavaScript to run this app.</noscript>
-  <div id="root"></div>
-</body>
+    <head>
+        <base href="/" />
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="description" content="Diploma client app" />
+        <meta name="google" content="notranslate" />
+        <title>Diploma client app</title>
+        <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+        <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+        <style>
+            .splash-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                background: #282a37;
+                height: 100vh;
+            }
+
+            @keyframes ripple {
+                from {
+                    transform: scale(0);
+                    opacity: 1;
+                }
+                to {
+                    transform: scale(1);
+                    opacity: 0;
+                }
+            }
+
+            .multi-ripple {
+                width: 2.6rem;
+                height: 2.6rem;
+                margin: 2rem;
+            }
+
+            .multi-ripple div {
+                position: absolute;
+                width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                border: 0.3rem solid #979fd0;
+                animation: 1.5s ripple infinite;
+            }
+
+            .multi-ripple div:nth-child(2) {
+                animation-delay: 0.5s;
+            }
+        </style>
+        <script>
+            (function (ctx) {
+                var startupTime = 0;
+                var timer = setInterval(function () {
+                    if (startupTime >= 1 && ctx.diplomaApp) {
+                        ctx.diplomaApp.main();
+                        clearInterval(timer);
+                    }
+                    startupTime += 0.5;
+                }, 500);
+            })(window);
+        </script>
+    </head>
+    <body>
+        <!--[if lt IE 9]>
+            <p>
+                You are using an <strong>outdated</strong> browser. Please
+                <a href="http://browsehappy.com/">upgrade your browser</a> to improve your
+                experience.
+            </p>
+        <![endif]-->
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="root">
+            <div class="splash-container">
+                <div class="multi-ripple">
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>

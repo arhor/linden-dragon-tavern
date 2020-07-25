@@ -5,14 +5,14 @@ import NavBar from '@/components/NavBar';
 import AppRouter from '@/components/AppRouter';
 
 const AppLayout = () => {
-  return (
-    <BrowserRouter>
-      <NavBar />
-      <Container component='main'>
-        <AppRouter />
-      </Container>
-    </BrowserRouter>
-  );
+    return (
+        <BrowserRouter>
+            <NavBar />
+            <Container component="main">
+                <AppRouter />
+            </Container>
+        </BrowserRouter>
+    );
 };
 
 export default AppLayout;

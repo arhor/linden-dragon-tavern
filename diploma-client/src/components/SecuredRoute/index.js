@@ -1,1 +1,1 @@
-export { default } from '@/components/SecuredRoute/SecuredRoute.js'
+export { default } from '@/components/SecuredRoute/SecuredRoute.js';

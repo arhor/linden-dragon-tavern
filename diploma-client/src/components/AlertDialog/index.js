@@ -1,1 +1,1 @@
-import { default } from '@/components/AlertDialog/AlertDialog';
+export { default } from '@/components/AlertDialog/AlertDialog.js';

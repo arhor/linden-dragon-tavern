@@ -1,7 +1,7 @@
 export const onSignUpClick = () => {
-  // TODO: implement
+    // TODO: implement
 };
 
 export const onSignInClick = () => {
-  // TODO: implement
+    // TODO: implement
 };

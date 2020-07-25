@@ -1,1 +1,1 @@
-export { default } from '@/components/ErrorBoundaryRoute/ErrorBoundaryRoute.js'
+export { default } from '@/components/ErrorBoundaryRoute/ErrorBoundaryRoute.js';

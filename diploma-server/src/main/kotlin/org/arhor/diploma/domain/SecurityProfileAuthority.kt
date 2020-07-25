@@ -16,7 +16,7 @@ class SecurityProfileAuthority {
         AttributeOverride(name = "firstId", column = Column(name = "profile_id", nullable = false)),
         AttributeOverride(name = "secondId", column = Column(name = "authority_id", nullable = false))
     )
-    var id: CompositeId? = null
+    var id: CompositeId<Long, Long>? = null
 
     @ManyToOne(optional = false)
     @MapsId("profile_id")

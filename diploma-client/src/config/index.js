@@ -3,7 +3,7 @@ import theme from '@/config/theme';
 import * as serviceWorker from '@/config/serviceWorker';
 
 export default {
-  i18n,
-  theme,
-  serviceWorker,
+    i18n,
+    theme,
+    serviceWorker,
 };

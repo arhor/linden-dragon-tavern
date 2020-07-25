@@ -15,18 +15,18 @@ abstract class AbstractService<E : DomainObject<K>, D, K : Serializable>(
     internal inline fun <reified D> getOne(id: K): D {
         return repository
             .findById(id)
-            .map<D> { convert(it) }
+            .map { it.convertTo<D>() }
             .orElseThrow { EntityNotFoundException("account", "id", id) }
     }
 
     internal inline fun <reified D> getList(page: Int, size: Int): List<D> {
         return repository
             .findAll(PageRequest.of(page, size))
-            .map<D> { convert(it) }
+            .map { it.convertTo<D>() }
             .toList()
     }
 
-    internal inline fun <T, reified D> convert(source: T): D {
-        return converter.convert(source, D::class.java)
+    internal inline fun <reified D> Any.convertTo(): D {
+        return converter.convert(this, D::class.java)
     }
 }
