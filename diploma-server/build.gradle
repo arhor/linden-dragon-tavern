@@ -116,7 +116,7 @@ test {
 }
 
 task clientCopy(type: Copy, dependsOn: ":diploma-client:clientBuild") {
-    from "../diploma-client/build/"
+    from "../diploma-client/dist/"
     into "build/resources/main/static/"
 }
 

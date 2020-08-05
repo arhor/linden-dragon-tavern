@@ -15,6 +15,9 @@ node {
 idea {
     module {
         excludeDirs += files("node_modules")
+        excludeDirs += files("data")
+        excludeDirs += files("dist")
+        excludeDirs += files("dist_electron")
     }
 }
 
@@ -45,4 +48,8 @@ task clientStart (type: NpmTask, dependsOn: npmAuditFix) {
     description = "Starts client development server"
     workingDir = file(jsRootDir)
     args = ["run", "start"]
+}
+
+task scrap (type: NodeTask, dependsOn: npmInstall) {
+    script = file('scripts/dungeon_su_scrapper.js')
 }

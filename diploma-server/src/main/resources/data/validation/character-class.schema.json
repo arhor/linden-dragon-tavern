@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://diploma.arhor.org/character-class.schema.json",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "title": "CharacterClass",
+    "description": "D&D 5-e character class",
+    "properties": {
+      "id": {
+        "type": "integer"
+      },
+      "name": {
+        "type": "string"
+      },
+      "hitDie": {
+        "type": "integer"
+      },
+      "archetypes": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "savingThrows": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "proficiencies": {
+      }
+    },
+    "required": [
+      "id",
+      "name",
+      "hitDie"
+    ]
+  }
+}
