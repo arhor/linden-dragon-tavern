@@ -21,6 +21,11 @@ class CustomErrorController(
     private val errorProperties: ErrorProperties = ErrorProperties()
 ) : ErrorController {
 
+    companion object {
+        private const val DEFAULT_ERROR_PATH = "/api/error"
+        private const val ERROR_PATH = "\${server.error.path:\${error.path:$DEFAULT_ERROR_PATH}}"
+    }
+
     override fun getErrorPath(): String = ERROR_PATH
 
     @RequestMapping(ERROR_PATH)
@@ -34,7 +39,7 @@ class CustomErrorController(
         return ResponseEntity(
             messageResponse {
                 error {
-                    code = 500
+                    code = status.value()
                     text = "Unhandled error. Please, create proper exception handler for it."
                     details = listOf(errorAttributes(req))
                 }
@@ -114,10 +119,5 @@ class CustomErrorController(
 
     private fun getBooleanParameter(req: WebRequest, param: String): Boolean {
         return req.getParameter(param).asBoolean { it.equals("false", ignoreCase = true) }
-    }
-
-    companion object {
-        private const val DEFAULT_ERROR_PATH = "/api/error"
-        private const val ERROR_PATH = "\${server.error.path:\${error.path:$DEFAULT_ERROR_PATH}}"
     }
 }

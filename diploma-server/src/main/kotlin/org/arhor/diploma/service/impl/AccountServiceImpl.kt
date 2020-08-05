@@ -23,6 +23,13 @@ class AccountServiceImpl(
     converter: Converter
 ) : AbstractService<Account, AccountDTO, Long>(converter, repository), AccountService {
 
+    companion object {
+        @JvmStatic
+        private val log: Logger = createLogger<AccountServiceImpl>()
+    }
+
+    override val type: Class<AccountDTO> = AccountDTO::class.java
+
     override fun loadUserByUsername(username: String?): UserDetails {
         return username?.let {
             repository
@@ -43,9 +50,9 @@ class AccountServiceImpl(
         } ?: throw IllegalArgumentException(username)
     }
 
-    override fun getAccountById(id: Long) = getOne<AccountDTO>(id)
+    override fun getAccountById(id: Long) = getOne(id)
 
-    override fun getAccounts(page: Int, size: Int) = getList<AccountDTO>(page, size)
+    override fun getAccounts(page: Int, size: Int) = getList(page, size)
 
     override fun createAccount(accountDTO: AccountDTO): Long {
         accountDTO.username?.let { username -> repository.findByUsername(username) }?.ifPresent { account ->
@@ -76,10 +83,5 @@ class AccountServiceImpl(
             ?.mapNotNull { auth -> auth?.name }
             ?.map { name -> SimpleGrantedAuthority(name) }
             ?: emptyList()
-    }
-
-    companion object {
-        @JvmStatic
-        private val log: Logger = createLogger<AccountServiceImpl>()
     }
 }

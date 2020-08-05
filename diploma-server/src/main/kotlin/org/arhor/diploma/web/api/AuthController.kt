@@ -24,32 +24,41 @@ class AuthController(
     private val tokenProvider: TokenProvider<Authentication>
 ) {
 
+    companion object {
+        @JvmStatic
+        private val log: Logger = createLogger<AuthController>()
+    }
+
     @PostMapping("/token")
     fun authenticate(@RequestBody signIn: SignInRequest): SignInResponse {
+        log.debug("authentication started: [${signIn}]")
+
         val auth = authManager.authenticate(
             UsernamePasswordAuthenticationToken(
                 signIn.username,
                 signIn.password
             )
         )
+
         SecurityContextHolder.getContext().authentication = auth
-        return SignInResponse(
-            tokenProvider.generate(auth),
-            tokenProvider.authTokenType()
-        )
+
+        return convertToSignInResponse(auth).also {
+            log.debug("authentication succeed: [{}]", it)
+        }
     }
 
     @GetMapping("/refresh")
     @PreAuthorize("isAuthenticated()")
     fun refresh(auth: Authentication): SignInResponse {
+        return convertToSignInResponse(auth).also {
+            log.debug("token refreshed: [{}]", it)
+        }
+    }
+
+    private fun convertToSignInResponse(auth: Authentication): SignInResponse {
         return SignInResponse(
             tokenProvider.generate(auth),
             tokenProvider.authTokenType()
         )
-    }
-
-    companion object {
-        @JvmStatic
-        private val log: Logger = createLogger<AuthController>()
     }
 }

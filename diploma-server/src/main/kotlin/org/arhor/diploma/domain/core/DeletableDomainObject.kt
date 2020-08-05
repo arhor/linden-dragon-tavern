@@ -1,11 +1,13 @@
 package org.arhor.diploma.domain.core
 
+import org.arhor.diploma.core.Deletable
 import java.io.Serializable
 import javax.persistence.Column
 import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
-abstract class DeletableDomainObject<T : Serializable> : DomainObject<T>(), Deletable {
+abstract class DeletableDomainObject<T : Serializable> : DomainObject<T>(),
+    Deletable {
 
     @Column(name = "deleted", nullable = false)
     override var isDeleted: Boolean = false

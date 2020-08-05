@@ -1,4 +1,4 @@
-package org.arhor.diploma.domain.core
+package org.arhor.diploma.core
 
 interface Deletable {
 

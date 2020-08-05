@@ -1,9 +1,10 @@
 package org.arhor.diploma
 
 import org.arhor.diploma.config.properties.ApplicationProperties
-import org.arhor.diploma.startup.StartupVerifier
-import org.arhor.diploma.util.Failure
-import org.arhor.diploma.util.Success
+import org.arhor.diploma.core.StartupTask
+import org.arhor.diploma.service.Reader
+import org.arhor.diploma.service.dto.Ability
+import org.arhor.diploma.service.dto.Skill
 import org.arhor.diploma.util.createLogger
 import org.slf4j.Logger
 import org.springframework.boot.CommandLineRunner
@@ -14,15 +15,13 @@ import org.springframework.context.annotation.Bean
 import org.springframework.core.env.Environment
 import java.net.InetAddress
 import java.net.UnknownHostException
-import java.text.DecimalFormat
 import javax.annotation.PostConstruct
-import kotlin.system.exitProcess
 
 @SpringBootApplication
 @EnableConfigurationProperties(ApplicationProperties::class)
 class DiplomaApp(
     private val env: Environment,
-    private val verifiers: List<StartupVerifier>
+    private val startupTasks: List<StartupTask>
 ) {
 
     companion object {
@@ -36,27 +35,10 @@ class DiplomaApp(
     }
 
     @PostConstruct
-    fun verifyStartup() {
-        log.info("Starting app verification")
-        log.info("Found [${verifiers.size}] verifiers to run")
-
-        val width = DecimalFormat("0".repeat(verifiers.size.toString().length))
-
-        val success = verifiers.sorted().mapIndexed { i, verifier ->
-            val result = verifier.verify()
-            when (result) {
-                is Success -> log.info("${width.format(i)}: ${result.value}")
-                is Failure -> log.error("${width.format(i)}: ${result.error.message}")
-            }
-            result
-        }.all { it.isSuccess }
-
-        if (!success) {
-            log.error("An error occurred during startup verification")
-            exitProcess(0)
+    fun executeStartupTasks() {
+        for (task in startupTasks) {
+            task.execute()
         }
-
-        log.info("App verification finished successfully")
     }
 
     @Bean

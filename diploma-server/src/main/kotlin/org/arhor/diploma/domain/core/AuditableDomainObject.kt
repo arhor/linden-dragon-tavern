@@ -1,5 +1,6 @@
 package org.arhor.diploma.domain.core;
 
+import org.arhor.diploma.core.Auditable
 import java.io.Serializable
 import java.time.LocalDateTime
 import javax.persistence.Column
@@ -8,7 +9,8 @@ import javax.persistence.PrePersist
 import javax.persistence.PreUpdate
 
 @MappedSuperclass
-abstract class AuditableDomainObject<T : Serializable> : DeletableDomainObject<T>(), Auditable {
+abstract class AuditableDomainObject<T : Serializable> : DeletableDomainObject<T>(),
+    Auditable {
 
     @Column
     override var created: LocalDateTime? = null

@@ -1,5 +1,6 @@
 package org.arhor.diploma.domain.core
 
+import org.arhor.diploma.core.Identifiable
 import java.io.Serializable
 import javax.persistence.*
 
