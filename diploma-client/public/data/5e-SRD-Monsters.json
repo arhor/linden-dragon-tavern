@@ -144,7 +144,7 @@
     "type": "dragon",
     "alignment": "chaotic evil",
     "armorClass": 19,
-    "hitPoints": 195,
+    "hitPoints": "195 (17d12 + 85)",
     "damageImmunities": [
       "acid"
     ],
@@ -249,7 +249,7 @@
     "type": "undead",
     "alignment": "lawful evil",
     "armorClass": 19,
-    "hitPoints": 225,
+    "hitPoints": "225 (18d12)",
     "damageResistances": [
       "necrotic"
     ],
@@ -359,7 +359,7 @@
     "type": "dragon",
     "alignment": "lawful evil",
     "armorClass": 19,
-    "hitPoints": 225,
+    "hitPoints": "225 (18d12 + 108)",
     "damageImmunities": [
       "lightning"
     ],
@@ -460,7 +460,7 @@
     "type": "dragon",
     "alignment": "chaotic good",
     "armorClass": 18,
-    "hitPoints": 172,
+    "hitPoints": "172 (15d12 + 75)",
     "damageImmunities": [
       "fire"
     ],
@@ -549,7 +549,7 @@
     "type": "dragon",
     "alignment": "lawful good",
     "armorClass": 19,
-    "hitPoints": 212,
+    "hitPoints": "212 (17d12)",
     "damageImmunities": [
       "lightning"
     ],
@@ -655,7 +655,7 @@
     "type": "dragon",
     "alignment": "chaotic good",
     "armorClass": 18,
-    "hitPoints": 184,
+    "hitPoints": "184 (16d12 + 80)",
     "damageImmunities": [
       "acid"
     ],
@@ -757,7 +757,7 @@
     "type": "dragon",
     "alignment": "lawful good",
     "armorClass": 19,
-    "hitPoints": 256,
+    "hitPoints": "256 (19d12 + 133)",
     "damageImmunities": [
       "fire"
     ],
@@ -864,7 +864,7 @@
     "type": "dragon",
     "alignment": "lawful evil",
     "armorClass": 19,
-    "hitPoints": 207,
+    "hitPoints": "207 (18d12 + 90)",
     "damageImmunities": [
       "poison"
     ],
@@ -975,7 +975,7 @@
     "type": "dragon",
     "alignment": "chaotic evil",
     "armorClass": 19,
-    "hitPoints": 256,
+    "hitPoints": "256 (19d12 + 133)",
     "damageImmunities": [
       "fire"
     ],
@@ -1081,7 +1081,7 @@
     "type": "dragon",
     "alignment": "lawful good",
     "armorClass": 19,
-    "hitPoints": 243,
+    "hitPoints": "243 (18d12 + 126)",
     "damageImmunities": [
       "cold"
     ],
@@ -1183,7 +1183,7 @@
     "type": "dragon",
     "alignment": "chaotic evil",
     "armorClass": 18,
-    "hitPoints": 200,
+    "hitPoints": "200 (16d12 + 96)",
     "damageImmunities": [
       "cold"
     ],
@@ -1289,7 +1289,7 @@
     "type": "elemental",
     "alignment": "neutral",
     "armorClass": 15,
-    "hitPoints": 90,
+    "hitPoints": "90 (12d10 + 24)",
     "damageResistances": [
       "lightning",
       "thunder",
@@ -1360,7 +1360,7 @@
     "type": "dragon",
     "alignment": "chaotic evil",
     "armorClass": 22,
-    "hitPoints": 367,
+    "hitPoints": "367 (21d20 + 147)",
     "damageImmunities": [
       "acid"
     ],
@@ -1563,7 +1563,7 @@
     "type": "dragon",
     "alignment": "chaotic good",
     "armorClass": 20,
-    "hitPoints": 297,
+    "hitPoints": "297 (17d20 + 119)",
     "damageImmunities": [
       "fire"
     ],
@@ -1670,7 +1670,7 @@
     "type": "dragon",
     "alignment": "lawful good",
     "armorClass": 22,
-    "hitPoints": 444,
+    "hitPoints": "444 (24d20)",
     "damageImmunities": [
       "lightning"
     ],
@@ -1779,7 +1779,7 @@
     "type": "dragon",
     "alignment": "chaotic good",
     "armorClass": 21,
-    "hitPoints": 350,
+    "hitPoints": "350 (20d20 + 140)",
     "damageImmunities": [
       "acid"
     ],
@@ -1885,7 +1885,7 @@
     "type": "dragon",
     "alignment": "lawful good",
     "armorClass": 22,
-    "hitPoints": 546,
+    "hitPoints": "546 (28d20 + 252)",
     "damageImmunities": [
       "fire"
     ],
@@ -1996,7 +1996,7 @@
     "type": "dragon",
     "alignment": "lawful evil",
     "armorClass": 21,
-    "hitPoints": 385,
+    "hitPoints": "385 (22d20 + 154)",
     "damageImmunities": [
       "poison"
     ],
@@ -2107,7 +2107,7 @@
     "type": "dragon",
     "alignment": "chaotic evil",
     "armorClass": 22,
-    "hitPoints": 546,
+    "hitPoints": "546 (28d20 + 252)",
     "damageImmunities": [
       "fire"
     ],
@@ -2208,7 +2208,7 @@
     "type": "dragon",
     "alignment": "lawful good",
     "armorClass": 22,
-    "hitPoints": 487,
+    "hitPoints": "487 (25d20 + 225)",
     "damageImmunities": [
       "cold"
     ],
@@ -2314,7 +2314,7 @@
     "type": "dragon",
     "alignment": "chaotic evil",
     "armorClass": 20,
-    "hitPoints": 333,
+    "hitPoints": "333 (18d20 + 144)",
     "damageImmunities": [
       "cold"
     ],
@@ -2514,7 +2514,7 @@
     "type": "construct",
     "alignment": "unaligned",
     "armorClass": 18,
-    "hitPoints": 33,
+    "hitPoints": "33 (6d8 + 6)",
     "damageImmunities": [
       "poison",
       "psychic"
@@ -2806,7 +2806,7 @@
     "type": "plant",
     "alignment": "unaligned",
     "armorClass": 9,
-    "hitPoints": 10,
+    "hitPoints": "10 (3d6)",
     "damageVulnerabilities": [
       "fire"
     ],
@@ -2856,7 +2856,7 @@
     "type": "plant",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 59,
+    "hitPoints": "59 (7d12 + 14)",
     "damageVulnerabilities": [
       "fire"
     ],
@@ -2907,7 +2907,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 11,
-    "hitPoints": 19,
+    "hitPoints": "19 (3d10)",
     "challengeRating": 0.25,
     "actions": [
       {
@@ -3046,7 +3046,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 10,
-    "hitPoints": "3 (1d4 + 1)",
+    "hitPoints": "34 (4d10 + 12)",
     "challengeRating": 0,
     "specialAbilities": [
       {
@@ -3233,7 +3233,7 @@
     "subtype": "any race",
     "alignment": "any non-lawful alignment",
     "armorClass": 15,
-    "hitPoints": 65,
+    "hitPoints": "65 (10d8)",
     "challengeRating": 2,
     "actions": [
       {
@@ -3296,7 +3296,7 @@
     "subtype": "devil",
     "alignment": "lawful evil",
     "armorClass": 15,
-    "hitPoints": 110,
+    "hitPoints": "110 (13d8 + 52)",
     "damageResistances": [
       "cold",
       "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
@@ -3476,7 +3476,7 @@
     "subtype": "devil",
     "alignment": "lawful evil",
     "armorClass": 13,
-    "hitPoints": 52,
+    "hitPoints": "52 (8d8 + 16)",
     "damageResistances": [
       "cold",
       "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
@@ -3668,7 +3668,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 11,
-    "hitPoints": 19,
+    "hitPoints": "19 (3d8 + 6)",
     "challengeRating": 0.5,
     "specialAbilities": [
       {
@@ -3721,7 +3721,7 @@
     "type": "dragon",
     "alignment": "chaotic evil",
     "armorClass": 17,
-    "hitPoints": 33,
+    "hitPoints": "33 (6d8 + 6)",
     "damageImmunities": [
       "acid"
     ],
@@ -3785,7 +3785,7 @@
     "type": "ooze",
     "alignment": "unaligned",
     "armorClass": 7,
-    "hitPoints": 85,
+    "hitPoints": "85 (10d10 + 30)",
     "damageImmunities": [
       "acid",
       "cold",
@@ -3857,7 +3857,7 @@
     "type": "fey",
     "alignment": "lawful good",
     "armorClass": 13,
-    "hitPoints": 22,
+    "hitPoints": "9 (2d8)",
     "challengeRating": 0.25,
     "specialAbilities": [
       {
@@ -3957,7 +3957,7 @@
     "type": "dragon",
     "alignment": "lawful evil",
     "armorClass": 17,
-    "hitPoints": 52,
+    "hitPoints": "52 (8d8 + 16)",
     "damageImmunities": [
       "lightning"
     ],
@@ -4015,7 +4015,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 11,
-    "hitPoints": "11 (2d8 + 2)",
+    "hitPoints": "42 (5d10 + 15)",
     "challengeRating": 0.25,
     "specialAbilities": [
       {
@@ -4062,7 +4062,7 @@
     "subtype": "devil",
     "alignment": "lawful evil",
     "armorClass": 19,
-    "hitPoints": 142,
+    "hitPoints": "142 (15d10 + 60)",
     "damageResistances": [
       "cold",
       "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
@@ -4160,7 +4160,7 @@
     "type": "dragon",
     "alignment": "chaotic good",
     "armorClass": 16,
-    "hitPoints": 16,
+    "hitPoints": "16 (3d8 + 3)",
     "damageImmunities": [
       "fire"
     ],
@@ -4218,7 +4218,7 @@
     "type": "dragon",
     "alignment": "lawful good",
     "armorClass": 17,
-    "hitPoints": 32,
+    "hitPoints": "32 (5d8)",
     "damageImmunities": [
       "lightning"
     ],
@@ -4282,7 +4282,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 11,
-    "hitPoints": 34,
+    "hitPoints": "34 (4d10 + 12)",
     "challengeRating": 1,
     "specialAbilities": [
       {
@@ -4483,7 +4483,7 @@
     "type": "monstrosity",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 51,
+    "hitPoints": "51 (6d10 + 18)",
     "challengeRating": 2,
     "specialAbilities": [
       {
@@ -4586,7 +4586,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 42,
+    "hitPoints": "42 (5d10)",
     "challengeRating": 2,
     "specialAbilities": [
       {
@@ -4711,7 +4711,7 @@
     "subtype": "devil",
     "alignment": "lawful evil",
     "armorClass": 16,
-    "hitPoints": 85,
+    "hitPoints": "85 (10d8 + 40)",
     "damageResistances": [
       "cold",
       "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
@@ -4917,7 +4917,7 @@
     "type": "construct",
     "alignment": "unaligned",
     "armorClass": 14,
-    "hitPoints": 133,
+    "hitPoints": "133 (14d10 + 56)",
     "damageImmunities": [
       "acid",
       "poison",
@@ -5000,7 +5000,7 @@
     "type": "aberration",
     "alignment": "chaotic neutral",
     "armorClass": 14,
-    "hitPoints": 78,
+    "hitPoints": "78 (12d10)",
     "challengeRating": 8,
     "specialAbilities": [
       {
@@ -5076,7 +5076,7 @@
     "type": "giant",
     "alignment": "neutral good (50%) or neutral evil (50%)",
     "armorClass": 14,
-    "hitPoints": 200,
+    "hitPoints": "262 (21d12 + 126)",
     "challengeRating": 9,
     "specialAbilities": [
       {
@@ -5218,7 +5218,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 13,
+    "hitPoints": "13 (2d10 + 2)",
     "challengeRating": 0.25,
     "actions": [
       {
@@ -5262,7 +5262,7 @@
     "type": "dragon",
     "alignment": "chaotic good",
     "armorClass": 16,
-    "hitPoints": 22,
+    "hitPoints": "22 (4d8 + 4)",
     "damageImmunities": [
       "acid"
     ],
@@ -5485,7 +5485,7 @@
     "subtype": "any race",
     "alignment": "any non-good alignment",
     "armorClass": 13,
-    "hitPoints": 22,
+    "hitPoints": "33 (6d8 + 6)",
     "challengeRating": 2,
     "specialAbilities": [
       {
@@ -5642,7 +5642,7 @@
     "type": "monstrosity",
     "alignment": "neutral evil",
     "armorClass": 12,
-    "hitPoints": 39,
+    "hitPoints": "39 (6d8 + 12)",
     "challengeRating": 1,
     "specialAbilities": [
       {
@@ -5692,7 +5692,7 @@
     "subtype": "gnome",
     "alignment": "neutral good",
     "armorClass": 15,
-    "hitPoints": 16,
+    "hitPoints": "16 (3d6)",
     "challengeRating": 0.5,
     "specialAbilities": [
       {
@@ -5792,7 +5792,7 @@
     "type": "celestial",
     "alignment": "lawful good",
     "armorClass": 17,
-    "hitPoints": "136 (16d8 + 64)",
+    "hitPoints": "45 (7d8 + 14)",
     "damageResistances": [
       "radiant",
       "bludgeoning, piercing, and slashing from nonmagical weapons"
@@ -5874,7 +5874,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 14,
-    "hitPoints": 37,
+    "hitPoints": "37 (5d10 + 10)",
     "challengeRating": 1,
     "specialAbilities": [
       {
@@ -6061,7 +6061,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 10,
-    "hitPoints": 19,
+    "hitPoints": "19 (3d10 + 3)",
     "challengeRating": 0.25,
     "actions": [
       {
@@ -6096,7 +6096,7 @@
     "type": "dragon",
     "alignment": "neutral",
     "armorClass": 20,
-    "hitPoints": 341,
+    "hitPoints": "341 (22d20 + 110)",
     "damageResistances": [
       "fire"
     ],
@@ -6568,7 +6568,7 @@
     "type": "elemental",
     "alignment": "neutral evil",
     "armorClass": 12,
-    "hitPoints": 17,
+    "hitPoints": "17 (5d6)",
     "damageVulnerabilities": [
       "fire"
     ],
@@ -6683,7 +6683,7 @@
     "type": "elemental",
     "alignment": "neutral",
     "armorClass": 17,
-    "hitPoints": 126,
+    "hitPoints": "126 (12d10 + 60)",
     "damageVulnerabilities": [
       "thunder"
     ],
@@ -6825,7 +6825,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 76,
+    "hitPoints": "76 (8d12)",
     "challengeRating": 4,
     "specialAbilities": [
       {
@@ -7220,7 +7220,7 @@
     "type": "giant",
     "alignment": "lawful evil",
     "armorClass": 18,
-    "hitPoints": 162,
+    "hitPoints": "162 (13d12 + 78)",
     "damageImmunities": [
       "fire"
     ],
@@ -7279,7 +7279,7 @@
     "type": "construct",
     "alignment": "neutral",
     "armorClass": 9,
-    "hitPoints": 93,
+    "hitPoints": "93 (11d8 + 44)",
     "damageImmunities": [
       "lightning",
       "poison",
@@ -7361,7 +7361,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 14,
-    "hitPoints": 5,
+    "hitPoints": "5 (2d4)",
     "challengeRating": 0.125,
     "specialAbilities": [
       {
@@ -7404,7 +7404,7 @@
     "type": "construct",
     "alignment": "unaligned",
     "armorClass": 17,
-    "hitPoints": 17,
+    "hitPoints": "17 (5d6)",
     "damageImmunities": [
       "poison",
       "psychic"
@@ -7466,7 +7466,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 11,
-    "hitPoints": "1 (1d4 - 1)",
+    "hitPoints": "18 (4d6 + 4)",
     "challengeRating": 0,
     "specialAbilities": [
       {
@@ -7507,7 +7507,7 @@
     "type": "giant",
     "alignment": "neutral evil",
     "armorClass": 15,
-    "hitPoints": 138,
+    "hitPoints": "138 (12d12 + 60)",
     "damageImmunities": [
       "cold"
     ],
@@ -7634,7 +7634,7 @@
     "type": "ooze",
     "alignment": "unaligned",
     "armorClass": 6,
-    "hitPoints": 84,
+    "hitPoints": "84 (8d10 + 40)",
     "conditionImmunities": [
       "blinded",
       "charmed",
@@ -7884,7 +7884,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 157,
+    "hitPoints": "157 (15d12)",
     "challengeRating": 7,
     "actions": [
       {
@@ -7934,7 +7934,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 10,
-    "hitPoints": 13,
+    "hitPoints": "13 (2d8)",
     "challengeRating": 0.25,
     "specialAbilities": [
       {
@@ -7988,7 +7988,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 22,
+    "hitPoints": "22 (4d10)",
     "challengeRating": 0.25,
     "specialAbilities": [
       {
@@ -8035,7 +8035,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 42,
+    "hitPoints": "42 (5d10)",
     "challengeRating": 2,
     "specialAbilities": [
       {
@@ -8081,7 +8081,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 4,
+    "hitPoints": "4 (1d6 + 1)",
     "challengeRating": 0.25,
     "actions": [
       {
@@ -8118,7 +8118,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 60,
+    "hitPoints": "60 (8d12)",
     "challengeRating": 2,
     "actions": [
       {
@@ -8164,7 +8164,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 15,
-    "hitPoints": 13,
+    "hitPoints": "13 (3d8)",
     "challengeRating": 0.125,
     "specialAbilities": [
       {
@@ -8209,7 +8209,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 14,
-    "hitPoints": 85,
+    "hitPoints": "85 (9d12)",
     "challengeRating": 5,
     "specialAbilities": [
       {
@@ -8264,7 +8264,7 @@
     "type": "beast",
     "alignment": "neutral good",
     "armorClass": 13,
-    "hitPoints": 26,
+    "hitPoints": "26 (4d10)",
     "challengeRating": 1,
     "specialAbilities": [
       {
@@ -8323,7 +8323,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 15,
-    "hitPoints": 42,
+    "hitPoints": "42 (5d12)",
     "challengeRating": 2,
     "specialAbilities": [
       {
@@ -8380,7 +8380,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 4,
+    "hitPoints": "4 (1d6)",
     "challengeRating": 0,
     "specialAbilities": [
       {
@@ -8422,7 +8422,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 11,
-    "hitPoints": 18,
+    "hitPoints": "18 (4d8)",
     "challengeRating": 0.25,
     "specialAbilities": [
       {
@@ -8476,7 +8476,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 11,
-    "hitPoints": 19,
+    "hitPoints": "19 (3d10 + 3)",
     "challengeRating": 0.5,
     "specialAbilities": [
       {
@@ -8522,7 +8522,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 45,
+    "hitPoints": "45 (6d10 + 12)",
     "challengeRating": 1,
     "specialAbilities": [
       {
@@ -8565,7 +8565,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 19,
+    "hitPoints": "19 (3d10 + 3)",
     "challengeRating": 0.25,
     "specialAbilities": [
       {
@@ -8612,7 +8612,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 11,
-    "hitPoints": 52,
+    "hitPoints": "52 (8d10 + 8)",
     "challengeRating": 1,
     "specialAbilities": [
       {
@@ -8670,7 +8670,7 @@
     "type": "beast",
     "alignment": "neutral",
     "armorClass": 12,
-    "hitPoints": 19,
+    "hitPoints": "19 (3d10 + 3)",
     "challengeRating": 0.25,
     "specialAbilities": [
       {
@@ -8726,7 +8726,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 14,
-    "hitPoints": 11,
+    "hitPoints": "11 (2d8 + 2)",
     "challengeRating": 0.25,
     "actions": [
       {
@@ -8765,7 +8765,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 7,
+    "hitPoints": "7 (2d6)",
     "challengeRating": 0.125,
     "specialAbilities": [
       {
@@ -8811,7 +8811,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 7,
+    "hitPoints": "7 (2d6)",
     "challengeRating": 0.125,
     "actions": [
       {
@@ -8847,7 +8847,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 15,
-    "hitPoints": 52,
+    "hitPoints": "52 (7d10 + 14)",
     "challengeRating": 3,
     "actions": [
       {
@@ -8894,7 +8894,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 16,
+    "hitPoints": "16 (3d10)",
     "challengeRating": 0.5,
     "specialAbilities": [
       {
@@ -8941,7 +8941,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 126,
+    "hitPoints": "126 (11d12 + 55)",
     "challengeRating": 5,
     "specialAbilities": [
       {
@@ -8989,7 +8989,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 14,
-    "hitPoints": 26,
+    "hitPoints": "26 (4d10 + 4)",
     "challengeRating": 1,
     "specialAbilities": [
       {
@@ -9048,7 +9048,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 11,
-    "hitPoints": 39,
+    "hitPoints": "39 (6d10 + 6)",
     "challengeRating": 1,
     "specialAbilities": [
       {
@@ -9099,7 +9099,7 @@
     "type": "beast",
     "alignment": "neutral evil",
     "armorClass": 10,
-    "hitPoints": 22,
+    "hitPoints": "22 (3d10 + 6)",
     "challengeRating": 1,
     "specialAbilities": [
       {
@@ -9161,7 +9161,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 13,
+    "hitPoints": "13 (3d8)",
     "challengeRating": 0.5,
     "actions": [
       {
@@ -9198,7 +9198,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 9,
+    "hitPoints": "9 (2d8)",
     "challengeRating": 0.125,
     "specialAbilities": [
       {
@@ -9243,7 +9243,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 11,
+    "hitPoints": "11 (2d8 + 2)",
     "challengeRating": 0.25,
     "specialAbilities": [
       {
@@ -9298,7 +9298,7 @@
     "type": "aberration",
     "alignment": "neutral",
     "armorClass": 9,
-    "hitPoints": 67,
+    "hitPoints": "67 (9d8 + 27)",
     "conditionImmunities": [
       "prone"
     ],
@@ -9673,7 +9673,7 @@
     "type": "dragon",
     "alignment": "lawful good",
     "armorClass": 17,
-    "hitPoints": 60,
+    "hitPoints": "60 (8d8 + 24)",
     "damageImmunities": [
       "fire"
     ],
@@ -9737,7 +9737,7 @@
     "type": "monstrosity",
     "alignment": "unaligned",
     "armorClass": 19,
-    "hitPoints": "114 (12d10 + 48)",
+    "hitPoints": "406 (28d12 + 224)",
     "damageImmunities": [
       "petrified"
     ],
@@ -9795,7 +9795,7 @@
     "type": "ooze",
     "alignment": "unaligned",
     "armorClass": 8,
-    "hitPoints": 22,
+    "hitPoints": "22 (3d8 + 9)",
     "damageResistances": [
       "acid",
       "cold",
@@ -9861,7 +9861,7 @@
     "type": "dragon",
     "alignment": "lawful evil",
     "armorClass": 17,
-    "hitPoints": 38,
+    "hitPoints": "38 (7d8 + 7)",
     "damageImmunities": [
       "poison"
     ],
@@ -9928,7 +9928,7 @@
     "type": "fey",
     "alignment": "neutral evil",
     "armorClass": 17,
-    "hitPoints": 82,
+    "hitPoints": "82 (11d8 + 33)",
     "challengeRating": 3,
     "specialAbilities": [
       {
@@ -10223,7 +10223,7 @@
     "type": "monstrosity",
     "alignment": "lawful good",
     "armorClass": 18,
-    "hitPoints": 127,
+    "hitPoints": "127 (15d10)",
     "damageImmunities": [
       "poison"
     ],
@@ -10381,7 +10381,7 @@
     "subtype": "human",
     "alignment": "any alignment",
     "armorClass": 18,
-    "hitPoints": 65,
+    "hitPoints": "65 (10d8)",
     "damageResistances": [
       "fire"
     ],
@@ -10545,7 +10545,7 @@
     "type": "fiend",
     "alignment": "lawful evil",
     "armorClass": 15,
-    "hitPoints": 45,
+    "hitPoints": "45 (7d8 + 14)",
     "damageImmunities": [
       "fire"
     ],
@@ -10686,7 +10686,7 @@
     "type": "giant",
     "alignment": "chaotic evil",
     "armorClass": 13,
-    "hitPoints": 105,
+    "hitPoints": "105 (10d12 + 40)",
     "challengeRating": 5,
     "actions": [
       {
@@ -10900,7 +10900,7 @@
     "subtype": "devil",
     "alignment": "lawful evil",
     "armorClass": 18,
-    "hitPoints": 148,
+    "hitPoints": "178 (17d10 + 85)",
     "damageResistances": [
       "cold",
       "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
@@ -10984,7 +10984,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 45,
+    "hitPoints": "45 (6d10 + 12)",
     "challengeRating": 2,
     "specialAbilities": [
       {
@@ -11136,7 +11136,7 @@
     "subtype": "devil",
     "alignment": "lawful evil",
     "armorClass": 18,
-    "hitPoints": 180,
+    "hitPoints": "180 (19d10 + 76)",
     "damageResistances": [
       "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
     ],
@@ -11224,7 +11224,7 @@
     "type": "elemental",
     "alignment": "neutral evil",
     "armorClass": 11,
-    "hitPoints": 21,
+    "hitPoints": "21 (6d6)",
     "damageVulnerabilities": [
       "bludgeoning",
       "fire"
@@ -11382,7 +11382,7 @@
     "type": "elemental",
     "alignment": "neutral",
     "armorClass": 14,
-    "hitPoints": 104,
+    "hitPoints": "104 (16d8 + 32)",
     "damageResistances": [
       "bludgeoning, piercing, and slashing from nonmagical weapons"
     ],
@@ -11456,7 +11456,7 @@
     "type": "construct",
     "alignment": "unaligned",
     "armorClass": 20,
-    "hitPoints": 210,
+    "hitPoints": "210 (20d10 + 100)",
     "damageImmunities": [
       "fire",
       "poison",
@@ -11590,7 +11590,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 90,
+    "hitPoints": "90 (12d12 + 12)",
     "challengeRating": 3,
     "specialAbilities": [
       {
@@ -11640,7 +11640,7 @@
     "subtype": "any race",
     "alignment": "any alignment",
     "armorClass": 18,
-    "hitPoints": "52 (8d8 + 16)",
+    "hitPoints": "180 (19d8 + 95)",
     "challengeRating": 3,
     "specialAbilities": [
       {
@@ -11998,7 +11998,7 @@
     "type": "undead",
     "alignment": "any evil alignment",
     "armorClass": 17,
-    "hitPoints": "135 (18d8 + 54)",
+    "hitPoints": "136 (16d10 + 48)",
     "damageResistances": [
       "cold",
       "lightning",
@@ -12197,7 +12197,7 @@
     "subtype": "lizardfolk",
     "alignment": "neutral",
     "armorClass": 15,
-    "hitPoints": 22,
+    "hitPoints": "22 (4d8)",
     "challengeRating": 0.5,
     "specialAbilities": [
       {
@@ -12322,7 +12322,7 @@
     "type": "elemental",
     "alignment": "neutral evil",
     "armorClass": 11,
-    "hitPoints": 22,
+    "hitPoints": "22 (5d6 + 5)",
     "damageVulnerabilities": [
       "cold"
     ],
@@ -12658,7 +12658,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": "5 (1d8 + 1)",
+    "hitPoints": "33 (6d8 + 6)",
     "challengeRating": 0.125,
     "specialAbilities": [
       {
@@ -13014,7 +13014,7 @@
     "type": "undead",
     "alignment": "lawful evil",
     "armorClass": 12,
-    "hitPoints": 67,
+    "hitPoints": "67 (9d10)",
     "damageVulnerabilities": [
       "bludgeoning"
     ],
@@ -13181,7 +13181,7 @@
     "type": "undead",
     "alignment": "lawful evil",
     "armorClass": 17,
-    "hitPoints": 97,
+    "hitPoints": "97 (13d8)",
     "damageVulnerabilities": [
       "bludgeoning"
     ],
@@ -13375,7 +13375,7 @@
     "type": "fiend",
     "alignment": "neutral evil",
     "armorClass": 17,
-    "hitPoints": 112,
+    "hitPoints": "112 (15d8 + 45)",
     "damageResistances": [
       "cold",
       "fire",
@@ -13468,7 +13468,7 @@
     "type": "fiend",
     "alignment": "neutral evil",
     "armorClass": 13,
-    "hitPoints": "68 (8d10 + 24)",
+    "hitPoints": "71 (13d8 + 13)",
     "damageImmunities": [
       "fire"
     ],
@@ -13575,7 +13575,7 @@
     "type": "ooze",
     "alignment": "unaligned",
     "armorClass": 8,
-    "hitPoints": 45,
+    "hitPoints": "45 (6d10 + 12)",
     "damageResistances": [
       "acid"
     ],
@@ -13747,7 +13747,7 @@
     "type": "undead",
     "alignment": "neutral evil",
     "armorClass": 8,
-    "hitPoints": 85,
+    "hitPoints": "85 (9d10)",
     "damageImmunities": [
       "poison"
     ],
@@ -13800,7 +13800,7 @@
     "type": "giant",
     "alignment": "lawful evil",
     "armorClass": 16,
-    "hitPoints": "110 (13d10 + 39)",
+    "hitPoints": "7 (2d6)",
     "challengeRating": 7,
     "specialAbilities": [
       {
@@ -14046,7 +14046,7 @@
     "type": "monstrosity",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 59,
+    "hitPoints": "59 (7d10)",
     "challengeRating": 3,
     "specialAbilities": [
       {
@@ -14205,7 +14205,7 @@
     "type": "monstrosity",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 32,
+    "hitPoints": "32 (5d10 + 5)",
     "challengeRating": 3,
     "specialAbilities": [
       {
@@ -14259,7 +14259,7 @@
     "subtype": "devil",
     "alignment": "lawful evil",
     "armorClass": 19,
-    "hitPoints": 300,
+    "hitPoints": "300 (24d10 + 168)",
     "damageResistances": [
       "cold",
       "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
@@ -14485,7 +14485,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 2,
+    "hitPoints": "2 (1d4)",
     "challengeRating": 0.125,
     "actions": [
       {
@@ -14521,7 +14521,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 42,
+    "hitPoints": "42 (5d10 + 15)",
     "challengeRating": 2,
     "specialAbilities": [
       {
@@ -14576,7 +14576,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 10,
-    "hitPoints": 11,
+    "hitPoints": "11 (2d8)",
     "challengeRating": 0.125,
     "actions": [
       {
@@ -14867,7 +14867,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": "1 (1d4 - 1)",
+    "hitPoints": "28 (8d8 - 8)",
     "challengeRating": 0,
     "specialAbilities": [
       {
@@ -14975,7 +14975,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 10,
-    "hitPoints": "71 (11d8 + 22)",
+    "hitPoints": "118 (12d12 + 40)",
     "challengeRating": 0,
     "specialAbilities": [
       {
@@ -15015,7 +15015,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": "1 (1d4 - 1)",
+    "hitPoints": "24 (7d8 - 7)",
     "challengeRating": 0,
     "specialAbilities": [
       {
@@ -15056,7 +15056,7 @@
     "type": "dragon",
     "alignment": "chaotic evil",
     "armorClass": 17,
-    "hitPoints": 75,
+    "hitPoints": "75 (10d8 + 30)",
     "damageImmunities": [
       "fire"
     ],
@@ -15114,7 +15114,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 22,
+    "hitPoints": "22 (4d8 + 4)",
     "challengeRating": 0.5,
     "specialAbilities": [
       {
@@ -15257,7 +15257,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 10,
-    "hitPoints": 13,
+    "hitPoints": "13 (2d10 + 2)",
     "challengeRating": 0.25,
     "actions": [
       {
@@ -15292,7 +15292,7 @@
     "type": "monstrosity",
     "alignment": "unaligned",
     "armorClass": 15,
-    "hitPoints": "248 (16d20 + 80)",
+    "hitPoints": "38 (4d10 + 16)",
     "challengeRating": 11,
     "specialAbilities": [
       {
@@ -15419,7 +15419,7 @@
     "type": "construct",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 33,
+    "hitPoints": "33 (6d10)",
     "damageImmunities": [
       "poison",
       "psychic"
@@ -15481,7 +15481,7 @@
     "type": "monstrosity",
     "alignment": "unaligned",
     "armorClass": 14,
-    "hitPoints": 27,
+    "hitPoints": "27 (5d8 + 5)",
     "challengeRating": 0.5,
     "specialAbilities": [
       {
@@ -15531,7 +15531,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 52,
+    "hitPoints": "52 (7d10 + 14)",
     "challengeRating": 2,
     "specialAbilities": [
       {
@@ -15895,7 +15895,7 @@
     "type": "fey",
     "alignment": "chaotic evil",
     "armorClass": 14,
-    "hitPoints": 52,
+    "hitPoints": "52 (7d8 + 21)",
     "challengeRating": 2,
     "specialAbilities": [
       {
@@ -15967,7 +15967,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 11,
-    "hitPoints": 1,
+    "hitPoints": "1 (1d4 - 1)",
     "challengeRating": 0,
     "specialAbilities": [
       {
@@ -16076,7 +16076,7 @@
     "type": "plant",
     "alignment": "unaligned",
     "armorClass": 15,
-    "hitPoints": 136,
+    "hitPoints": "136 (16d10 + 48)",
     "damageResistances": [
       "cold",
       "fire"
@@ -16141,7 +16141,7 @@
     "type": "construct",
     "alignment": "unaligned",
     "armorClass": 17,
-    "hitPoints": 142,
+    "hitPoints": "142 (15d10)",
     "damageImmunities": [
       "poison"
     ],
@@ -16259,7 +16259,7 @@
     "type": "dragon",
     "alignment": "lawful good",
     "armorClass": 17,
-    "hitPoints": 45,
+    "hitPoints": "45 (6d8 + 18)",
     "damageImmunities": [
       "cold"
     ],
@@ -16316,7 +16316,7 @@
     "type": "undead",
     "alignment": "lawful evil",
     "armorClass": 13,
-    "hitPoints": "118 (12d12 + 40)",
+    "hitPoints": "22 (3d10 + 6)",
     "damageVulnerabilities": [
       "bludgeoning"
     ],
@@ -16604,7 +16604,7 @@
     "type": "monstrosity",
     "alignment": "chaotic evil",
     "armorClass": 15,
-    "hitPoints": 75,
+    "hitPoints": "75 (10d10 + 20)",
     "damageImmunities": [
       "poison"
     ],
@@ -16791,7 +16791,7 @@
     "type": "elemental",
     "alignment": "neutral evil",
     "armorClass": 10,
-    "hitPoints": 21,
+    "hitPoints": "21 (6d6)",
     "damageImmunities": [
       "fire",
       "poison"
@@ -16894,7 +16894,7 @@
     "type": "giant",
     "alignment": "neutral",
     "armorClass": 17,
-    "hitPoints": 126,
+    "hitPoints": "161 (14d12 + 70)",
     "challengeRating": 7,
     "specialAbilities": [
       {
@@ -16963,7 +16963,7 @@
     "type": "construct",
     "alignment": "unaligned",
     "armorClass": 17,
-    "hitPoints": 178,
+    "hitPoints": "178 (17d10 + 85)",
     "damageImmunities": [
       "poison",
       "psychic",
@@ -17037,7 +17037,7 @@
     "type": "giant",
     "alignment": "chaotic good",
     "armorClass": 16,
-    "hitPoints": 230,
+    "hitPoints": "230 (20d12 + 100)",
     "damageResistances": [
       "cold"
     ],
@@ -17121,7 +17121,7 @@
     "subtype": "shapechanger",
     "alignment": "neutral evil",
     "armorClass": 15,
-    "hitPoints": 66,
+    "hitPoints": "66 (12d8)",
     "damageResistances": [
       "cold",
       "fire",
@@ -17201,7 +17201,7 @@
     "type": "swarm of Tiny beasts",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 22,
+    "hitPoints": "22 (5d8)",
     "damageResistances": [
       "bludgeoning",
       "piercing",
@@ -17266,7 +17266,7 @@
     "type": "swarm of Tiny beasts",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 22,
+    "hitPoints": "22 (5d8)",
     "damageResistances": [
       "bludgeoning",
       "piercing",
@@ -17324,7 +17324,7 @@
     "type": "swarm of Tiny beasts",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 22,
+    "hitPoints": "22 (5d8)",
     "damageResistances": [
       "bludgeoning",
       "piercing",
@@ -17381,7 +17381,7 @@
     "type": "swarm of Tiny beasts",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 22,
+    "hitPoints": "22 (5d8)",
     "damageResistances": [
       "bludgeoning",
       "piercing",
@@ -17438,7 +17438,7 @@
     "type": "swarm of Tiny beasts",
     "alignment": "unaligned",
     "armorClass": 14,
-    "hitPoints": 36,
+    "hitPoints": "36 (8d8)",
     "damageResistances": [
       "bludgeoning",
       "piercing",
@@ -17495,7 +17495,7 @@
     "type": "swarm of Tiny beasts",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 28,
+    "hitPoints": "28 (8d8)",
     "damageResistances": [
       "bludgeoning",
       "piercing",
@@ -17560,7 +17560,7 @@
     "type": "swarm of Tiny beasts",
     "alignment": "unaligned",
     "armorClass": 10,
-    "hitPoints": 24,
+    "hitPoints": "24 (7d8)",
     "damageResistances": [
       "bludgeoning",
       "piercing",
@@ -17620,7 +17620,7 @@
     "type": "swarm of Tiny beasts",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 24,
+    "hitPoints": "24 (7d8)",
     "damageResistances": [
       "bludgeoning",
       "piercing",
@@ -17676,7 +17676,7 @@
     "type": "swarm of Tiny beasts",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 22,
+    "hitPoints": "22 (5d8)",
     "damageResistances": [
       "bludgeoning",
       "piercing",
@@ -17744,7 +17744,7 @@
     "type": "swarm of Tiny beasts",
     "alignment": "unaligned",
     "armorClass": 12,
-    "hitPoints": 22,
+    "hitPoints": "22 (5d8)",
     "damageResistances": [
       "bludgeoning",
       "piercing",
@@ -18102,7 +18102,7 @@
     "subtype": "any race",
     "alignment": "any alignment",
     "armorClass": 12,
-    "hitPoints": 11,
+    "hitPoints": "11 (2d8 + 2)",
     "challengeRating": 0.125,
     "specialAbilities": [
       {
@@ -18194,7 +18194,7 @@
     "type": "giant",
     "alignment": "chaotic evil",
     "armorClass": 15,
-    "hitPoints": "84 (8d10 + 40)",
+    "hitPoints": "97 (15d10 + 15)",
     "challengeRating": 5,
     "specialAbilities": [
       {
@@ -18260,7 +18260,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": 136,
+    "hitPoints": "136 (13d12 + 52)",
     "challengeRating": 8,
     "actions": [
       {
@@ -18520,7 +18520,7 @@
     "type": "undead",
     "alignment": "neutral evil",
     "armorClass": 15,
-    "hitPoints": 82,
+    "hitPoints": "82 (11d8)",
     "damageResistances": [
       "necrotic",
       "bludgeoning, piercing, and slashing from nonmagical weapons"
@@ -18652,7 +18652,7 @@
     "type": "plant",
     "alignment": "unaligned",
     "armorClass": 5,
-    "hitPoints": 18,
+    "hitPoints": "18 (4d8)",
     "conditionImmunities": [
       "blinded",
       "deafened",
@@ -18836,7 +18836,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 11,
-    "hitPoints": "22 (3d10 + 6)",
+    "hitPoints": "19 (3d10 + 3)",
     "challengeRating": 0.5,
     "specialAbilities": [
       {
@@ -18877,7 +18877,7 @@
     "type": "undead",
     "alignment": "lawful evil",
     "armorClass": 13,
-    "hitPoints": 22,
+    "hitPoints": "22 (3d10)",
     "damageVulnerabilities": [
       "bludgeoning"
     ],
@@ -18923,7 +18923,7 @@
     "type": "elemental",
     "alignment": "neutral",
     "armorClass": 14,
-    "hitPoints": 114,
+    "hitPoints": "114 (12d10 + 48)",
     "damageResistances": [
       "acid",
       "bludgeoning, piercing, and slashing from nonmagical weapons"
@@ -19415,7 +19415,7 @@
     "type": "dragon",
     "alignment": "chaotic evil",
     "armorClass": 16,
-    "hitPoints": 32,
+    "hitPoints": "32 (5d8 + 10)",
     "damageImmunities": [
       "cold"
     ],
@@ -19474,7 +19474,7 @@
     "type": "undead",
     "alignment": "neutral evil",
     "armorClass": 14,
-    "hitPoints": "45 (6d8 + 18)",
+    "hitPoints": "37 (5d8 + 15)",
     "damageImmunities": [
       "necrotic",
       "bludgeoning, piercing, and slashing from nonmagical weapons that aren't silvered"
@@ -19547,7 +19547,7 @@
     "type": "undead",
     "alignment": "chaotic evil",
     "armorClass": 19,
-    "hitPoints": 22,
+    "hitPoints": "22 (9d4)",
     "damageResistances": [
       "acid",
       "cold",
@@ -19629,7 +19629,7 @@
     "type": "monstrosity",
     "alignment": "neutral evil",
     "armorClass": 13,
-    "hitPoints": 75,
+    "hitPoints": "75 (10d10 + 20)",
     "damageImmunities": [
       "cold"
     ],
@@ -19694,7 +19694,7 @@
     "type": "beast",
     "alignment": "unaligned",
     "armorClass": 13,
-    "hitPoints": "11 (2d8 + 2)",
+    "hitPoints": "15 (3d8 + 2)",
     "challengeRating": 0.25,
     "specialAbilities": [
       {
@@ -19790,7 +19790,7 @@
     "type": "undead",
     "alignment": "neutral evil",
     "armorClass": 13,
-    "hitPoints": "67 (9d8 + 27)",
+    "hitPoints": "45 (6d8 + 18)",
     "damageResistances": [
       "acid",
       "cold",
@@ -19995,7 +19995,7 @@
     "type": "dragon",
     "alignment": "chaotic evil",
     "armorClass": 18,
-    "hitPoints": 127,
+    "hitPoints": "127 (15d10 + 45)",
     "damageImmunities": [
       "acid"
     ],
@@ -20071,7 +20071,7 @@
     "type": "dragon",
     "alignment": "lawful evil",
     "armorClass": 18,
-    "hitPoints": 152,
+    "hitPoints": "152 (16d10 + 64)",
     "damageImmunities": [
       "lightning"
     ],
@@ -20141,7 +20141,7 @@
     "type": "dragon",
     "alignment": "chaotic good",
     "armorClass": 17,
-    "hitPoints": 110,
+    "hitPoints": "110 (13d10 + 39)",
     "damageImmunities": [
       "fire"
     ],
@@ -20212,7 +20212,7 @@
     "type": "dragon",
     "alignment": "lawful good",
     "armorClass": 18,
-    "hitPoints": 142,
+    "hitPoints": "142 (15d10 + 60)",
     "damageImmunities": [
       "lightning"
     ],
@@ -20289,7 +20289,7 @@
     "type": "dragon",
     "alignment": "chaotic good",
     "armorClass": 17,
-    "hitPoints": 119,
+    "hitPoints": "119 (14d10 + 42)",
     "damageImmunities": [
       "acid"
     ],
@@ -20360,7 +20360,7 @@
     "type": "dragon",
     "alignment": "lawful good",
     "armorClass": 18,
-    "hitPoints": 178,
+    "hitPoints": "178 (17d10 + 85)",
     "damageImmunities": [
       "fire"
     ],
@@ -20438,7 +20438,7 @@
     "type": "dragon",
     "alignment": "lawful evil",
     "armorClass": 18,
-    "hitPoints": 136,
+    "hitPoints": "136 (16d10 + 48)",
     "damageImmunities": [
       "poison"
     ],
@@ -20518,7 +20518,7 @@
     "type": "dragon",
     "alignment": "chaotic evil",
     "armorClass": 18,
-    "hitPoints": 178,
+    "hitPoints": "178 (17d10 + 85)",
     "damageImmunities": [
       "fire"
     ],
@@ -20588,7 +20588,7 @@
     "type": "dragon",
     "alignment": "lawful good",
     "armorClass": 18,
-    "hitPoints": 168,
+    "hitPoints": "168 (16d10 + 80)",
     "damageImmunities": [
       "cold"
     ],
@@ -20659,7 +20659,7 @@
     "type": "dragon",
     "alignment": "chaotic evil",
     "armorClass": 17,
-    "hitPoints": 133,
+    "hitPoints": "133 (14d10 + 56)",
     "damageImmunities": [
       "cold"
     ],
@@ -20736,7 +20736,7 @@
     "type": "undead",
     "alignment": "neutral evil",
     "armorClass": 8,
-    "hitPoints": "22 (3d8 + 9)",
+    "hitPoints": "34 (4d12 + 8)",
     "conditionImmunities": [
       "poisoned"
     ],

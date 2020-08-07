@@ -45,7 +45,7 @@ abstract class AbstractService<E : DomainObject<K>, T : Identifiable<K>, K : Ser
     }
 
     override fun update(item: T): T {
-        return item.id?.let {
+        return item.getId()?.let {
             val entity = repository
                 .findById(it)
                 .orElseThrow { EntityNotFoundException("account", "id", it) }
@@ -66,7 +66,7 @@ abstract class AbstractService<E : DomainObject<K>, T : Identifiable<K>, K : Ser
     }
 
     override fun delete(item: T) {
-        item.id?.let { delete(it) }
+        item.getId()?.let { delete(it) }
     }
 
 

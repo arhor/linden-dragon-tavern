@@ -28,6 +28,6 @@ interface AccountRepository : BaseRepository<Account, Long> {
     @Transactional
     @CacheEvict(cacheNames = [Cache.Names.ACCOUNT_BY_USERNAME], key = "#entity.username")
     override fun delete(entity: Account) {
-        entity.id?.let { deleteById(it) }
+        entity.getId()?.let { deleteById(it) }
     }
 }

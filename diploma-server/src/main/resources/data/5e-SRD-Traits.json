@@ -2,30 +2,14 @@
   {
     "id": 1,
     "races": [
-      {
-        "name": "Dwarf"
-      },
-      {
-        "name": "Hill Dwarf"
-      },
-      {
-        "name": "Elf"
-      },
-      {
-        "name": "High Elf"
-      },
-      {
-        "name": "Gnome"
-      },
-      {
-        "name": "Rock Gnome"
-      },
-      {
-        "name": "Half-Elf"
-      },
-      {
-        "name": "Half-Orc"
-      }
+      "Dwarf",
+      "Hill Dwarf",
+      "Elf",
+      "High Elf",
+      "Gnome",
+      "Rock Gnome",
+      "Half-Elf",
+      "Half-Orc"
     ],
     "name": "Darkvision",
     "desc": [
@@ -35,10 +19,8 @@
   {
     "id": 2,
     "races": [
-      {
-        "name": "Dwarf"
-      },
-      { "name": "Hill Dwarf" }
+      "Dwarf",
+      "Hill Dwarf"
     ],
     "name": "Dwarven Resilience",
     "desc": [
@@ -48,10 +30,8 @@
   {
     "id": 3,
     "races": [
-      {
-        "name": "Dwarf"
-      },
-      { "name": "Hill Dwarf" }
+      "Dwarf",
+      "Hill Dwarf"
     ],
     "name": "Dwarven Combat Training",
     "desc": [
@@ -61,10 +41,8 @@
   {
     "id": 4,
     "races": [
-      {
-        "name": "Dwarf"
-      },
-      { "name": "Hill Dwarf" }
+      "Dwarf",
+      "Hill Dwarf"
     ],
     "name": "Stonecunning",
     "desc": [
@@ -74,9 +52,7 @@
   {
     "id": 5,
     "races": [
-      {
-        "name": "Hill Dwarf"
-      }
+      "Hill Dwarf"
     ],
     "name": "Dwarven Toughness",
     "desc": [
@@ -86,24 +62,20 @@
   {
     "id": 6,
     "races": [
-      {
-        "name": "Elf"
-      },
-      { "name": "High Elf" }
+      "Elf",
+      "High Elf"
     ],
     "name": "Keen Senses",
-    "desc": ["You have proficiency in the Perception skill."]
+    "desc": [
+      "You have proficiency in the Perception skill."
+    ]
   },
   {
     "id": 7,
     "races": [
-      {
-        "name": "Elf"
-      },
-      { "name": "High Elf" },
-      {
-        "name": "Half-Elf"
-      }
+      "Elf",
+      "High Elf",
+      "Half-Elf"
     ],
     "name": "Fey Ancestry",
     "desc": [
@@ -113,10 +85,8 @@
   {
     "id": 8,
     "races": [
-      {
-        "name": "Elf"
-      },
-      { "name": "High Elf" }
+      "Elf",
+      "High Elf"
     ],
     "name": "Trance",
     "desc": [
@@ -126,10 +96,8 @@
   {
     "id": 9,
     "races": [
-      {
-        "name": "Elf"
-      },
-      { "name": "High Elf" }
+      "Elf",
+      "High Elf"
     ],
     "name": "Elf Weapon Training",
     "desc": [
@@ -139,9 +107,7 @@
   {
     "id": 10,
     "races": [
-      {
-        "name": "High Elf"
-      }
+      "High Elf"
     ],
     "name": "High Elf Cantrip",
     "desc": [
@@ -151,9 +117,7 @@
   {
     "id": 11,
     "races": [
-      {
-        "name": "High Elf"
-      }
+      "High Elf"
     ],
     "name": "Extra Language",
     "desc": [
@@ -163,10 +127,8 @@
   {
     "id": 12,
     "races": [
-      {
-        "name": "Halfling"
-      },
-      { "name": "Lightfoot Halfling" }
+      "Halfling",
+      "Lightfoot Halfling"
     ],
     "name": "Lucky",
     "desc": [
@@ -176,21 +138,19 @@
   {
     "id": 13,
     "races": [
-      {
-        "name": "Halfling"
-      },
-      { "name": "Lightfoot Halfling" }
+      "Halfling",
+      "Lightfoot Halfling"
     ],
     "name": "Brave",
-    "desc": ["You have advantage on saving throw against being frightened."]
+    "desc": [
+      "You have advantage on saving throw against being frightened."
+    ]
   },
   {
     "id": 14,
     "races": [
-      {
-        "name": "Halfling"
-      },
-      { "name": "Lightfoot Halfling" }
+      "Halfling",
+      "Lightfoot Halfling"
     ],
     "name": "Halfling Nimbleness",
     "desc": [
@@ -200,9 +160,7 @@
   {
     "id": 15,
     "races": [
-      {
-        "name": "Lightfoot Halfling"
-      }
+      "Lightfoot Halfling"
     ],
     "name": "Naturally Stealthy",
     "desc": [
@@ -212,9 +170,7 @@
   {
     "id": 16,
     "races": [
-      {
-        "name": "Dragonborn"
-      }
+      "Dragonborn"
     ],
     "name": "Draconic Ancestry",
     "desc": [
@@ -224,9 +180,7 @@
   {
     "id": 17,
     "races": [
-      {
-        "name": "Dragonborn"
-      }
+      "Dragonborn"
     ],
     "name": "Breath Weapon",
     "desc": [
@@ -238,9 +192,7 @@
   {
     "id": 18,
     "races": [
-      {
-        "name": "Dragonborn"
-      }
+      "Dragonborn"
     ],
     "name": "Damage Resistance",
     "desc": [
@@ -250,10 +202,8 @@
   {
     "id": 19,
     "races": [
-      {
-        "name": "Gnome"
-      },
-      { "name": "Rock Gnome" }
+      "Gnome",
+      "Rock Gnome"
     ],
     "name": "Gnome Cunning",
     "desc": [
@@ -263,9 +213,7 @@
   {
     "id": 20,
     "races": [
-      {
-        "name": "Rock Gnome"
-      }
+      "Rock Gnome"
     ],
     "name": "Artificer's Lore",
     "desc": [
@@ -275,9 +223,7 @@
   {
     "id": 21,
     "races": [
-      {
-        "name": "Rock Gnome"
-      }
+      "Rock Gnome"
     ],
     "name": "Tinker",
     "desc": [
@@ -291,29 +237,27 @@
   {
     "id": 22,
     "races": [
-      {
-        "name": "Half-Elf"
-      }
+      "Half-Elf"
     ],
     "name": "Skill Versatility",
-    "desc": ["You gain proficiency in two skills of your choice."]
+    "desc": [
+      "You gain proficiency in two skills of your choice."
+    ]
   },
   {
     "id": 23,
     "races": [
-      {
-        "name": "Half-Orc"
-      }
+      "Half-Orc"
     ],
     "name": "Menacing",
-    "desc": ["You gain proficiency in the Intimidation skill."]
+    "desc": [
+      "You gain proficiency in the Intimidation skill."
+    ]
   },
   {
     "id": 24,
     "races": [
-      {
-        "name": "Half-Orc"
-      }
+      "Half-Orc"
     ],
     "name": "Relentless Endurance",
     "desc": [
@@ -323,9 +267,7 @@
   {
     "id": 25,
     "races": [
-      {
-        "name": "Half-Orc"
-      }
+      "Half-Orc"
     ],
     "name": "Savage Attacks",
     "desc": [
@@ -335,19 +277,17 @@
   {
     "id": 26,
     "races": [
-      {
-        "name": "Tiefling"
-      }
+      "Tiefling"
     ],
     "name": "Hellish Resistance",
-    "desc": ["You have resistance to fire damage."]
+    "desc": [
+      "You have resistance to fire damage."
+    ]
   },
   {
     "id": 27,
     "races": [
-      {
-        "name": "Tiefling"
-      }
+      "Tiefling"
     ],
     "name": "Internal Legacy",
     "desc": [

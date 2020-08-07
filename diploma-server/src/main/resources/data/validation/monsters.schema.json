@@ -1,0 +1,248 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://diploma.arhor.org/monsters.schema.json",
+  "title": "Monsters",
+  "description": "D&D 5-e monsters data-set",
+  "type": "array",
+  "items": {
+    "$ref": "#/definitions/monster"
+  },
+  "definitions": {
+    "monster": {
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "size": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "subtype": {
+          "type": "string"
+        },
+        "alignment": {
+          "type": "string"
+        },
+        "armorClass": {
+          "type": "integer"
+        },
+        "hitPoints": {
+          "type": "string"
+        },
+        "speed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "abilities": {
+          "$ref": "#/definitions/abilities"
+        },
+        "skills": {
+          "$ref": "#/definitions/skills"
+        },
+        "damageVulnerabilities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "damageResistances": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "damageImmunities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "conditionImmunities": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "senses": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "languages": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "challengeRating": {
+          "type": "number"
+        },
+        "specialAbilities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "desc": {
+                "type": "string"
+              },
+              "damageDice": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "name",
+              "desc"
+            ]
+          }
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/action"
+          }
+        },
+        "legendaryActions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/action"
+          }
+        }
+      },
+      "required": [
+        "name",
+        "size",
+        "type",
+        "alignment",
+        "armorClass",
+        "hitPoints",
+        "speed",
+        "abilities",
+        "skills",
+        "senses",
+        "challengeRating"
+      ]
+    },
+    "abilities": {
+      "type": "object",
+      "properties": {
+        "STR": {
+          "type": "integer"
+        },
+        "DEX": {
+          "type": "integer"
+        },
+        "CON": {
+          "type": "integer"
+        },
+        "INT": {
+          "type": "integer"
+        },
+        "WIS": {
+          "type": "integer"
+        },
+        "CHA": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "STR",
+        "DEX",
+        "CON",
+        "INT",
+        "WIS",
+        "CHA"
+      ]
+    },
+    "skills": {
+      "type": "object",
+      "properties": {
+        "athletics": {
+          "type": "integer"
+        },
+        "acrobatics": {
+          "type": "integer"
+        },
+        "sleightOfHand": {
+          "type": "integer"
+        },
+        "stealth": {
+          "type": "integer"
+        },
+        "arcana": {
+          "type": "integer"
+        },
+        "history": {
+          "type": "integer"
+        },
+        "investigation": {
+          "type": "integer"
+        },
+        "nature": {
+          "type": "integer"
+        },
+        "religion": {
+          "type": "integer"
+        },
+        "animalHandling": {
+          "type": "integer"
+        },
+        "insight": {
+          "type": "integer"
+        },
+        "medicine": {
+          "type": "integer"
+        },
+        "perception": {
+          "type": "integer"
+        },
+        "survival": {
+          "type": "integer"
+        },
+        "deception": {
+          "type": "integer"
+        },
+        "intimidation": {
+          "type": "integer"
+        },
+        "performance": {
+          "type": "integer"
+        },
+        "persuasion": {
+          "type": "integer"
+        }
+      }
+    },
+    "action": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "desc": {
+          "type": "string"
+        },
+        "attackBonus": {
+          "type": "integer"
+        },
+        "damageBonus": {
+          "type": "integer"
+        },
+        "damageDice": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "desc"
+      ]
+    }
+  }
+}

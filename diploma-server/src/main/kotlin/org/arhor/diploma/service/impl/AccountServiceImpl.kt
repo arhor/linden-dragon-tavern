@@ -63,7 +63,7 @@ class AccountServiceImpl(
 
         val savedAccount = accountDTO.convertTo<Account>().let(repository::save)
 
-        return savedAccount.id ?: throw IllegalStateException("Entity ID must be generated!")
+        return savedAccount.getId() ?: throw IllegalStateException("Entity ID must be generated!")
     }
 
     override fun deleteAccount(id: Long) {

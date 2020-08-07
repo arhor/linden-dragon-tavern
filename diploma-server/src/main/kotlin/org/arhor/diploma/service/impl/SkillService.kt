@@ -5,7 +5,7 @@ import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Service
 
 @Service
-class SkillService(resourceLoader: ResourceLoader) : DataReaderImpl<Skill, Int>(resourceLoader) {
+class SkillService(resourceLoader: ResourceLoader) : DataReaderImpl<Skill, String>(resourceLoader) {
 
     override val resourcePath = "classpath:data/5e-SRD-Skills.json"
     override val resourceType = Array<Skill>::class.java

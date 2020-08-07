@@ -57,19 +57,19 @@ interface BaseRepository<T : DomainObject<K>, K : Serializable> : JpaRepository<
     @JvmDefault
     @Transactional
     override fun delete(entity: T) {
-        entity.id?.let { deleteById(it) }
+        entity.getId()?.let { deleteById(it) }
     }
 
     @JvmDefault
     @Transactional
     override fun deleteAll(entities: Iterable<T>) {
-        deleteAllById(entities.mapNotNull { it.id })
+        deleteAllById(entities.mapNotNull { it.getId() })
     }
 
     @JvmDefault
     @Transactional
     override fun deleteInBatch(entities: Iterable<T>) {
-        deleteAllById(entities.mapNotNull { it.id })
+        deleteAllById(entities.mapNotNull { it.getId() })
     }
 
     @Modifying

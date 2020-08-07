@@ -1,15 +1,26 @@
 package org.arhor.diploma.domain.core
 
-import org.arhor.diploma.core.Identifiable
+import org.arhor.diploma.core.MutableIdentity
 import java.io.Serializable
-import javax.persistence.*
+import javax.persistence.GeneratedValue
+import javax.persistence.GenerationType
+import javax.persistence.Id
+import javax.persistence.MappedSuperclass
 
 @MappedSuperclass
-abstract class DomainObject<T : Serializable> : Identifiable<T> {
+abstract class DomainObject<T : Serializable> : MutableIdentity<T> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    override var id: T? = null
+    private var id: T? = null
+
+    override fun getId(): T? {
+        return id
+    }
+
+    override fun setId(id: T?) {
+        this.id = id
+    }
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

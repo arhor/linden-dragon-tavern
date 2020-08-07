@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class MonsterReaderTest {
 
     @Autowired
-    private Reader<Monster, Integer> reader;
+    private Reader<Monster, String> reader;
 
     @Autowired
     private ObjectMapper mapper;

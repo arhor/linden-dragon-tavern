@@ -1,12 +1,22 @@
 package org.arhor.diploma.service.dto
 
 import org.arhor.diploma.core.Identifiable
+import org.arhor.diploma.core.MutableIdentity
 
 data class AccountDTO(
-    override var id: Long?,
+    private var id: Long?,
     var username: String?,
     var password: String?,
     var email: String?,
     var firstName: String?,
     var lastName: String?
-) : Identifiable<Long>
+) : MutableIdentity<Long> {
+
+    override fun getId(): Long? {
+        return id
+    }
+
+    override fun setId(id: Long?) {
+        this.id = id
+    }
+}

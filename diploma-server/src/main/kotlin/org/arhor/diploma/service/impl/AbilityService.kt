@@ -5,7 +5,7 @@ import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Service
 
 @Service
-class AbilityService(resourceLoader: ResourceLoader) : DataReaderImpl<Ability, Int>(resourceLoader) {
+class AbilityService(resourceLoader: ResourceLoader) : DataReaderImpl<Ability, String>(resourceLoader) {
 
     override val schemaPath = "classpath:data/ability.schema.json"
     override val resourcePath = "classpath:data/5e-SRD-org.arhor.diploma.core.Ability-Scores.json"

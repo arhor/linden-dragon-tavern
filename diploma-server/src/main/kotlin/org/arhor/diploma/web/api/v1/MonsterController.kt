@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
     path = ["/api/v1/monsters"],
     produces = [MediaType.APPLICATION_JSON_VALUE]
 )
-class MonsterController(private val monsterReader: Reader<Monster, Int>) {
+class MonsterController(private val monsterReader: Reader<Monster, String>) {
 
     companion object {
         @JvmStatic
