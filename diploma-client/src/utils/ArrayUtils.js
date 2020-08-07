@@ -17,7 +17,7 @@ export function isEmptyArray(items) {
  * @param {Array} items
  */
 export function commaSeparate(items) {
-    return (items || []).reduce((prev, curr) => `${prev}, ${curr}`);
+    return items.join(',');
 }
 
 /**

@@ -75,10 +75,10 @@ import { mapState } from 'vuex';
 
 export default {
     computed: mapState({
-        dark: state => state.application.dark,
-        drawers: state => state.application.drawers,
-        primaryDrawer: state => state.application.primaryDrawer,
-        footer: state => state.application.footer
+        dark: (state) => state.application.dark,
+        drawers: (state) => state.application.drawers,
+        primaryDrawer: (state) => state.application.primaryDrawer,
+        footer: (state) => state.application.footer
     }),
     methods: {
         switchTheme() {

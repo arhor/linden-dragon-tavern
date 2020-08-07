@@ -1,6 +1,6 @@
 <template>
     <v-row wrap>
-        <v-col v-for="(ability, i) in abilities" :key="`ability-${i}`" cols="2">
+        <v-col v-for="ability in abilities" :key="ability.name" cols="2">
             <ability-details :ability="ability" :value="valueOf(ability)" />
         </v-col>
     </v-row>
@@ -8,7 +8,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import AbilityDetails from './AbilityDetails.vue';
+import AbilityDetails from '@/modules/ability/components/AbilityDetails.vue';
 
 export default {
     name: 'AbilityList',
@@ -22,11 +22,11 @@ export default {
         AbilityDetails
     },
     computed: mapState({
-        abilities: state => state.abilities.all
+        abilities: (state) => state.abilities.all
     }),
     methods: {
         valueOf(ability) {
-            return this.creature[ability.full_name.toLowerCase()];
+            return this.creature.abilities[ability.name];
         }
     }
 };

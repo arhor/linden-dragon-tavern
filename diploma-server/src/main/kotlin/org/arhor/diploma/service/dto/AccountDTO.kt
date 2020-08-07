@@ -1,5 +1,7 @@
 package org.arhor.diploma.service.dto
 
+import org.arhor.diploma.core.Identifiable
+
 data class AccountDTO(
     override var id: Long?,
     var username: String?,
@@ -7,4 +9,4 @@ data class AccountDTO(
     var email: String?,
     var firstName: String?,
     var lastName: String?
-) : DTO<Long>
+) : Identifiable<Long>

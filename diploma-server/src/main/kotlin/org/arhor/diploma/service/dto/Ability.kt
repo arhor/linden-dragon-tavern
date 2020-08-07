@@ -1,6 +1,7 @@
 package org.arhor.diploma.service.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import org.arhor.diploma.core.Identifiable
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Ability(
@@ -9,4 +10,4 @@ data class Ability(
     var fullName: String?,
     var description: List<String>,
     var skills: List<String>
-) : DTO<Int>
+) : Identifiable<Int>

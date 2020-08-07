@@ -48,7 +48,7 @@ export default {
     }),
     mounted() {
         ['abilities', 'monsters', 'spells', 'skills'].forEach(
-            asset => void this.$store.dispatch(`${asset}/load`)
+            (asset) => void this.$store.dispatch(`${asset}/load`)
         );
     }
 };

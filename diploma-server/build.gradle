@@ -1,3 +1,8 @@
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
+import java.util.stream.Collectors
+
 plugins {
     id "org.springframework.boot"
     id "io.spring.dependency-management"
@@ -39,7 +44,6 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-reflect"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${kotlin_coroutine_version}"
 
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
 
@@ -49,18 +53,12 @@ dependencies {
     implementation "io.jsonwebtoken:jjwt:${jsonwebtoken_version}"
     implementation "org.modelmapper:modelmapper:${modelmapper_version}"
 
-    implementation "org.springframework.security:spring-security-config"
-    implementation "org.springframework.security:spring-security-data"
-    implementation "org.springframework.security:spring-security-web"
-    implementation "org.springframework.security:spring-security-messaging"
-
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-cache"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     implementation "org.springframework.boot:spring-boot-starter-security"
     implementation "org.springframework.boot:spring-boot-starter-undertow"
     implementation "org.springframework.boot:spring-boot-starter-web"
-    implementation "org.springframework.boot:spring-boot-starter-websocket"
 
     testImplementation "org.flywaydb:flyway-core"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
@@ -74,7 +72,6 @@ compileKotlin {
         freeCompilerArgs = [
                 "-Xjsr305=strict",
                 "-Xjvm-default=enable",
-//                "-XXLanguage:+InlineClasses"
         ]
         jvmTarget = JavaVersion.VERSION_11
     }
@@ -120,4 +117,4 @@ task clientCopy(type: Copy, dependsOn: ":diploma-client:clientBuild") {
     into "build/resources/main/static/"
 }
 
-processResources { dependsOn clientCopy }
+//processResources { dependsOn clientCopy }

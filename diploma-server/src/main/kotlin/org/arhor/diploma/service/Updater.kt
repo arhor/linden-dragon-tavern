@@ -1,9 +1,9 @@
 package org.arhor.diploma.service
 
-import org.arhor.diploma.service.dto.DTO
+import org.arhor.diploma.core.Identifiable
 import java.io.Serializable
 
-interface Updater<D : DTO<K>, K : Serializable> {
+interface Updater<T : Identifiable<K>, K : Serializable> {
 
-    fun update(dto: D): D
+    fun update(item: T): T
 }

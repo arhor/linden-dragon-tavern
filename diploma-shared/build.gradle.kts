@@ -31,6 +31,8 @@ kotlin {
         commonMain {
             dependencies {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
             }
         }
         commonTest {

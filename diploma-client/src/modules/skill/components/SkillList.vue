@@ -19,7 +19,7 @@ export default {
         GenericList
     },
     computed: mapState({
-        allSkills: state => state.skills.all
+        allSkills: (state) => state.skills.all
     }),
     data() {
         return {
@@ -29,7 +29,7 @@ export default {
     mounted() {
         const isTraversable = this.allSkills && this.allSkills instanceof Array;
         if (isTraversable) {
-            this.allSkills.forEach(it => {
+            this.allSkills.forEach((it) => {
                 const propName = toPropName(it.name);
                 const value = this.creature[propName];
                 if (value) {

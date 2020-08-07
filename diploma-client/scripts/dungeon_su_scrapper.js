@@ -4,48 +4,50 @@ const fs = require('fs');
 
 const BASE_URL = 'https://dungeon.su';
 
-(async function () {
+(async function() {
     try {
         const { data } = await axios.get(`${BASE_URL}/bestiary`);
 
         const result = [];
         const $ = cheerio.load(data);
 
-        const elements = $('ul.list-of-items li').not('.first-letter').get();
+        const elements = $('ul.list-of-items li')
+            .not('.first-letter')
+            .get();
 
         console.info('monster links parsing started');
 
-        let percent = 0;
+        const progress = new ProgressLogger(elements.length);
 
         for (let i = 0; i < elements.length; i++) {
-
-            let currPercent = ((i / elements.length) * 100) | 0;
-            if (currPercent !== percent) {
-                percent = currPercent;
-                console.log(`${percent < 10 ? '  ' : percent < 100 ? ' ': ''}${percent}% complete`)
-            }
-
+            progress.update(i + 1);
             const elem = elements[i];
 
-            const link = $(elem).find('a').attr('href');
+            const link = $(elem)
+                .find('a')
+                .attr('href');
 
             if (!isEmptyString(link)) {
-                const { data } = await axios.get(BASE_URL + link);
+                const response = await axios.get(BASE_URL + link);
 
-                const monsterInfo = parseMonsterInfo(data, i + 1);
+                const monsterInfo = parseMonsterInfo(response.data, i + 1);
 
                 result.push(monsterInfo);
             }
         }
         console.info('monster links parsing finished');
 
-        fs.writeFileSync('./data/monsters.json', JSON.stringify(result, null, 2));
+        persist(result);
     } catch (error) {
         console.error(error);
     }
 })();
 
 // ----------------------------------------------------------------------------
+
+function persist(data) {
+    fs.writeFileSync('./raw_data/monsters.json', JSON.stringify(data, null, 2));
+}
 
 function parseMonsterInfo(html, index) {
     const $ = cheerio.load(html);
@@ -62,7 +64,7 @@ function parseMonsterInfo(html, index) {
             .map((param) => param.trim()) || [];
 
     const ac = findOne(params, 'Класс доспеха:');
-    const hp = findOne(params, 'Хиты:');
+    const hitPoints = findOne(params, 'Хиты:');
 
     const speed = findList(params, 'Скорость:');
 
@@ -70,25 +72,25 @@ function parseMonsterInfo(html, index) {
         .find('li.stats div.stat')
         .get()
         .map((elem) => {
-            const title = $(elem).attr('title');
-            const abbr = $(elem).find('div:not(:has(strong))').text();
-            const ability = $(elem).find('div:has(strong)').text();
+            const abbr = $(elem)
+                .find('div:not(:has(strong))')
+                .text();
 
             const [
                 ,
                 value,
-                unknown,
-                modifier,
-            ] = /(\d{1,2})(\s{0,5}\(([\-+]?\d{0,2})\))?(\s{0,5}\(([\-+]?\d{1,2})\))/g.exec(ability);
+                ,
+            ] = /(\d{1,2})(\s{0,5}\(([-+]?\d{0,2})\))?(\s{0,5}\(([-+]?\d{1,2})\))/g.exec(
+                $(elem)
+                    .find('div:has(strong)')
+                    .text()
+            );
 
             return {
-                title,
-                abbr,
-                value,
-                unknown,
-                modifier,
+                [abilityAbbrToEng(abbr)]: value
             };
-        });
+        })
+        .reduce((prev, next) => Object.assign(prev, next), {});
 
     const skills = findList(params, 'Навыки:');
     const senses = findList(params, 'Чувства:');
@@ -100,14 +102,16 @@ function parseMonsterInfo(html, index) {
         .find('.subsection')
         .get()
         .map((elem) => {
-            const title = $(elem).find('h3.subsection-title').text();
+            const additionalTitle = $(elem)
+                .find('h3.subsection-title')
+                .text();
             const items = $(elem)
                 .find('div p')
                 .get()
                 .map((subElem) => $(subElem).text())
                 .filter((text) => !isEmptyString(text));
 
-            return { title, items };
+            return { title: additionalTitle, items };
         });
 
     return {
@@ -117,7 +121,7 @@ function parseMonsterInfo(html, index) {
         type,
         alignment,
         ac,
-        hp,
+        hitPoints,
         speed,
         abilities,
         skills,
@@ -125,12 +129,16 @@ function parseMonsterInfo(html, index) {
         languages,
         cr,
         source,
-        additional,
+        additional
     };
 }
 
 function findOne(element, title) {
-    return element.find(`li:has(>strong:contains("${title}"))`).text().replace(title, '').trim();
+    return element
+        .find(`li:has(>strong:contains("${title}"))`)
+        .text()
+        .replace(title, '')
+        .trim();
 }
 
 function findList(element, title) {
@@ -146,4 +154,66 @@ function findList(element, title) {
 
 function isEmptyString(str = '') {
     return str === void 0 && str === null && str === '';
+}
+
+class ProgressLogger {
+    constructor(total) {
+        this.total = total;
+        this.curr = 0;
+        this.writer = this._isTerminalAvailable() ? this._terminalWriter : this._consoleWriter;
+    }
+
+    update(i) {
+        let percent = ((i / this.total) * 100) | 0;
+        if (this.curr !== percent && percent <= 100) {
+            this.curr = percent;
+            this._logProgress();
+        }
+    }
+
+    _logProgress() {
+        this.writer(`${String(this.curr).padStart(3)}% complete`);
+    }
+
+    _terminalWriter(msg) {
+        process.stdout.clearLine();
+        process.stdout.cursorTo(0);
+        process.stdout.write(msg);
+        if (this.curr == 100) {
+            process.stdout.write('\n');
+        }
+    }
+
+    _consoleWriter(msg) {
+        console.log(msg);
+    }
+
+    _isTerminalAvailable() {
+        return Boolean(
+            process &&
+                process.stdout &&
+                process.stdout.clearLine &&
+                process.stdout.cursorTo &&
+                process.stdout.write
+        );
+    }
+}
+
+function abilityAbbrToEng(abbr) {
+    switch (abbr) {
+        case 'СИЛ':
+            return 'STR';
+        case 'ЛОВ':
+            return 'DEX';
+        case 'ТЕЛ':
+            return 'CON';
+        case 'ИНТ':
+            return 'INT';
+        case 'МДР':
+            return 'WIS';
+        case 'ХАР':
+            return 'CHA';
+        default:
+            throw new Error('illegal argument: ' + abbr);
+    }
 }

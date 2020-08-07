@@ -17,12 +17,10 @@
 
             <v-row>
                 <v-col cols="12" class="text-xs-left">
-                    Armor class: {{ monster.armor_class }}
+                    Armor class: {{ monster.armorClass }}
                 </v-col>
-                <v-col cols="12" class="text-xs-left">
-                    Hit points: {{ monster.hit_points }} ({{ monster.hit_dice }})
-                </v-col>
-                <v-col cols="12" class="text-xs-left">Speed: {{ monster.speed }}</v-col>
+                <v-col cols="12" class="text-xs-left"> Hit points: {{ monster.hitPoints }} </v-col>
+                <v-col cols="12" class="text-xs-left">Speed: {{ monster.speed.join(',') }}</v-col>
             </v-row>
 
             <v-divider />
@@ -31,11 +29,11 @@
 
             <v-divider />
 
-            <generic-list title="Damage vulnerabilities" :items="monster.damage_vulnerabilities" />
-            <generic-list title="Damage resistances" :items="monster.damage_resistances" />
-            <generic-list title="Damage immunities" :items="monster.damage_immunities" />
+            <generic-list title="Damage vulnerabilities" :items="monster.damageVulnerabilities" />
+            <generic-list title="Damage resistances" :items="monster.damageResistances" />
+            <generic-list title="Damage immunities" :items="monster.damageImmunities" />
 
-            <generic-list title="Condition immunities" :items="monster.condition_immunities" />
+            <generic-list title="Condition immunities" :items="monster.conditionImmunities" />
             <skill-list :creature="monster" />
 
             <generic-list title="Senses" :items="[monster.senses]" />
@@ -44,15 +42,21 @@
             <v-row>
                 <v-col cols="12" class="text-xs-left">
                     <strong>Challenge:</strong>
-                    {{ monster.challenge_rating }} (# XP)
+                    {{ monster.challengeRating }} (# XP)
                 </v-col>
             </v-row>
 
-            <special-ability-list :special-abilities="monster.special_abilities" />
+            <v-divider />
+
+            <special-ability-list :special-abilities="monster.specialAbilities" />
 
             <v-divider />
 
             <action-list :actions="monster.actions" />
+
+            <v-divider />
+
+            <special-ability-list :special-abilities="monster.legendaryActions" />
         </v-container>
     </v-card>
 </template>

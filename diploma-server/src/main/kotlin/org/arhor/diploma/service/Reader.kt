@@ -1,13 +1,13 @@
 package org.arhor.diploma.service
 
-import org.arhor.diploma.service.dto.DTO
+import org.arhor.diploma.core.Identifiable
 import java.io.Serializable
 
-interface Reader<D : DTO<K>, K : Serializable> {
+interface Reader<T : Identifiable<K>, K : Serializable> {
 
-    fun getOne(id: K): D
+    fun getOne(id: K): T
 
-    fun getList(): List<D>
+    fun getList(): List<T>
 
-    fun getList(page: Int, size: Int): List<D>
+    fun getList(page: Int, size: Int): List<T>
 }

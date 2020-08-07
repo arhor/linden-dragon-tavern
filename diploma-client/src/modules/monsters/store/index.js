@@ -7,9 +7,14 @@ const state = {
 const getters = {};
 
 const actions = {
-    load: async store => {
-        const { data } = await axios.get('data/5e-SRD-Monsters.json');
-        store.commit('SET_MONSTERS', data);
+    load: async (store) => {
+        // const address = location.protocol + "//" + location.host + '/api/v1/monsters'
+        try {
+            const { data } = await axios.get('data/5e-SRD-Monsters.json');
+            store.commit('SET_MONSTERS', data);
+        } catch (error) {
+            console.error(error);
+        }
     }
 };
 

@@ -1,11 +1,11 @@
 package org.arhor.diploma.service
 
-import org.arhor.diploma.service.dto.DTO
+import org.arhor.diploma.core.Identifiable
 import java.io.Serializable
 
-interface Deleter<D : DTO<K>, K : Serializable> {
+interface Deleter<T : Identifiable<K>, K : Serializable> {
 
     fun delete(id: K)
 
-    fun delete(dto: D)
+    fun delete(item: T)
 }

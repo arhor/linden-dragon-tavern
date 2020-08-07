@@ -14,7 +14,7 @@
                     />
                 </v-card-title>
                 <v-data-table
-                    class="evelation-1"
+                    class="elevation-1"
                     :headers="headers"
                     :items="allMonsters"
                     :search="search"
@@ -24,7 +24,7 @@
                         <td>{{ props.item.name }}</td>
                         <td>{{ props.item.size }}</td>
                         <td>{{ props.item.type }}</td>
-                        <td>{{ props.item.challenge_rating }}</td>
+                        <td>{{ props.item.challengeRating }}</td>
                     </template>
                 </v-data-table>
                 <v-dialog v-model="dialog" max-width="800">
@@ -53,7 +53,7 @@ export default {
             { text: 'Name', value: 'name' },
             { text: 'Size', value: 'size' },
             { text: 'Type', value: 'type' },
-            { text: 'CR', value: 'challenge_rating' }
+            { text: 'CR', value: 'challengeRating' }
         ]
     }),
     methods: {

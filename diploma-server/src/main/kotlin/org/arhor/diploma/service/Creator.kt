@@ -1,9 +1,9 @@
 package org.arhor.diploma.service
 
-import org.arhor.diploma.service.dto.DTO
+import org.arhor.diploma.core.Identifiable
 import java.io.Serializable
 
-interface Creator<D : DTO<K>, K : Serializable> {
+interface Creator<T : Identifiable<K>, K : Serializable> {
 
-    fun create(dto: D): D
+    fun create(item: T): T
 }

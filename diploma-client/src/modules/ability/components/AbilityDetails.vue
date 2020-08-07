@@ -2,15 +2,15 @@
     <v-tooltip top>
         <template v-slot:activator="{ on }">
             <v-container class="text-xs-center" color="primary" v-if="ability && value" v-on="on">
-                <v-layout row wrap>
-                    <v-flex xs12>
+                <v-row>
+                    <v-col cols="12">
                         <strong>{{ ability.name }}</strong>
-                    </v-flex>
-                    <v-flex xs12> {{ value }} ({{ value | calcBonus }}) </v-flex>
-                </v-layout>
+                    </v-col>
+                    <v-col cols="12"> {{ value }} ({{ value | calcBonus }}) </v-col>
+                </v-row>
             </v-container>
         </template>
-        <span>{{ ability.full_name }}</span>
+        <span>{{ ability.fullName }}</span>
     </v-tooltip>
 </template>
 

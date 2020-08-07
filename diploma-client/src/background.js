@@ -1,26 +1,9 @@
-import { spawn } from 'child_process';
 import { app, protocol, BrowserWindow } from 'electron';
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib';
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
-// const ls = spawn('java', ['-jar', './public/diploma-server-0.0.1-SNAPSHOT.jar']);
-
-// ls.stdout.on('data', data => {
-//     console.log(`stdout: ${data}`);
-// });
-
-// ls.stderr.on('data', data => {
-//     console.error(`stderr: ${data}`);
-// });
-
-// ls.on('close', code => {
-//     console.log(`child process exited with code ${code}`);
-// });
-
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let win;
 
 // Scheme must be registered before the app is ready

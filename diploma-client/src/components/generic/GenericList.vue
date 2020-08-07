@@ -1,13 +1,13 @@
 <template>
     <v-row v-if="notEmpty">
         <v-col cols="12" class="text-xs-left">
-            <strong v-if="title">{{ title + ':' }}</strong> {{ commaSeparatedString }}
+            <strong v-if="title">{{ title + ':' }}</strong> {{ this.items.join(',') }}
         </v-col>
     </v-row>
 </template>
 
 <script>
-import { commaSeparate, isEmptyArray } from '@/utils/ArrayUtils.js';
+import { isEmptyArray } from '@/utils/ArrayUtils.js';
 
 export default {
     name: 'GenericList',
@@ -24,9 +24,6 @@ export default {
     computed: {
         notEmpty() {
             return !isEmptyArray(this.items);
-        },
-        commaSeparatedString() {
-            return commaSeparate(this.items);
         }
     }
 };

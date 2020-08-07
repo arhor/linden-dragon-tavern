@@ -2,9 +2,6 @@ package org.arhor.diploma
 
 import org.arhor.diploma.config.properties.ApplicationProperties
 import org.arhor.diploma.core.StartupTask
-import org.arhor.diploma.service.Reader
-import org.arhor.diploma.service.dto.Ability
-import org.arhor.diploma.service.dto.Skill
 import org.arhor.diploma.util.createLogger
 import org.slf4j.Logger
 import org.springframework.boot.CommandLineRunner
