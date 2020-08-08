@@ -34,23 +34,28 @@ function createWindow() {
         win.loadURL(process.env.WEBPACK_DEV_SERVER_URL);
         if (!process.env.IS_TEST) win.webContents.openDevTools();
     } else {
-        splashscreen = new BrowserWindow({
-            width: 350,
-            height: 338,
-            center: true,
-            transparent: true,
-            frame: false,
-            alwaysOnTop: true,
-            parent: win
-        });
+        if (process.platform !== 'linux') {
+            splashscreen = new BrowserWindow({
+                width: 350,
+                height: 338,
+                center: true,
+                transparent: true,
+                frame: false,
+                alwaysOnTop: true,
+                parent: win
+            });
+        }
+
         createProtocol('app');
         // Load the index.html when not in development
-        splashscreen.loadURL('app://./logo.svg');
+        if (process.platform !== 'linux') {
+            splashscreen.loadURL('app://./logo.svg');
+        }
         win.loadURL('app://./index.html');
     }
 
-    if (!process.env.WEBPACK_DEV_SERVER_URL) {
-        // When application loaded start fadin splash screen and then show the main window.
+    if (!process.env.WEBPACK_DEV_SERVER_URL && process.platform !== 'linux') {
+        // When application loaded start fading splash screen and then show the main window.
         // Fading may not be animated on Linux.
         win.once('ready-to-show', () => {
             let opacity = 1;

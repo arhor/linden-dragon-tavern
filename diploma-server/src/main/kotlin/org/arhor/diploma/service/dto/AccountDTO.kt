@@ -1,6 +1,5 @@
 package org.arhor.diploma.service.dto
 
-import org.arhor.diploma.core.Identifiable
 import org.arhor.diploma.core.MutableIdentity
 
 data class AccountDTO(

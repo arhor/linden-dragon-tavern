@@ -1,5 +1,6 @@
 package org.arhor.diploma.core
 
+@Suppress("unused")
 sealed class ActionResult<out T> {
 
     abstract val isSuccess: Boolean
@@ -21,7 +22,11 @@ sealed class ActionResult<out T> {
 
     inline fun <R> map(f: (T?) -> R): ActionResult<R> {
         return when (this) {
-            is Success<T> -> Success(f(value))
+            is Success<T> -> try {
+                Success(f(value))
+            } catch (error: Throwable) {
+                Failure(error)
+            }
             is Failure -> this
         }
     }

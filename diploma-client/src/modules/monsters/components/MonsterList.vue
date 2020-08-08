@@ -28,7 +28,7 @@
                     </template>
                 </v-data-table>
                 <v-dialog v-model="dialog" max-width="800">
-                    <MonsterDetails :monster="monster" />
+                    <MonsterDetails :monster="concreteMonster" />
                 </v-dialog>
             </v-card>
         </v-col>
@@ -47,7 +47,6 @@ export default {
     data: () => ({
         search: '',
         dialog: false,
-        monster: null,
         errors: [],
         headers: [
             { text: 'Name', value: 'name' },
@@ -58,12 +57,12 @@ export default {
     }),
     methods: {
         showDetails(concreteMonster) {
-            this.monster = concreteMonster;
+            this.$store.dispatch('monsters/loadDetails', concreteMonster.name);
             this.dialog = true;
         }
     },
     computed: {
-        ...mapState('monsters', ['allMonsters'])
+        ...mapState('monsters', ['allMonsters', 'concreteMonster'])
     }
 };
 </script>

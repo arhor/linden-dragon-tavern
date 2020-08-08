@@ -55,11 +55,13 @@ class AccountServiceImpl(
     override fun getAccounts(page: Int, size: Int) = getList(page, size)
 
     override fun createAccount(accountDTO: AccountDTO): Long {
-        accountDTO.username?.let { username -> repository.findByUsername(username) }?.ifPresent { account ->
-            val message = "Username '${account.username}' is already taken"
-            log.error(message)
-            throw RuntimeException(message)
-        }
+        accountDTO.username
+            ?.let { username -> repository.findByUsername(username) }
+            ?.ifPresent { account ->
+                val message = "Username '${account.username}' is already taken"
+                log.error(message)
+                throw RuntimeException(message)
+            }
 
         val savedAccount = accountDTO.convertTo<Account>().let(repository::save)
 
@@ -79,8 +81,8 @@ class AccountServiceImpl(
     private fun extractAuthorities(account: Account): Collection<GrantedAuthority> {
         return account.securityProfile
             ?.securityAuthorities
-            ?.map { auth -> auth.authority }
-            ?.mapNotNull { auth -> auth?.name }
+            ?.mapNotNull { profileAuthority -> profileAuthority.authority }
+            ?.mapNotNull { authority -> authority.name }
             ?.map { name -> SimpleGrantedAuthority(name) }
             ?: emptyList()
     }
