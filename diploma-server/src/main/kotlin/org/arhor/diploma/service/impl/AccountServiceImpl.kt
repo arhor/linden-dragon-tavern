@@ -5,7 +5,7 @@ import org.arhor.diploma.repository.AccountRepository
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
 import org.arhor.diploma.service.exception.EntityNotFoundException
-import org.arhor.diploma.util.Converter
+import org.arhor.diploma.service.mapping.AccountConverter
 import org.arhor.diploma.util.createLogger
 import org.slf4j.Logger
 import org.springframework.security.core.GrantedAuthority
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional
 @Transactional
 class AccountServiceImpl(
     private val repository: AccountRepository,
-    converter: Converter
+    converter: AccountConverter
 ) : AbstractService<Account, AccountDTO, Long>(converter, repository), AccountService {
 
     companion object {
@@ -63,9 +63,9 @@ class AccountServiceImpl(
                 throw RuntimeException(message)
             }
 
-        val savedAccount = accountDTO.convertTo<Account>().let(repository::save)
+        val savedAccount = converter.dtoToEntity(accountDTO)?.let(repository::save)
 
-        return savedAccount.getId() ?: throw IllegalStateException("Entity ID must be generated!")
+        return savedAccount?.getId() ?: throw IllegalStateException("Entity ID must be generated!")
     }
 
     override fun deleteAccount(id: Long) {

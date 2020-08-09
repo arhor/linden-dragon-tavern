@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service
 
 @Service
 class MonsterServiceImpl(
-    resourceLoader: ResourceLoader
-) : MonsterService, DataReaderImpl<MonsterDetails, String>(resourceLoader) {
+    loader: ResourceLoader
+) : MonsterService, DataReaderImpl<MonsterDetails, String>(loader) {
 
     override val resourcePath = "classpath:data/5e-SRD-Monsters.json"
     override val resourceType = Array<MonsterDetails>::class.java

@@ -2,28 +2,32 @@ package org.arhor.diploma.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.arhor.diploma.service.dto.Monster;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-@SpringBootTest
+@SpringJUnitConfig
 class MonsterReaderTest {
 
-    @Autowired
-    private Reader<Monster, String> reader;
+    @TestConfiguration
+    @ComponentScan("org.arhor.diploma.service")
+    static class TestConfig {}
+
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
-    private ObjectMapper mapper;
+    private MonsterService service;
 
     @Test
     void fetchAllMonsters() {
         assertDoesNotThrow(() -> {
             // when
-            var monsters = reader.getList();
+            var monsters = service.getList();
 
             // then
             assertNotNull(monsters);

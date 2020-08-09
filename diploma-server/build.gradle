@@ -29,13 +29,14 @@ configurations {
 }
 
 dependencies {
-    implementation project(":diploma-shared")
-
     runtimeOnly "org.postgresql:postgresql"
 
     developmentOnly "org.springframework.boot:spring-boot-devtools"
 
     kapt "org.springframework:spring-context-indexer"
+    kapt "org.mapstruct:mapstruct-processor:${mapstruct_version}"
+
+    implementation project(":diploma-shared")
 
     implementation "org.jetbrains.kotlin:kotlin-reflect"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
@@ -43,7 +44,7 @@ dependencies {
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
 
     implementation "io.jsonwebtoken:jjwt:${jsonwebtoken_version}"
-    implementation "org.modelmapper:modelmapper:${modelmapper_version}"
+    implementation "org.mapstruct:mapstruct:${mapstruct_version}"
 
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.springframework.boot:spring-boot-starter-cache"

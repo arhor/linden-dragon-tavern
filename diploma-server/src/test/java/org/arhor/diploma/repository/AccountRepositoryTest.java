@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 
+import static org.arhor.diploma.TestUtils.generateAccountWithFilledFields;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -24,7 +25,7 @@ class AccountRepositoryTest extends TestExecutionContext {
   @Transactional
   void shouldSoftlyDeleteAccount() {
     // given
-    final Account account = repository.save(generateAccount());
+    final var account = repository.save(generateAccountWithFilledFields());
     assertFalse(account.isDeleted());
 
     // when
@@ -36,16 +37,5 @@ class AccountRepositoryTest extends TestExecutionContext {
         () -> assertThat(repository.findById(Objects.requireNonNull(account.getId()))).isEmpty(),
         () -> assertThat(repository.findDeleted()).contains(account)
     );
-  }
-
-  private static Account generateAccount() {
-    final Account account = new Account();
-
-    account.setUsername(RandomString.make());
-    account.setPassword(RandomString.make());
-    account.setFirstName(RandomString.make());
-    account.setLastName(RandomString.make());
-
-    return account;
   }
 }

@@ -8,12 +8,12 @@ import org.arhor.diploma.service.Deleter
 import org.arhor.diploma.service.Reader
 import org.arhor.diploma.service.Updater
 import org.arhor.diploma.service.exception.EntityNotFoundException
-import org.arhor.diploma.util.Converter
+import org.arhor.diploma.service.mapping.Converter
 import org.springframework.data.domain.PageRequest
 import java.io.Serializable
 
 abstract class AbstractService<E : DomainObject<K>, T : Identifiable<K>, K : Serializable>(
-    private val converter: Converter,
+    protected val converter: Converter<E, T>,
     private val repository: BaseRepository<E, K>
 ) : Creator<T, K>, Reader<T, K>, Updater<T, K>, Deleter<T, K> {
 
@@ -26,21 +26,22 @@ abstract class AbstractService<E : DomainObject<K>, T : Identifiable<K>, K : Ser
     override fun getOne(id: K): T {
         return repository
             .findById(id)
-            .map { converter.convert(it, type) }
-            .orElseThrow { EntityNotFoundException("account", "id", id) }
+            .map { converter.entityToDto(it) }
+            .orElseThrow { EntityNotFoundException("account", "id", id) }!!
     }
 
     override fun getList(): List<T> {
         return repository
             .findAll()
-            .map { converter.convert(it, type) }
+            .mapNotNull { converter.entityToDto(it) }
             .toList()
     }
 
     override fun getList(page: Int, size: Int): List<T> {
         return repository
             .findAll(PageRequest.of(page, size))
-            .map { converter.convert(it, type) }
+            .toList()
+            .mapNotNull { converter.entityToDto(it) }
             .toList()
     }
 
@@ -52,7 +53,7 @@ abstract class AbstractService<E : DomainObject<K>, T : Identifiable<K>, K : Ser
 
             val saved = repository.save(entity)
 
-            converter.convert(saved, type)
+            converter.entityToDto(saved)
 
         } ?: throw IllegalArgumentException("passed dto has no id")
     }
@@ -67,10 +68,5 @@ abstract class AbstractService<E : DomainObject<K>, T : Identifiable<K>, K : Ser
 
     override fun delete(item: T) {
         item.getId()?.let { delete(it) }
-    }
-
-
-    internal inline fun <reified D> Any.convertTo(): D {
-        return converter.convert(this, D::class.java)
     }
 }
