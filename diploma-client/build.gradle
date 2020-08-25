@@ -38,7 +38,7 @@ task npmAuditFix (type: NpmTask, dependsOn: npmInstall) {
     args = ["audit", "fix"]
 }
 
-task clientBuild (type: NpmTask, dependsOn: [/*npmAuditFix,*/ injectSharedLib]) {
+task clientBuild (type: NpmTask, dependsOn: [npmAuditFix, injectSharedLib]) {
     description = "Builds production version of the app client"
     workingDir = file(jsRootDir)
     args = ["run", "build"]

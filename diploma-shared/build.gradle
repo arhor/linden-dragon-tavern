@@ -1,5 +1,5 @@
 plugins {
-    id("org.jetbrains.kotlin.multiplatform")
+    id "org.jetbrains.kotlin.multiplatform"
 }
 
 group = "org.arhor"
@@ -9,15 +9,16 @@ description = "diploma-shared"
 kotlin {
 
     jvm {
-        val main by compilations.getting {
+        compilations.main {
             kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_11.toString()
+                jvmTarget = JavaVersion.VERSION_11
             }
         }
     }
 
     js {
-        val main by compilations.getting {
+        browser()
+        compilations.main {
             kotlinOptions {
                 metaInfo = false
                 sourceMap = false
@@ -30,15 +31,15 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-common"
+                implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
             }
         }
         commonTest {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-test-common")
-                implementation("org.jetbrains.kotlin:kotlin-test-annotations-common")
+                implementation "org.jetbrains.kotlin:kotlin-test-common"
+                implementation "org.jetbrains.kotlin:kotlin-test-annotations-common"
             }
         }
     }

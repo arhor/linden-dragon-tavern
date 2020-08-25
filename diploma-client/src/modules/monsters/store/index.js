@@ -35,6 +35,6 @@ export default {
         },
         SET_MONSTER_DETAILS: (state, payload) => {
             state.concreteMonster = payload;
-        },
+        }
     }
 };

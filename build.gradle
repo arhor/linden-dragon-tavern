@@ -32,6 +32,9 @@ wrapper {
 }
 
 task injectClientIntoServer(type: Copy, dependsOn: ":diploma-client:clientBuild") {
-    from "${project(':diploma-client').rootDir}/dist/"
-    into "${project(':diploma-server').buildDir}/resources/main/static/"
+    def clientBuildDir = [project(':diploma-client').projectDir, "dist"].join(File.separator)
+    def serverResourcesDir = [project(':diploma-server').buildDir, "resources", "main", "static"].join(File.separator)
+
+    from clientBuildDir
+    into serverResourcesDir
 }
