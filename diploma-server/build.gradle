@@ -29,12 +29,10 @@ configurations {
 }
 
 dependencies {
-    runtimeOnly "org.postgresql:postgresql"
-
-    developmentOnly "org.springframework.boot:spring-boot-devtools"
-
-    kapt "org.springframework:spring-context-indexer"
     kapt "org.mapstruct:mapstruct-processor:${mapstruct_version}"
+    kapt "org.springframework:spring-context-indexer"
+
+    runtimeOnly "org.postgresql:postgresql"
 
     implementation project(":diploma-shared")
 
@@ -62,11 +60,12 @@ dependencies {
 
 compileKotlin {
     kotlinOptions {
-        freeCompilerArgs = [
+        freeCompilerArgs += [
                 "-Xjsr305=strict",
                 "-Xjvm-default=enable",
         ]
         jvmTarget = JavaVersion.VERSION_11
+        javaParameters = true
     }
 }
 
@@ -74,39 +73,16 @@ springBoot {
     mainClassName = "org.arhor.diploma.DiplomaApp"
 }
 
-def openAccessOnJDK9 = [
-        "--add-modules=java.se",
-        "--add-exports=java.base/jdk.internal.ref=ALL-UNNAMED",
-        "--add-opens=java.base/java.lang=ALL-UNNAMED",
-        "--add-opens=java.base/java.nio=ALL-UNNAMED",
-        "--add-opens=java.base/sun.nio.ch=ALL-UNNAMED",
-        "--add-opens=java.management/sun.management=ALL-UNNAMED",
-        "--add-opens=jdk.management/com.sun.management.internal=ALL-UNNAMED"
-]
-
 def springProfiles = "-Dspring.profiles.active=" + [
         "default",
 ].join(",")
 
 bootRun {
-    jvmArgs += openAccessOnJDK9
     jvmArgs += springProfiles
 }
 
 test {
     useJUnitPlatform()
 
-    testLogging {
-        events "FAILED", "SKIPPED"
-    }
-
-    jvmArgs += openAccessOnJDK9
     jvmArgs += springProfiles
 }
-
-task clientCopy(type: Copy, dependsOn: ":diploma-client:clientBuild") {
-    from "../diploma-client/dist/"
-    into "build/resources/main/static/"
-}
-
-processResources { dependsOn clientCopy }

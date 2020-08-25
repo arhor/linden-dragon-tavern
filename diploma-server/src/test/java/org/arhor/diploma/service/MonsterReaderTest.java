@@ -1,45 +1,37 @@
 package org.arhor.diploma.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.arhor.diploma.service.impl.MonsterServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringJUnitConfig
 class MonsterReaderTest {
 
     @TestConfiguration
-    @ComponentScan("org.arhor.diploma.service")
-    static class TestConfig {}
-
-    private final ObjectMapper mapper = new ObjectMapper();
+    static class TestConfig {
+        @Bean
+        MonsterService monsterService(ResourceLoader loader) {
+            return new MonsterServiceImpl(loader);
+        }
+    }
 
     @Autowired
     private MonsterService service;
 
     @Test
     void fetchAllMonsters() {
-        assertDoesNotThrow(() -> {
-            // when
-            var monsters = service.getList();
+        // when
+        var monsters = service.getList();
 
-            // then
-            assertNotNull(monsters);
-
-            monsters.forEach(monster -> {
-                try {
-                    if (monster.getLegendaryActions() != null)
-                    System.out.println(mapper.writeValueAsString(monster));
-                } catch (JsonProcessingException e) {
-                    e.printStackTrace();
-                }
-            });
-        });
+        // then
+        assertThat(monsters)
+                .isNotNull()
+                .isNotEmpty();
     }
 }

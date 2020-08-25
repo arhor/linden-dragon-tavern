@@ -39,6 +39,10 @@ interface BaseRepository<T : DomainObject<K>, K : Serializable> : JpaRepository<
     @Transactional(readOnly = true)
     fun findDeleted(): MutableList<T>
 
+    @Query("SELECT e.id FROM #{#entityName} e WHERE e.isDeleted = true")
+    @Transactional(readOnly = true)
+    fun findDeletedIds(): MutableList<K>
+
     @Transactional(readOnly = true)
     @Query("SELECT COUNT(e) FROM #{#entityName} e WHERE e.isDeleted = false")
     override fun count(): Long

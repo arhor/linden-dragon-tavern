@@ -1,8 +1,6 @@
 package org.arhor.diploma.repository;
 
-import net.bytebuddy.utility.RandomString;
 import org.arhor.diploma.TestExecutionContext;
-import org.arhor.diploma.domain.Account;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,24 +16,22 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 @SpringBootTest
 class AccountRepositoryTest extends TestExecutionContext {
 
-  @Autowired
-  private AccountRepository repository;
+    @Autowired
+    private AccountRepository repository;
 
-  @Test
-  @Transactional
-  void shouldSoftlyDeleteAccount() {
-    // given
-    final var account = repository.save(generateAccountWithFilledFields());
-    assertFalse(account.isDeleted());
+    @Test
+    @Transactional
+    void shouldSoftlyDeleteAccount() {
+        // given
+        final var account = repository.save(generateAccountWithFilledFields());
+        final var accountId = account.getId();
 
-    // when
-    repository.delete(account);
+        // when
+        repository.delete(account);
 
-    // then
-    assertAll(
-        () -> assertThat(account.getId()).isNotNull(),
-        () -> assertThat(repository.findById(Objects.requireNonNull(account.getId()))).isEmpty(),
-        () -> assertThat(repository.findDeleted()).contains(account)
-    );
-  }
+        // then
+        assertThat(accountId).isNotNull();
+        assertThat(repository.findById(accountId)).isEmpty();
+        assertThat(repository.findDeletedIds()).contains(accountId);
+    }
 }

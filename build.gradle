@@ -30,3 +30,8 @@ allprojects {
 wrapper {
     gradleVersion = "${gradle_version}"
 }
+
+task injectClientIntoServer(type: Copy, dependsOn: ":diploma-client:clientBuild") {
+    from "${project(':diploma-client').rootDir}/dist/"
+    into "${project(':diploma-server').buildDir}/resources/main/static/"
+}
