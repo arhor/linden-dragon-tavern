@@ -21,7 +21,7 @@ abstract class DataProviderImplDefault<
     protected abstract val resourcePath: String
     protected abstract val resourceType: Class<Array<D>>
 
-    protected val data: Set<D> by lazy(::loadData)
+    protected var data: Set<D> = loadData()
 
     protected abstract fun shrinkData(details: D): T
 
@@ -50,6 +50,10 @@ abstract class DataProviderImplDefault<
         val amount = size.toLong()
 
         return data.stream().skip(offset).limit(amount).toList()
+    }
+
+    override fun reload() {
+        data = loadData()
     }
 
     private fun loadData(): Set<D> {

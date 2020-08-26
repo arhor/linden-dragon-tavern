@@ -1,11 +1,13 @@
 package org.arhor.diploma.data.file
 
+import org.arhor.diploma.core.ReloadableResource
+
 /**
  * @param T basic data type which provides only few required fields
  * @param D detailed data type which contains all fields
  * @param K identity type
  */
-interface DataProvider<T, D, K> {
+interface DataProvider<T, D, K> : ReloadableResource {
 
     fun getOne(id: K): T
 
