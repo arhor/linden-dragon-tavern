@@ -1,7 +1,7 @@
 package org.arhor.diploma.web.api.v1
 
-import org.arhor.diploma.service.data.model.Spell
-import org.arhor.diploma.service.data.SpellService
+import org.arhor.diploma.data.file.model.Spell
+import org.arhor.diploma.data.file.SpellProvider
 import org.arhor.diploma.util.createLogger
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*
     produces = [MediaType.APPLICATION_JSON_VALUE]
 )
 class SpellController(
-    service: SpellService
-): StaticDataController<Spell, Spell.Details, String>(service, log, "Spell") {
+    provider: SpellProvider
+): StaticDataController<Spell, Spell.Details, String>(provider, log, "Spell") {
 
     companion object {
         @JvmStatic

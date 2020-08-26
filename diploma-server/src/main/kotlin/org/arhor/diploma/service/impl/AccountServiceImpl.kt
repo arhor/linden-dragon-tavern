@@ -1,7 +1,7 @@
 package org.arhor.diploma.service.impl
 
-import org.arhor.diploma.domain.Account
-import org.arhor.diploma.repository.AccountRepository
+import org.arhor.diploma.data.persist.domain.Account
+import org.arhor.diploma.data.persist.repository.AccountRepository
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
 import org.arhor.diploma.service.exception.EntityNotFoundException

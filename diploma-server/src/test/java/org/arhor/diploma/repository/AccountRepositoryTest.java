@@ -1,12 +1,11 @@
 package org.arhor.diploma.repository;
 
 import org.arhor.diploma.TestExecutionContext;
+import org.arhor.diploma.data.persist.repository.AccountRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.Objects;
 
 import static org.arhor.diploma.TestUtils.generateAccountWithFilledFields;
 import static org.assertj.core.api.Assertions.assertThat;

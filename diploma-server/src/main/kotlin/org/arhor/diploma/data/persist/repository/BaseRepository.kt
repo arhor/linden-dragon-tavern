@@ -1,6 +1,6 @@
-package org.arhor.diploma.repository
+package org.arhor.diploma.data.persist.repository
 
-import org.arhor.diploma.domain.core.DomainObject
+import org.arhor.diploma.data.persist.domain.core.DomainObject
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort

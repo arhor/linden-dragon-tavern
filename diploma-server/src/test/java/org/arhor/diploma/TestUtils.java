@@ -1,7 +1,7 @@
 package org.arhor.diploma;
 
 import net.bytebuddy.utility.RandomString;
-import org.arhor.diploma.domain.Account;
+import org.arhor.diploma.data.persist.domain.Account;
 
 public class TestUtils {
 

@@ -1,7 +1,7 @@
 package org.arhor.diploma.service;
 
-import org.arhor.diploma.service.data.MonsterService;
-import org.arhor.diploma.service.data.MonsterServiceImpl;
+import org.arhor.diploma.data.file.MonsterProvider;
+import org.arhor.diploma.data.file.MonsterProviderImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -17,13 +17,13 @@ class MonsterReaderTest {
     @TestConfiguration
     static class TestConfig {
         @Bean
-        MonsterService monsterService(ResourceLoader loader) {
-            return new MonsterServiceImpl(loader);
+        MonsterProvider monsterService(ResourceLoader loader) {
+            return new MonsterProviderImpl(loader);
         }
     }
 
     @Autowired
-    private MonsterService service;
+    private MonsterProvider service;
 
     @Test
     void fetchAllMonsters() {

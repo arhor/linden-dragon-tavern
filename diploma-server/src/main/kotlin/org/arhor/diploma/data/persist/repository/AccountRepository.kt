@@ -1,6 +1,6 @@
-package org.arhor.diploma.repository
+package org.arhor.diploma.data.persist.repository
 
-import org.arhor.diploma.domain.Account
+import org.arhor.diploma.data.persist.domain.Account
 import org.arhor.diploma.util.Cache
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable

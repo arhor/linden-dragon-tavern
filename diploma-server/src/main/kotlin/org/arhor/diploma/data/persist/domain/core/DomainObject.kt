@@ -1,4 +1,4 @@
-package org.arhor.diploma.domain.core
+package org.arhor.diploma.data.persist.domain.core
 
 import org.arhor.diploma.core.MutableIdentity
 import java.io.Serializable

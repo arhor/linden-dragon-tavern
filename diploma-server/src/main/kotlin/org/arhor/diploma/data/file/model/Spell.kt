@@ -1,4 +1,4 @@
-package org.arhor.diploma.service.data.model
+package org.arhor.diploma.data.file.model
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties

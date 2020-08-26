@@ -1,13 +1,13 @@
-package org.arhor.diploma.service.data
+package org.arhor.diploma.data.file
 
-import org.arhor.diploma.service.data.model.Monster
+import org.arhor.diploma.data.file.model.Monster
 import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Service
 
 private typealias MonsterDataProvider = DataProviderImplDefault<Monster, Monster.Details, String>
 
 @Service
-class MonsterServiceImpl(loader: ResourceLoader) : MonsterService, MonsterDataProvider(loader) {
+class MonsterProviderImpl(loader: ResourceLoader) : MonsterProvider, MonsterDataProvider(loader) {
 
     override val resourcePath = "classpath:data/5e-SRD-Monsters.json"
     override val resourceType = Array<Monster.Details>::class.java

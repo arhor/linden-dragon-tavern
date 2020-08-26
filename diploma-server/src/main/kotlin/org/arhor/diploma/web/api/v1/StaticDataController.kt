@@ -1,7 +1,7 @@
 package org.arhor.diploma.web.api.v1
 
 import org.arhor.diploma.core.Identifiable
-import org.arhor.diploma.service.data.DataProvider
+import org.arhor.diploma.data.file.DataProvider
 import org.arhor.diploma.util.bound
 import org.slf4j.Logger
 import org.springframework.http.ResponseEntity

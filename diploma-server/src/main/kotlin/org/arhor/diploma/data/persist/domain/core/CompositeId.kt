@@ -1,4 +1,4 @@
-package org.arhor.diploma.domain.core
+package org.arhor.diploma.data.persist.domain.core
 
 import java.io.Serializable
 import javax.persistence.Embeddable

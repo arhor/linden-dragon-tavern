@@ -1,6 +1,6 @@
 package org.arhor.diploma.service.mapping;
 
-import org.arhor.diploma.domain.Account;
+import org.arhor.diploma.data.persist.domain.Account;
 import org.arhor.diploma.service.dto.AccountDTO;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

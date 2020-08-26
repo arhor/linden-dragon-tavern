@@ -1,6 +1,6 @@
-package org.arhor.diploma.domain
+package org.arhor.diploma.data.persist.domain
 
-import org.arhor.diploma.domain.core.AuditableDomainObject
+import org.arhor.diploma.data.persist.domain.core.AuditableDomainObject
 import org.arhor.diploma.util.Common.STATIC_HASH_CODE
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy

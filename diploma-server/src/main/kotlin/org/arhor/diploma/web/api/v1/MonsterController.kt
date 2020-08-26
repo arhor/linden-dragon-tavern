@@ -1,7 +1,7 @@
 package org.arhor.diploma.web.api.v1
 
-import org.arhor.diploma.service.data.model.Monster
-import org.arhor.diploma.service.data.MonsterService
+import org.arhor.diploma.data.file.model.Monster
+import org.arhor.diploma.data.file.MonsterProvider
 import org.arhor.diploma.util.createLogger
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*
     produces = [MediaType.APPLICATION_JSON_VALUE]
 )
 class MonsterController(
-    service: MonsterService
-) : StaticDataController<Monster, Monster.Details, String>(service, log, "Monster") {
+    provider: MonsterProvider
+) : StaticDataController<Monster, Monster.Details, String>(provider, log, "Monster") {
 
     companion object {
         @JvmStatic

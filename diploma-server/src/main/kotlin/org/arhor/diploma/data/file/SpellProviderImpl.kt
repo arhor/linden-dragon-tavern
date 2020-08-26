@@ -1,13 +1,13 @@
-package org.arhor.diploma.service.data
+package org.arhor.diploma.data.file
 
-import org.arhor.diploma.service.data.model.Spell
+import org.arhor.diploma.data.file.model.Spell
 import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Service
 
 private typealias SpellDataProvider = DataProviderImplDefault<Spell, Spell.Details, String>
 
 @Service
-class SpellServiceImpl(loader: ResourceLoader) : SpellService, SpellDataProvider(loader) {
+class SpellProviderImpl(loader: ResourceLoader) : SpellProvider, SpellDataProvider(loader) {
 
     override val resourcePath = "classpath:data/5e-SRD-Spells.json"
     override val resourceType = Array<Spell.Details>::class.java

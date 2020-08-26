@@ -1,8 +1,8 @@
 package org.arhor.diploma.service.impl
 
 import org.arhor.diploma.core.Identifiable
-import org.arhor.diploma.domain.core.DomainObject
-import org.arhor.diploma.repository.BaseRepository
+import org.arhor.diploma.data.persist.domain.core.DomainObject
+import org.arhor.diploma.data.persist.repository.BaseRepository
 import org.arhor.diploma.service.Creator
 import org.arhor.diploma.service.Deleter
 import org.arhor.diploma.service.Reader
