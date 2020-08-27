@@ -1,12 +1,10 @@
 package org.arhor.diploma
 
-import org.arhor.diploma.config.properties.ApplicationProperties
 import org.arhor.diploma.core.StartupTask
 import org.arhor.diploma.util.createLogger
 import org.slf4j.Logger
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.core.env.Environment
@@ -15,7 +13,6 @@ import java.net.UnknownHostException
 import javax.annotation.PostConstruct
 
 @SpringBootApplication
-@EnableConfigurationProperties(ApplicationProperties::class)
 class DiplomaApp(
     private val env: Environment,
     private val startupTasks: List<StartupTask>

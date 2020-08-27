@@ -3,7 +3,6 @@ package org.arhor.diploma.web.filter
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.util.createLogger
 import org.arhor.diploma.web.security.TokenProvider
-import org.slf4j.Logger
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
@@ -18,6 +17,11 @@ class CustomAuthFilter(
     private val tokenProvider: TokenProvider<*>,
     private val accountService: AccountService
 ) : OncePerRequestFilter() {
+
+    companion object {
+        @JvmStatic
+        private val log = createLogger<CustomAuthFilter>()
+    }
 
     override fun doFilterInternal(
         req: HttpServletRequest,
@@ -43,10 +47,5 @@ class CustomAuthFilter(
             log.error("Can NOT set user authentication -> Message: {}", e.message)
         }
         next.doFilter(req, res)
-    }
-
-    companion object {
-        @JvmStatic
-        private val log: Logger = createLogger<CustomAuthFilter>()
     }
 }

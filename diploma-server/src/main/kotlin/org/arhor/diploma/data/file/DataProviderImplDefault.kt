@@ -3,6 +3,7 @@ package org.arhor.diploma.data.file
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.arhor.diploma.core.Identifiable
+import org.arhor.diploma.util.createLogger
 import org.springframework.core.io.ResourceLoader
 import java.io.Serializable
 import kotlin.streams.toList
@@ -15,9 +16,12 @@ abstract class DataProviderImplDefault<
     private val resourceLoader: ResourceLoader
 ) : DataProvider<T, D, K> {
 
+    companion object {
+        private val log = createLogger<DataProviderImplDefault<*,*,*>>()
+    }
+
     private val objectMapper: ObjectMapper = jacksonObjectMapper()
 
-    protected open val schemaPath: String? = null
     protected abstract val resourcePath: String
     protected abstract val resourceType: Class<Array<D>>
 
@@ -53,7 +57,11 @@ abstract class DataProviderImplDefault<
     }
 
     override fun reload() {
-        data = loadData()
+        try {
+            data = loadData()
+        } catch (e: Throwable) {
+            log.error("Attempt to reload data-file was failed", e)
+        }
     }
 
     private fun loadData(): Set<D> {

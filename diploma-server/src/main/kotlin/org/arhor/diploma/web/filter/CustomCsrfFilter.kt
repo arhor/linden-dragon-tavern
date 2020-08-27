@@ -1,9 +1,7 @@
 package org.arhor.diploma.web.filter
 
-import org.arhor.diploma.aspect.LoggingAspect
 import org.arhor.diploma.util.createLogger
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
+import org.springframework.http.HttpMethod.*
 import org.springframework.security.web.access.AccessDeniedHandlerImpl
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
@@ -24,6 +22,20 @@ import org.springframework.security.access.AccessDeniedException as AccessDenied
 @Component
 class CustomCsrfFilter : OncePerRequestFilter() {
 
+    companion object {
+        private const val CSRF_COOKIE_NAME = "csrf-token"
+        private const val CSRF_HEADER_NAME = "x-csrf-token"
+
+        @JvmStatic
+        private val SAFE_METHODS = setOf(
+            GET,
+            HEAD,
+            TRACE,
+            OPTIONS,
+        ).map { it.toString() }
+    }
+
+    // TODO: try to replace by spring-bean
     private val accessDeniedHandler = AccessDeniedHandlerImpl()
 
     override fun doFilterInternal(
@@ -54,16 +66,5 @@ class CustomCsrfFilter : OncePerRequestFilter() {
             }
         }
         return null
-    }
-
-    companion object {
-        private const val CSRF_COOKIE_NAME = "csrf-token"
-        private const val CSRF_HEADER_NAME = "x-csrf-token"
-
-        @JvmStatic
-        private val SAFE_METHODS = setOf("GET", "HEAD", "TRACE", "OPTIONS")
-
-        @JvmStatic
-        private val log: Logger = createLogger<CustomCsrfFilter>()
     }
 }

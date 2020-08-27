@@ -21,6 +21,11 @@ class SpellController(
         private val log = createLogger<SpellController>()
     }
 
+    @PostMapping(path = ["/reload"])
+    fun reloadDataProvider() {
+        dataProvider.reload()
+    }
+
     @GetMapping(path = ["/details/{name}"])
     fun getSpellDetails(@PathVariable name: String): ResponseEntity<Spell.Details> {
         return getEntityDetails(name)

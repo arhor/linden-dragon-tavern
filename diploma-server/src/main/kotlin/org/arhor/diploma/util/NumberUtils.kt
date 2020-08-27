@@ -10,7 +10,11 @@ package org.arhor.diploma.util
  * @return closure with min bound value
  */
 internal fun <N : Number> N?.minBound(bound: Int): Int {
-    return if ((this == null) || (this.toLong() <= bound)) bound else this.toInt()
+    return if ((this == null) || (this.toLong() <= bound)) {
+        bound
+    } else {
+        this.toInt()
+    }
 }
 
 /**
@@ -23,5 +27,9 @@ internal fun <N : Number> N?.minBound(bound: Int): Int {
  * @return closure with max bound value
  */
 internal fun <N : Number> N?.maxBound(bound: Int): Int {
-    return if ((this == null) || (this.toLong() >= bound)) bound else this.toInt()
+    return if ((this == null) || (this.toLong() >= bound)) {
+        bound
+    } else {
+        this.toInt()
+    }
 }

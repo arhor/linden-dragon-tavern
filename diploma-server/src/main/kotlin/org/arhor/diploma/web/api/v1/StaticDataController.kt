@@ -16,13 +16,13 @@ abstract class StaticDataController<
     private val resourceName: String
 ) {
 
-    fun getEntityDetails(name: K): ResponseEntity<D> {
+    protected fun getEntityDetails(name: K): ResponseEntity<D> {
         log.debug("fetching {} details by name: {}", resourceName, name)
         val entityDetails = dataProvider.getDetails(name)
         return ResponseEntity.ok(entityDetails)
     }
 
-    fun getEntityDetailsList(page: Int?, size: Int?): ResponseEntity<List<D>> {
+    protected fun getEntityDetailsList(page: Int?, size: Int?): ResponseEntity<List<D>> {
         val entityDetailsList = if ((page == null) and (size == null)) {
             log.debug("fetching all {} details list", resourceName)
             dataProvider.getDetailsList()
@@ -33,13 +33,13 @@ abstract class StaticDataController<
         return ResponseEntity.ok(entityDetailsList)
     }
 
-    fun getEntity(name: K): ResponseEntity<T> {
+    protected fun getEntity(name: K): ResponseEntity<T> {
         log.debug("fetching {} by name: {}", resourceName, name)
         val entity = dataProvider.getOne(name)
         return ResponseEntity.ok(entity)
     }
 
-    fun getEntityList(page: Int?, size: Int?): ResponseEntity<List<T>> {
+    protected fun getEntityList(page: Int?, size: Int?): ResponseEntity<List<T>> {
         val entityList = if ((page == null) and (size == null)) {
             log.debug("fetching all {} list", resourceName)
             dataProvider.getList()
