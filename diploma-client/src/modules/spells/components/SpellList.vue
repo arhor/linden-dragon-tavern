@@ -23,7 +23,7 @@
                     <template v-slot:items="props" @click.stop="showDetails(props.item)">
                         <td>{{ props.item.level }}</td>
                         <td>{{ props.item.name }}</td>
-                        <td>{{ props.item.school.name }}</td>
+                        <td>{{ props.item.school }}</td>
                     </template>
                 </v-data-table>
             </v-card>
@@ -44,7 +44,7 @@ export default {
         headers: [
             { text: 'Level', value: 'level' },
             { text: 'Name', value: 'name' },
-            { text: 'School', value: 'school.name' }
+            { text: 'School', value: 'school' }
         ]
     }),
     methods: {

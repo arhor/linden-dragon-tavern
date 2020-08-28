@@ -9,7 +9,7 @@ private typealias MonsterDataProvider = DataProviderImplDefault<Monster, Monster
 @Service
 class MonsterProviderImpl(loader: ResourceLoader) : MonsterProvider, MonsterDataProvider(loader) {
 
-    override val resourcePath = "classpath:data/5e-SRD-Monsters.json"
+    override val resourcePath get() = "classpath:data/5e-SRD-Monsters.json"
     override val resourceType = Array<Monster.Details>::class.java
 
     override fun shrinkData(details: Monster.Details): Monster {

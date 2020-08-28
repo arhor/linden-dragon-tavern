@@ -6,6 +6,7 @@ import org.arhor.diploma.core.Identifiable
 import org.arhor.diploma.util.createLogger
 import org.springframework.core.io.ResourceLoader
 import java.io.Serializable
+import javax.annotation.PostConstruct
 import kotlin.streams.toList
 
 abstract class DataProviderImplDefault<
@@ -25,7 +26,7 @@ abstract class DataProviderImplDefault<
     protected abstract val resourcePath: String
     protected abstract val resourceType: Class<Array<D>>
 
-    protected var data: Set<D> = loadData()
+    protected var data: Set<D> = emptySet()
 
     protected abstract fun shrinkData(details: D): T
 
@@ -53,9 +54,15 @@ abstract class DataProviderImplDefault<
         val offset = ((page - 1) * size).toLong()
         val amount = size.toLong()
 
-        return data.stream().skip(offset).limit(amount).toList()
+        return data.takeIf { it.isNotEmpty() }
+            ?.stream()
+            ?.skip(offset)
+            ?.limit(amount)
+            ?.toList()
+            ?: emptyList()
     }
 
+    @PostConstruct
     override fun reload() {
         try {
             data = loadData()

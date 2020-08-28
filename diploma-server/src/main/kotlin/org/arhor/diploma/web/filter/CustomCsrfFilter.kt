@@ -1,6 +1,5 @@
 package org.arhor.diploma.web.filter
 
-import org.arhor.diploma.util.createLogger
 import org.springframework.http.HttpMethod.*
 import org.springframework.security.web.access.AccessDeniedHandlerImpl
 import org.springframework.stereotype.Component
