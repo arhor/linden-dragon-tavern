@@ -28,8 +28,11 @@ dependencies {
 def jsRootDir = "${project.projectDir}"
 
 task injectSharedLib(type: Copy, dependsOn: ":diploma-shared:build") {
-    from "../diploma-shared/build/compiled-js/"
-    into "src/lib/"
+    def sharedLibSource = [project(':diploma-shared').buildDir, "compiled-js"].join(File.separator)
+    def sharedLibTarget = [project(':diploma-client').projectDir, "src", "lib"].join(File.separator)
+
+    from sharedLibSource
+    into sharedLibTarget
 }
 
 task npmAuditFix (type: NpmTask, dependsOn: npmInstall) {
