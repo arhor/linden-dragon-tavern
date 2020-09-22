@@ -13,8 +13,8 @@
                 <template v-slot:default>
                     <thead>
                         <tr>
-                            <th class="text-left">Name</th>
-                            <th class="text-left">Status</th>
+                            <th class="text-left" id="name">Name</th>
+                            <th class="text-left" id="status">Status</th>
                         </tr>
                     </thead>
                     <tbody>

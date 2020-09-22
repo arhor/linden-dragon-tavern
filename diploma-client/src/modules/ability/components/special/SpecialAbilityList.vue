@@ -14,8 +14,8 @@
 </template>
 
 <script>
-import { processLinebreaks } from '@/utils/StringUtils';
-import { notEmptyArray } from '@/utils/ArrayUtils';
+import { processLinebreaks } from '@/utils/stringUtils';
+import { notEmptyArray } from '@/utils/arrayUtils';
 
 export default {
     name: 'SpecialAbilityList',

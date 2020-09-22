@@ -16,7 +16,7 @@
         </encoder>
     </appender>
 
-    <logger name="org.arhor.diploma" level="DEBUG"/>
+
     <logger name="javax.activation" level="WARN"/>
     <logger name="javax.management.remote" level="WARN"/>
     <logger name="javax.xml.bind" level="WARN"/>
@@ -28,6 +28,7 @@
     <logger name="io.undertow.websockets.jsr" level="ERROR"/>
     <logger name="org.apache" level="WARN"/>
     <logger name="org.apache.catalina.startup.DigesterFactory" level="OFF"/>
+    <logger name="org.arhor.diploma" level="DEBUG"/>
     <logger name="org.bson" level="WARN"/>
     <logger name="org.hibernate.validator" level="WARN"/>
     <logger name="org.hibernate" level="WARN"/>

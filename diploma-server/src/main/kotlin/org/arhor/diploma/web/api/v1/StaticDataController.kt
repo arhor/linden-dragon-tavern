@@ -2,10 +2,13 @@ package org.arhor.diploma.web.api.v1
 
 import org.arhor.diploma.core.Identifiable
 import org.arhor.diploma.data.file.DataProvider
+import org.arhor.diploma.data.file.model.Spell
 import org.arhor.diploma.util.bound
 import org.slf4j.Logger
 import org.springframework.http.ResponseEntity
 import java.io.Serializable
+import java.util.function.Predicate
+import kotlin.reflect.KProperty1
 
 abstract class StaticDataController<
         T : Identifiable<K>,
@@ -26,6 +29,17 @@ abstract class StaticDataController<
         val entityDetailsList = if ((page == null) and (size == null)) {
             log.debug("fetching all {} details list", resourceName)
             dataProvider.getDetailsList()
+        } else {
+            log.debug("fetching {} details list: page {}, size {}", resourceName, page, size)
+            bound<Int, List<D>>(dataProvider::getDetailsList)(page, size)
+        }
+        return ResponseEntity.ok(entityDetailsList)
+    }
+
+    protected fun getEntityDetailsList(page: Int?, size: Int?, query: Predicate<D>): ResponseEntity<List<D>> {
+        val entityDetailsList = if ((page == null) and (size == null)) {
+            log.debug("fetching all {} details list", resourceName)
+            dataProvider.getDetailsList(query)
         } else {
             log.debug("fetching {} details list: page {}, size {}", resourceName, page, size)
             bound<Int, List<D>>(dataProvider::getDetailsList)(page, size)

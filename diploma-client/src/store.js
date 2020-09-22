@@ -10,6 +10,10 @@ import spells from '@/modules/spells/store';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
+    namespaced: true,
+    state: {},
+    actions: {},
+    mutations: {},
     modules: {
         abilities,
         maps,

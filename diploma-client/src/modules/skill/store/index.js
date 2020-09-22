@@ -1,29 +1,28 @@
-/* eslint-disable no-param-reassign */
 import axios from 'axios';
 
-const state = {
-    all: []
+const mutation = {
+    SET_SKILLS: 'SET_SKILLS'
 };
 
-const getters = {};
-
 const actions = {
-    async load({ commit }) {
+    load: async ({ commit }) => {
         const { data } = await axios.get('data/5e-SRD-Skills.json');
-        commit('SET_SKILLS', data);
+        commit(mutation.SET_SKILLS, data);
     }
 };
 
 const mutations = {
-    SET_SKILLS(state, payload) {
+    [mutation.SET_SKILLS]: (state, payload) => {
         state.all = payload;
     }
 };
 
 export default {
     namespaced: true,
-    state,
-    getters,
+    state: {
+        all: []
+    },
+    getters: {},
     actions,
     mutations
 };

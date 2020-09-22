@@ -9,12 +9,11 @@ Vue.config.productionTip = false;
 
 window.appController = {
     main() {
-        const application = new Vue({
+        new Vue({
             vuetify,
             router,
             store,
             render: (h) => h(App)
-        });
-        application.$mount('#app');
+        }).$mount('#app');
     }
 };

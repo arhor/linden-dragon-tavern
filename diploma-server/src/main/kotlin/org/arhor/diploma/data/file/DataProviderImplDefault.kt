@@ -6,6 +6,7 @@ import org.arhor.diploma.core.Identifiable
 import org.arhor.diploma.util.createLogger
 import org.springframework.core.io.ResourceLoader
 import java.io.Serializable
+import java.util.function.Predicate
 import javax.annotation.PostConstruct
 import kotlin.streams.toList
 
@@ -50,12 +51,29 @@ abstract class DataProviderImplDefault<
         return data.toList()
     }
 
+    override fun getDetailsList(query: Predicate<D>): List<D> {
+        return data.filter { query.test(it) }.toList()
+    }
+
     override fun getDetailsList(page: Int, size: Int): List<D> {
         val offset = ((page - 1) * size).toLong()
         val amount = size.toLong()
 
         return data.takeIf { it.isNotEmpty() }
             ?.stream()
+            ?.skip(offset)
+            ?.limit(amount)
+            ?.toList()
+            ?: emptyList()
+    }
+
+    override fun getDetailsList(page: Int, size: Int, query: Predicate<D>): List<D> {
+        val offset = ((page - 1) * size).toLong()
+        val amount = size.toLong()
+
+        return data.takeIf { it.isNotEmpty() }
+            ?.stream()
+            ?.filter(query)
             ?.skip(offset)
             ?.limit(amount)
             ?.toList()

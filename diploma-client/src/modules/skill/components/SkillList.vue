@@ -4,7 +4,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { signed, toPropName } from '@/utils/StringUtils';
+import { signed, toPropName } from '@/utils/stringUtils';
 import GenericList from '@/components/generic/GenericList.vue';
 
 export default {
@@ -21,11 +21,9 @@ export default {
     computed: mapState({
         allSkills: (state) => state.skills.all
     }),
-    data() {
-        return {
-            skills: []
-        };
-    },
+    data: () => ({
+        skills: []
+    }),
     mounted() {
         const isTraversable = this.allSkills && this.allSkills instanceof Array;
         if (isTraversable) {

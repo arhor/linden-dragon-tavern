@@ -1,6 +1,7 @@
 package org.arhor.diploma.data.file
 
 import org.arhor.diploma.core.ReloadableResource
+import java.util.function.Predicate
 
 /**
  * @param T basic data type which provides only few required fields
@@ -19,5 +20,9 @@ interface DataProvider<T, D, K> : ReloadableResource {
 
     fun getDetailsList(): List<D>
 
+    fun getDetailsList(query: Predicate<D>): List<D>
+
     fun getDetailsList(page: Int, size: Int): List<D>
+
+    fun getDetailsList(page: Int, size: Int, query: Predicate<D>): List<D>
 }
