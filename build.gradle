@@ -25,10 +25,11 @@ wrapper {
     gradleVersion = "${gradle_version}"
 }
 
-task buildCompositeApp(dependsOn: ":diploma-client:clientBuild") {
+task buildCompositeApp(dependsOn: ":diploma-client:buildClient") {
     group "build"
 
     doFirst {
+        print "copying client build files into the server resource directory"
         copy {
             from Paths.get(project(':diploma-client').projectDir.toString(), "dist")
             into Paths.get(project(':diploma-server').buildDir.toString(), "resources", "main", "static")
