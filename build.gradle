@@ -1,3 +1,5 @@
+import java.nio.file.Paths
+
 plugins {
     id "org.springframework.boot"           apply false
     id "io.spring.dependency-management"    apply false
@@ -11,14 +13,6 @@ plugins {
 }
 
 allprojects {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        jcenter()
-        maven { url "https://repo.spring.io/milestone" }
-    }
-
-
     tasks.withType(JavaCompile) {
         options.compilerArgs.addAll([
                 "-Xlint:unchecked",
@@ -31,10 +25,15 @@ wrapper {
     gradleVersion = "${gradle_version}"
 }
 
-task injectClientIntoServer(type: Copy, dependsOn: ":diploma-client:clientBuild") {
-    def clientBuildDir = [project(':diploma-client').projectDir, "dist"].join(File.separator)
-    def serverResourcesDir = [project(':diploma-server').buildDir, "resources", "main", "static"].join(File.separator)
+task buildCompositeApp(dependsOn: ":diploma-client:clientBuild") {
+    group "build"
 
-    from clientBuildDir
-    into serverResourcesDir
+    doFirst {
+        copy {
+            from Paths.get(project(':diploma-client').projectDir.toString(), "dist")
+            into Paths.get(project(':diploma-server').buildDir.toString(), "resources", "main", "static")
+        }
+    }
+
+    finalizedBy ":diploma-server:build"
 }

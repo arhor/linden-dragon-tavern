@@ -1,0 +1,1 @@
+gradlew bootRun -Dorg.gradle.java.home=D:\java\zulu11.41.23-ca-jdk11.0.8-win_x64
