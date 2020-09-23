@@ -79,6 +79,9 @@ def springProfiles = "-Dspring.profiles.active=" + [
 
 bootRun {
     jvmArgs += springProfiles
+    jvmArgs += "-XX:+UseSerialGC"
+    jvmArgs += "-XX:MaxRAM=100m"
+    jvmArgs += "-Xss512k"
 }
 
 test {
