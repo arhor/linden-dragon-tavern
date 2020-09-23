@@ -80,12 +80,8 @@ springBoot {
     mainClassName = "org.arhor.diploma.DiplomaApp"
 }
 
-def springProfiles = "-Dspring.profiles.active=" + [
-        "default",
-].join(",")
-
 bootRun {
-    jvmArgs += springProfiles
+    jvmArgs += "-Dspring.profiles.active=default"
     jvmArgs += "-XX:+UseSerialGC"
     jvmArgs += "-XX:MaxRAM=100m"
     jvmArgs += "-Xss512k"
@@ -93,6 +89,5 @@ bootRun {
 
 test {
     useJUnitPlatform()
-
-    jvmArgs += springProfiles
+    jvmArgs += "-Dspring.profiles.active=default"
 }

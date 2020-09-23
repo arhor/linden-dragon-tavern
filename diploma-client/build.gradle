@@ -1,3 +1,5 @@
+import java.nio.file.Paths
+
 plugins {
     id "com.github.node-gradle.node"
     id "idea"
@@ -28,11 +30,8 @@ dependencies {
 def jsRootDir = "${project.projectDir}"
 
 task injectSharedLib(type: Copy, dependsOn: ":diploma-shared:build") {
-    def sharedLibSource = [project(':diploma-shared').buildDir, "compiled-js"].join(File.separator)
-    def sharedLibTarget = [project(':diploma-client').projectDir, "src", "lib"].join(File.separator)
-
-    from sharedLibSource
-    into sharedLibTarget
+    from Paths.get(project(':diploma-shared').buildDir.toString(), "compiled-js")
+    into Paths.get(project(':diploma-client').projectDir.toString(), "src", "lib")
 }
 
 task npmAuditFix (type: NpmTask, dependsOn: npmInstall) {
@@ -42,6 +41,7 @@ task npmAuditFix (type: NpmTask, dependsOn: npmInstall) {
 }
 
 task clientBuild (type: NpmTask, dependsOn: [npmAuditFix, injectSharedLib]) {
+    group = "build"
     description = "Builds production version of the app client"
     workingDir = file(jsRootDir)
     args = ["run", "build"]
