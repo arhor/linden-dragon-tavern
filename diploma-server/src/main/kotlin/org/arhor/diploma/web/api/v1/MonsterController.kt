@@ -21,7 +21,7 @@ class MonsterController(
         private val log = createLogger<MonsterController>()
     }
 
-    @GetMapping("/details/{name}")
+    @GetMapping("/{name}/details")
     fun getMonsterDetails(@PathVariable name: String): ResponseEntity<Monster.Details> {
         return getEntityDetails(name)
     }

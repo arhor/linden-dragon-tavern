@@ -15,7 +15,7 @@
 export default {
     name: 'DndBreadcrumbs',
     data: () => ({
-        breadcrumbs: []
+        breadcrumbs: [],
     }),
     methods: {
         updateBreadcrumbs() {
@@ -23,15 +23,15 @@ export default {
             this.$route.meta?.breadcrumbs?.forEach((breadcrumb) => {
                 this.breadcrumbs.push(breadcrumb);
             });
-        }
+        },
     },
     watch: {
         ['$route']: function() {
             this.updateBreadcrumbs();
-        }
+        },
     },
     mounted() {
         this.updateBreadcrumbs();
-    }
+    },
 };
 </script>

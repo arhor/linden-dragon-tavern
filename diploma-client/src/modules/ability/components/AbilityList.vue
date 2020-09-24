@@ -15,19 +15,19 @@ export default {
     props: {
         creature: {
             type: Object,
-            default: null
-        }
+            default: null,
+        },
     },
     components: {
-        AbilityDetails
+        AbilityDetails,
     },
     computed: mapState({
-        abilities: (state) => state.abilities.all
+        abilities: (state) => state.abilities.all,
     }),
     methods: {
         valueOf(ability) {
             return this.creature.abilities[ability.name];
-        }
-    }
+        },
+    },
 };
 </script>

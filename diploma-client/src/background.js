@@ -10,8 +10,8 @@ let win;
 protocol.registerSchemesAsPrivileged([
     {
         scheme: 'app',
-        privileges: { secure: true, standard: true }
-    }
+        privileges: { secure: true, standard: true },
+    },
 ]);
 
 function createWindow() {
@@ -22,8 +22,8 @@ function createWindow() {
         webPreferences: {
             // Use pluginOptions.nodeIntegration, leave this alone
             // See nklayman.github.io/vue-cli-plugin-electron-builder/guide/security.html#node-integration for more info
-            nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION
-        }
+            nodeIntegration: process.env.ELECTRON_NODE_INTEGRATION,
+        },
     });
 
     // Create loading window.
@@ -42,7 +42,7 @@ function createWindow() {
                 transparent: true,
                 frame: false,
                 alwaysOnTop: true,
-                parent: win
+                parent: win,
             });
         }
 

@@ -1,8 +1,8 @@
 <template>
     <v-row>
-        <v-col v-for="(action, i) in actions" :key="`action-${i}`" cols="12">
-            <strong>{{ action.name }}</strong>
-            : {{ action.desc }}
+        <v-col v-for="{ name, desc } in actions" :key="name" cols="12">
+            <strong>{{ name }}</strong>
+            : {{ desc }}
         </v-col>
     </v-row>
 </template>
@@ -13,8 +13,8 @@ export default {
     props: {
         actions: {
             type: Array,
-            default: () => []
-        }
-    }
+            default: () => [],
+        },
+    },
 };
 </script>

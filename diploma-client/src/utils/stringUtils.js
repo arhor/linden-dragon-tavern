@@ -1,6 +1,6 @@
 /** @param {string} text */
-export function processLinebreaks(text) {
-    return String(text || '').replace(/(\n)|(\r\n)/g, '<br/>');
+export function renderLinebreaksHTML(text) {
+    return text?.replace(/(\n)|(\r\n)/g, '<br/>');
 }
 
 /** @param {number} value */

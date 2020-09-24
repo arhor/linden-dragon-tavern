@@ -14,16 +14,16 @@
                     />
                 </v-card-title>
                 <v-data-table
-                    class="evelation-1"
+                    class="elevation-1"
                     :headers="headers"
                     :items="allSpells"
                     :search="search"
                     @click:row="showDetails"
                 >
-                    <template v-slot:items="props" @click.stop="showDetails(props.item)">
-                        <td>{{ props.item.level }}</td>
-                        <td>{{ props.item.name }}</td>
-                        <td>{{ props.item.school }}</td>
+                    <template v-slot:items="{ item }" @click.stop="showDetails(item)">
+                        <td>{{ item.level }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.school }}</td>
                     </template>
                 </v-data-table>
             </v-card>
@@ -44,17 +44,17 @@ export default {
         headers: [
             { text: 'Level', value: 'level' },
             { text: 'Name', value: 'name' },
-            { text: 'School', value: 'school' }
-        ]
+            { text: 'School', value: 'school' },
+        ],
     }),
     methods: {
         showDetails(concreteSpell) {
             this.spell = concreteSpell;
             this.dialog = true;
-        }
+        },
     },
     computed: {
-        ...mapState('spells', ['allSpells'])
-    }
+        ...mapState('spells', ['allSpells']),
+    },
 };
 </script>

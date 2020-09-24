@@ -15,23 +15,24 @@
 </template>
 
 <script>
+import sharedLib from '@/lib/diploma-shared.js';
+
+const { Utils } = sharedLib.org.arhor.diploma;
+
 export default {
     name: 'AbilityDetails',
     props: {
         ability: {
             type: Object,
-            default: null
+            default: null,
         },
         value: {
             type: Number,
-            default: 0
-        }
+            default: 0,
+        },
     },
     filters: {
-        calcBonus(stat) {
-            const result = Math.floor((stat - 10) / 2);
-            return (result >= 0 ? '+' : '').concat(result);
-        }
-    }
+        calcBonus: (value) => Utils.calcAbilityModifier(value),
+    },
 };
 </script>

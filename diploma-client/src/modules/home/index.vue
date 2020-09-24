@@ -19,12 +19,12 @@
                     </thead>
                     <tbody>
                         <tr
-                            v-for="module in modules"
-                            :key="module.name"
-                            @click.stop="goTo(module.path)"
+                            v-for="{ name, path, status } in modules"
+                            :key="name"
+                            @click.stop="navigateTo(path)"
                         >
-                            <td>{{ module.name }}</td>
-                            <td>{{ module.status }}</td>
+                            <td>{{ name }}</td>
+                            <td>{{ status }}</td>
                         </tr>
                     </tbody>
                 </template>
@@ -36,17 +36,17 @@
 <script>
 export default {
     name: 'Home',
-    data: () => ({
-        modules: [
+    computed: {
+        modules: () => [
             { name: 'Monsters', path: '/monsters', status: 'in progress' },
             { name: 'Spells', path: '/spells', status: 'in progress' },
-            { name: 'Maps', path: '/maps', status: 'in progress' }
-        ]
-    }),
+            { name: 'Maps', path: '/maps', status: 'in progress' },
+        ],
+    },
     methods: {
-        goTo(path) {
-            this.$router.push(path);
-        }
-    }
+        navigateTo(path) {
+            this['$router']?.push(path);
+        },
+    },
 };
 </script>

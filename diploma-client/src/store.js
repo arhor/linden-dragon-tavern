@@ -19,8 +19,8 @@ const store = new Vuex.Store({
         maps,
         monsters,
         skills,
-        spells
-    }
+        spells,
+    },
 });
 
 export default store;

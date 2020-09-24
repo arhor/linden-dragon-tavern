@@ -13,7 +13,7 @@
         <v-app-bar dark app>
             <v-app-bar-nav-icon @click.stop="displayDrawer = !displayDrawer" />
 
-            <v-toolbar-title>{{ name }}</v-toolbar-title>
+            <v-toolbar-title>{{ appName }}</v-toolbar-title>
 
             <v-spacer />
 
@@ -44,16 +44,16 @@ export default {
     name: 'App',
     components: { DndBreadcrumbs },
     data: () => ({
-        name: 'D&D Homebrew App',
+        appName: 'D&D Homebrew App',
         displayDrawer: false,
         appBarLinks: [
             { path: '/', name: 'Home' },
             { path: '/about', name: 'About' },
-            { path: '/settings', name: 'Settings' }
-        ]
+            { path: '/settings', name: 'Settings' },
+        ],
     }),
     mounted() {
         MODULES_TO_LOAD.forEach((asset) => void this.$store.dispatch(`${asset}/load`));
-    }
+    },
 };
 </script>

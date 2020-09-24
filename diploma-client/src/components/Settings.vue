@@ -78,7 +78,7 @@ export default {
         dark: (state) => state.application.dark,
         drawers: (state) => state.application.drawers,
         primaryDrawer: (state) => state.application.primaryDrawer,
-        footer: (state) => state.application.footer
+        footer: (state) => state.application.footer,
     }),
     methods: {
         switchTheme() {
@@ -95,7 +95,7 @@ export default {
         },
         switchFooterInsetMode() {
             this.$store.dispatch('application/switchFooterInsetMode');
-        }
-    }
+        },
+    },
 };
 </script>

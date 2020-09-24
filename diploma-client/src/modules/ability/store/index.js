@@ -1,28 +1,28 @@
 import axios from 'axios';
 
-const state = {
-    all: []
+export const action = {
+    load: 'load',
 };
 
-const getters = {};
-
-const actions = {
-    async load({ commit }) {
-        const { data } = await axios.get('data/5e-SRD-Ability-Scores.json');
-        commit('SET_ABILITIES', data);
-    }
-};
-
-const mutations = {
-    SET_ABILITIES(state, payload) {
-        state.all = payload;
-    }
+const mutation = {
+    SET_ABILITIES: 'SET_ABILITIES',
 };
 
 export default {
     namespaced: true,
-    state,
-    getters,
-    actions,
-    mutations
+    state: {
+        all: [],
+    },
+    getters: {},
+    actions: {
+        [action.load]: async ({ commit }) => {
+            const { data } = await axios.get('data/5e-SRD-Ability-Scores.json');
+            commit(mutation.SET_ABILITIES, data);
+        },
+    },
+    mutations: {
+        [mutation.SET_ABILITIES]: (state, payload) => {
+            state.all = payload;
+        },
+    },
 };

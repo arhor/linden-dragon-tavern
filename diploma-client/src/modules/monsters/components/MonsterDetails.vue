@@ -73,15 +73,15 @@ export default {
     props: {
         monster: {
             type: Object,
-            default: null
-        }
+            default: null,
+        },
     },
     components: {
         AbilityList,
         ActionList,
         GenericList,
         SkillList,
-        SpecialAbilityList
-    }
+        SpecialAbilityList,
+    },
 };
 </script>

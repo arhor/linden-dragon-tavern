@@ -16,53 +16,49 @@
                 <v-data-table
                     class="elevation-1"
                     :headers="headers"
-                    :items="allMonsters"
+                    :items="monsters"
                     :search="search"
                     @click:row="showDetails"
                 >
-                    <template v-slot:items="props" @click.stop="showDetails(props.item)">
-                        <td>{{ props.item.name }}</td>
-                        <td>{{ props.item.size }}</td>
-                        <td>{{ props.item.type }}</td>
-                        <td>{{ props.item.challengeRating }}</td>
+                    <template
+                        v-slot:items="{ item: { name, size, type, challengeRating } }"
+                        @click.stop="showDetails(name)"
+                    >
+                        <td>{{ name }}</td>
+                        <td>{{ size }}</td>
+                        <td>{{ type }}</td>
+                        <td>{{ challengeRating }}</td>
                     </template>
                 </v-data-table>
-                <v-dialog v-model="dialog" max-width="800">
-                    <MonsterDetails :monster="concreteMonster" />
-                </v-dialog>
             </v-card>
         </v-col>
     </v-row>
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import MonsterDetails from '@/modules/monsters/components/MonsterDetails.vue';
-
 export default {
     name: 'MonsterList',
-    components: {
-        MonsterDetails
+    props: {
+        monsters: {
+            type: Array,
+            default: () => [],
+            required: true,
+        },
     },
     data: () => ({
         search: '',
-        dialog: false,
         errors: [],
         headers: [
             { text: 'Name', value: 'name' },
             { text: 'Size', value: 'size' },
             { text: 'Type', value: 'type' },
-            { text: 'CR', value: 'challengeRating' }
-        ]
+            { text: 'CR', value: 'challengeRating' },
+        ],
     }),
     methods: {
-        showDetails(concreteMonster) {
-            this.$store.dispatch('monsters/loadDetails', concreteMonster.name);
-            this.dialog = true;
-        }
+        showDetails(monsterName) {
+            this.$emit('show-monster-details', monsterName);
+        },
     },
-    computed: {
-        ...mapState('monsters', ['allMonsters', 'concreteMonster'])
-    }
 };
 </script>

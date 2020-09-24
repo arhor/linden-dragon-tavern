@@ -29,7 +29,7 @@ class SpellController(
         dataProvider.reload()
     }
 
-    @GetMapping(path = ["/details/{name}"])
+    @GetMapping(path = ["/{name}/details"])
     fun getSpellDetails(@PathVariable name: String): ResponseEntity<Spell.Details> {
         return getEntityDetails(name)
     }

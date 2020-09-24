@@ -7,7 +7,7 @@ import SpellList from '@/modules/spells/components/SpellList.vue';
 
 export default {
     components: {
-        SpellList
-    }
+        SpellList,
+    },
 };
 </script>

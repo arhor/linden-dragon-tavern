@@ -42,7 +42,7 @@ task buildClient (type: NpmTask, dependsOn: [npmInstall, injectSharedLib]) {
 task clientStart (type: NpmTask, dependsOn: [npmInstall, injectSharedLib]) {
     description = "Starts client development server"
     workingDir = project.projectDir
-    args = ["run", "start"]
+    args = ["run", "serve"]
 }
 
 task scrap (type: NodeTask, dependsOn: npmInstall) {

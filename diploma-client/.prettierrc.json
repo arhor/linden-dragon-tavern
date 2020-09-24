@@ -4,5 +4,6 @@
     "arrowParens": "always",
     "endOfLine": "crlf",
     "semi": true,
-    "tabWidth": 4
+    "tabWidth": 4,
+    "trailingComma": "all"
 }

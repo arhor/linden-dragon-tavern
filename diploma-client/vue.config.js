@@ -6,8 +6,8 @@ module.exports = {
     configureWebpack: {
         resolve: {
             alias: {
-                '@': path.resolve(__dirname, 'src')
-            }
+                '@': path.resolve(__dirname, 'src'),
+            },
         },
         plugins: [
             new CompressionPlugin({
@@ -15,8 +15,8 @@ module.exports = {
                 algorithm: 'gzip',
                 test: new RegExp('\\.(js|jsx|css)$'),
                 threshold: 10240,
-                minRatio: 0.8
-            })
-        ]
-    }
+                minRatio: 0.8,
+            }),
+        ],
+    },
 };
