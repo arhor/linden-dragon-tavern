@@ -8,8 +8,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import { action } from '@/modules/monsters/store';
+import { mapActions, mapState } from 'vuex';
 import MonsterDetails from '@/modules/monsters/components/MonsterDetails.vue';
 import MonsterList from '@/modules/monsters/components/MonsterList.vue';
 
@@ -25,11 +24,14 @@ export default {
         ...mapState('monsters', ['allMonsters', 'currentMonster']),
     },
     methods: {
-        loadMonsterDetails({ name }) {
-            this.$store.dispatch(`monsters/${action.loadDetails}`, name).then(() => {
-                this.dialog = true;
-            });
+        ...mapActions('monsters', ['load', 'loadDetails']),
+        async loadMonsterDetails({ name }) {
+            await this.loadDetails(name);
+            this.dialog = true;
         },
+    },
+    mounted() {
+        this.load();
     },
 };
 </script>

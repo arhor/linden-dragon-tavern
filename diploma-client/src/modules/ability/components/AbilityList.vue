@@ -1,6 +1,6 @@
 <template>
     <v-row wrap>
-        <v-col v-for="ability in abilities" :key="ability.name" cols="2">
+        <v-col v-for="ability in allAbilities" :key="ability.name" cols="2">
             <ability-details :ability="ability" :value="valueOf(ability)" />
         </v-col>
     </v-row>
@@ -21,9 +21,9 @@ export default {
     components: {
         AbilityDetails,
     },
-    computed: mapState({
-        abilities: (state) => state.abilities.all,
-    }),
+    computed: {
+        ...mapState('abilities', ['allAbilities']),
+    },
     methods: {
         valueOf(ability) {
             return this.creature.abilities[ability.name];

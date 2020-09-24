@@ -4,7 +4,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { signed, toPropName } from '@/utils/stringUtils';
+import { signed, replaceSpacesWithUnderscore } from '@/utils/stringUtils';
 import GenericList from '@/components/generic/GenericList.vue';
 
 export default {
@@ -12,29 +12,29 @@ export default {
     props: {
         creature: {
             type: Object,
-            default: null
-        }
+            default: null,
+        },
     },
     components: {
-        GenericList
+        GenericList,
     },
-    computed: mapState({
-        allSkills: (state) => state.skills.all
-    }),
+    computed: {
+        ...mapState('skills', ['allSkills']),
+    },
     data: () => ({
-        skills: []
+        skills: [],
     }),
     mounted() {
-        const isTraversable = this.allSkills && this.allSkills instanceof Array;
-        if (isTraversable) {
-            this.allSkills.forEach((it) => {
-                const propName = toPropName(it.name);
+        const { allSkills } = this;
+        if (allSkills && allSkills instanceof Array) {
+            allSkills.forEach((it) => {
+                const propName = replaceSpacesWithUnderscore(it.name);
                 const value = this.creature[propName];
                 if (value) {
                     this.skills.push(`${it.name} ${signed(value)}`);
                 }
             });
         }
-    }
+    },
 };
 </script>

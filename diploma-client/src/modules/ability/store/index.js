@@ -1,9 +1,5 @@
 import axios from 'axios';
 
-export const action = {
-    load: 'load',
-};
-
 const mutation = {
     SET_ABILITIES: 'SET_ABILITIES',
 };
@@ -11,18 +7,26 @@ const mutation = {
 export default {
     namespaced: true,
     state: {
-        all: [],
+        allAbilities: [],
+        isAbilitiesLoaded: false,
     },
     getters: {},
     actions: {
-        [action.load]: async ({ commit }) => {
-            const { data } = await axios.get('data/5e-SRD-Ability-Scores.json');
-            commit(mutation.SET_ABILITIES, data);
+        load: async ({ commit, state }) => {
+            if (!state.isAbilitiesLoaded) {
+                try {
+                    const { data } = await axios.get('data/5e-SRD-Ability-Scores.json');
+                    commit(mutation.SET_ABILITIES, data);
+                } catch (e) {
+                    console.error(e);
+                }
+            }
         },
     },
     mutations: {
         [mutation.SET_ABILITIES]: (state, payload) => {
             state.all = payload;
+            state.isAbilitiesLoaded = true;
         },
     },
 };

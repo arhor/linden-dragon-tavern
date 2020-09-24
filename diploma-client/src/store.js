@@ -9,11 +9,24 @@ import spells from '@/modules/spells/store';
 
 Vue.use(Vuex);
 
+const mutation = {
+    SWITCH_THEME: 'SWITCH_THEME',
+};
+
 const store = new Vuex.Store({
-    namespaced: true,
-    state: {},
-    actions: {},
-    mutations: {},
+    state: {
+        dark: true,
+    },
+    actions: {
+        switchTheme: ({ commit }) => {
+            commit(mutation.SWITCH_THEME);
+        },
+    },
+    mutations: {
+        [mutation.SWITCH_THEME]: (state) => {
+            state.dark = !state.dark;
+        },
+    },
     modules: {
         abilities,
         maps,

@@ -10,7 +10,7 @@ import { mapState } from 'vuex';
 export default {
     name: 'MapCarousel',
     computed: {
-        ...mapState('maps', ['Barovia'])
-    }
+        ...mapState('maps', ['Barovia']),
+    },
 };
 </script>

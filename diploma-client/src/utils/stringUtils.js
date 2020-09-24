@@ -10,6 +10,6 @@ export function signed(value) {
 }
 
 /** @param {string} str */
-export function toPropName(str) {
+export function replaceSpacesWithUnderscore(str) {
     return str?.replace(/ /g, '_')?.toLowerCase() ?? '';
 }

@@ -7,7 +7,7 @@ import SkillList from '@/modules/skill/components/SkillList.vue';
 
 export default {
     components: {
-        SkillList
-    }
+        SkillList,
+    },
 };
 </script>

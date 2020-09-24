@@ -1,16 +1,16 @@
 <template>
-    <v-app dark>
+    <v-app :dark="dark">
         <v-navigation-drawer
             v-model="displayDrawer"
             mini-variant
             temporary
             absolute
             overflow
-            dark
+            :dark="dark"
             app
         />
 
-        <v-app-bar dark app>
+        <v-app-bar :dark="dark" app>
             <v-app-bar-nav-icon @click.stop="displayDrawer = !displayDrawer" />
 
             <v-toolbar-title>{{ appName }}</v-toolbar-title>
@@ -29,16 +29,17 @@
             </v-container>
         </v-main>
 
-        <v-footer dark app>
+        <v-footer :dark="dark" app>
             <span class="px-3">&copy; {{ new Date().getFullYear() }}</span>
         </v-footer>
     </v-app>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import DndBreadcrumbs from '@/components/DndBreadcrumbs';
 
-const MODULES_TO_LOAD = ['abilities', 'monsters', 'spells', 'skills'];
+const MODULES_TO_LOAD = ['abilities', 'spells', 'skills'];
 
 export default {
     name: 'App',
@@ -52,6 +53,9 @@ export default {
             { path: '/settings', name: 'Settings' },
         ],
     }),
+    computed: {
+        ...mapState(['dark']),
+    },
     mounted() {
         MODULES_TO_LOAD.forEach((asset) => void this.$store.dispatch(`${asset}/load`));
     },
