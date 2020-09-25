@@ -20,7 +20,7 @@
             <v-btn v-for="{ path, name } in appBarLinks" :key="name" :to="path" text>
                 {{ name }}
             </v-btn>
-            <download-charsheet-button />
+            <download-button :url="characterSheetUrl" />
         </v-app-bar>
 
         <v-main>
@@ -38,14 +38,15 @@
 
 <script>
 import { mapState } from 'vuex';
+import { SERVER_API_URL } from '@/config/server-api';
 import DndBreadcrumbs from '@/components/DndBreadcrumbs';
-import DownloadCharsheetButton from '@/components/DownloadCharsheetButton';
+import DownloadButton from '@/components/DownloadButton';
 
 const MODULES_TO_LOAD = ['abilities', 'spells', 'skills'];
 
 export default {
     name: 'App',
-    components: { DownloadCharsheetButton, DndBreadcrumbs },
+    components: { DownloadButton, DndBreadcrumbs },
     data: () => ({
         appName: 'D&D Homebrew App',
         displayDrawer: false,
@@ -57,6 +58,11 @@ export default {
     }),
     computed: {
         ...mapState(['dark']),
+        characterSheetUrl: {
+            get() {
+                return `${SERVER_API_URL}/api/v1/charsheets`;
+            },
+        },
     },
     mounted() {
         MODULES_TO_LOAD.forEach((asset) => void this.$store.dispatch(`${asset}/load`));

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import sharedLib from '@/lib/diploma-shared.js';
+import sharedLib from '@/lib/diploma-shared';
 
 const { Utils } = sharedLib.org.arhor.diploma;
 

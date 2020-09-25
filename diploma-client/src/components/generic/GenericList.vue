@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { isEmptyArray } from '@/utils/arrayUtils.js';
+import { isEmptyArray } from '@/utils/arrayUtils';
 
 export default {
     name: 'GenericList',
