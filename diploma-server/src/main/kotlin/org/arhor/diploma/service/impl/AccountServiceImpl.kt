@@ -4,7 +4,7 @@ import org.arhor.diploma.data.persist.domain.Account
 import org.arhor.diploma.data.persist.repository.AccountRepository
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
-import org.arhor.diploma.service.exception.EntityNotFoundException
+import org.arhor.diploma.exception.EntityNotFoundException
 import org.arhor.diploma.service.mapping.AccountConverter
 import org.arhor.diploma.util.createLogger
 import org.slf4j.Logger

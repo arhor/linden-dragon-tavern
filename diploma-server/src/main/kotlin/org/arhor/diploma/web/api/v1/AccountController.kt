@@ -17,6 +17,11 @@ import org.springframework.web.bind.annotation.*
 )
 class AccountController(private val service: AccountService) {
 
+    companion object {
+        @JvmStatic
+        private val log = createLogger<AccountController>()
+    }
+
     @GetMapping
     @PreAuthorize("hasAuthority('${Account.VIEW}') and hasAuthority('${Account.EDIT}')")
     fun getAccounts(
@@ -29,10 +34,5 @@ class AccountController(private val service: AccountService) {
     @GetMapping(path = ["/{id}"])
     fun getAccount(@PathVariable id: Long): AccountDTO {
         return service.getAccountById(id)
-    }
-
-    companion object {
-        @JvmStatic
-        private val log: Logger = createLogger<AccountController>()
     }
 }

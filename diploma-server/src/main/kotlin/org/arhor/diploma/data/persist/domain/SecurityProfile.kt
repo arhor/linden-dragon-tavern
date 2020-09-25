@@ -16,18 +16,29 @@ class SecurityProfile : AuditableDomainObject<Long>() {
     var name: String? = null
 
     @OneToMany(mappedBy = "securityProfile", cascade = [CascadeType.ALL], orphanRemoval = true)
-    var accounts: List<Account>? = null
+    private val _accounts = mutableListOf<Account>()
+
+    val accounts get() = _accounts.toList()
 
     @OneToMany(mappedBy = "securityProfile", cascade = [CascadeType.ALL], orphanRemoval = true)
-    var securityAuthorities: List<SecurityProfileAuthority>? = null
+    private val _securityAuthorities = mutableListOf<SecurityProfileAuthority>()
+
+    val securityAuthorities get() = _securityAuthorities.toList()
+
+    fun addAccount(account: Account) {
+        _accounts.add(account)
+    }
+
+    fun addSecurityProfileAuthority(authority: SecurityProfileAuthority) {
+        _securityAuthorities.add(authority)
+    }
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other !is SecurityProfile) return false
         if (!super.equals(other)) return false
 
         if (name != other.name) return false
-        if (accounts != other.accounts) return false
-        if (securityAuthorities != other.securityAuthorities) return false
 
         return true
     }
@@ -37,6 +48,6 @@ class SecurityProfile : AuditableDomainObject<Long>() {
     }
 
     override fun toString(): String {
-        return "SecurityProfile(name=$name, accounts=$accounts, securityAuthorities=$securityAuthorities)"
+        return "SecurityProfile(name=$name)"
     }
 }

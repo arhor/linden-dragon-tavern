@@ -7,7 +7,7 @@ import org.arhor.diploma.service.Creator
 import org.arhor.diploma.service.Deleter
 import org.arhor.diploma.service.Reader
 import org.arhor.diploma.service.Updater
-import org.arhor.diploma.service.exception.EntityNotFoundException
+import org.arhor.diploma.exception.EntityNotFoundException
 import org.arhor.diploma.service.mapping.Converter
 import org.springframework.data.domain.PageRequest
 import java.io.Serializable

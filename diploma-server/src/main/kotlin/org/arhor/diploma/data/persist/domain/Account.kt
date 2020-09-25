@@ -51,6 +51,4 @@ class Account : AuditableDomainObject<Long>() {
     override fun toString(): String {
         return "Account(username=$username, password=$password, email=$email, firstName=$firstName, lastName=$lastName)"
     }
-
-
 }

@@ -1,3 +1,4 @@
+-- START >>> table 'authorities'
 CREATE TABLE IF NOT EXISTS authorities
 (
     id            BIGSERIAL        NOT NULL PRIMARY KEY,
@@ -8,7 +9,9 @@ WITH
     OIDS = FALSE
 );
 ALTER TABLE authorities OWNER to postgres;
+-- END <<< table 'authorities'
 
+-- START >>> table 'security_profiles'
 CREATE TABLE IF NOT EXISTS security_profiles
 (
     id         BIGSERIAL     NOT NULL PRIMARY KEY,
@@ -22,7 +25,9 @@ WITH
     OIDS = FALSE
 );
 ALTER TABLE security_profiles OWNER to postgres;
+-- END <<< table 'security_profiles'
 
+-- START >>> table 'security_profile_authorities'
 CREATE TABLE IF NOT EXISTS security_profile_authorities
 (
     profile_id      BIGINT    NOT NULL,
@@ -40,7 +45,9 @@ WITH
     OIDS = FALSE
 );
 ALTER TABLE security_profile_authorities OWNER to postgres;
+-- END <<< table 'security_profile_authorities'
 
+-- START >>> table 'accounts'
 CREATE TABLE IF NOT EXISTS accounts
 (
     id            BIGSERIAL        NOT NULL PRIMARY KEY,
@@ -62,3 +69,42 @@ WITH
     OIDS = FALSE
 );
 ALTER TABLE accounts OWNER to postgres;
+-- END <<< table 'accounts'
+
+-- START >>> table 'character_sheets'
+CREATE TABLE IF NOT EXISTS character_sheets
+(
+    id     BIGSERIAL    NOT NULL PRIMARY KEY,
+    str    SMALLINT     NOT NULL,
+    dex    SMALLINT     NOT NULL,
+    con    SMALLINT     NOT NULL,
+    int    SMALLINT     NOT NULL,
+    wis    SMALLINT     NOT NULL,
+    cha    SMALLINT     NOT NULL
+    -- FIXME: add all required fields!!!
+)
+WITH
+(
+    OIDS = FALSE
+);
+ALTER TABLE character_sheets OWNER to postgres;
+-- END <<< table 'character_sheets'
+
+-- START >>> table 'character_classes'
+CREATE TABLE IF NOT EXISTS character_classes
+(
+    id                    BIGSERIAL      NOT NULL PRIMARY KEY,
+    class_name            VARCHAR(30)    NOT NULL UNIQUE,
+    class_level           SMALLINT       NOT NULL,
+    character_sheet_id    BIGINT         NOT NULL,
+
+    CONSTRAINT character_classes_fk FOREIGN KEY (character_sheet_id) REFERENCES character_sheets (id)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+)
+WITH
+(
+    OIDS = FALSE
+);
+ALTER TABLE character_classes OWNER to postgres;
+-- END <<< table 'character_classes'

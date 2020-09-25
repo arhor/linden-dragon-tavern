@@ -1,14 +1,15 @@
 pluginManagement {
     plugins {
-        id "org.springframework.boot"           version "${spring_boot_version}"
-        id "io.spring.dependency-management"    version "${spring_dependency_management_version}"
-        id "com.github.node-gradle.node"        version "${gradle_node_plugin_version}"
-        id "org.jetbrains.kotlin.kapt"          version "${kotlin_lang_version}"
-        id "org.jetbrains.kotlin.multiplatform" version "${kotlin_lang_version}"
-        id "org.jetbrains.kotlin.jvm"           version "${kotlin_lang_version}"
-        id "org.jetbrains.kotlin.plugin.noarg"  version "${kotlin_lang_version}"
-        id "org.jetbrains.kotlin.plugin.spring" version "${kotlin_lang_version}"
-        id "org.jetbrains.kotlin.plugin.jpa"    version "${kotlin_lang_version}"
+        id "org.springframework.boot"            version "${spring_boot_version}"
+        id "io.spring.dependency-management"     version "${spring_dependency_management_version}"
+        id "com.github.node-gradle.node"         version "${gradle_node_plugin_version}"
+        id "org.jetbrains.kotlin.kapt"           version "${kotlin_lang_version}"
+        id "org.jetbrains.kotlin.multiplatform"  version "${kotlin_lang_version}"
+        id "org.jetbrains.kotlin.jvm"            version "${kotlin_lang_version}"
+        id "org.jetbrains.kotlin.plugin.noarg"   version "${kotlin_lang_version}"
+        id "org.jetbrains.kotlin.plugin.allopen" version "${kotlin_lang_version}"
+        id "org.jetbrains.kotlin.plugin.spring"  version "${kotlin_lang_version}"
+        id "org.jetbrains.kotlin.plugin.jpa"     version "${kotlin_lang_version}"
     }
 }
 
