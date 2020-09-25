@@ -20,6 +20,7 @@
             <v-btn v-for="{ path, name } in appBarLinks" :key="name" :to="path" text>
                 {{ name }}
             </v-btn>
+            <download-charsheet-button />
         </v-app-bar>
 
         <v-main>
@@ -38,12 +39,13 @@
 <script>
 import { mapState } from 'vuex';
 import DndBreadcrumbs from '@/components/DndBreadcrumbs';
+import DownloadCharsheetButton from '@/components/DownloadCharsheetButton';
 
 const MODULES_TO_LOAD = ['abilities', 'spells', 'skills'];
 
 export default {
     name: 'App',
-    components: { DndBreadcrumbs },
+    components: { DownloadCharsheetButton, DndBreadcrumbs },
     data: () => ({
         appName: 'D&D Homebrew App',
         displayDrawer: false,
