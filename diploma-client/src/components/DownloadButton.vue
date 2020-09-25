@@ -4,7 +4,8 @@
 
 <script>
 import axios from 'axios';
-import { deserialize, useObjectURL } from '@/utils/coreUtils';
+import { useObjectURL } from '@/utils/coreUtils';
+import { deserialize } from '@/utils/stringUtils';
 
 export default {
     name: 'DownloadButton',

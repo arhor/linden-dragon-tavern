@@ -1,5 +1,5 @@
 /** @param {string} text */
-export function renderLinebreaksHTML(text) {
+export function renderLinebreaksHTML(text = '') {
     return text?.replace(/(\n)|(\r\n)/g, '<br/>');
 }
 
@@ -10,6 +10,17 @@ export function signed(value) {
 }
 
 /** @param {string} str */
-export function replaceSpacesWithUnderscore(str) {
+export function replaceSpacesWithUnderscore(str = '') {
     return str?.replace(/ /g, '_')?.toLowerCase() ?? '';
+}
+
+/** @param {string} str */
+export function deserialize(str = '') {
+    const result = {};
+    const entries = str?.split(';');
+    for (let i = 0; i < entries.length; i++) {
+        const [name, value] = entries[i].split('=');
+        result[name] = value ?? true;
+    }
+    return result;
 }

@@ -4,13 +4,3 @@ export function useObjectURL(data, urlConsumer) {
     urlConsumer(url);
     window.URL.revokeObjectURL(url);
 }
-
-export function deserialize(str = '') {
-    const result = {};
-    const entries = str?.split(';');
-    for (let i = 0; i < entries.length; i++) {
-        const [name, value] = entries[i].split('=');
-        result[name] = value ?? true;
-    }
-    return result;
-}
