@@ -36,7 +36,7 @@ import { mapState } from 'vuex';
 
 export default {
     name: 'SpellList',
-    data: () => ({
+    data: (self) => ({
         search: '',
         dialog: false,
         spell: null,

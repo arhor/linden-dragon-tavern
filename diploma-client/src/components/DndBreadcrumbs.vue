@@ -14,7 +14,7 @@
 <script>
 export default {
     name: 'DndBreadcrumbs',
-    data: () => ({
+    data: (self) => ({
         breadcrumbs: [],
     }),
     methods: {

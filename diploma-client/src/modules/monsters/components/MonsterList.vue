@@ -41,11 +41,10 @@ export default {
     props: {
         monsters: {
             type: Array,
-            default: () => [],
             required: true,
         },
     },
-    data: () => ({
+    data: (self) => ({
         search: '',
         errors: [],
         headers: [
