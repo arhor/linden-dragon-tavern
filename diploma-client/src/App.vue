@@ -61,7 +61,7 @@ const MODULES_TO_LOAD = ['abilities', 'spells', 'skills'];
 export default {
     name: 'App',
     components: { DownloadButton, DndBreadcrumbs, Settings },
-    data: (self) => ({
+    data: () => ({
         appName: 'D&D Homebrew App',
         displayDrawer: false,
         displaySettings: false,

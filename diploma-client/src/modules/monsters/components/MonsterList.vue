@@ -44,7 +44,7 @@ export default {
             required: true,
         },
     },
-    data: (self) => ({
+    data: () => ({
         search: '',
         errors: [],
         headers: [

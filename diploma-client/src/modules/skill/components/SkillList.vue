@@ -21,7 +21,7 @@ export default {
     computed: {
         ...mapState('skills', ['allSkills']),
     },
-    data: (self) => ({
+    data: () => ({
         skills: [],
     }),
     mounted() {

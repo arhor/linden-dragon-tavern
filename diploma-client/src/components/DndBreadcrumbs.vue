@@ -14,19 +14,22 @@
 <script>
 export default {
     name: 'DndBreadcrumbs',
-    data: (self) => ({
+    data: () => ({
         breadcrumbs: [],
     }),
     methods: {
         updateBreadcrumbs() {
             this.breadcrumbs = [];
-            this.$route.meta?.breadcrumbs?.forEach((breadcrumb) => {
-                this.breadcrumbs.push(breadcrumb);
+            this.$route.meta?.breadcrumbs?.forEach((breadcrumb, idx, items) => {
+                this.breadcrumbs.push({
+                    ...breadcrumb,
+                    disabled: Boolean(idx === items.length - 1),
+                });
             });
         },
     },
     watch: {
-        ['$route']: function() {
+        $route: function() {
             this.updateBreadcrumbs();
         },
     },

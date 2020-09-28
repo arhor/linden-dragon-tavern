@@ -17,7 +17,7 @@ export default {
         MonsterDetails,
         MonsterList,
     },
-    data: (self) => ({
+    data: () => ({
         dialog: false,
     }),
     computed: {

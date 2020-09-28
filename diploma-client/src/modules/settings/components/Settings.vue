@@ -20,7 +20,7 @@
 import { mapActions, mapState } from 'vuex';
 
 export default {
-    data: (self) => ({
+    data: () => ({
         ...mapState(['dark']),
     }),
     methods: {

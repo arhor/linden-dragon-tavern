@@ -4,20 +4,36 @@ import Home from '@/modules/home';
 
 Vue.use(VueRouter);
 
+const breadcrumb = {
+    home: {
+        text: 'Home',
+        to: '/',
+    },
+    about: {
+        text: 'About',
+        to: '/about',
+    },
+    monsters: {
+        text: 'Monsters',
+        to: '/monsters',
+    },
+    spells: {
+        text: 'Spells',
+        to: '/spells',
+    },
+    maps: {
+        text: 'Maps',
+        to: '/maps',
+    },
+};
+
 const routes = [
     {
         path: '/',
         name: 'home',
         component: Home,
-        children: [], // TODO: implement nested routes
         meta: {
-            breadcrumbs: [
-                {
-                    text: 'Home',
-                    to: '/',
-                    disabled: true,
-                },
-            ],
+            breadcrumbs: [breadcrumb.home],
         },
     },
     {
@@ -25,27 +41,7 @@ const routes = [
         name: 'about',
         component: () => import('@/modules/about'),
         meta: {
-            breadcrumbs: [
-                {
-                    text: 'About',
-                    to: '/about',
-                    disabled: true,
-                },
-            ],
-        },
-    },
-    {
-        path: '/settings',
-        name: 'settings',
-        component: () => import('@/modules/settings'),
-        meta: {
-            breadcrumbs: [
-                {
-                    text: 'Settings',
-                    to: '/settings',
-                    disabled: true,
-                },
-            ],
+            breadcrumbs: [breadcrumb.about],
         },
     },
     {
@@ -53,18 +49,7 @@ const routes = [
         name: 'monsters',
         component: () => import('@/modules/monsters'),
         meta: {
-            breadcrumbs: [
-                {
-                    text: 'Home',
-                    to: '/',
-                    disabled: false,
-                },
-                {
-                    text: 'Monsters',
-                    to: '/monsters',
-                    disabled: true,
-                },
-            ],
+            breadcrumbs: [breadcrumb.home, breadcrumb.monsters],
         },
     },
     {
@@ -72,18 +57,7 @@ const routes = [
         name: 'spells',
         component: () => import('@/modules/spells'),
         meta: {
-            breadcrumbs: [
-                {
-                    text: 'Home',
-                    to: '/',
-                    disabled: false,
-                },
-                {
-                    text: 'Spells',
-                    to: '/spells',
-                    disabled: true,
-                },
-            ],
+            breadcrumbs: [breadcrumb.home, breadcrumb.spells],
         },
     },
     {
@@ -91,18 +65,7 @@ const routes = [
         name: 'maps',
         component: () => import('@/modules/maps'),
         meta: {
-            breadcrumbs: [
-                {
-                    text: 'Home',
-                    to: '/',
-                    disabled: false,
-                },
-                {
-                    text: 'Maps',
-                    to: '/maps',
-                    disabled: true,
-                },
-            ],
+            breadcrumbs: [breadcrumb.home, breadcrumb.maps],
         },
     },
 ];
