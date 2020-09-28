@@ -8,7 +8,7 @@ import { useObjectURL } from '@/utils/coreUtils';
 import { deserialize } from '@/utils/stringUtils';
 
 export default {
-    name: 'DownloadButton',
+    name: 'DndDownloadButton',
     props: {
         url: {
             type: String,

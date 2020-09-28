@@ -14,26 +14,22 @@
                     <v-list-item-icon>
                         <v-icon>mdi-cog</v-icon>
                     </v-list-item-icon>
-                    <v-list-item-title>Settings</v-list-item-title>
+                    <v-list-item-title>DndAppSettings</v-list-item-title>
                 </v-list-item>
             </v-list>
-
             <v-dialog v-model="displaySettings" max-width="800">
-                <settings />
+                <dnd-app-settings />
             </v-dialog>
         </v-navigation-drawer>
 
         <v-app-bar :dark="dark" app>
             <v-app-bar-nav-icon @click.stop="displayDrawer = !displayDrawer" />
-
             <v-toolbar-title>{{ appName }}</v-toolbar-title>
-
             <v-spacer />
-
             <v-btn v-for="{ path, name } in appBarLinks" :key="name" :to="path" text>
                 {{ name }}
             </v-btn>
-            <download-button :url="characterSheetUrl" />
+            <dnd-download-button :url="characterSheetUrl" />
         </v-app-bar>
 
         <v-main>
@@ -51,16 +47,17 @@
 
 <script>
 import { mapState } from 'vuex';
+
 import { SERVER_API_URL } from '@/config/server-api';
+import DndAppSettings from '@/components/DndAppSettings.vue';
 import DndBreadcrumbs from '@/components/DndBreadcrumbs';
-import DownloadButton from '@/components/DownloadButton';
-import Settings from '@/modules/settings/components/Settings.vue';
+import DndDownloadButton from '@/components/DndDownloadButton';
 
 const MODULES_TO_LOAD = ['abilities', 'spells', 'skills'];
 
 export default {
     name: 'App',
-    components: { DownloadButton, DndBreadcrumbs, Settings },
+    components: { DndDownloadButton, DndBreadcrumbs, DndAppSettings },
     data: () => ({
         appName: 'D&D Homebrew App',
         displayDrawer: false,
@@ -72,10 +69,8 @@ export default {
     }),
     computed: {
         ...mapState(['dark']),
-        characterSheetUrl: {
-            get() {
-                return `${SERVER_API_URL}/api/v1/charsheets`;
-            },
+        characterSheetUrl() {
+            return `${SERVER_API_URL}/api/v1/charsheets`;
         },
     },
     methods: {

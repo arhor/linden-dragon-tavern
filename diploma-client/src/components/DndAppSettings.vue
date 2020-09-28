@@ -20,6 +20,7 @@
 import { mapActions, mapState } from 'vuex';
 
 export default {
+    name: 'DndAppSettings',
     data: () => ({
         ...mapState(['dark']),
     }),

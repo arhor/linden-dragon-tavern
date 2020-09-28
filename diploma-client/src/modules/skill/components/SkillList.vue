@@ -1,11 +1,11 @@
 <template>
-    <generic-list title="Skills" :items="skills" />
+    <dnd-comma-separated-list title="Skills" :items="skills" />
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import { signed, replaceSpacesWithUnderscore } from '@/utils/stringUtils';
-import GenericList from '@/components/generic/GenericList.vue';
+import DndCommaSeparatedList from '@/components/DndCommaSeparatedList.vue';
 
 export default {
     name: 'SkillList',
@@ -16,7 +16,7 @@ export default {
         },
     },
     components: {
-        GenericList,
+        DndCommaSeparatedList,
     },
     computed: {
         ...mapState('skills', ['allSkills']),

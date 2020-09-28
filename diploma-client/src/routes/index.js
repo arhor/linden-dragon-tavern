@@ -1,31 +1,12 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+
+import breadcrumbs from '@/routes/breadcrumbs';
 import Home from '@/modules/home';
 
 Vue.use(VueRouter);
 
-const breadcrumb = {
-    home: {
-        text: 'Home',
-        to: '/',
-    },
-    about: {
-        text: 'About',
-        to: '/about',
-    },
-    monsters: {
-        text: 'Monsters',
-        to: '/monsters',
-    },
-    spells: {
-        text: 'Spells',
-        to: '/spells',
-    },
-    maps: {
-        text: 'Maps',
-        to: '/maps',
-    },
-};
+const { about, spells, maps, monsters, home } = breadcrumbs;
 
 const routes = [
     {
@@ -33,7 +14,7 @@ const routes = [
         name: 'home',
         component: Home,
         meta: {
-            breadcrumbs: [breadcrumb.home],
+            breadcrumbs: [home],
         },
     },
     {
@@ -41,7 +22,7 @@ const routes = [
         name: 'about',
         component: () => import('@/modules/about'),
         meta: {
-            breadcrumbs: [breadcrumb.about],
+            breadcrumbs: [about],
         },
     },
     {
@@ -49,7 +30,7 @@ const routes = [
         name: 'monsters',
         component: () => import('@/modules/monsters'),
         meta: {
-            breadcrumbs: [breadcrumb.home, breadcrumb.monsters],
+            breadcrumbs: [home, monsters],
         },
     },
     {
@@ -57,7 +38,7 @@ const routes = [
         name: 'spells',
         component: () => import('@/modules/spells'),
         meta: {
-            breadcrumbs: [breadcrumb.home, breadcrumb.spells],
+            breadcrumbs: [home, spells],
         },
     },
     {
@@ -65,7 +46,7 @@ const routes = [
         name: 'maps',
         component: () => import('@/modules/maps'),
         meta: {
-            breadcrumbs: [breadcrumb.home, breadcrumb.maps],
+            breadcrumbs: [home, maps],
         },
     },
 ];

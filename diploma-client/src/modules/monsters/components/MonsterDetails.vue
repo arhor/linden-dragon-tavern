@@ -29,15 +29,24 @@
 
             <v-divider />
 
-            <generic-list title="Damage vulnerabilities" :items="monster.damageVulnerabilities" />
-            <generic-list title="Damage resistances" :items="monster.damageResistances" />
-            <generic-list title="Damage immunities" :items="monster.damageImmunities" />
+            <dnd-comma-separated-list
+                title="Damage vulnerabilities"
+                :items="monster.damageVulnerabilities"
+            />
+            <dnd-comma-separated-list
+                title="Damage resistances"
+                :items="monster.damageResistances"
+            />
+            <dnd-comma-separated-list title="Damage immunities" :items="monster.damageImmunities" />
 
-            <generic-list title="Condition immunities" :items="monster.conditionImmunities" />
+            <dnd-comma-separated-list
+                title="Condition immunities"
+                :items="monster.conditionImmunities"
+            />
             <skill-list :creature="monster" />
 
-            <generic-list title="Senses" :items="[monster.senses]" />
-            <generic-list title="Languages" :items="[monster.languages]" />
+            <dnd-comma-separated-list title="Senses" :items="[monster.senses]" />
+            <dnd-comma-separated-list title="Languages" :items="[monster.languages]" />
 
             <v-row>
                 <v-col cols="12" class="text-xs-left">
@@ -63,8 +72,8 @@
 
 <script>
 import AbilityList from '@/modules/ability/components/AbilityList.vue';
-import ActionList from '@/components/action/ActionList.vue';
-import GenericList from '@/components/generic/GenericList.vue';
+import ActionList from '@/components/ActionList.vue';
+import DndCommaSeparatedList from '@/components/DndCommaSeparatedList.vue';
 import SkillList from '@/modules/skill/components/SkillList.vue';
 import SpecialAbilityList from '@/modules/ability/components/special/SpecialAbilityList.vue';
 
@@ -79,7 +88,7 @@ export default {
     components: {
         AbilityList,
         ActionList,
-        GenericList,
+        DndCommaSeparatedList,
         SkillList,
         SpecialAbilityList,
     },

@@ -19,17 +19,17 @@ export default {
     }),
     methods: {
         updateBreadcrumbs() {
-            this.breadcrumbs = [];
-            this.$route.meta?.breadcrumbs?.forEach((breadcrumb, idx, items) => {
-                this.breadcrumbs.push({
-                    ...breadcrumb,
-                    disabled: Boolean(idx === items.length - 1),
-                });
-            });
+            this.breadcrumbs =
+                this.$route.meta?.breadcrumbs?.map((breadcrumb, idx, items) => {
+                    return {
+                        ...breadcrumb,
+                        disabled: Boolean(idx === items.length - 1),
+                    };
+                }) ?? [];
         },
     },
     watch: {
-        $route: function() {
+        $route() {
             this.updateBreadcrumbs();
         },
     },

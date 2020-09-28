@@ -1,7 +1,7 @@
 <template>
     <v-row v-if="notEmpty">
         <v-col cols="12" class="text-xs-left">
-            <strong v-if="title">{{ title + ':' }}</strong> {{ items.join(',') }}
+            <strong v-if="title">{{ title + ':' }}</strong> {{ items.join(', ') }}
         </v-col>
     </v-row>
 </template>
@@ -10,7 +10,7 @@
 import { isEmptyArray } from '@/utils/arrayUtils';
 
 export default {
-    name: 'GenericList',
+    name: 'DndCommaSeparatedList',
     props: {
         title: {
             type: String,
@@ -18,7 +18,7 @@ export default {
         },
         items: {
             type: Array,
-            default: () => [],
+            required: true,
         },
     },
     computed: {
