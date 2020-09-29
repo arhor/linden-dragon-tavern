@@ -1,5 +1,8 @@
 package org.arhor.diploma.web.filter
 
+import org.arhor.diploma.CsrfUtils.CSRF_COOKIE_NAME
+import org.arhor.diploma.CsrfUtils.CSRF_HEADER_NAME
+import org.arhor.diploma.CsrfUtils.SAFE_METHODS
 import org.springframework.http.HttpMethod.*
 import org.springframework.security.web.access.AccessDeniedHandlerImpl
 import org.springframework.stereotype.Component
@@ -20,19 +23,6 @@ import org.springframework.security.access.AccessDeniedException as AccessDenied
  */
 @Component
 class CustomCsrfFilter : OncePerRequestFilter() {
-
-    companion object {
-        private const val CSRF_COOKIE_NAME = "csrf-token"
-        private const val CSRF_HEADER_NAME = "x-csrf-token"
-
-        @JvmStatic
-        private val SAFE_METHODS = setOf(
-            GET,
-            HEAD,
-            TRACE,
-            OPTIONS,
-        ).map { it.toString() }
-    }
 
     // TODO: try to replace by spring-bean
     private val accessDeniedHandler = AccessDeniedHandlerImpl()

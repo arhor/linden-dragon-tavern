@@ -1,12 +1,12 @@
 import generateUUID from '@/utils/coreUtils';
+import sharedLib from '@/lib/diploma-shared';
 
-const SAFE_METHODS = ['get', 'head', 'options', 'trace'];
-const CSRF_HEADER_NAME = 'x-csrf-token';
+const { CsrfUtils } = sharedLib.org.arhor.diploma;
 
 const CSRF_TOKEN = generateUUID();
 
 export const addCsrfToken = (config) => {
-    if (SAFE_METHODS.includes(config.method)) {
+    if (CsrfUtils.SAFE_METHODS.includes(config.method)) {
         return config;
     }
 
@@ -15,7 +15,7 @@ export const addCsrfToken = (config) => {
     return {
         headers: {
             ...headers,
-            [CSRF_HEADER_NAME]: CSRF_TOKEN,
+            [CsrfUtils.CSRF_HEADER_NAME]: CSRF_TOKEN,
         },
         ...restConfig,
     };

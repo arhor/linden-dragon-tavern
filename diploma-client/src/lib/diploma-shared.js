@@ -42,6 +42,23 @@
       new Authorities();
     }return Authorities_instance;
   }
+  function CsrfUtils() {
+    CsrfUtils_instance = this;
+    this.CSRF_HEADER_NAME = 'x-csrf-token';
+    this.CSRF_COOKIE_NAME = 'csrf-token';
+    this.SAFE_METHODS = ['get', 'head', 'options', 'trace'];
+  }
+  CsrfUtils.$metadata$ = {
+    kind: Kind_OBJECT,
+    simpleName: 'CsrfUtils',
+    interfaces: []
+  };
+  var CsrfUtils_instance = null;
+  function CsrfUtils_getInstance() {
+    if (CsrfUtils_instance === null) {
+      new CsrfUtils();
+    }return CsrfUtils_instance;
+  }
   function Utils() {
     Utils_instance = this;
   }
@@ -75,6 +92,9 @@
   });
   Object.defineProperty(package$diploma, 'Authorities', {
     get: Authorities_getInstance
+  });
+  Object.defineProperty(package$diploma, 'CsrfUtils', {
+    get: CsrfUtils_getInstance
   });
   Object.defineProperty(package$diploma, 'Utils', {
     get: Utils_getInstance
