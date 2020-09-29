@@ -3,14 +3,13 @@ package org.arhor.diploma.web.filter
 import org.arhor.diploma.CsrfUtils.CSRF_COOKIE_NAME
 import org.arhor.diploma.CsrfUtils.CSRF_HEADER_NAME
 import org.arhor.diploma.CsrfUtils.SAFE_METHODS
-import org.springframework.http.HttpMethod.*
 import org.springframework.security.web.access.AccessDeniedHandlerImpl
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import org.springframework.security.access.AccessDeniedException as AccessDenied
+import org.springframework.security.access.AccessDeniedException
 
 /**
  * Class CustomCsrfFilter implements stateless CSRF protection. To successfully
@@ -38,7 +37,7 @@ class CustomCsrfFilter : OncePerRequestFilter() {
                 accessDeniedHandler.handle(
                     req,
                     res,
-                    AccessDenied("CSRF token is missing or not matching")
+                    AccessDeniedException("CSRF token is missing or not matching")
                 )
                 return
             }
@@ -48,9 +47,9 @@ class CustomCsrfFilter : OncePerRequestFilter() {
 
     private fun getCsrfCookieToken(req: HttpServletRequest): String? {
         if (req.cookies != null) {
-            for (c in req.cookies) {
-                if ((c != null) && CSRF_COOKIE_NAME == c.name) {
-                    return c.value
+            for (cookie in req.cookies) {
+                if ((cookie != null) && CSRF_COOKIE_NAME == cookie.name) {
+                    return cookie.value
                 }
             }
         }

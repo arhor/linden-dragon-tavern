@@ -1,6 +1,4 @@
-import axios from 'axios';
-
-import { SERVER_API_URL } from '@/config/server-api';
+import authService from '@/modules/auth/services/AuthService';
 
 const mutation = {
     SET_ACCESS_TOKEN: 'SET_ACCESS_TOKEN',
@@ -18,12 +16,7 @@ export default {
     actions: {
         logIn: async ({ commit }, { username, password }) => {
             try {
-                const {
-                    data: { accessToken, tokenType },
-                } = await axios.post(`${SERVER_API_URL}/auth/token`, {
-                    username,
-                    password,
-                });
+                const { accessToken, tokenType } = await authService.signIn({ username, password });
                 commit(mutation.SET_ACCESS_TOKEN, { accessToken, tokenType });
             } catch (e) {
                 commit(mutation.INVALIDATE_SESSION);

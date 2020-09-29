@@ -16,6 +16,4 @@ class SpellService extends BaseService {
     }
 }
 
-export default new SpellService({
-    baseUrl: '/api/v1/spells',
-});
+export default new SpellService({ baseUrl: '/api/v1/spells' });
