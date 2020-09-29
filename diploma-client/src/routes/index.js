@@ -49,6 +49,10 @@ const routes = [
             breadcrumbs: [home, maps],
         },
     },
+    {
+        path: '*',
+        component: () => import('@/components/DndPageNotFound'),
+    },
 ];
 
 const router = new VueRouter({

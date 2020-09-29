@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import abilities from '@/modules/ability/store';
+import auth from '@/modules/auth/store';
 import maps from '@/modules/maps/store';
 import monsters from '@/modules/monsters/store';
 import skills from '@/modules/skill/store';
@@ -17,6 +18,7 @@ const store = new Vuex.Store({
     state: {
         dark: true,
     },
+    getters: {},
     actions: {
         switchTheme: ({ commit }) => {
             commit(mutation.SWITCH_THEME);
@@ -29,6 +31,7 @@ const store = new Vuex.Store({
     },
     modules: {
         abilities,
+        auth,
         maps,
         monsters,
         skills,

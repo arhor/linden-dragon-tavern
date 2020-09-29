@@ -49,7 +49,7 @@
 import { mapState } from 'vuex';
 
 import { SERVER_API_URL } from '@/config/server-api';
-import DndAppSettings from '@/components/DndAppSettings.vue';
+import DndAppSettings from '@/components/DndAppSettings';
 import DndBreadcrumbs from '@/components/DndBreadcrumbs';
 import DndDownloadButton from '@/components/DndDownloadButton';
 
