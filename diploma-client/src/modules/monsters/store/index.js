@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { SERVER_API_URL } from '@/config/server-api.js';
+import axios from '@/api/BaseService.js';
+import { SERVER_API_URL } from '@/api/server-api.js';
 
 const MONSTERS_BASE_URL = `${SERVER_API_URL}/api/v1/monsters`;
 

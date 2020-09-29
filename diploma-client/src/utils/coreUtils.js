@@ -1,8 +1,8 @@
 /**
  * Provides execution context for ObjectURL consuming function and revokes ObjectURL after usage.
  *
- * @param data
- * @param urlConsumer
+ * @param data {BufferSource}
+ * @param urlConsumer {function(string): void}
  */
 export function useObjectURL(data, urlConsumer) {
     const blob = new Blob([data]);

@@ -1,17 +1,7 @@
 (function (_, Kotlin) {
   'use strict';
-  var Kind_CLASS = Kotlin.Kind.CLASS;
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
   var numberToInt = Kotlin.numberToInt;
-  function Ability() {
-    this.name = '';
-    this.fullName = '';
-  }
-  Ability.$metadata$ = {
-    kind: Kind_CLASS,
-    simpleName: 'Ability',
-    interfaces: []
-  };
   function Authorities() {
     Authorities_instance = this;
   }
@@ -83,13 +73,12 @@
       new Utils();
     }return Utils_instance;
   }
-  var package$org = _.org || (_.org = {});
-  var package$arhor = package$org.arhor || (package$org.arhor = {});
-  var package$diploma = package$arhor.diploma || (package$arhor.diploma = {});
-  package$diploma.Ability = Ability;
   Object.defineProperty(Authorities.prototype, 'Account', {
     get: Authorities$Account_getInstance
   });
+  var package$org = _.org || (_.org = {});
+  var package$arhor = package$org.arhor || (package$org.arhor = {});
+  var package$diploma = package$arhor.diploma || (package$arhor.diploma = {});
   Object.defineProperty(package$diploma, 'Authorities', {
     get: Authorities_getInstance
   });

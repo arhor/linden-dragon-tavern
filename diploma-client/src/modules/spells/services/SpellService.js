@@ -1,4 +1,4 @@
-import { BaseService } from '@/api/BaseService.js';
+import axios, { BaseService } from '@/api/BaseService.js';
 
 class SpellService extends BaseService {
     constructor({ baseUrl }) {
@@ -6,12 +6,12 @@ class SpellService extends BaseService {
     }
 
     async getAllSpells() {
-        const { data } = await this.http.get(this.baseUrl);
+        const { data } = await axios.get('/api/v1/spells');
         return data;
     }
 
     async getSpellByName(name) {
-        const { data } = await this.http.get(`${this.baseUrl}/${name}/details`);
+        const { data } = await axios.get(`/api/v1/spells/${name}/details`);
         return data;
     }
 }

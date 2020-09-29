@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '@/api/BaseService.js';
 
 const mutation = {
     SET_ABILITIES: 'SET_ABILITIES',

@@ -15,7 +15,8 @@ export function useLocalStoragePlugin(storeName) {
 /**
  * Provides a plugin which allows to handle mutation events by their type.
  *
- * @param mutationHandler {object} options object, should contain mappings between mutation types and handler functions
+ * @param mutationHandler {object} options object, should contain mappings between mutation types
+ *                                 and handler functions
  * @return {function({subscribe: *}): void}
  */
 export function useMutationHandlerPlugin(mutationHandler) {

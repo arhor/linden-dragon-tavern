@@ -1,5 +1,4 @@
-import { BaseService } from '@/api/BaseService.js';
-import { SERVER_API_URL } from '@/config/server-api.js';
+import axios, { BaseService } from '@/api/BaseService.js';
 import { parseJWT } from '@/utils/coreUtils.js';
 
 const convertResponseToAuthModel = (data) => {
@@ -16,7 +15,7 @@ class AuthService extends BaseService {
     }
 
     async signIn({ username, password }) {
-        const { data } = await this.http.post(`${SERVER_API_URL}/token`, {
+        const { data } = await axios.post('/auth/token', {
             username,
             password,
         });
@@ -24,7 +23,7 @@ class AuthService extends BaseService {
     }
 
     async signUp({ username, password }) {
-        const { data } = await this.http.post(`${this.baseUrl}/register`, {
+        const { data } = await axios.post('/auth/register', {
             username,
             password,
         });
@@ -32,7 +31,7 @@ class AuthService extends BaseService {
     }
 
     async refresh() {
-        const { data } = await this.http.get(`${this.baseUrl}/refresh`);
+        const { data } = await axios.get('/auth/refresh');
         return convertResponseToAuthModel(data);
     }
 }
