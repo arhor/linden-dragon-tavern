@@ -1,4 +1,5 @@
 import authService from '@/modules/auth/services/AuthService';
+import { useLocalStoragePlugin, useMutationHandlerPlugin } from '@/utils/storeUtils';
 
 const mutation = {
     SET_ACCESS_TOKEN: 'SET_ACCESS_TOKEN',
@@ -36,4 +37,5 @@ export default {
             state.tokenType = null;
         },
     },
+    plugins: [useLocalStoragePlugin('auth')],
 };

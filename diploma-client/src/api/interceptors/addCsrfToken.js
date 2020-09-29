@@ -1,4 +1,4 @@
-import generateUUID from '@/utils/coreUtils';
+import { generateUUID } from '@/utils/coreUtils';
 import sharedLib from '@/lib/diploma-shared';
 
 const { CsrfUtils } = sharedLib.org.arhor.diploma;

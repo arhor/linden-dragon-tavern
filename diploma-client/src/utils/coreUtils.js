@@ -1,3 +1,9 @@
+/**
+ * Provides execution context for ObjectURL consuming function and revokes ObjectURL after usage.
+ *
+ * @param data
+ * @param urlConsumer
+ */
 export function useObjectURL(data, urlConsumer) {
     const blob = new Blob([data]);
     const url = window.URL.createObjectURL(blob);
@@ -5,6 +11,12 @@ export function useObjectURL(data, urlConsumer) {
     window.URL.revokeObjectURL(url);
 }
 
+/**
+ * Parses JWT string into a JS object.
+ *
+ * @param token {string}
+ * @return {object}
+ */
 export function parseJWT(token) {
     const base64Url = token.split('.')[1];
     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -21,7 +33,12 @@ export function parseJWT(token) {
     return { ...payload, sub: JSON.parse(payload.sub) };
 }
 
-export default function generateUUID() {
+/**
+ * Generates string representation of the UUID.
+ *
+ * @return {string}
+ */
+export function generateUUID() {
     const uuidPattern = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
 
     return uuidPattern.replace(/[xy]/g, (c) => {
