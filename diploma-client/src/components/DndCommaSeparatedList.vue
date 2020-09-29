@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import { isEmptyArray } from '@/utils/arrayUtils';
+import { isEmptyArray } from '@/utils/arrayUtils.js';
 
 export default {
     name: 'DndCommaSeparatedList',

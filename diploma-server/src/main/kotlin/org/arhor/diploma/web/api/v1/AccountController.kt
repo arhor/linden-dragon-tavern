@@ -6,9 +6,12 @@ import org.arhor.diploma.service.dto.AccountDTO
 import org.arhor.diploma.util.bound
 import org.arhor.diploma.util.createLogger
 import org.slf4j.Logger
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 
 @RestController
 @RequestMapping(
@@ -31,8 +34,21 @@ class AccountController(private val service: AccountService) {
         return bound<Int, List<AccountDTO>>(service::getAccounts)(page, size)
     }
 
-    @GetMapping(path = ["/{id}"])
+    @GetMapping("/{id}")
     fun getAccount(@PathVariable id: Long): AccountDTO {
         return service.getAccountById(id)
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    fun createAccount(@RequestBody dto: AccountDTO): ResponseEntity<Unit> {
+        val newAccountId = service.createAccount(dto)
+
+        val location = ServletUriComponentsBuilder.fromCurrentRequest()
+            .path("/{id}")
+            .buildAndExpand(newAccountId)
+            .toUri()
+
+        return ResponseEntity.created(location).build()
     }
 }

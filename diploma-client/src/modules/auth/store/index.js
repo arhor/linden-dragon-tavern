@@ -1,5 +1,5 @@
-import authService from '@/modules/auth/services/AuthService';
-import { useLocalStoragePlugin, useMutationHandlerPlugin } from '@/utils/storeUtils';
+import authService from '@/modules/auth/services/AuthService.js';
+import { useLocalStoragePlugin } from '@/utils/storeUtils.js';
 
 const mutation = {
     SET_ACCESS_TOKEN: 'SET_ACCESS_TOKEN',
@@ -15,7 +15,7 @@ export default {
         isLoggedIn: (state) => state.accessToken !== void 0 && state.accessToken !== null,
     },
     actions: {
-        logIn: async ({ commit }, { username, password }) => {
+        signIn: async ({ commit }, { username, password }) => {
             try {
                 const { accessToken, tokenType } = await authService.signIn({ username, password });
                 commit(mutation.SET_ACCESS_TOKEN, { accessToken, tokenType });
@@ -23,7 +23,7 @@ export default {
                 commit(mutation.INVALIDATE_SESSION);
             }
         },
-        logOut: ({ commit }) => {
+        signOut: ({ commit }) => {
             commit(mutation.INVALIDATE_SESSION);
         },
     },

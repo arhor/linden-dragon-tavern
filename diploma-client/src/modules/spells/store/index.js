@@ -1,4 +1,4 @@
-import spellService from '@/modules/spells/services/SpellService';
+import spellService from '@/modules/spells/services/SpellService.js';
 
 const mutation = {
     SET_SPELLS: 'SET_SPELLS',

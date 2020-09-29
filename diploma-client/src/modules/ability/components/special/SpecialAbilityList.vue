@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import { renderLinebreaksHTML } from '@/utils/stringUtils';
-import { notEmptyArray } from '@/utils/arrayUtils';
+import { renderLinebreaksHTML } from '@/utils/stringUtils.js';
+import { notEmptyArray } from '@/utils/arrayUtils.js';
 
 export default {
     name: 'SpecialAbilityList',

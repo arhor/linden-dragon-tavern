@@ -4,7 +4,7 @@
 
 <script>
 import { mapState } from 'vuex';
-import { signed, replaceSpacesWithUnderscore } from '@/utils/stringUtils';
+import { signed, replaceSpacesWithUnderscore } from '@/utils/stringUtils.js';
 import DndCommaSeparatedList from '@/components/DndCommaSeparatedList.vue';
 
 export default {

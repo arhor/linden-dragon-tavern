@@ -1,4 +1,4 @@
-import { BaseService } from '@/api/BaseService';
+import { BaseService } from '@/api/BaseService.js';
 
 class SpellService extends BaseService {
     constructor({ baseUrl }) {

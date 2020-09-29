@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { SERVER_API_URL } from '@/config/server-api';
+import { SERVER_API_URL } from '@/config/server-api.js';
 import { requestInterceptor } from '@/api/interceptors';
 
 const generalApi = axios.create({
