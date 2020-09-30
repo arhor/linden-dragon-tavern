@@ -28,11 +28,18 @@ dependencies {
 }
 
 task injectSharedLib(type: Copy, dependsOn: ":diploma-shared:build") {
-    from Paths.get(project(':diploma-shared').buildDir.toString(), "compiled-js")
-    into Paths.get(project(':diploma-client').projectDir.toString(), "src", "lib")
+    from Paths.get(project(":diploma-shared").buildDir.toString(), "compiled-js")
+    into Paths.get(project(":diploma-client").projectDir.toString(), "src", "lib")
 }
 
-task buildClient (type: NpmTask, dependsOn: [npmInstall, injectSharedLib]) {
+task clientTest (type: NpmTask, dependsOn: [npmInstall, injectSharedLib]) {
+    group = "verification"
+    description = "Runs JS tests in client project"
+    workingDir = project.projectDir
+    args = ["run", "test:unit"]
+}
+
+task buildClient (type: NpmTask, dependsOn: [clientTest]) {
     group = "build"
     description = "Builds production version of the app client"
     workingDir = project.projectDir
@@ -45,6 +52,6 @@ task clientStart (type: NpmTask, dependsOn: [npmInstall, injectSharedLib]) {
     args = ["run", "serve"]
 }
 
-task scrap (type: NodeTask, dependsOn: npmInstall) {
-    script = file('scripts/dungeon_su_scrapper.js')
+task scrap (type: NodeTask, dependsOn: [npmInstall]) {
+    script = file("scripts/dungeon_su_scrapper.js")
 }
