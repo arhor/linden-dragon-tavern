@@ -3,7 +3,7 @@
  * @param value {T}
  * @return {T}
  */
-const identity = (value) => value;
+export const identity = (value) => value;
 
 /**
  * @template T

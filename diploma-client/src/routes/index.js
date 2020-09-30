@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import breadcrumbs from '@/routes/breadcrumbs.js';
 import Home from '@/modules/home';
+import breadcrumbs from '@/routes/breadcrumbs.js';
 
 Vue.use(VueRouter);
 

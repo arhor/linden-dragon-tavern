@@ -1,6 +1,7 @@
-import { createLocalVue, shallowMount } from '@vue/test-utils';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
+import { createLocalVue, shallowMount } from '@vue/test-utils';
+
 import DndCommaSeparatedList from '@/components/DndCommaSeparatedList.vue';
 
 describe('DndCommaSeparatedList.vue', () => {

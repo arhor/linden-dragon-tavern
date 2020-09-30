@@ -9,6 +9,7 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+
 import MonsterDetails from '@/modules/monsters/components/MonsterDetails.vue';
 import MonsterList from '@/modules/monsters/components/MonsterList.vue';
 

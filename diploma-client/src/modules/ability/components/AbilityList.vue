@@ -8,6 +8,7 @@
 
 <script>
 import { mapState } from 'vuex';
+
 import AbilityDetails from '@/modules/ability/components/AbilityDetails.vue';
 
 export default {

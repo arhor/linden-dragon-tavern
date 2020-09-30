@@ -48,10 +48,10 @@
 <script>
 import { mapState } from 'vuex';
 
-import { SERVER_API_URL } from '@/api/server-api.js';
 import DndAppSettings from '@/components/DndAppSettings.vue';
 import DndBreadcrumbs from '@/components/DndBreadcrumbs.vue';
 import DndDownloadButton from '@/components/DndDownloadButton.vue';
+import { SERVER_API_URL } from '@/api/server-api.js';
 
 const MODULES_TO_LOAD = ['abilities', 'spells', 'skills'];
 

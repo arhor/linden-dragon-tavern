@@ -1,5 +1,5 @@
-import 'fontsource-roboto';
 import '@mdi/font/css/materialdesignicons.css';
+import 'fontsource-roboto';
 
 import Vue from 'vue';
 import Vuetify from 'vuetify/lib';
