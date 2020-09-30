@@ -1,5 +1,5 @@
-/** @param {string} text */
-export function renderLinebreaksHTML(text = '') {
+/** @param {string} [text] */
+export function renderLinebreaksHTML(text) {
     return text?.replace(/(\n)|(\r\n)/g, '<br/>');
 }
 
@@ -9,8 +9,8 @@ export function signed(value) {
     return `${num >= 0 ? '+' : '-'}${num}`;
 }
 
-/** @param {string} str */
-export function replaceSpacesWithUnderscore(str = '') {
+/** @param {string} [str] */
+export function replaceSpacesWithUnderscore(str) {
     return str?.replace(/ /g, '_')?.toLowerCase() ?? '';
 }
 
@@ -20,7 +20,7 @@ export function replaceSpacesWithUnderscore(str = '') {
  */
 export function serialize(obj) {
     let result = '';
-    for (const [name, value] of Object.entries(obj)) {
+    for (const [name, value] of Object.entries(obj ?? {})) {
         result += name;
         if (value !== true && value !== 'true') {
             result += `=${value}`;

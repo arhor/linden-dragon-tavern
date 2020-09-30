@@ -1,23 +1,27 @@
 import * as arrayUtils from '@/utils/arrayUtils.js';
 
 describe('arrayUtils.js', () => {
-    test('isEmptyArray should return true only for array instance', () => {
+    test('should return true only for array instance', () => {
         const emptyArrays = [[], new Array(), Array.of()];
 
         emptyArrays.forEach((array) => {
-            expect(arrayUtils.isEmptyArray(array)).toBe(true);
+            const result = arrayUtils.isEmptyArray(array);
+
+            expect(result).toBe(true);
         });
     });
 
-    test('isEmptyArray should return false for null, undefined, strings etc.', () => {
+    test('should return false for null, undefined, strings etc.', () => {
         const nonArrays = [null, undefined, 'array', 10, true, false];
 
         nonArrays.forEach((some) => {
-            expect(arrayUtils.isEmptyArray(some)).toBe(false);
+            const result = arrayUtils.isEmptyArray(some);
+
+            expect(result).toBe(false);
         });
     });
 
-    test('isEmptyArray should return true for any filled array', () => {
+    test('should return true for any filled array', () => {
         const filledArrays = [
             [1],
             new Array(true, false),
@@ -26,21 +30,26 @@ describe('arrayUtils.js', () => {
         ];
 
         filledArrays.forEach((array) => {
-            expect(arrayUtils.isEmptyArray(array)).toBe(false);
+            const result = arrayUtils.isEmptyArray(array);
+
+            expect(result).toBe(false);
         });
     });
 
-    test('commaSeparate should return comma separated string representation of passed array', () => {
+    test('should return comma separated string representation of passed array', () => {
         const arrayToJoin = ['one', 'two', 'three'];
+        const result = arrayUtils.commaSeparate(arrayToJoin);
 
-        expect(arrayUtils.commaSeparate(arrayToJoin)).toMatch('one, two, three');
+        expect(result).toMatch('one, two, three');
     });
 
-    test('commaSeparate should return empty string for null, undefined or epmty array', () => {
+    test('should return empty string for null, undefined or epmty array', () => {
         const arrays = [null, undefined, []];
 
         arrays.forEach((array) => {
-            expect(arrayUtils.commaSeparate(array)).toMatch('');
+            const result = arrayUtils.commaSeparate(array);
+
+            expect(result).toMatch('');
         });
     });
 });

@@ -4,15 +4,15 @@ import Vuetify from 'vuetify';
 import DndCommaSeparatedList from '@/components/DndCommaSeparatedList.vue';
 
 describe('DndCommaSeparatedList.vue', () => {
-    Vue.use(Vuetify);
-
     let localVue;
-    beforeEach(() => {
+
+    beforeAll(() => {
+        Vue.use(Vuetify);
         localVue = createLocalVue();
         localVue.use(Vuetify);
     });
 
-    test('renders props.title and props.items when passed', () => {
+    test('should render passed props: `title` and `items`', () => {
         const title = 'test title';
         const items = ['one', 'two', 'three'];
 
@@ -21,6 +21,17 @@ describe('DndCommaSeparatedList.vue', () => {
             propsData: { title, items },
         });
 
-        expect(wrapper.text()).toMatch(`${title}: ${items.join(', ')}`);
+        expect(wrapper.text()).toEqual(`${title}: ${items.join(', ')}`);
+    });
+
+    test('should render passed props: `items` without any title', () => {
+        const items = ['one', 'two', 'three'];
+
+        const wrapper = shallowMount(DndCommaSeparatedList, {
+            localVue,
+            propsData: { items },
+        });
+
+        expect(wrapper.text()).toEqual(`${items.join(', ')}`);
     });
 });
