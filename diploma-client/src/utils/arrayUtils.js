@@ -3,12 +3,12 @@ export function notEmptyArray(items) {
     return !isEmptyArray(items);
 }
 
-/** @param {Array} items */
+/** @param {*[]} items */
 export function isEmptyArray(items) {
-    return items?.length === 0;
+    return Array.isArray(items) && items.length === 0;
 }
 
 /** @param {Array} items */
 export function commaSeparate(items) {
-    return items?.join(',') ?? '';
+    return items?.join(', ') ?? '';
 }

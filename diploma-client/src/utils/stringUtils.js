@@ -14,12 +14,16 @@ export function replaceSpacesWithUnderscore(str = '') {
     return str?.replace(/ /g, '_')?.toLowerCase() ?? '';
 }
 
-/** @param {string} str */
-export function deserialize(str = '') {
+/** @param {string} [str] */
+export function deserialize(str) {
     const result = {};
-    const entries = str?.split(';');
+    const entries = str?.split(';') ?? [];
     for (let i = 0; i < entries.length; i++) {
-        const [name, value] = entries[i].split('=');
+        const entry = entries[i];
+        if (entry === '') {
+            continue;
+        }
+        const [name, value] = entry.split('=');
         result[name] = value ?? true;
     }
     return result;
