@@ -66,6 +66,7 @@ export default {
         appName: 'D&D Homebrew App',
         displayDrawer: false,
         displaySettings: false,
+        transitionName: 'fade',
         appBarLinks: [
             { path: '/', name: 'Home' },
             { path: '/about', name: 'About' },
@@ -82,6 +83,13 @@ export default {
             this.displaySettings = true;
         },
     },
+    // watch: {
+    //     $route(to, from) {
+    //         const toDepth = to.path.split('/').length;
+    //         const fromDepth = from.path.split('/').length;
+    //         this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
+    //     },
+    // },
     mounted() {
         MODULES_TO_LOAD.forEach((asset) => void this.$store.dispatch(`${asset}/load`));
     },

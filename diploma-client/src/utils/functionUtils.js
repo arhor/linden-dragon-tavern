@@ -34,3 +34,16 @@ export const compose = (...functions) => {
 export const pipe = (...functions) => {
     return functions.reduce(simpleCompose, identity);
 };
+
+/**
+ * @template R
+ * @param functions {(function(...[*]): R)[]} array of functions which must have the same signature
+ * @param reducer {function(R, R): R} reducer function combining two values into the one
+ * @param seed {R} initial value
+ * @return {function(...[*]): R}
+ */
+export const combineReduce = ([...functions], reducer, seed) => {
+    return (...args) => {
+        return functions.map((fn) => fn(...args)).reduce(reducer, seed);
+    };
+};
