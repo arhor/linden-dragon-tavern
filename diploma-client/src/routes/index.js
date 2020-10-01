@@ -18,6 +18,14 @@ const routes = [
         },
     },
     {
+        path: '/account',
+        name: 'account',
+        component: () => import('@/modules/auth'),
+        meta: {
+            breadcrumbs: [home],
+        },
+    },
+    {
         path: '/about',
         name: 'about',
         component: () => import('@/modules/about'),

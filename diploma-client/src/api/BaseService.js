@@ -1,4 +1,4 @@
-import axios from '@/api/axiosConfig.js';
+import axios from '@/api/generalApi.js';
 
 export class BaseService {
     constructor({ baseUrl }) {

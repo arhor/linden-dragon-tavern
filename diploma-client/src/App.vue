@@ -30,6 +30,10 @@
                 {{ name }}
             </v-btn>
             <dnd-download-button :url="characterSheetUrl" />
+
+            <v-btn to="/account" fab dark>
+                <v-icon>mdi-account-circle</v-icon>
+            </v-btn>
         </v-app-bar>
 
         <v-main>
