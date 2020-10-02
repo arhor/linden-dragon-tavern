@@ -1,4 +1,7 @@
+import org.flywaydb.gradle.task.AbstractFlywayTask
+
 plugins {
+    id "org.flywaydb.flyway"
     id "org.springframework.boot"
     id "io.spring.dependency-management"
     id "org.jetbrains.kotlin.jvm"
@@ -66,6 +69,19 @@ dependencies {
     testImplementation "org.testcontainers:postgresql:${testcontainers_version}"
     testImplementation "org.testcontainers:junit-jupiter:${testcontainers_version}"
 }
+
+tasks.withType(AbstractFlywayTask) {
+    it.dependsOn processResources
+}
+
+flyway {
+    driver = "org.postgresql.Driver"
+    url = "jdbc:postgresql://localhost:5432/diploma_db"
+    user = "postgres"
+    password = "password"
+    locations = ['classpath:db/migration']
+}
+
 
 compileKotlin {
     kotlinOptions {
