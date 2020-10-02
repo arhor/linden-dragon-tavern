@@ -19,7 +19,7 @@ export const simpleCompose = (prevFun, nextFun) => {
 
 /**
  * @template T
- * @param functions {function(T): T}
+ * @param functions {(function(T): T)[]}
  * @return {function(T): T}
  */
 export const compose = (...functions) => {
@@ -28,7 +28,7 @@ export const compose = (...functions) => {
 
 /**
  * @template T
- * @param functions {function(T): T}
+ * @param functions {(function(T): T)[]}
  * @return {function(T): T}
  */
 export const pipe = (...functions) => {
