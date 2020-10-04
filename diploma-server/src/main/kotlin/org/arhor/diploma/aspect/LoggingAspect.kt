@@ -4,7 +4,6 @@ import org.arhor.diploma.util.createLogger
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
-import org.slf4j.Logger
 import org.springframework.stereotype.Component
 
 @Aspect
@@ -13,7 +12,7 @@ class LoggingAspect {
 
     companion object {
         @JvmStatic
-        private val log: Logger = createLogger<LoggingAspect>()
+        private val log = createLogger<LoggingAspect>()
     }
 
     @Before("execution(* *(.., @org.springframework.web.bind.annotation.ExceptionHandler (*), ..))")

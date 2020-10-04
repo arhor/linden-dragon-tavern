@@ -4,7 +4,6 @@ import org.arhor.diploma.util.createLogger
 import org.arhor.diploma.web.model.SignInRequest
 import org.arhor.diploma.web.model.SignInResponse
 import org.arhor.diploma.web.security.TokenProvider
-import org.slf4j.Logger
 import org.springframework.http.MediaType
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.authentication.AuthenticationManager
@@ -26,7 +25,7 @@ class AuthController(
 
     companion object {
         @JvmStatic
-        private val log: Logger = createLogger<AuthController>()
+        private val log = createLogger<AuthController>()
     }
 
     @PostMapping("/token")

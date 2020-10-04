@@ -16,8 +16,8 @@ interface AccountConverter : Converter<Account, AccountDTO> {
         Mapping(target = "updated", ignore = true),
         Mapping(target = "deleted", ignore = true)
     )
-    override fun dtoToEntity(dto: AccountDTO?): Account?
+    override fun dtoToEntity(dto: AccountDTO): Account
 
     @InheritInverseConfiguration
-    override fun entityToDto(entity: Account?): AccountDTO?
+    override fun entityToDto(entity: Account): AccountDTO
 }

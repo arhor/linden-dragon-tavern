@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.node.ArrayNode
 import io.jsonwebtoken.*
 import org.arhor.diploma.util.toArrayNode
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.Authentication
@@ -100,7 +99,7 @@ class JwtProvider(
 
     companion object {
         @JvmStatic
-        private val log: Logger = LoggerFactory.getLogger(JwtProvider::class.java)
+        private val log = LoggerFactory.getLogger(JwtProvider::class.java)
 
         const val FIELD_USERNAME = "username"
         const val FIELD_ROLES = "roles"

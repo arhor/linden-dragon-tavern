@@ -1,8 +1,6 @@
 package org.arhor.diploma.web.security
 
 import org.arhor.diploma.util.createLogger
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.stereotype.Component
@@ -14,7 +12,7 @@ class JwtAuthEntryPoint : AuthenticationEntryPoint {
 
     companion object {
         @JvmStatic
-        private val log: Logger = createLogger<JwtAuthEntryPoint>()
+        private val log = createLogger<JwtAuthEntryPoint>()
     }
 
     override fun commence(

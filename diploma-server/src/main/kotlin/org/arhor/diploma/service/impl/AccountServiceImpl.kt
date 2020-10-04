@@ -2,12 +2,11 @@ package org.arhor.diploma.service.impl
 
 import org.arhor.diploma.data.persist.domain.Account
 import org.arhor.diploma.data.persist.repository.AccountRepository
+import org.arhor.diploma.exception.EntityNotFoundException
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
-import org.arhor.diploma.exception.EntityNotFoundException
 import org.arhor.diploma.service.mapping.AccountConverter
 import org.arhor.diploma.util.createLogger
-import org.slf4j.Logger
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
@@ -25,10 +24,8 @@ class AccountServiceImpl(
 
     companion object {
         @JvmStatic
-        private val log: Logger = createLogger<AccountServiceImpl>()
+        private val log = createLogger<AccountServiceImpl>()
     }
-
-    override val type: Class<AccountDTO> = AccountDTO::class.java
 
     override fun loadUserByUsername(username: String?): UserDetails {
         return username?.let {
@@ -63,9 +60,9 @@ class AccountServiceImpl(
                 throw RuntimeException(message)
             }
 
-        val savedAccount = converter.dtoToEntity(accountDTO)?.let(repository::save)
+        val savedAccount = converter.dtoToEntity(accountDTO).let(repository::save)
 
-        return savedAccount?.getId() ?: throw IllegalStateException("Entity ID must be generated!")
+        return savedAccount.getId() ?: throw IllegalStateException("Entity ID must be generated!")
     }
 
     override fun deleteAccount(id: Long) {

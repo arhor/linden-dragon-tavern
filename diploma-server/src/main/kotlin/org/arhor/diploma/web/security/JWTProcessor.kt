@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.*
 import org.arhor.diploma.util.createLogger
-import org.slf4j.Logger
 import org.springframework.security.core.Authentication
 import java.util.*
 
@@ -82,7 +81,7 @@ class JWTProcessor(
         get() = AUTH_TYPE
 
     companion object {
-        private val log: Logger = createLogger<JWTProcessor>()
+        private val log = createLogger<JWTProcessor>()
 
         private const val AUTH_HEADER = "Authentication"
         private const val AUTH_TYPE = "Bearer"

@@ -5,7 +5,6 @@ import org.arhor.diploma.core.ActionResult.Success
 import org.arhor.diploma.core.StartupTask
 import org.arhor.diploma.core.Verifiable
 import org.arhor.diploma.util.createLogger
-import org.slf4j.Logger
 import org.springframework.stereotype.Component
 import java.text.DecimalFormat
 import kotlin.system.exitProcess
@@ -15,7 +14,7 @@ class StartupVerifier(private val verifiers: List<Verifiable>) : StartupTask {
 
     companion object {
         @JvmStatic
-        private val log: Logger = createLogger<StartupVerifier>()
+        private val log = createLogger<StartupVerifier>()
     }
 
     override fun execute() {

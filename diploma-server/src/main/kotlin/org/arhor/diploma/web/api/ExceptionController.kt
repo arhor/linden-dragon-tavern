@@ -2,7 +2,6 @@ package org.arhor.diploma.web.api
 
 import org.arhor.diploma.web.model.MessageResponse
 import org.arhor.diploma.web.model.messageResponse
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.context.MessageSource
 import org.springframework.http.HttpStatus
@@ -20,7 +19,7 @@ class ExceptionController(
 
     companion object {
         @JvmStatic
-        private val log: Logger = LoggerFactory.getLogger(ExceptionController::class.java)
+        private val log = LoggerFactory.getLogger(ExceptionController::class.java)
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)

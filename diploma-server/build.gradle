@@ -79,7 +79,8 @@ flyway {
     url = "jdbc:postgresql://localhost:5432/diploma_db"
     user = "postgres"
     password = "password"
-    locations = ['classpath:db/migration']
+    locations = ["classpath:db/migration"]
+    encoding = "UTF-8"
 }
 
 

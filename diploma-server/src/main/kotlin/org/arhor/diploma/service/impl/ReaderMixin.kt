@@ -1,0 +1,41 @@
+package org.arhor.diploma.service.impl
+
+import org.arhor.diploma.core.Identifiable
+import org.arhor.diploma.data.persist.domain.core.DomainObject
+import org.arhor.diploma.data.persist.repository.BaseRepository
+import org.arhor.diploma.exception.EntityNotFoundException
+import org.arhor.diploma.service.Reader
+import org.arhor.diploma.service.mapping.Converter
+import org.springframework.data.domain.PageRequest
+import java.io.Serializable
+
+class ReaderMixin<
+        E : DomainObject<K>,
+        D : Identifiable<K>,
+        K : Serializable>(
+    private val converter: Converter<E, D>,
+    private val repository: BaseRepository<E, K>
+) : Reader<D, K> {
+
+    override fun getOne(id: K): D {
+        return repository
+            .findById(id)
+            .map { converter.entityToDto(it) }
+            .orElseThrow { EntityNotFoundException("account", "id", id) }
+    }
+
+    override fun getList(): List<D> {
+        return repository
+            .findAll()
+            .map { converter.entityToDto(it) }
+            .toList()
+    }
+
+    override fun getList(page: Int, size: Int): List<D> {
+        return repository
+            .findAll(PageRequest.of(page, size))
+            .toList()
+            .mapNotNull { converter.entityToDto(it) }
+            .toList()
+    }
+}

@@ -2,7 +2,6 @@ package org.arhor.diploma
 
 import org.arhor.diploma.core.StartupTask
 import org.arhor.diploma.util.createLogger
-import org.slf4j.Logger
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -20,7 +19,7 @@ class DiplomaApp(
 
     companion object {
         @JvmStatic
-        private val log: Logger = createLogger<DiplomaApp>()
+        private val log = createLogger<DiplomaApp>()
 
         @JvmStatic
         fun main(args: Array<String>) {

@@ -1,7 +1,6 @@
 package org.arhor.diploma.config
 
 import org.arhor.diploma.config.properties.CustomProperties
-import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.boot.web.server.MimeMappings
 import org.springframework.boot.web.server.WebServerFactory
@@ -108,6 +107,6 @@ class WebServerConfig(
 
     companion object {
         @JvmStatic
-        private val log: Logger = LoggerFactory.getLogger(WebServerConfig::class.java)
+        private val log = LoggerFactory.getLogger(WebServerConfig::class.java)
     }
 }

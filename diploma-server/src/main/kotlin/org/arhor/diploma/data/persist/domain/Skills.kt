@@ -1,8 +1,8 @@
 package org.arhor.diploma.data.persist.domain
 
+import org.arhor.diploma.core.BitSet32
 import javax.persistence.Column
 import javax.persistence.Embeddable
-import kotlin.math.pow
 
 @Embeddable
 class Skills {
@@ -10,24 +10,28 @@ class Skills {
     @Column(name = "skills_bits")
     private var skillsBits: Int = 0
 
-    fun setAcrobatics() {
-        set(SkillType.ACROBATICS)
+    fun setAcrobatics(value: Boolean = true) {
+        set(SkillType.ACROBATICS, value)
     }
 
-    fun isAcrobatics(): Boolean {
+    fun getAcrobatics(): Boolean {
         return get(SkillType.ACROBATICS)
     }
 
-    private fun set(skillType: SkillType) {
-        skillsBits = skillsBits or calcPosition(skillType)
+    fun setAnimalHandling(value: Boolean = true) {
+        set(SkillType.ANIMAL_HANDLING, value)
+    }
+
+    fun getAnimalHandling(): Boolean {
+        return get(SkillType.ANIMAL_HANDLING)
+    }
+
+    private fun set(skillType: SkillType, value: Boolean) {
+        skillsBits = BitSet32.fromNumber(skillsBits).also { it[skillType.ordinal] = value }.valuesHolder
     }
 
     private fun get(skillType: SkillType): Boolean {
-        return (skillsBits and calcPosition(skillType)) == skillType.ordinal
-    }
-
-    private fun calcPosition(skillType: SkillType): Int {
-        return 2.0.pow(skillType.ordinal).toInt()
+        return BitSet32.fromNumber(skillsBits)[skillType.ordinal]
     }
 
     private enum class SkillType {

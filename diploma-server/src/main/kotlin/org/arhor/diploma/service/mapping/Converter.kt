@@ -10,7 +10,7 @@ package org.arhor.diploma.service.mapping
  */
 interface Converter<E, D> {
 
-    fun entityToDto(entity: E?): D?
+    fun entityToDto(entity: E): D
 
-    fun dtoToEntity(dto: D?): E?
+    fun dtoToEntity(dto: D): E
 }
