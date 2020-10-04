@@ -25,10 +25,14 @@ CREATE TABLE IF NOT EXISTS security_profile_authorities
     authority_id    BIGINT    NOT NULL,
 
     CONSTRAINT PK_security_profile_authorities PRIMARY KEY (profile_id, authority_id),
-    CONSTRAINT FK_security_profile_authorities_security_profiles FOREIGN KEY (profile_id) REFERENCES security_profiles (id)
+
+    CONSTRAINT FK_security_profile_authorities_security_profiles FOREIGN KEY (profile_id)
+        REFERENCES security_profiles (id)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
-    CONSTRAINT FK_security_profile_authorities_authorities FOREIGN KEY (authority_id) REFERENCES authorities (id)
+
+    CONSTRAINT FK_security_profile_authorities_authorities FOREIGN KEY (authority_id)
+        REFERENCES authorities (id)
         ON UPDATE CASCADE
         ON DELETE CASCADE
 )
@@ -49,7 +53,8 @@ CREATE TABLE IF NOT EXISTS accounts
     updated       TIMESTAMP        NULL,
     deleted       BOOLEAN          NOT NULL DEFAULT FALSE,
 
-    CONSTRAINT FK_accounts_security_profiles FOREIGN KEY (profile_id) REFERENCES security_profiles (id)
+    CONSTRAINT FK_accounts_security_profiles FOREIGN KEY (profile_id)
+        REFERENCES security_profiles (id)
         ON UPDATE CASCADE
         ON DELETE SET NULL
 )

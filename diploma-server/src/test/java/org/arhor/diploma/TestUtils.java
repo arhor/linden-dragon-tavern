@@ -16,4 +16,12 @@ public class TestUtils {
 
         return account;
     }
+
+    public static String randomString() {
+        return RandomString.make();
+    }
+
+    public static String randomString(int length) {
+        return RandomString.make(length);
+    }
 }

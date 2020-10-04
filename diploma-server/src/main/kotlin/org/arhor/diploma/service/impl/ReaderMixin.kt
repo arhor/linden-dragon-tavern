@@ -21,7 +21,7 @@ class ReaderMixin<
         return repository
             .findById(id)
             .map { converter.entityToDto(it) }
-            .orElseThrow { EntityNotFoundException("account", "id", id) }
+            .orElseThrow { EntityNotFoundException(fieldValue =  id) }
     }
 
     override fun getList(): List<D> {
