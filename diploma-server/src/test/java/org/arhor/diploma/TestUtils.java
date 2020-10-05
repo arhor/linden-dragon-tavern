@@ -3,6 +3,8 @@ package org.arhor.diploma;
 import net.bytebuddy.utility.RandomString;
 import org.arhor.diploma.data.persist.domain.Account;
 
+import java.util.Random;
+
 public class TestUtils {
 
     public static Account generateAccountWithFilledFields() {
@@ -23,5 +25,9 @@ public class TestUtils {
 
     public static String randomString(int length) {
         return RandomString.make(length);
+    }
+
+    public static int randomInt(int bound) {
+        return new Random().nextInt(bound);
     }
 }

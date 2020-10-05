@@ -1,0 +1,27 @@
+services:
+  app-database:
+    image: postgres:11.7
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: diploma_db
+
+  app-server:
+    build:
+      context: .
+      dockerfile: diploma-server/Dockerfile
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    networks:
+      - diploma-app-network
+    depends_on:
+      - app-database
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  database-data: # named volumes can be managed easier using docker-compose
