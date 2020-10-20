@@ -1,4 +1,4 @@
-package org.arhor.diploma.core
+package org.arhor.diploma.commons
 
 import java.io.Serializable
 

@@ -1,6 +1,6 @@
 package org.arhor.diploma.data.persist.domain.core
 
-import org.arhor.diploma.core.Deletable
+import org.arhor.diploma.commons.Deletable
 import java.io.Serializable
 import javax.persistence.Column
 import javax.persistence.MappedSuperclass

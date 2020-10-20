@@ -1,27 +1,20 @@
 package org.arhor.diploma.web.filter
 
-import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.util.createLogger
 import org.arhor.diploma.web.security.TokenProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource
-import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@Component
 class CustomAuthFilter(
     private val tokenProvider: TokenProvider<*>,
-    private val accountService: AccountService
+    private val userDetailsService: UserDetailsService
 ) : OncePerRequestFilter() {
-
-    companion object {
-        @JvmStatic
-        private val log = createLogger<CustomAuthFilter>()
-    }
 
     override fun doFilterInternal(
         req: HttpServletRequest,
@@ -35,7 +28,7 @@ class CustomAuthFilter(
                 val token = tokenProvider.parse(authHeader)
                 if (tokenProvider.validate(token)) {
                     tokenProvider.parseUsername(token)
-                        ?.let(accountService::loadUserByUsername)
+                        ?.let(userDetailsService::loadUserByUsername)
                         ?.let { user -> UsernamePasswordAuthenticationToken(user, token, user.authorities) }
                         ?.let { auth ->
                             auth.details = WebAuthenticationDetailsSource().buildDetails(req)
@@ -47,5 +40,9 @@ class CustomAuthFilter(
             log.error("Can NOT set user authentication -> Message: {}", e.message)
         }
         next.doFilter(req, res)
+    }
+
+    companion object {
+        private val log = createLogger<CustomAuthFilter>()
     }
 }

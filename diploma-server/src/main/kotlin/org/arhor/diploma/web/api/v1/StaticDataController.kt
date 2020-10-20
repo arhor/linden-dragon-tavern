@@ -1,14 +1,12 @@
 package org.arhor.diploma.web.api.v1
 
-import org.arhor.diploma.core.Identifiable
+import org.arhor.diploma.commons.Identifiable
 import org.arhor.diploma.data.file.DataProvider
-import org.arhor.diploma.data.file.model.Spell
 import org.arhor.diploma.util.bound
 import org.slf4j.Logger
 import org.springframework.http.ResponseEntity
 import java.io.Serializable
 import java.util.function.Predicate
-import kotlin.reflect.KProperty1
 
 abstract class StaticDataController<
         T : Identifiable<K>,

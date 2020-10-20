@@ -46,6 +46,7 @@ dependencies {
     runtimeOnly "org.postgresql:postgresql"
 
     implementation project(":diploma-shared")
+    implementation project(":diploma-server:commons")
 
     implementation "org.jetbrains.kotlin:kotlin-reflect"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
@@ -83,7 +84,6 @@ flyway {
     encoding = "UTF-8"
 }
 
-
 compileKotlin {
     kotlinOptions {
         freeCompilerArgs += [
@@ -106,7 +106,7 @@ springBoot {
 }
 
 bootRun {
-    jvmArgs += "-Dspring.profiles.active=default"
+    jvmArgs += "-Dspring.profiles.active=default,dev"
     jvmArgs += "-XX:+UseSerialGC"
     jvmArgs += "-XX:MaxRAM=100m"
     jvmArgs += "-Xss512k"
@@ -114,5 +114,5 @@ bootRun {
 
 test {
     useJUnitPlatform()
-    jvmArgs += "-Dspring.profiles.active=default"
+    jvmArgs += "-Dspring.profiles.active=default,dev"
 }

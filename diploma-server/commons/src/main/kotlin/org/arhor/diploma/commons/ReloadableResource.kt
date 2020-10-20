@@ -1,4 +1,4 @@
-package org.arhor.diploma.core
+package org.arhor.diploma.commons
 
 /**
  * Represents in-memory resource which can be reloaded from its source, for example file.

@@ -1,6 +1,6 @@
 package org.arhor.diploma.service.dto
 
-import org.arhor.diploma.core.MutableIdentity
+import org.arhor.diploma.commons.MutableIdentity
 
 data class AccountDTO(
     private var id: Long? = null,

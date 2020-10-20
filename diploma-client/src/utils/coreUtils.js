@@ -47,3 +47,11 @@ export function generateUUID() {
         return v.toString(16);
     });
 }
+
+/**
+ * @param obj {*}
+ * @return {boolean}
+ */
+export function refExists(obj) {
+    return obj !== void 0 && obj !== null;
+}

@@ -1,4 +1,4 @@
-package org.arhor.diploma.core
+package org.arhor.diploma.commons
 
 /**
  * General interface for any task which should be executed at application startup stage.

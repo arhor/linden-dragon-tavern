@@ -57,8 +57,6 @@ import DndBreadcrumbs from '@/components/DndBreadcrumbs.vue';
 import DndDownloadButton from '@/components/DndDownloadButton.vue';
 import { SERVER_API_URL } from '@/api/server-api.js';
 
-const MODULES_TO_LOAD = ['abilities', 'spells', 'skills'];
-
 export default {
     name: 'App',
     components: { DndDownloadButton, DndBreadcrumbs, DndAppSettings },
@@ -83,15 +81,10 @@ export default {
             this.displaySettings = true;
         },
     },
-    // watch: {
-    //     $route(to, from) {
-    //         const toDepth = to.path.split('/').length;
-    //         const fromDepth = from.path.split('/').length;
-    //         this.transitionName = toDepth < fromDepth ? 'slide-right' : 'slide-left';
-    //     },
-    // },
     mounted() {
-        MODULES_TO_LOAD.forEach((asset) => void this.$store.dispatch(`${asset}/load`));
+        ['abilities', 'spells', 'skills'].forEach(
+            (asset) => void this.$store.dispatch(`${asset}/load`),
+        );
     },
 };
 </script>

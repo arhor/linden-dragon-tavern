@@ -1,6 +1,8 @@
 import Vue from 'vue';
 
 import '@/assets/style/main.scss';
+import '@/plugins/cookies.js';
+
 import App from '@/App.vue';
 import router from '@/routes';
 import store from '@/store';

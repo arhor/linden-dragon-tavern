@@ -1,6 +1,6 @@
 package org.arhor.diploma.data.persist.domain.core
 
-import org.arhor.diploma.core.MutableIdentity
+import org.arhor.diploma.commons.MutableIdentity
 import java.io.Serializable
 import javax.persistence.GeneratedValue
 import javax.persistence.GenerationType

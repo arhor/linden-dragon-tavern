@@ -3,7 +3,7 @@ package org.arhor.diploma.service.dto
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
-import org.arhor.diploma.core.Identifiable
+import org.arhor.diploma.commons.Identifiable
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)

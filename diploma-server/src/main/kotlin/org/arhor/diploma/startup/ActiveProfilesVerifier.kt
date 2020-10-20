@@ -1,11 +1,11 @@
 package org.arhor.diploma.startup
 
-import org.arhor.diploma.core.ActionResult
-import org.arhor.diploma.core.ActionResult.Failure
-import org.arhor.diploma.core.ActionResult.Success
-
-import org.arhor.diploma.core.Verifiable
+import org.arhor.diploma.commons.ActionResult
+import org.arhor.diploma.commons.ActionResult.Failure
+import org.arhor.diploma.commons.ActionResult.Success
+import org.arhor.diploma.commons.Verifiable
 import org.arhor.diploma.util.SpringProfile
+import org.arhor.diploma.util.SpringProfile.DEVELOPMENT
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
 
@@ -20,21 +20,18 @@ class ActiveProfilesVerifier(private val env: Environment) : Verifiable {
     override val priority: Int = 1
 
     override fun verify(): ActionResult<String> {
-        if (env.activeProfiles.contains(SpringProfile.DEVELOPMENT)) {
+        if (env.activeProfiles.contains(DEVELOPMENT)) {
             for (profile in devIncompatibleProfiles) {
                 if (env.activeProfiles.contains(profile)) {
-                    val error = createError(profile)
-                    return Failure(error)
+                    return Failure(
+                        IllegalStateException(
+                            "Profiles '$DEVELOPMENT' and '${profile}' should not run both at the same time!"
+                        )
+                    )
                 }
             }
         }
-
         return Success("There are no mutually exclusive profiles.")
     }
 
-    private fun createError(p2: String): Throwable {
-        return IllegalStateException(
-            "Profiles '${SpringProfile.DEVELOPMENT}' and '${p2}' should not run both at the same time!"
-        )
-    }
 }

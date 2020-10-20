@@ -1,4 +1,4 @@
-package org.arhor.diploma.core;
+package org.arhor.diploma.commons;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -8,12 +8,12 @@ import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class BitSet32Test {
+class BitSet64Test {
 
     @Test
     void shouldHaveAllValuesFalse() {
         // given
-        var bitSet = new BitSet32();
+        var bitSet = new BitSet64();
 
         for (int i = 0; i < bitSet.size(); i++) {
             // when
@@ -27,7 +27,7 @@ class BitSet32Test {
     @Test
     void shouldHaveAllValuesTrue() {
         // given
-        var bitSet = new BitSet32();
+        var bitSet = new BitSet64();
 
         // when
         for (int i = 0; i < bitSet.size(); i++) {
@@ -44,7 +44,7 @@ class BitSet32Test {
     @MethodSource("provideIndexesToTest")
     void shouldHaveOnlyOneValuesSet(int indexToTest) {
         // given
-        var bitSet = new BitSet32();
+        var bitSet = new BitSet64();
 
         // when
         bitSet.set(indexToTest, true);
@@ -62,7 +62,7 @@ class BitSet32Test {
     @Test
     void shouldHaveSeparateIterators() {
         // given
-        var bitSet = new BitSet32();
+        var bitSet = new BitSet64();
 
         // when
         var iterator1 = bitSet.iterator();
@@ -76,16 +76,16 @@ class BitSet32Test {
     @MethodSource("provideIndexesToTest")
     void shouldCorrectlyCreateBitSetFromNumber(int indexToTest) {
         // given
-        var bitSet1 = new BitSet32();
+        var bitSet1 = new BitSet64();
 
         // when
         bitSet1.set(indexToTest, true);
-        var bitSet2 = BitSet32.fromNumber(bitSet1.getValuesHolder());
+        var bitSet2 = BitSet64.fromNumber(bitSet1.getValuesHolder());
 
         // then
         assertThat(bitSet2.getValuesHolder()).isEqualTo(bitSet1.getValuesHolder());
 
-        for (int i = 0; i < BitSet32.CAPACITY; i++) {
+        for (int i = 0; i < BitSet64.CAPACITY; i++) {
             boolean value1 = bitSet1.get(i);
             boolean value2 = bitSet2.get(i);
             assertThat(value1).isEqualTo(value2);
@@ -93,6 +93,6 @@ class BitSet32Test {
     }
 
     private static IntStream provideIndexesToTest() {
-        return IntStream.range(0, BitSet32.CAPACITY);
+        return IntStream.range(0, BitSet64.CAPACITY);
     }
 }

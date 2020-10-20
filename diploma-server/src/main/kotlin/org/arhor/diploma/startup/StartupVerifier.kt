@@ -1,9 +1,9 @@
 package org.arhor.diploma.startup
 
-import org.arhor.diploma.core.ActionResult.Failure
-import org.arhor.diploma.core.ActionResult.Success
-import org.arhor.diploma.core.StartupTask
-import org.arhor.diploma.core.Verifiable
+import org.arhor.diploma.commons.ActionResult.Failure
+import org.arhor.diploma.commons.ActionResult.Success
+import org.arhor.diploma.commons.StartupTask
+import org.arhor.diploma.commons.Verifiable
 import org.arhor.diploma.util.createLogger
 import org.springframework.stereotype.Component
 import java.text.DecimalFormat

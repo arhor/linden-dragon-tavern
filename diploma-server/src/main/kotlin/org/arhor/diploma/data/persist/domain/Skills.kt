@@ -1,6 +1,6 @@
 package org.arhor.diploma.data.persist.domain
 
-import org.arhor.diploma.core.BitSet32
+import org.arhor.diploma.commons.BitSet32
 import javax.persistence.Column
 import javax.persistence.Embeddable
 

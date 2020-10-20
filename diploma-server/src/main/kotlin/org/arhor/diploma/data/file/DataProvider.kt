@@ -1,6 +1,6 @@
 package org.arhor.diploma.data.file
 
-import org.arhor.diploma.core.ReloadableResource
+import org.arhor.diploma.commons.ReloadableResource
 import java.util.function.Predicate
 
 /**

@@ -1,6 +1,6 @@
 package org.arhor.diploma.data.persist.domain.core;
 
-import org.arhor.diploma.core.Auditable
+import org.arhor.diploma.commons.Auditable
 import java.io.Serializable
 import java.time.LocalDateTime
 import javax.persistence.Column

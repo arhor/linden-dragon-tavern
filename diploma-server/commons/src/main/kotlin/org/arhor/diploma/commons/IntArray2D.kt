@@ -1,4 +1,4 @@
-package org.arhor.diploma.core
+package org.arhor.diploma.commons
 
 import java.util.*
 
@@ -34,16 +34,30 @@ class IntArray2D private constructor(@JvmField val rows: Int, @JvmField val cols
         buffer[index] = value
     }
 
+    inline fun forEach(consumer: (value: Int, row: Int, col: Int) -> Unit) {
+        forEach { value, row, col, _ -> consumer(value, row, col) }
+    }
+
+    inline fun forEach(consumer: (value: Int, row: Int, col: Int, array: IntArray2D) -> Unit) {
+        for (i in 0 until this.rows) {
+            for (j in 0 until this.cols) {
+                consumer(this[i, j], i, j, this)
+            }
+        }
+    }
+
     private fun index(row: Int, col: Int): Int {
         ensureSafeAccess(row, col)
         return (cols * row) + col
     }
 
     private fun ensureSafeAccess(row: Int, col: Int) {
-        val rowIsOut = row < 0 || row >= rows
-        val colIsOut = col < 0 || col >= cols
+        val rowIsOut = (row < 0) || (row >= rows)
+        val colIsOut = (col < 0) || (col >= cols)
         if (rowIsOut || colIsOut) {
-            throw IndexOutOfBoundsException()
+            throw IndexOutOfBoundsException(
+                "index [${row},${col}] is out of bound (${rows},${cols})"
+            )
         }
     }
 

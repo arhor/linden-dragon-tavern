@@ -1,8 +1,8 @@
 package org.arhor.diploma.startup
 
-import org.arhor.diploma.core.ActionResult
-import org.arhor.diploma.core.ActionResult.Success
-import org.arhor.diploma.core.Verifiable
+import org.arhor.diploma.commons.ActionResult
+import org.arhor.diploma.commons.ActionResult.Success
+import org.arhor.diploma.commons.Verifiable
 import org.springframework.stereotype.Component
 
 @Component

@@ -2,7 +2,7 @@ package org.arhor.diploma.data.file
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import org.arhor.diploma.core.Identifiable
+import org.arhor.diploma.commons.Identifiable
 import org.arhor.diploma.util.createLogger
 import org.springframework.core.io.ResourceLoader
 import java.io.Serializable

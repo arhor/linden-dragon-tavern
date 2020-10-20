@@ -1,17 +1,12 @@
 package org.arhor.diploma.web.filter
 
-import org.springframework.core.Ordered
-import org.springframework.core.annotation.Order
 import org.springframework.http.HttpHeaders.*
 import org.springframework.http.HttpMethod.*
-import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-@Component
-@Order(Ordered.HIGHEST_PRECEDENCE)
 class CustomCorsFilter : OncePerRequestFilter() {
 
     companion object {

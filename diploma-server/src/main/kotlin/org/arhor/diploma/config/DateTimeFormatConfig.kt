@@ -6,7 +6,7 @@ import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-class DateTimeFormatConfiguration : WebMvcConfigurer {
+class DateTimeFormatConfig : WebMvcConfigurer {
 
     override fun addFormatters(registry: FormatterRegistry) {
         val registrar = DateTimeFormatterRegistrar()

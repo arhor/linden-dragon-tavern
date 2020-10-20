@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL
-import org.arhor.diploma.core.Identifiable
+import org.arhor.diploma.commons.Identifiable
 import org.arhor.diploma.service.dto.Abilities
 import org.arhor.diploma.service.dto.Action
 import org.arhor.diploma.service.dto.Skills

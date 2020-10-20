@@ -1,6 +1,6 @@
 package org.arhor.diploma
 
-import org.arhor.diploma.core.StartupTask
+import org.arhor.diploma.commons.StartupTask
 import org.arhor.diploma.util.createLogger
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication

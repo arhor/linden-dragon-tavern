@@ -36,7 +36,7 @@
     CsrfUtils_instance = this;
     this.CSRF_HEADER_NAME = 'x-csrf-token';
     this.CSRF_COOKIE_NAME = 'csrf-token';
-    this.SAFE_METHODS = ['get', 'head', 'options', 'trace'];
+    this.SAFE_METHODS = ['GET', 'HEAD', 'OPTIONS', 'TRACE'];
   }
   CsrfUtils.$metadata$ = {
     kind: Kind_OBJECT,

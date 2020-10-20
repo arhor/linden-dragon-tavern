@@ -3,6 +3,7 @@ package org.arhor.diploma.web.filter
 import org.arhor.diploma.CsrfUtils.CSRF_COOKIE_NAME
 import org.arhor.diploma.CsrfUtils.CSRF_HEADER_NAME
 import org.arhor.diploma.CsrfUtils.SAFE_METHODS
+import org.arhor.diploma.util.createLogger
 import org.springframework.security.web.access.AccessDeniedHandlerImpl
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
@@ -20,10 +21,8 @@ import org.springframework.security.access.AccessDeniedException
  * @author Maksim Buryshynets
  * @version 1.0 11 March 2019
  */
-@Component
 class CustomCsrfFilter : OncePerRequestFilter() {
 
-    // TODO: try to replace by spring-bean
     private val accessDeniedHandler = AccessDeniedHandlerImpl()
 
     override fun doFilterInternal(
@@ -31,14 +30,12 @@ class CustomCsrfFilter : OncePerRequestFilter() {
         res: HttpServletResponse,
         next: FilterChain
     ) {
-        if (!SAFE_METHODS.contains(req.method)) {
+        if (!SAFE_METHODS.contains(req.method.toUpperCase())) {
             val csrfCookieValue = getCsrfCookieToken(req)
             if ((csrfCookieValue == null) || csrfCookieValue != req.getHeader(CSRF_HEADER_NAME)) {
-                accessDeniedHandler.handle(
-                    req,
-                    res,
-                    AccessDeniedException("CSRF token is missing or not matching")
-                )
+                val errorMsg = "CSRF token is missing or not matching"
+                log.debug(errorMsg)
+                accessDeniedHandler.handle(req, res, AccessDeniedException(errorMsg))
                 return
             }
         }
@@ -54,5 +51,9 @@ class CustomCsrfFilter : OncePerRequestFilter() {
             }
         }
         return null
+    }
+
+    companion object {
+        private val log = createLogger<CustomCsrfFilter>()
     }
 }

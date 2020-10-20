@@ -1,4 +1,4 @@
-package org.arhor.diploma.core
+package org.arhor.diploma.commons
 
 @Suppress("unused")
 sealed class ActionResult<out T> {

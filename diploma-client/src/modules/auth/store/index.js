@@ -1,4 +1,5 @@
 import authService from '@/modules/auth/services/AuthService.js';
+import { refExists } from '@/utils/coreUtils';
 import { useLocalStoragePlugin } from '@/utils/storeUtils.js';
 
 const mutation = {
@@ -12,7 +13,7 @@ export default {
         accessToken: null,
     },
     getters: {
-        isLoggedIn: (state) => state.accessToken !== void 0 && state.accessToken !== null,
+        isLoggedIn: (state) => refExists(state.accessToken),
     },
     actions: {
         signIn: async ({ commit }, { username, password }) => {

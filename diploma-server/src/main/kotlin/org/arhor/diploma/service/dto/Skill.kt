@@ -1,7 +1,7 @@
 package org.arhor.diploma.service.dto
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import org.arhor.diploma.core.Identifiable
+import org.arhor.diploma.commons.Identifiable
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class Skill(
