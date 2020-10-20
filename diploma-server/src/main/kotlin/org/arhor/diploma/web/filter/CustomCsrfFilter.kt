@@ -3,14 +3,13 @@ package org.arhor.diploma.web.filter
 import org.arhor.diploma.CsrfUtils.CSRF_COOKIE_NAME
 import org.arhor.diploma.CsrfUtils.CSRF_HEADER_NAME
 import org.arhor.diploma.CsrfUtils.SAFE_METHODS
-import org.arhor.diploma.util.createLogger
+import org.arhor.diploma.exception.InvalidCsrfTokenException
+import org.arhor.diploma.exception.MissingCsrfTokenException
 import org.springframework.security.web.access.AccessDeniedHandlerImpl
-import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
-import org.springframework.security.access.AccessDeniedException
 
 /**
  * Class CustomCsrfFilter implements stateless CSRF protection. To successfully
@@ -32,10 +31,19 @@ class CustomCsrfFilter : OncePerRequestFilter() {
     ) {
         if (!SAFE_METHODS.contains(req.method.toUpperCase())) {
             val csrfCookieValue = getCsrfCookieToken(req)
-            if ((csrfCookieValue == null) || csrfCookieValue != req.getHeader(CSRF_HEADER_NAME)) {
-                val errorMsg = "CSRF token is missing or not matching"
-                log.debug(errorMsg)
-                accessDeniedHandler.handle(req, res, AccessDeniedException(errorMsg))
+            val csrfHeaderValue = req.getHeader(CSRF_HEADER_NAME)
+
+            if ((csrfCookieValue != null) && (csrfHeaderValue != null)) {
+                if (csrfCookieValue != csrfHeaderValue) {
+                    accessDeniedHandler.handle(
+                        req,
+                        res,
+                        InvalidCsrfTokenException(expected = csrfCookieValue, actual = csrfHeaderValue)
+                    )
+                    return
+                }
+            } else {
+                accessDeniedHandler.handle(req, res, MissingCsrfTokenException())
                 return
             }
         }
@@ -51,9 +59,5 @@ class CustomCsrfFilter : OncePerRequestFilter() {
             }
         }
         return null
-    }
-
-    companion object {
-        private val log = createLogger<CustomCsrfFilter>()
     }
 }

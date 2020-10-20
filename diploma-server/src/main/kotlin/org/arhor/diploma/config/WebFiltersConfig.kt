@@ -18,7 +18,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 class WebFiltersConfig {
 
     @Bean
-//    @Profile("!${SpringProfile.DEVELOPMENT}")
+    @Profile("!${SpringProfile.DEVELOPMENT}")
     fun customCsrfFilter(): FilterRegistrationBean<CustomCsrfFilter> {
         val csrfFilterBean = FilterRegistrationBean<CustomCsrfFilter>()
 

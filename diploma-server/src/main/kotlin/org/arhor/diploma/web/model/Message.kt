@@ -76,7 +76,7 @@ class MessageResponseBuilder {
 }
 
 inline fun messageResponse(init: MessageResponseBuilder.() -> Unit): MessageResponse {
-    val builder = MessageResponseBuilder()
-    builder.init()
-    return builder.build()
+    val message = MessageResponseBuilder()
+    message.init()
+    return message.build()
 }
