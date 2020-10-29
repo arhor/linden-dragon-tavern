@@ -16,8 +16,8 @@ group = "org.arhor"
 version = "0.0.1-SNAPSHOT"
 description = "diploma-server"
 
-java.sourceCompatibility = JavaVersion.VERSION_11
-java.targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = java_global_version
+targetCompatibility = java_global_version
 
 repositories {
     mavenLocal()
@@ -40,6 +40,8 @@ configurations {
 }
 
 dependencies {
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
     kapt "org.mapstruct:mapstruct-processor:${mapstruct_version}"
     kapt "org.springframework:spring-context-indexer"
 
@@ -90,7 +92,7 @@ compileKotlin {
                 "-Xjsr305=strict",
                 "-Xjvm-default=enable",
         ]
-        jvmTarget = JavaVersion.VERSION_11
+        jvmTarget = java_global_version
         javaParameters = true
     }
 }

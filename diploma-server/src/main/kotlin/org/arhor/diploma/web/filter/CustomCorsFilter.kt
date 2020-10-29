@@ -1,5 +1,6 @@
 package org.arhor.diploma.web.filter
 
+import org.arhor.diploma.CsrfUtils
 import org.springframework.http.HttpHeaders.*
 import org.springframework.http.HttpMethod.*
 import org.springframework.web.filter.OncePerRequestFilter
@@ -19,7 +20,7 @@ class CustomCorsFilter : OncePerRequestFilter() {
             "Content-Type",
             "Authorization",
             "credential",
-            "x-csrf-token",
+            CsrfUtils.CSRF_HEADER_NAME,
             "x-requested-with"
         ).joinToString(separator = ",")
 

@@ -1,6 +1,5 @@
 package org.arhor.diploma.web.api
 
-import com.fasterxml.jackson.core.JsonLocation
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
@@ -18,11 +17,12 @@ import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.context.request.WebRequest
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import java.io.IOException
+import java.lang.Exception
 import java.util.*
-import kotlin.jvm.Throws
 
 @RestControllerAdvice
 class ExceptionController(
@@ -84,51 +84,6 @@ class ExceptionController(
                 text = localize(lang, "error.entity.notfound")
                 details = listOf(
                     localize(lang, "error.entity.notfound.details", e.className, e.fieldName, e.fieldValue)
-                )
-            }
-        }
-    }
-
-    @ResponseStatus(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
-    @ExceptionHandler(HttpMediaTypeNotSupportedException::class)
-    fun mediaTypeNotSupportedException(e: HttpMediaTypeNotSupportedException, lang: Locale): MessageResponse {
-        log.error("Request media type not supported", e)
-        return messageResponse {
-            error {
-                code = 415
-                text = localize(lang, "error.type.unsupported")
-                details = listOf(
-                    localize(lang, "error.type.unsupported.details", e.contentType, e.supportedMediaTypes)
-                )
-            }
-        }
-    }
-
-    @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
-    @ExceptionHandler(HttpMediaTypeNotAcceptableException::class)
-    fun mediaTypeNotAcceptableException(e: HttpMediaTypeNotAcceptableException, lang: Locale): MessageResponse {
-        log.error("Media type not accepted", e)
-        return messageResponse {
-            error {
-                code = 406
-                text = localize(lang, "error.type.unaccepted")
-                details = listOf(
-                    localize(lang, "error.type.unaccepted.details", e.supportedMediaTypes)
-                )
-            }
-        }
-    }
-
-    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    @ExceptionHandler(HttpRequestMethodNotSupportedException::class)
-    fun requestMethodNotSupported(e: HttpRequestMethodNotSupportedException, lang: Locale): MessageResponse {
-        log.error("Request method not supported", e)
-        return messageResponse {
-            error {
-                code = 405
-                text = localize(lang, "error.method.unsupported")
-                details = listOf(
-                    localize(lang, "error.method.unsupported.details", e.method, e.supportedHttpMethods)
                 )
             }
         }

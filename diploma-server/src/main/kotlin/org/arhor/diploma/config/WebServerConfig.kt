@@ -95,7 +95,7 @@ class WebServerConfig(
         val source = UrlBasedCorsConfigurationSource()
         val config: CorsConfiguration = props.cors
 
-        config.allowedOrigins?.takeIf { it.isNotEmpty() }?.let {
+        if (config.allowedOrigins?.isNotEmpty() == true) {
             log.debug("Registering CORS filter")
             source.registerCorsConfiguration("/api/**", config)
             source.registerCorsConfiguration("/management/**", config)

@@ -1,0 +1,14 @@
+{
+    "properties": [
+        {
+            "name": "security.jwt.secret",
+            "type": "java.lang.String",
+            "description": "Character sequence to encrypt JWT, if not provided randomly generated UUID will be used."
+        },
+        {
+            "name": "security.jwt.expire",
+            "type": "java.lang.Integer",
+            "description": "Duration in milliseconds for generated JWT to expire, if not provided default 3600 (1 hour) will be used."
+        }
+    ]
+}

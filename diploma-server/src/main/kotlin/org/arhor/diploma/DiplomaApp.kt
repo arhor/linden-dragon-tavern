@@ -59,6 +59,7 @@ class DiplomaApp(
     - Local:      ${protocol}://localhost:${serverPort}${contextPath}
     - External:   ${protocol}://${hostAddress}:${serverPort}${contextPath}
     - Profile(s): ${env.activeProfiles.asList()}
+    - java ver.:  ${System.getProperty("java.version")}
 --------------------------------------------------------------------------------"""
         )
     }
