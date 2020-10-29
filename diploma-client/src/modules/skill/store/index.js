@@ -1,4 +1,4 @@
-import axios from '@/api/BaseService.js';
+import axios from 'axios';
 
 const mutation = {
     SET_SKILLS: 'SET_SKILLS',

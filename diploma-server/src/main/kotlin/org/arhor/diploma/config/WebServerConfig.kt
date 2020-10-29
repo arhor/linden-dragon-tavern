@@ -1,19 +1,14 @@
 package org.arhor.diploma.config
 
-import org.arhor.diploma.config.properties.CustomProperties
-import org.slf4j.LoggerFactory
+import org.arhor.diploma.util.createLogger
 import org.springframework.boot.web.server.MimeMappings
 import org.springframework.boot.web.server.WebServerFactory
 import org.springframework.boot.web.server.WebServerFactoryCustomizer
 import org.springframework.boot.web.servlet.ServletContextInitializer
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory
-import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
 import org.springframework.http.MediaType
-import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-import org.springframework.web.filter.CorsFilter
 import java.io.File
 import java.io.UnsupportedEncodingException
 import java.net.URLDecoder
@@ -24,8 +19,7 @@ import javax.servlet.ServletException
 
 @Configuration
 class WebServerConfig(
-    private val env: Environment,
-    private val props: CustomProperties
+    private val env: Environment
 ) : ServletContextInitializer, WebServerFactoryCustomizer<WebServerFactory> {
 
     @Throws(ServletException::class)
@@ -50,8 +44,9 @@ class WebServerConfig(
             server.setMimeMappings(
                 MimeMappings(MimeMappings.DEFAULT).apply {
                     val utf8 = StandardCharsets.UTF_8.name().toLowerCase()
-                    add("html", MediaType.TEXT_HTML_VALUE + ";charset=" + utf8)
-                    add("json", MediaType.TEXT_HTML_VALUE + ";charset=" + utf8)
+                    val mimeType = "${MediaType.TEXT_HTML_VALUE};charset=${utf8}"
+                    add("html", mimeType)
+                    add("json", mimeType)
                 }
             )
         }
@@ -90,23 +85,8 @@ class WebServerConfig(
         }
     }
 
-    @Bean
-    fun corsFilter(): CorsFilter? {
-        val source = UrlBasedCorsConfigurationSource()
-        val config: CorsConfiguration = props.cors
-
-        if (config.allowedOrigins?.isNotEmpty() == true) {
-            log.debug("Registering CORS filter")
-            source.registerCorsConfiguration("/api/**", config)
-            source.registerCorsConfiguration("/management/**", config)
-            source.registerCorsConfiguration("/v2/api-docs", config)
-        }
-
-        return CorsFilter(source)
-    }
-
     companion object {
         @JvmStatic
-        private val log = LoggerFactory.getLogger(WebServerConfig::class.java)
+        private val log = createLogger<WebServerConfig>()
     }
 }

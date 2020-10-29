@@ -25,38 +25,9 @@ class WebSecurityConfig(
     private val encoder: PasswordEncoder
 ) : WebSecurityConfigurerAdapter() {
 
-    companion object {
-        private val SECURITY_POLICY_DIRECTIVES = arrayOf(
-            "default-src 'self'",
-            "frame-src 'self' data:",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com",
-            "style-src 'self' 'unsafe-inline'",
-            "img-src 'self' data:",
-            "font-src 'self' data:"
-        ).joinToString(separator = "; ")
-
-        private val FEATURE_POLICY_DIRECTIVES = arrayOf(
-            "geolocation 'none'",
-            "midi 'none'",
-            "sync-xhr 'none'",
-            "microphone 'none'",
-            "camera 'none'",
-            "magnetometer 'none'",
-            "gyroscope 'none'",
-            "speaker 'none'",
-            "fullscreen 'self'",
-            "payment 'none'"
-        ).joinToString(separator = "; ")
-    }
-
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(accountService)
             .passwordEncoder(encoder)
-    }
-
-    @Bean
-    override fun authenticationManagerBean(): AuthenticationManager {
-        return super.authenticationManagerBean()
     }
 
     override fun configure(http: HttpSecurity) {
@@ -85,5 +56,37 @@ class WebSecurityConfig(
             .httpBasic().disable()
             .formLogin().disable()
             .apply(jwtConfigurer)
+    }
+
+    @Bean
+    override fun authenticationManagerBean(): AuthenticationManager {
+        return super.authenticationManagerBean()
+    }
+
+    companion object {
+
+        @JvmStatic
+        private val SECURITY_POLICY_DIRECTIVES = arrayOf(
+            "default-src 'self'",
+            "frame-src 'self' data:",
+            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com",
+            "style-src 'self' 'unsafe-inline'",
+            "img-src 'self' data:",
+            "font-src 'self' data:"
+        ).joinToString(separator = "; ")
+
+        @JvmStatic
+        private val FEATURE_POLICY_DIRECTIVES = arrayOf(
+            "geolocation 'none'",
+            "midi 'none'",
+            "sync-xhr 'none'",
+            "microphone 'none'",
+            "camera 'none'",
+            "magnetometer 'none'",
+            "gyroscope 'none'",
+            "speaker 'none'",
+            "fullscreen 'self'",
+            "payment 'none'"
+        ).joinToString(separator = "; ")
     }
 }

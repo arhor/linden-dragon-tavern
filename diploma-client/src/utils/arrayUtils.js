@@ -3,7 +3,7 @@ export function notEmptyArray(items) {
     return !isEmptyArray(items);
 }
 
-/** @param {*[]} items */
+/** @param {*} items */
 export function isEmptyArray(items) {
     return Array.isArray(items) && items.length === 0;
 }

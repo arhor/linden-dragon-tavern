@@ -1,8 +1,8 @@
 package org.arhor.diploma.config
 
 import org.arhor.diploma.util.SpringProfile
+import org.arhor.diploma.util.createLogger
 import org.arhor.diploma.web.filter.CustomAuthFilter
-import org.arhor.diploma.web.filter.CustomCorsFilter
 import org.arhor.diploma.web.filter.CustomCsrfFilter
 import org.arhor.diploma.web.security.TokenProvider
 import org.springframework.beans.factory.annotation.Qualifier
@@ -10,9 +10,10 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile
-import org.springframework.core.Ordered
-import org.springframework.core.annotation.Order
 import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.filter.CorsFilter
 
 @Configuration
 class WebFiltersConfig {
@@ -38,8 +39,31 @@ class WebFiltersConfig {
     }
 
     @Bean
-    @Order(Ordered.HIGHEST_PRECEDENCE)
-    fun customCorsFilter(): CustomCorsFilter {
-        return CustomCorsFilter()
+    fun corsFilter(): CorsFilter {
+        val source = UrlBasedCorsConfigurationSource()
+        val config: CorsConfiguration = CorsConfiguration().apply {
+            applyPermitDefaultValues()
+        }
+
+        if (config.allowedOrigins?.isNotEmpty() == true) {
+            log.debug("Registering CORS filter")
+
+            val corsPath = arrayOf(
+                "/api/**",
+                "/management/**",
+                "/v2/api-docs"
+            )
+
+            corsPath.forEach { path ->
+                source.registerCorsConfiguration(path, config)
+            }
+        }
+
+        return CorsFilter(source)
+    }
+
+    companion object {
+        @JvmStatic
+        private val log = createLogger<WebFiltersConfig>()
     }
 }

@@ -8,6 +8,7 @@
 
 <script>
 import { isEmptyArray } from '@/utils/arrayUtils.js';
+import { refExists } from '@/utils/coreUtils';
 
 export default {
     name: 'DndCommaSeparatedList',
@@ -18,12 +19,12 @@ export default {
         },
         items: {
             type: Array,
-            required: true,
+            default: () => [],
         },
     },
     computed: {
         notEmpty() {
-            return !isEmptyArray(this.items);
+            return refExists(this.items) && !isEmptyArray(this.items);
         },
     },
 };
