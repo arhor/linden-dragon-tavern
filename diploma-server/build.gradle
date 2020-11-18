@@ -66,6 +66,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-undertow"
     implementation "org.springframework.boot:spring-boot-starter-web"
 
+    testImplementation project(":diploma-test-utils")
     testImplementation "org.flywaydb:flyway-core"
     testImplementation "org.springframework.boot:spring-boot-starter-test"
     testImplementation "org.springframework.security:spring-security-test"
@@ -103,18 +104,30 @@ allOpen {
     annotation("javax.persistence.Embeddable")
 }
 
+def applicationMainClass = "org.arhor.diploma.DiplomaApp"
+
 springBoot {
-    mainClassName = "org.arhor.diploma.DiplomaApp"
+    mainClassName = applicationMainClass
 }
 
+jar {
+    manifest {
+        attributes("Main-Class": applicationMainClass)
+    }
+}
+
+def springActiveProfiles = "-Dspring.profiles.active=default,dev"
+
 bootRun {
-    jvmArgs += "-Dspring.profiles.active=default,dev"
+    jvmArgs += springActiveProfiles
     jvmArgs += "-XX:+UseSerialGC"
     jvmArgs += "-XX:MaxRAM=100m"
     jvmArgs += "-Xss512k"
 }
 
 test {
-    useJUnitPlatform()
-    jvmArgs += "-Dspring.profiles.active=default,dev"
+    useJUnitPlatform {
+//        excludeTags "integration"
+    }
+    jvmArgs += springActiveProfiles
 }

@@ -14,6 +14,8 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import kotlin.reflect.KProperty
+import kotlin.reflect.KProperty1
 
 @Service
 @Transactional
@@ -21,11 +23,6 @@ class AccountServiceImpl(
     private val repository: AccountRepository,
     converter: AccountConverter
 ) : AbstractService<Account, AccountDTO, Long>(converter, repository), AccountService {
-
-    companion object {
-        @JvmStatic
-        private val log = createLogger<AccountServiceImpl>()
-    }
 
     override fun loadUserByUsername(username: String?): UserDetails {
         return username?.let {
@@ -52,6 +49,9 @@ class AccountServiceImpl(
     override fun getAccounts(page: Int, size: Int) = getList(page, size)
 
     override fun createAccount(accountDTO: AccountDTO): Long {
+
+        val kMutableProperty1: KProperty1<AccountDTO, String?> = AccountDTO::email
+
         accountDTO.username
             ?.let { username -> repository.findByUsername(username) }
             ?.ifPresent { account ->
@@ -60,19 +60,11 @@ class AccountServiceImpl(
                 throw RuntimeException(message)
             }
 
-        val savedAccount = converter.dtoToEntity(accountDTO).let(repository::save)
-
-        return savedAccount.getId() ?: throw IllegalStateException("Entity ID must be generated!")
+        return create(accountDTO).getId() ?: throw IllegalStateException("Entity ID must be generated!")
     }
 
     override fun deleteAccount(id: Long) {
-        repository.findById(id).orElseThrow {
-            EntityNotFoundException(
-                className = "Account",
-                fieldName = "id",
-                fieldValue = id
-            )
-        }.let(repository::delete)
+        delete(id)
     }
 
     private fun extractAuthorities(account: Account): Collection<GrantedAuthority> {
@@ -82,5 +74,10 @@ class AccountServiceImpl(
             ?.mapNotNull { authority -> authority.name }
             ?.map { name -> SimpleGrantedAuthority(name) }
             ?: emptyList()
+    }
+
+    companion object {
+        @JvmStatic
+        private val log = createLogger<AccountServiceImpl>()
     }
 }

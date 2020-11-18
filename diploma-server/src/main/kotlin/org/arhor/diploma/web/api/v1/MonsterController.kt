@@ -16,11 +16,6 @@ class MonsterController(
     provider: MonsterProvider
 ) : StaticDataController<Monster, Monster.Details, String>(provider, log, "Monster") {
 
-    companion object {
-        @JvmStatic
-        private val log = createLogger<MonsterController>()
-    }
-
     @GetMapping("/{name}/details")
     fun getMonsterDetails(@PathVariable name: String): ResponseEntity<Monster.Details> {
         return getEntityDetails(name)
@@ -45,5 +40,10 @@ class MonsterController(
         @RequestParam(required = false) size: Int?
     ): ResponseEntity<List<Monster>> {
         return getEntityList(page, size)
+    }
+
+    companion object {
+        @JvmStatic
+        private val log = createLogger<MonsterController>()
     }
 }

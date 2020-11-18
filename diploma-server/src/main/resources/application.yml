@@ -92,7 +92,7 @@ spring:
 
   output:
     ansi:
-      console-available: true
+      enabled: detect
 
 security:
   jwt:

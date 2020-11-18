@@ -19,11 +19,6 @@ class SpellController(
     provider: SpellProvider
 ): StaticDataController<Spell, Spell.Details, String>(provider, log, "Spell") {
 
-    companion object {
-        @JvmStatic
-        private val log = createLogger<SpellController>()
-    }
-
     @PostMapping(path = ["/reload"])
     fun reloadDataProvider() {
         dataProvider.reload()
@@ -63,5 +58,10 @@ class SpellController(
         @RequestParam(required = false) size: Int?
     ): ResponseEntity<List<Spell>> {
         return getEntityList(page, size)
+    }
+
+    companion object {
+        @JvmStatic
+        private val log = createLogger<SpellController>()
     }
 }

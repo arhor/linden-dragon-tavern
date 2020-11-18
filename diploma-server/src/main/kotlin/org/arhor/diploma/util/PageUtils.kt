@@ -1,7 +1,7 @@
 package org.arhor.diploma.util
 
-private const val DEFAULT_PAGE = 0
-private const val DEFAULT_SIZE = 200
+const val DEFAULT_PAGE = 0
+const val DEFAULT_SIZE = 200
 
 internal inline fun <N : Number, T> bound(
     crossinline request: (Int, Int) -> T

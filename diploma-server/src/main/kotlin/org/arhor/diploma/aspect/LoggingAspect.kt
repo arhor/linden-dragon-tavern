@@ -10,11 +10,6 @@ import org.springframework.stereotype.Component
 @Component
 class LoggingAspect {
 
-    companion object {
-        @JvmStatic
-        private val log = createLogger<LoggingAspect>()
-    }
-
     @Before("execution(* *(.., @org.springframework.web.bind.annotation.ExceptionHandler (*), ..))")
     fun logExceptionHandling(joinPoint: JoinPoint) {
         for (arg in joinPoint.args) {
@@ -22,5 +17,10 @@ class LoggingAspect {
                 log.error(arg.message, arg)
             }
         }
+    }
+
+    companion object {
+        @JvmStatic
+        private val log = createLogger<LoggingAspect>()
     }
 }

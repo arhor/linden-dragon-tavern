@@ -17,12 +17,23 @@ class DeleterMixin<
     override fun delete(id: K) {
         val entity = repository
             .findById(id)
-            .orElseThrow { EntityNotFoundException("account", "id", id) }
+            .orElseThrow {
+                EntityNotFoundException(
+                    entityName = repository.getEntityName(),
+                    propertyName = UpdaterMixin.KEY_PROPERTY,
+                    propertyValue = id
+                )
+            }
 
         repository.delete(entity)
     }
 
     override fun delete(item: D) {
         item.getId()?.let { delete(it) }
+            ?: throw IllegalArgumentException("Passed item has not set $KEY_PROPERTY value, so it cannot be deleted")
+    }
+
+    companion object {
+        const val KEY_PROPERTY = "id"
     }
 }

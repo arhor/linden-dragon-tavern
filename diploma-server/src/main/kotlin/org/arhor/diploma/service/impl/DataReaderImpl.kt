@@ -43,4 +43,8 @@ abstract class DataReaderImpl<T : Identifiable<K>, K : Serializable>(
             ?.let { values -> setOf(*values) }
             ?: emptySet()
     }
+
+    override fun getTotalSize(): Long {
+        return data.size.toLong()
+    }
 }

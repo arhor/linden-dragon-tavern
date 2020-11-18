@@ -23,11 +23,6 @@ class AuthController(
     private val tokenProvider: TokenProvider<Authentication>
 ) {
 
-    companion object {
-        @JvmStatic
-        private val log = createLogger<AuthController>()
-    }
-
     @PostMapping("/token")
     fun authenticate(@RequestBody signIn: SignInRequest): SignInResponse {
         log.debug("authentication started: [${signIn}]")
@@ -59,5 +54,10 @@ class AuthController(
             tokenProvider.generate(auth),
             tokenProvider.authTokenType()
         )
+    }
+
+    companion object {
+        @JvmStatic
+        private val log = createLogger<AuthController>()
     }
 }

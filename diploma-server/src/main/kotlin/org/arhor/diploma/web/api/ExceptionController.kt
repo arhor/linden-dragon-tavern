@@ -11,17 +11,12 @@ import org.arhor.diploma.web.model.MessageResponse
 import org.arhor.diploma.web.model.messageResponse
 import org.springframework.context.MessageSource
 import org.springframework.http.HttpStatus
-import org.springframework.web.HttpMediaTypeNotAcceptableException
-import org.springframework.web.HttpMediaTypeNotSupportedException
-import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
-import org.springframework.web.context.request.WebRequest
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import java.io.IOException
-import java.lang.Exception
 import java.util.*
 
 @RestControllerAdvice
@@ -83,7 +78,7 @@ class ExceptionController(
                 code = 404
                 text = localize(lang, "error.entity.notfound")
                 details = listOf(
-                    localize(lang, "error.entity.notfound.details", e.className, e.fieldName, e.fieldValue)
+                    localize(lang, "error.entity.notfound.details", e.entityName, e.propertyName, e.propertyValue)
                 )
             }
         }

@@ -20,11 +20,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 )
 class AccountController(private val service: AccountService) {
 
-    companion object {
-        @JvmStatic
-        private val log = createLogger<AccountController>()
-    }
-
     @GetMapping
     @PreAuthorize("hasAuthority('${Account.VIEW}') and hasAuthority('${Account.EDIT}')")
     fun getAccounts(
@@ -50,5 +45,10 @@ class AccountController(private val service: AccountService) {
             .toUri()
 
         return ResponseEntity.created(location).build()
+    }
+
+    companion object {
+        @JvmStatic
+        private val log = createLogger<AccountController>()
     }
 }

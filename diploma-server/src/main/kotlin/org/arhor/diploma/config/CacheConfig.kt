@@ -11,10 +11,6 @@ import org.springframework.scheduling.annotation.Scheduled
 @Configuration
 class CacheConfig {
 
-    companion object {
-        private val log = createLogger<CacheConfig>()
-    }
-
     /**
      * Scheduled task to clear account caches every 5 minutes.
      */
@@ -22,5 +18,9 @@ class CacheConfig {
     @Scheduled(fixedDelay = 5 * 60 * 1000, initialDelay = 500)
     fun accountCacheEvict() {
         log.info("Flush {} cache(s)", listOf(Cache.Names.ACCOUNT))
+    }
+
+    companion object {
+        private val log = createLogger<CacheConfig>()
     }
 }

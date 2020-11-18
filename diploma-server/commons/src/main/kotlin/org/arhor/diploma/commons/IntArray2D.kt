@@ -6,24 +6,6 @@ class IntArray2D private constructor(@JvmField val rows: Int, @JvmField val cols
 
     private val buffer: IntArray = IntArray(rows * cols)
 
-    companion object {
-        @JvmStatic
-        fun create(rows: Int, cols: Int): IntArray2D {
-            return IntArray2D(rows, cols)
-        }
-
-        @JvmStatic
-        inline fun create(rows: Int, cols: Int, init: (Int, Int) -> Int): IntArray2D {
-            return create(rows, cols).also {
-                for (i in 0 until rows) {
-                    for (j in 0 until cols) {
-                        it[i, j] = init(i, j)
-                    }
-                }
-            }
-        }
-    }
-
     operator fun get(row: Int, col: Int): Int {
         val index = index(row, col)
         return buffer[index]
@@ -71,5 +53,23 @@ class IntArray2D private constructor(@JvmField val rows: Int, @JvmField val cols
             result.add(row.toString())
         }
         return result.toString()
+    }
+
+    companion object {
+        @JvmStatic
+        fun create(rows: Int, cols: Int): IntArray2D {
+            return IntArray2D(rows, cols)
+        }
+
+        @JvmStatic
+        inline fun create(rows: Int, cols: Int, init: (Int, Int) -> Int): IntArray2D {
+            return create(rows, cols).also {
+                for (i in 0 until rows) {
+                    for (j in 0 until cols) {
+                        it[i, j] = init(i, j)
+                    }
+                }
+            }
+        }
     }
 }

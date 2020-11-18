@@ -1,0 +1,21 @@
+plugins {
+    id 'java-library'
+}
+
+group = "org.arhor"
+version = "0.0.1-SNAPSHOT"
+description = "diploma-test-utils"
+
+sourceCompatibility = java_global_version
+targetCompatibility = java_global_version
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+dependencies {
+    implementation "org.assertj:assertj-core:${assertj_version}"
+    implementation "org.junit.jupiter:junit-jupiter-api:${junit_jupiter_version}"
+}

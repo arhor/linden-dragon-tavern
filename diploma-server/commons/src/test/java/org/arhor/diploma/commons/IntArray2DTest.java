@@ -8,13 +8,13 @@ import org.junit.platform.commons.annotation.Testable;
 import org.junit.platform.commons.logging.Logger;
 import org.junit.platform.commons.logging.LoggerFactory;
 
+import java.util.Random;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Testable
-//@ExtendWith(MockitoExtension.class)
 class IntArray2DTest {
 
     private static final Logger log = LoggerFactory.getLogger(IntArray2DTest.class);
@@ -86,17 +86,14 @@ class IntArray2DTest {
     }
 
     private static Stream<Arguments> provideArrayAndRandomCell() {
-        return sequence().flatMap(cols -> {
-            return sequence().map(rows -> {
-                final int testCol = TestUtils.randomInt(cols);
-                final int testRow = TestUtils.randomInt(rows);
+        final var randomizer = new Random();
+        return IntStream.rangeClosed(1, 10).boxed().flatMap(cols -> {
+            return IntStream.rangeClosed(1, 10).boxed().map(rows -> {
+                final int testCol = randomizer.nextInt(cols);
+                final int testRow = randomizer.nextInt(rows);
 
                 return Arguments.of(cols, rows, testCol, testRow);
             });
         });
-    }
-
-    private static Stream<Integer> sequence() {
-        return IntStream.rangeClosed(1, 10).boxed();
     }
 }

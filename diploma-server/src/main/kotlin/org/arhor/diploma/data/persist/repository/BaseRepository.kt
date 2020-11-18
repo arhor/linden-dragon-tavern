@@ -15,6 +15,8 @@ import java.util.*
 @NoRepositoryBean
 interface BaseRepository<T : DomainObject<K>, K : Serializable> : JpaRepository<T, K> {
 
+    fun getEntityName(): String
+
     @Transactional(readOnly = true)
     @Query("SELECT e FROM #{#entityName} e WHERE e.isDeleted = false")
     override fun findAll(): MutableList<T>

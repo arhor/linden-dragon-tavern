@@ -5,7 +5,7 @@ import org.arhor.diploma.data.persist.domain.core.DomainObject
 import org.arhor.diploma.data.persist.repository.BaseRepository
 import org.arhor.diploma.exception.EntityNotFoundException
 import org.arhor.diploma.service.Reader
-import org.arhor.diploma.service.mapping.Converter
+import org.arhor.diploma.commons.Converter
 import org.springframework.data.domain.PageRequest
 import java.io.Serializable
 
@@ -21,7 +21,13 @@ class ReaderMixin<
         return repository
             .findById(id)
             .map { converter.entityToDto(it) }
-            .orElseThrow { EntityNotFoundException(fieldValue =  id) }
+            .orElseThrow {
+                EntityNotFoundException(
+                    entityName = repository.getEntityName(),
+                    propertyName = KEY_PROPERTY,
+                    propertyValue = id
+                )
+            }
     }
 
     override fun getList(): List<D> {
@@ -37,5 +43,13 @@ class ReaderMixin<
             .toList()
             .mapNotNull { converter.entityToDto(it) }
             .toList()
+    }
+
+    override fun getTotalSize(): Long {
+        return repository.count()
+    }
+
+    companion object {
+        const val KEY_PROPERTY = "id"
     }
 }

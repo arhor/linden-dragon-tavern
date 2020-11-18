@@ -10,6 +10,24 @@ import javax.servlet.http.HttpServletResponse
 
 class CustomCorsFilter : OncePerRequestFilter() {
 
+    override fun doFilterInternal(
+        req: HttpServletRequest,
+        res: HttpServletResponse,
+        next: FilterChain
+    ) {
+        res.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, req.getHeader(ORIGIN))
+        res.setHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS, true.toString())
+        res.setHeader(ACCESS_CONTROL_ALLOW_METHODS, ALLOWED_METHODS)
+        res.setHeader(ACCESS_CONTROL_MAX_AGE, MAX_AGE)
+        res.setHeader(ACCESS_CONTROL_ALLOW_HEADERS, ALLOWED_HEADERS)
+
+        if (OPTIONS.toString().equals(req.method, ignoreCase = true)) {
+            res.status = HttpServletResponse.SC_OK
+        } else {
+            next.doFilter(req, res)
+        }
+    }
+
     companion object {
 
         private const val MAX_AGE = 3600.toString()
@@ -33,23 +51,5 @@ class CustomCorsFilter : OncePerRequestFilter() {
             OPTIONS,
             DELETE
         ).joinToString(separator = ",")
-    }
-
-    override fun doFilterInternal(
-        req: HttpServletRequest,
-        res: HttpServletResponse,
-        next: FilterChain
-    ) {
-        res.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, req.getHeader(ORIGIN))
-        res.setHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS, true.toString())
-        res.setHeader(ACCESS_CONTROL_ALLOW_METHODS, ALLOWED_METHODS)
-        res.setHeader(ACCESS_CONTROL_MAX_AGE, MAX_AGE)
-        res.setHeader(ACCESS_CONTROL_ALLOW_HEADERS, ALLOWED_HEADERS)
-
-        if (OPTIONS.toString().equals(req.method, ignoreCase = true)) {
-            res.status = HttpServletResponse.SC_OK
-        } else {
-            next.doFilter(req, res)
-        }
     }
 }

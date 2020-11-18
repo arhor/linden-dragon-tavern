@@ -1,6 +1,6 @@
 package org.arhor.diploma.web.security
 
-import org.arhor.diploma.util.BasicAuthorities
+import org.arhor.diploma.Roles
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 
@@ -40,7 +40,7 @@ internal inline val currentUserJWT: String?
  */
 internal inline val isAuthenticated: Boolean
     get() {
-        return currUserAuthorities.none { BasicAuthorities.ANONYMOUS.role == it }
+        return currUserAuthorities.none { it == Roles.ANONYMOUS }
     }
 
 /**

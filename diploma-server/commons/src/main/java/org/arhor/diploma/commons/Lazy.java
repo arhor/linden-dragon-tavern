@@ -20,6 +20,7 @@ public interface Lazy<T> extends RichSupplier<T> {
      * @param <T> type of result value which will be computed
      * @return evaluation result
      */
+    @Nonnull
     static <T> Lazy<T> eval(@Nonnull Supplier<T> source) {
         return new NaiveLazy<>(source);
     }
@@ -31,6 +32,7 @@ public interface Lazy<T> extends RichSupplier<T> {
      * @param <T> type of result value which will be computed
      * @return evaluation result
      */
+    @Nonnull
     static <T> Lazy<T> evalSafe(@Nonnull Supplier<T> source) {
         return new SafeLazy<>(source);
     }

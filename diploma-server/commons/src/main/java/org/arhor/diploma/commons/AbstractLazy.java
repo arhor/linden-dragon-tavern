@@ -1,5 +1,7 @@
 package org.arhor.diploma.commons;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Objects;
 import java.util.function.Supplier;
 
@@ -8,9 +10,11 @@ abstract class AbstractLazy<T> implements Lazy<T> {
     private Supplier<T> source;
 
     protected boolean computed;
+
+    @Nullable
     protected T value;
 
-    AbstractLazy(final Supplier<T> source) {
+    AbstractLazy(@Nonnull final Supplier<T> source) {
         Objects.requireNonNull(source, "Lazy evaluation source must not be null");
         this.source = source;
     }

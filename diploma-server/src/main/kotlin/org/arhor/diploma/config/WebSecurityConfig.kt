@@ -64,7 +64,6 @@ class WebSecurityConfig(
     }
 
     companion object {
-
         @JvmStatic
         private val SECURITY_POLICY_DIRECTIVES = arrayOf(
             "default-src 'self'",

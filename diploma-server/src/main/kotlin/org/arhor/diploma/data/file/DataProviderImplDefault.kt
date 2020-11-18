@@ -18,10 +18,6 @@ abstract class DataProviderImplDefault<
     private val resourceLoader: ResourceLoader
 ) : DataProvider<T, D, K> {
 
-    companion object {
-        private val log = createLogger<DataProviderImplDefault<*,*,*>>()
-    }
-
     private val objectMapper: ObjectMapper = jacksonObjectMapper()
 
     protected abstract val resourcePath: String
@@ -96,5 +92,9 @@ abstract class DataProviderImplDefault<
             ?.use { reader -> objectMapper.createParser(reader).readValueAs(resourceType) }
             ?.let { values -> setOf(*values) }
             ?: emptySet()
+    }
+
+    companion object {
+        private val log = createLogger<DataProviderImplDefault<*,*,*>>()
     }
 }

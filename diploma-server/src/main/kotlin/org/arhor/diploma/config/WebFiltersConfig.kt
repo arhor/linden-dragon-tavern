@@ -1,5 +1,6 @@
 package org.arhor.diploma.config
 
+import org.arhor.diploma.config.props.CustomProperties
 import org.arhor.diploma.util.SpringProfile
 import org.arhor.diploma.util.createLogger
 import org.arhor.diploma.web.filter.CustomAuthFilter
@@ -39,11 +40,9 @@ class WebFiltersConfig {
     }
 
     @Bean
-    fun corsFilter(): CorsFilter {
+    fun corsFilter(props: CustomProperties): CorsFilter {
         val source = UrlBasedCorsConfigurationSource()
-        val config: CorsConfiguration = CorsConfiguration().apply {
-            applyPermitDefaultValues()
-        }
+        val config: CorsConfiguration = props.cors
 
         if (config.allowedOrigins?.isNotEmpty() == true) {
             log.debug("Registering CORS filter")

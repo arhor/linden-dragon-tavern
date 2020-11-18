@@ -1,10 +1,10 @@
 package org.arhor.diploma.service.impl
 
+import org.arhor.diploma.commons.Converter
 import org.arhor.diploma.commons.Identifiable
 import org.arhor.diploma.data.persist.domain.core.DomainObject
 import org.arhor.diploma.data.persist.repository.BaseRepository
 import org.arhor.diploma.service.Creator
-import org.arhor.diploma.service.mapping.Converter
 import java.io.Serializable
 
 class CreatorMixin<

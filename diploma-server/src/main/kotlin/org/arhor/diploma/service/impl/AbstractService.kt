@@ -7,7 +7,7 @@ import org.arhor.diploma.service.Creator
 import org.arhor.diploma.service.Deleter
 import org.arhor.diploma.service.Reader
 import org.arhor.diploma.service.Updater
-import org.arhor.diploma.service.mapping.Converter
+import org.arhor.diploma.commons.Converter
 import java.io.Serializable
 
 abstract class AbstractService<

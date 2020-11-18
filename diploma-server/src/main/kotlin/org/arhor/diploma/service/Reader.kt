@@ -10,4 +10,6 @@ interface Reader<T : Identifiable<K>, K : Serializable> {
     fun getList(): List<T>
 
     fun getList(page: Int, size: Int): List<T>
+
+    fun getTotalSize(): Long
 }

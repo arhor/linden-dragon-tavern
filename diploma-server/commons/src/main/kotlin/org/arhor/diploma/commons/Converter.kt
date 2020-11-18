@@ -1,4 +1,4 @@
-package org.arhor.diploma.service.mapping
+package org.arhor.diploma.commons
 
 /**
  * Generic interface for any converter implementation.

@@ -14,13 +14,6 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping(path = ["/api/v1/charsheets"])
 class CharacterSheetController(private val service: CharsheetService) {
 
-    companion object {
-        @JvmStatic
-        private val log = createLogger<CharacterSheetController>()
-
-        private const val CHAR_SHEET_PAGE_1 = "classpath:sheets/5E_CharacterSheet_Fillable_Page1.pdf"
-    }
-
     @GetMapping(produces = [MediaType.APPLICATION_PDF_VALUE])
     fun downloadCharsheet(): ResponseEntity<FileSystemResource> {
         log.debug("downloading empty character sheet")
@@ -32,5 +25,12 @@ class CharacterSheetController(private val service: CharsheetService) {
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=${file.name}")
             .contentLength(file.length())
             .body(resource)
+    }
+
+    companion object {
+        @JvmStatic
+        private val log = createLogger<CharacterSheetController>()
+
+        private const val CHAR_SHEET_PAGE_1 = "classpath:sheets/5E_CharacterSheet_Fillable_Page1.pdf"
     }
 }

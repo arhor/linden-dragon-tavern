@@ -13,6 +13,9 @@ import java.util.*
 @Repository
 interface AccountRepository : BaseRepository<Account, Long> {
 
+    @JvmDefault
+    override fun getEntityName(): String = "Account"
+
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = [Cache.Names.ACCOUNT_BY_USERNAME], key = "#username")
     @Query("SELECT a FROM Account a WHERE a.isDeleted = false AND a.username = :username")

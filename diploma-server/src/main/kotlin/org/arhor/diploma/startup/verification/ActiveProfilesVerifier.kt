@@ -1,31 +1,26 @@
-package org.arhor.diploma.startup
+package org.arhor.diploma.startup.verification
 
 import org.arhor.diploma.commons.ActionResult
 import org.arhor.diploma.commons.ActionResult.Failure
 import org.arhor.diploma.commons.ActionResult.Success
 import org.arhor.diploma.commons.Verifiable
+import org.arhor.diploma.commons.Priority
 import org.arhor.diploma.util.SpringProfile
-import org.arhor.diploma.util.SpringProfile.DEVELOPMENT
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
 
 @Component
 class ActiveProfilesVerifier(private val env: Environment) : Verifiable {
 
-    private val devIncompatibleProfiles: Array<String> = arrayOf(
-        SpringProfile.PRODUCTION,
-        SpringProfile.CLOUD
-    )
-
-    override val priority: Int = 1
+    override val priority = Priority.NORMAL
 
     override fun verify(): ActionResult<String> {
-        if (env.activeProfiles.contains(DEVELOPMENT)) {
-            for (profile in devIncompatibleProfiles) {
-                if (env.activeProfiles.contains(profile)) {
+        if (env.activeProfiles.contains(SpringProfile.DEVELOPMENT)) {
+            for (profile in env.activeProfiles) {
+                if ((profile == SpringProfile.PRODUCTION) || (profile == SpringProfile.CLOUD)) {
                     return Failure(
                         IllegalStateException(
-                            "Profiles '$DEVELOPMENT' and '${profile}' should not run both at the same time!"
+                            "Profiles '${SpringProfile.DEVELOPMENT}' and '${profile}' should not run both at the same time!"
                         )
                     )
                 }
@@ -33,5 +28,4 @@ class ActiveProfilesVerifier(private val env: Environment) : Verifiable {
         }
         return Success("There are no mutually exclusive profiles.")
     }
-
 }
