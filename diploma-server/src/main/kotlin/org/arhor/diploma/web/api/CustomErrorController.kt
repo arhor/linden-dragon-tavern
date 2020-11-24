@@ -1,9 +1,7 @@
 package org.arhor.diploma.web.api
 
 import org.arhor.diploma.config.props.CustomProperties
-import org.arhor.diploma.util.asBoolean
 import org.arhor.diploma.web.model.messageResponse
-import org.springframework.boot.autoconfigure.web.ErrorProperties
 import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeAttribute
 import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeStacktrace
 import org.springframework.boot.web.error.ErrorAttributeOptions
@@ -114,7 +112,7 @@ class CustomErrorController(
     }
 
     private fun getBooleanParameter(req: WebRequest, param: String): Boolean {
-        return req.getParameter(param).asBoolean { it.equals("false", ignoreCase = true) }
+        return req.getParameter(param)?.equals("true", ignoreCase = true) ?: false
     }
 
     companion object {

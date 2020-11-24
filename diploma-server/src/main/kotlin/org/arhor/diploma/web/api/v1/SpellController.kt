@@ -1,14 +1,12 @@
 package org.arhor.diploma.web.api.v1
 
-import org.arhor.diploma.data.file.model.Spell
 import org.arhor.diploma.data.file.SpellProvider
-import org.arhor.diploma.util.findAll
-import org.arhor.diploma.util.createLogger
-import org.arhor.diploma.util.equalTo
+import org.arhor.diploma.data.file.model.Spell
+import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
-import java.util.function.Predicate
+import java.lang.invoke.MethodHandles
 
 @RestController
 @RequestMapping(
@@ -62,6 +60,6 @@ class SpellController(
 
     companion object {
         @JvmStatic
-        private val log = createLogger<SpellController>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

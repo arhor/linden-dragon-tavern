@@ -3,9 +3,10 @@ package org.arhor.diploma.data.file
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.arhor.diploma.commons.Identifiable
-import org.arhor.diploma.util.createLogger
+import org.slf4j.LoggerFactory
 import org.springframework.core.io.ResourceLoader
 import java.io.Serializable
+import java.lang.invoke.MethodHandles
 import java.util.function.Predicate
 import javax.annotation.PostConstruct
 import kotlin.streams.toList
@@ -95,6 +96,6 @@ abstract class DataProviderImplDefault<
     }
 
     companion object {
-        private val log = createLogger<DataProviderImplDefault<*,*,*>>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

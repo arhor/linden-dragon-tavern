@@ -11,8 +11,8 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.SoftAssertions.assertSoftly;
 
 @SpringJUnitConfig
 @ExtendWith({RandomParameter.Resolver.class})
@@ -26,33 +26,23 @@ class AccountConverterTest {
     private Converter<Account, AccountDTO> mapper;
 
     @Test
-    void shouldConvertAllFieldsCorrectly(
-            @RandomParameter final String username,
-            @RandomParameter final String password,
-            @RandomParameter final String firstName,
-            @RandomParameter final String lastName,
-            @RandomParameter final String email) {
-
+    void shouldConvertAllFieldsCorrectly(@RandomParameter final Account testAccount) {
         // given
-        var account = new Account();
-
-        account.setUsername(username);
-        account.setPassword(password);
-        account.setFirstName(firstName);
-        account.setLastName(lastName);
-        account.setEmail(email);
+        var account = testAccount;
 
         // when
         var dto = mapper.entityToDto(account);
 
         // then
-        assertNotNull(dto);
+        assertThat(dto).isNotNull();
 
-        assertEquals(account.getId(), dto.getId());
-        assertEquals(account.getUsername(), dto.getUsername());
-        assertEquals(account.getPassword(), dto.getPassword());
-        assertEquals(account.getFirstName(), dto.getFirstName());
-        assertEquals(account.getLastName(), dto.getLastName());
-        assertEquals(account.getEmail(), dto.getEmail());
+        assertSoftly(softly -> {
+            softly.assertThat(dto.getId()).as("id").isEqualTo(account.getId());
+            softly.assertThat(dto.getUsername()).as("username").isEqualTo(account.getUsername());
+            softly.assertThat(dto.getPassword()).as("password").isEqualTo(account.getPassword());
+            softly.assertThat(dto.getFirstName()).as("firstName").isEqualTo(account.getFirstName());
+            softly.assertThat(dto.getLastName()).as("lastName").isEqualTo(account.getLastName());
+            softly.assertThat(dto.getEmail()).as("email").isEqualTo(account.getEmail());
+        });
     }
 }

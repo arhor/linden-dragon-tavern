@@ -1,11 +1,12 @@
 package org.arhor.diploma.config
 
 import org.arhor.diploma.util.Cache
-import org.arhor.diploma.util.createLogger
+import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.annotation.Scheduled
+import java.lang.invoke.MethodHandles
 
 @EnableCaching
 @Configuration
@@ -21,6 +22,6 @@ class CacheConfig {
     }
 
     companion object {
-        private val log = createLogger<CacheConfig>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

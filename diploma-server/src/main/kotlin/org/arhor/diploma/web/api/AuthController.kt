@@ -1,9 +1,9 @@
 package org.arhor.diploma.web.api
 
-import org.arhor.diploma.util.createLogger
 import org.arhor.diploma.web.model.SignInRequest
 import org.arhor.diploma.web.model.SignInResponse
 import org.arhor.diploma.web.security.TokenProvider
+import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.authentication.AuthenticationManager
@@ -11,6 +11,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.web.bind.annotation.*
+import java.lang.invoke.MethodHandles
 
 @RestController
 @RequestMapping(
@@ -58,6 +59,6 @@ class AuthController(
 
     companion object {
         @JvmStatic
-        private val log = createLogger<AuthController>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

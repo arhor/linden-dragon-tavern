@@ -1,6 +1,6 @@
 package org.arhor.diploma.config
 
-import org.arhor.diploma.util.createLogger
+import org.slf4j.LoggerFactory
 import org.springframework.boot.web.server.MimeMappings
 import org.springframework.boot.web.server.WebServerFactory
 import org.springframework.boot.web.server.WebServerFactoryCustomizer
@@ -11,6 +11,7 @@ import org.springframework.core.env.Environment
 import org.springframework.http.MediaType
 import java.io.File
 import java.io.UnsupportedEncodingException
+import java.lang.invoke.MethodHandles
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 import java.nio.file.Paths
@@ -87,6 +88,6 @@ class WebServerConfig(
 
     companion object {
         @JvmStatic
-        private val log = createLogger<WebServerConfig>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

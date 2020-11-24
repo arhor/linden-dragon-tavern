@@ -1,9 +1,10 @@
 package org.arhor.diploma.web.security
 
-import org.arhor.diploma.util.createLogger
+import org.slf4j.LoggerFactory
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.stereotype.Component
+import java.lang.invoke.MethodHandles
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -21,6 +22,6 @@ class JwtAuthEntryPoint : AuthenticationEntryPoint {
 
     companion object {
         @JvmStatic
-        private val log = createLogger<JwtAuthEntryPoint>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

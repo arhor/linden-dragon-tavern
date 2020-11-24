@@ -1,22 +1,18 @@
 package org.arhor.diploma.testutils;
 
-import org.assertj.core.internal.bytebuddy.utility.RandomString;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ExtensionContext.Namespace;
 import org.junit.jupiter.api.extension.ParameterContext;
-import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.util.Optional;
 import java.util.Random;
-import java.util.Set;
+
+import static org.arhor.diploma.testutils.ObjectGenerationStrategy.ONLY_PRIMITIVES;
+import static org.arhor.diploma.testutils.ParameterGeneratorFactory.getGeneratorForType;
 
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
@@ -27,6 +23,10 @@ public @interface RandomParameter {
     long min() default Long.MIN_VALUE;
 
     long max() default Long.MAX_VALUE;
+
+    ObjectGenerationStrategy objectGenerationSTrategy() default ONLY_PRIMITIVES;
+
+    // Random parameter resolver implementation class
 
     class Resolver implements ParameterResolver {
 
@@ -39,42 +39,37 @@ public @interface RandomParameter {
 
         @Override
         public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) {
-            return resolveInternal(
-                    parameterContext.getParameter().getType(),
-                    extensionContext,
-                    parameterContext.findAnnotation(RandomParameter.class).orElseThrow(IllegalStateException::new)
-            );
+            final Class<?> type = parameterContext.getParameter().getType();
+
+            final RandomParameter parameter =
+                    parameterContext
+                            .findAnnotation(RandomParameter.class)
+                            .orElseThrow(IllegalStateException::new);
+
+            return resolveInternal(type, extensionContext, parameter);
         }
+
+        // internal implementation
 
         private Object resolveInternal(
                 Class<?> requiredType,
                 ExtensionContext extensionContext,
-                RandomParameter parameterAnnotation) {
+                RandomParameter parameter) {
 
-            validateAnnotationParams(parameterAnnotation);
+            validateAnnotationParams(parameter);
 
-            final var generator = Generator
-                    .fromType(requiredType)
-                    .orElseThrow(() -> new ParameterResolutionException(
-                            String.format("No random generator implemented for %s", requiredType)
-                    ));
+            final var randomizer =
+                    extensionContext
+                            .getRoot()
+                            .getStore(NAMESPACE)
+                            .getOrComputeIfAbsent(Random.class);
 
-
-
-
-
-
-            final var randomizer = extensionContext
-                    .getRoot()
-                    .getStore(NAMESPACE)
-                    .getOrComputeIfAbsent(Random.class);
-
-            return generator.generate(randomizer, parameterAnnotation);
+            return getGeneratorForType(requiredType).generate(randomizer, parameter);
         }
 
-        private void validateAnnotationParams(RandomParameter annotation) {
-            final long min = annotation.min();
-            final long max = annotation.max();
+        private void validateAnnotationParams(RandomParameter parameter) {
+            final long min = parameter.min();
+            final long max = parameter.max();
 
             if (min > max) {
                 throw new IllegalArgumentException(
@@ -84,105 +79,6 @@ public @interface RandomParameter {
                                 max
                         )
                 );
-            }
-        }
-
-        private enum Generator {
-
-            BYTES(byte.class, Byte.class) {
-                @Override
-                public Object generate(Random randomizer, RandomParameter randomParameter) {
-                    var byteHolder = new byte[1];
-                    randomizer.nextBytes(byteHolder);
-                    return byteHolder[0];
-                }
-            },
-
-            SHORTS(short.class, Short.class) {
-                @Override
-                public Object generate(Random randomizer, RandomParameter randomParameter) {
-                    return (short) randomizer.nextInt();
-                }
-            },
-
-            INTEGERS(int.class, Integer.class) {
-                @Override
-                public Object generate(Random randomizer, RandomParameter randomParameter) {
-                    final long min = randomParameter.min();
-                    final long max = randomParameter.max();
-
-                    if ((min <= Integer.MIN_VALUE) && (max >= Integer.MAX_VALUE)) {
-                        return randomizer.nextInt();
-                    }
-
-                    return randomizer
-                            .ints()
-                            .filter(value -> value >= min && value <= max)
-                            .findFirst()
-                            .orElseThrow(() -> new RuntimeException(
-                                    String.format(
-                                            "Cannot generate random integer within the bound [%d, %d]",
-                                            min,
-                                            max
-                                    )
-                            ));
-                }
-            },
-
-            LONGS(long.class, Long.class) {
-                @Override
-                public Object generate(Random randomizer, RandomParameter randomParameter) {
-                    return randomizer.nextLong();
-                }
-            },
-
-            FLOATS(float.class, Float.class) {
-                @Override
-                public Object generate(Random randomizer, RandomParameter randomParameter) {
-                    return randomizer.nextFloat();
-                }
-            },
-
-            DOUBLES(double.class, Double.class) {
-                @Override
-                public Object generate(Random randomizer, RandomParameter randomParameter) {
-                    return randomizer.nextDouble();
-                }
-            },
-
-            BOOLEANS(boolean.class, Boolean.class) {
-                @Override
-                public Object generate(Random randomizer, RandomParameter randomParameter) {
-                    return randomizer.nextBoolean();
-                }
-            },
-
-            CHARACTER_SEQUENCES(String.class) {
-                @Override
-                public Object generate(Random randomizer, RandomParameter randomParameter) {
-                    return (randomParameter.length() > 0)
-                            ? RandomString.make(randomParameter.length())
-                            : RandomString.make();
-                }
-            },
-
-            ;
-
-            private final Set<Class<?>> supportedTypes;
-
-            public abstract Object generate(Random randomizer, RandomParameter randomParameter);
-
-            Generator(Class<?>... types) {
-                this.supportedTypes = Set.of(types);
-            }
-
-            public static Optional<Generator> fromType(Class<?> type) {
-                for (var generator : values()) {
-                    if (generator.supportedTypes.contains(type)) {
-                        return Optional.of(generator);
-                    }
-                }
-                return Optional.empty();
             }
         }
     }

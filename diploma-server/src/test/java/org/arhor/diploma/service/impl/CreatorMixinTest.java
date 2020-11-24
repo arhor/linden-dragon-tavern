@@ -1,10 +1,11 @@
 package org.arhor.diploma.service.impl;
 
+import org.arhor.diploma.commons.Converter;
 import org.arhor.diploma.commons.MutableIdentity;
 import org.arhor.diploma.data.persist.domain.core.DomainObject;
 import org.arhor.diploma.data.persist.repository.BaseRepository;
-import org.arhor.diploma.commons.Converter;
 import org.arhor.diploma.testutils.RandomParameter;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.commons.annotation.Testable;
@@ -37,8 +38,11 @@ class CreatorMixinTest {
         // given
         doReturn(testId).when(testDto).getId();
 
+        // when
+        ThrowingCallable action = () -> creatorUnderTest.create(testDto);
+
         // then
-        assertThatThrownBy(() -> creatorUnderTest.create(testDto))
+        assertThatThrownBy(action)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(testId);
 

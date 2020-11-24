@@ -2,10 +2,10 @@ package org.arhor.diploma.config
 
 import org.arhor.diploma.config.props.CustomProperties
 import org.arhor.diploma.util.SpringProfile
-import org.arhor.diploma.util.createLogger
 import org.arhor.diploma.web.filter.CustomAuthFilter
 import org.arhor.diploma.web.filter.CustomCsrfFilter
 import org.arhor.diploma.web.security.TokenProvider
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
+import java.lang.invoke.MethodHandles
 
 @Configuration
 class WebFiltersConfig {
@@ -63,6 +64,6 @@ class WebFiltersConfig {
 
     companion object {
         @JvmStatic
-        private val log = createLogger<WebFiltersConfig>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

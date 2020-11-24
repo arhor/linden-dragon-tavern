@@ -5,6 +5,7 @@ import org.arhor.diploma.data.persist.domain.core.DomainObject;
 import org.arhor.diploma.data.persist.repository.BaseRepository;
 import org.arhor.diploma.exception.EntityNotFoundException;
 import org.arhor.diploma.testutils.RandomParameter;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.commons.annotation.Testable;
@@ -36,8 +37,11 @@ class DeleterMixinTest {
         // given
         doReturn(null).when(testDto).getId();
 
+        // when
+        ThrowingCallable action = () -> deleterUnderTest.delete(testDto);
+
         // then
-        assertThatThrownBy(() -> deleterUnderTest.delete(testDto))
+        assertThatThrownBy(action)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(UpdaterMixin.KEY_PROPERTY);
 
@@ -53,8 +57,11 @@ class DeleterMixinTest {
         doReturn(Optional.empty()).when(repository).findById(testId);
         doReturn(entityName).when(repository).getEntityName();
 
+        // when
+        ThrowingCallable action = () -> deleterUnderTest.delete(testDto);
+
         // then
-        assertThatThrownBy(() -> deleterUnderTest.delete(testDto))
+        assertThatThrownBy(action)
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasFieldOrPropertyWithValue("entityName", entityName)
                 .hasFieldOrPropertyWithValue("propertyName", UpdaterMixin.KEY_PROPERTY)

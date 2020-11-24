@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import org.arhor.diploma.exception.EntityNotFoundException
 import org.arhor.diploma.exception.InvalidCsrfTokenException
 import org.arhor.diploma.exception.MissingCsrfTokenException
-import org.arhor.diploma.util.createLogger
 import org.arhor.diploma.web.model.MessageResponse
 import org.arhor.diploma.web.model.messageResponse
+import org.slf4j.LoggerFactory
 import org.springframework.context.MessageSource
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import java.io.IOException
+import java.lang.invoke.MethodHandles
 import java.util.*
 
 @RestControllerAdvice
@@ -133,6 +134,6 @@ class ExceptionController(
 
     companion object {
         @JvmStatic
-        private val log = createLogger<ExceptionController>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

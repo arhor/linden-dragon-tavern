@@ -2,11 +2,10 @@ package org.arhor.diploma.service.impl
 
 import org.arhor.diploma.data.persist.domain.Account
 import org.arhor.diploma.data.persist.repository.AccountRepository
-import org.arhor.diploma.exception.EntityNotFoundException
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
 import org.arhor.diploma.service.mapping.AccountConverter
-import org.arhor.diploma.util.createLogger
+import org.slf4j.LoggerFactory
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
@@ -14,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import kotlin.reflect.KProperty
+import java.lang.invoke.MethodHandles
 import kotlin.reflect.KProperty1
 
 @Service
@@ -78,6 +77,6 @@ class AccountServiceImpl(
 
     companion object {
         @JvmStatic
-        private val log = createLogger<AccountServiceImpl>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

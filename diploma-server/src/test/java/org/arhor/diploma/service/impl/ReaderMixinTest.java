@@ -6,6 +6,8 @@ import org.arhor.diploma.data.persist.repository.BaseRepository;
 import org.arhor.diploma.exception.EntityNotFoundException;
 import org.arhor.diploma.commons.Converter;
 import org.arhor.diploma.testutils.RandomParameter;
+import org.assertj.core.api.ThrowableAssert;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.commons.annotation.Testable;
@@ -87,8 +89,11 @@ class ReaderMixinTest {
         doReturn(Optional.empty()).when(repository).findById(search);
         doReturn(entityName).when(repository).getEntityName();
 
+        // when
+        ThrowingCallable action = () -> readerUnderTest.getOne(search);
+
         // then
-        assertThatThrownBy(() -> readerUnderTest.getOne(search))
+        assertThatThrownBy(action)
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasFieldOrPropertyWithValue("entityName", entityName)
                 .hasFieldOrPropertyWithValue("propertyName", ReaderMixin.KEY_PROPERTY)

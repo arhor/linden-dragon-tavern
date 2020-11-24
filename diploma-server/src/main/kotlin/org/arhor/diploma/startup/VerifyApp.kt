@@ -5,8 +5,9 @@ import org.arhor.diploma.commons.ActionResult.Success
 import org.arhor.diploma.commons.Priority
 import org.arhor.diploma.commons.StartupTask
 import org.arhor.diploma.commons.Verifiable
-import org.arhor.diploma.util.createLogger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import java.lang.invoke.MethodHandles
 import java.text.DecimalFormat
 import kotlin.system.exitProcess
 
@@ -56,6 +57,6 @@ class VerifyApp(private val verifiers: List<Verifiable>) : StartupTask {
 
     companion object {
         @JvmStatic
-        private val log = createLogger<VerifyApp>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

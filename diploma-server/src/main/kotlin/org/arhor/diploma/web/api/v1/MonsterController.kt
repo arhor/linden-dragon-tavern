@@ -1,11 +1,12 @@
 package org.arhor.diploma.web.api.v1
 
-import org.arhor.diploma.data.file.model.Monster
 import org.arhor.diploma.data.file.MonsterProvider
-import org.arhor.diploma.util.createLogger
+import org.arhor.diploma.data.file.model.Monster
+import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import java.lang.invoke.MethodHandles
 
 @RestController
 @RequestMapping(
@@ -44,6 +45,6 @@ class MonsterController(
 
     companion object {
         @JvmStatic
-        private val log = createLogger<MonsterController>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

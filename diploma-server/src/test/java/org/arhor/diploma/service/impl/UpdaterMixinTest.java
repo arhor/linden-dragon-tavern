@@ -6,6 +6,8 @@ import org.arhor.diploma.data.persist.repository.BaseRepository;
 import org.arhor.diploma.exception.EntityNotFoundException;
 import org.arhor.diploma.commons.Converter;
 import org.arhor.diploma.testutils.RandomParameter;
+import org.assertj.core.api.ThrowableAssert;
+import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.platform.commons.annotation.Testable;
@@ -22,7 +24,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.*;
 
 @Testable
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({MockitoExtension.class, RandomParameter.Resolver.class})
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 class UpdaterMixinTest {
 
@@ -39,8 +41,11 @@ class UpdaterMixinTest {
         // given
         doReturn(null).when(testDto).getId();
 
+        // when
+        ThrowingCallable action = () -> updaterUnderTest.update(testDto);
+
         // then
-        assertThatThrownBy(() -> updaterUnderTest.update(testDto))
+        assertThatThrownBy(action)
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(UpdaterMixin.KEY_PROPERTY);
 
@@ -56,8 +61,11 @@ class UpdaterMixinTest {
         doReturn(Optional.empty()).when(repository).findById(testId);
         doReturn(entityName).when(repository).getEntityName();
 
+        // when
+        ThrowingCallable action = () -> updaterUnderTest.update(testDto);
+
         // then
-        assertThatThrownBy(() -> updaterUnderTest.update(testDto))
+        assertThatThrownBy(action)
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasFieldOrPropertyWithValue("entityName", entityName)
                 .hasFieldOrPropertyWithValue("propertyName", UpdaterMixin.KEY_PROPERTY)

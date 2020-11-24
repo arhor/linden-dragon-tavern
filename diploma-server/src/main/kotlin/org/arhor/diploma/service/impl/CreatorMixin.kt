@@ -16,8 +16,17 @@ class CreatorMixin<
 ) : Creator<D, K> {
 
     override fun create(item: D): D {
+        item.getId()?.let {
+            throw IllegalArgumentException("New entity must have $KEY_PROPERTY = null, but passed object has [$it]")
+        }
+
         val newEntity = converter.dtoToEntity(item)
         val savedEntity = repository.save(newEntity)
+
         return converter.entityToDto(savedEntity)
+    }
+
+    companion object {
+        const val KEY_PROPERTY = "id"
     }
 }

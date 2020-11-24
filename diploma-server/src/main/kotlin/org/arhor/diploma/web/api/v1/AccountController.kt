@@ -4,14 +4,14 @@ import org.arhor.diploma.Authorities.Account
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
 import org.arhor.diploma.util.bound
-import org.arhor.diploma.util.createLogger
-import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
+import java.lang.invoke.MethodHandles
 
 @RestController
 @RequestMapping(
@@ -49,6 +49,6 @@ class AccountController(private val service: AccountService) {
 
     companion object {
         @JvmStatic
-        private val log = createLogger<AccountController>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

@@ -2,9 +2,10 @@ package org.arhor.diploma.startup
 
 import org.arhor.diploma.commons.Priority
 import org.arhor.diploma.commons.StartupTask
-import org.arhor.diploma.util.createLogger
+import org.slf4j.LoggerFactory
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
+import java.lang.invoke.MethodHandles
 import java.net.InetAddress
 import java.net.UnknownHostException
 
@@ -43,6 +44,6 @@ class DisplayAppInfo(private val env: Environment) : StartupTask {
 
     companion object {
         @JvmStatic
-        private val log = createLogger<DisplayAppInfo>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

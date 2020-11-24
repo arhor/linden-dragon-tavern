@@ -1,10 +1,11 @@
 package org.arhor.diploma.aspect
 
-import org.arhor.diploma.util.createLogger
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
+import java.lang.invoke.MethodHandles
 
 @Aspect
 @Component
@@ -21,6 +22,6 @@ class LoggingAspect {
 
     companion object {
         @JvmStatic
-        private val log = createLogger<LoggingAspect>()
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }
