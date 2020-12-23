@@ -15,4 +15,6 @@ object Versions {
     const val flywayGradlePlugin  = "7.0.0"
     const val springBoot          = "2.4.0"
     const val springDepManagement = "1.0.10.RELEASE"
+    const val logback             = "1.2.3"
+    const val slf4j               = "1.7.30"
 }

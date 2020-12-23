@@ -13,9 +13,9 @@ repositories {
 }
 
 dependencies {
-    implementation("ch.qos.logback:logback-core:1.2.3")
-    implementation("ch.qos.logback:logback-classic:1.2.3")
-    implementation("org.slf4j:slf4j-api:1.7.30")
+    implementation("ch.qos.logback:logback-core:${Versions.logback}")
+    implementation("ch.qos.logback:logback-classic:${Versions.logback}")
+    implementation("org.slf4j:slf4j-api:${Versions.slf4j}")
     implementation("org.assertj:assertj-core:${Versions.assertJCore}")
     implementation("org.junit.jupiter:junit-jupiter-api:${Versions.junitJupiter}")
 }
