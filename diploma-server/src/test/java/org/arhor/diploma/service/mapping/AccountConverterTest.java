@@ -26,10 +26,7 @@ class AccountConverterTest {
     private Converter<Account, AccountDTO> mapper;
 
     @Test
-    void shouldConvertAllFieldsCorrectly(@RandomParameter final Account testAccount) {
-        // given
-        var account = testAccount;
-
+    void shouldConvertAllFieldsCorrectly(@RandomParameter final Account account) {
         // when
         var dto = mapper.entityToDto(account);
 
@@ -44,5 +41,10 @@ class AccountConverterTest {
             softly.assertThat(dto.getLastName()).as("lastName").isEqualTo(account.getLastName());
             softly.assertThat(dto.getEmail()).as("email").isEqualTo(account.getEmail());
         });
+    }
+
+    @Test
+    void should(@RandomParameter(length = 5) final Account[] accounts) {
+        System.out.println(accounts);
     }
 }

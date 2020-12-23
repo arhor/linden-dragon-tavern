@@ -2,6 +2,7 @@ package org.arhor.diploma.commons
 
 import java.util.*
 
+@Suppress("unused")
 class IntArray2D private constructor(@JvmField val rows: Int, @JvmField val cols: Int) {
 
     private val buffer: IntArray = IntArray(rows * cols)

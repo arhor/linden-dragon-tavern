@@ -23,21 +23,9 @@ class AccountRepositoryTest extends DatabaseIntegrationTest {
 
     @Test
     @Transactional
-    void shouldSoftlyDeleteAccount(
-            @RandomParameter final String username,
-            @RandomParameter final String password,
-            @RandomParameter final String firstName,
-            @RandomParameter final String lastName,
-            @RandomParameter final String email) {
-
+    void shouldSoftlyDeleteAccount(@RandomParameter final Account account) {
         // given
-        var account = new Account();
-
-        account.setUsername(username);
-        account.setPassword(password);
-        account.setFirstName(firstName);
-        account.setLastName(lastName);
-        account.setEmail(email);
+        account.setId(null);
 
         final var savedAccount = repository.save(account);
         final var accountId = savedAccount.getId();

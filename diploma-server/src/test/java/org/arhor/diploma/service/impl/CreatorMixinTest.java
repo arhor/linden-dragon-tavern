@@ -25,10 +25,14 @@ import static org.mockito.Mockito.verifyNoInteractions;
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 class CreatorMixinTest {
 
-    @Mock private Converter<DomainObject<String>, MutableIdentity<String>> converter;
-    @Mock private BaseRepository<DomainObject<String>, String> repository;
-    @Mock private MutableIdentity<String> testDto;
-    @Mock private DomainObject<String> testEntity;
+    @Mock
+    private Converter<DomainObject<String>, MutableIdentity<String>> converter;
+    @Mock
+    private BaseRepository<DomainObject<String>, String> repository;
+    @Mock
+    private MutableIdentity<String> testDto;
+    @Mock
+    private DomainObject<String> testEntity;
 
     @InjectMocks
     private CreatorMixin<DomainObject<String>, MutableIdentity<String>, String> creatorUnderTest;

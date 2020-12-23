@@ -60,12 +60,9 @@ final class ObjectGenerator implements ParameterGenerator {
 
     private void writeProperties(final Object obj, final Random randomizer, final RandomParameter parameter) {
         for (Field declaredField : type.getDeclaredFields()) {
-            final int mod = declaredField.getModifiers();
-
-            if (Modifier.isFinal(mod) || Modifier.isStatic(mod)) {
+            if (!isAccessModifiersAreValid(declaredField)) {
                 continue;
             }
-
             final Class<?> fieldType = declaredField.getType();
 
             if (isFieldCanBeGenerated(fieldType, parameter.objectGenerationSTrategy())) {
@@ -78,6 +75,12 @@ final class ObjectGenerator implements ParameterGenerator {
                 }
             }
         }
+    }
+
+    private boolean isAccessModifiersAreValid(Field declaredField) {
+        final int mod = declaredField.getModifiers();
+        return Modifier.isFinal(mod)
+                || Modifier.isStatic(mod);
     }
 
     private static boolean isFieldCanBeGenerated(Class<?> fieldType, ObjectGenerationStrategy strategy) {

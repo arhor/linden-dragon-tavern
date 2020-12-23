@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.Authentication
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.lang.invoke.MethodHandles
@@ -21,7 +23,7 @@ import java.lang.invoke.MethodHandles
 class AccountController(private val service: AccountService) {
 
     @GetMapping
-    @PreAuthorize("hasAuthority('${Account.VIEW}') and hasAuthority('${Account.EDIT}')")
+    @PreAuthorize("hasAuthority('${Account.VIEW}')")
     fun getAccounts(
         @RequestParam(required = false) page: Int?,
         @RequestParam(required = false) size: Int?
@@ -34,9 +36,18 @@ class AccountController(private val service: AccountService) {
         return service.getAccountById(id)
     }
 
-    @PostMapping
+    @PutMapping
+    @PreAuthorize("isAuthenticated() and hasAuthority('${Account.EDIT}')")
     @ResponseStatus(HttpStatus.CREATED)
-    fun createAccount(@RequestBody dto: AccountDTO): ResponseEntity<Unit> {
+    fun updateAccount(@RequestBody dto: AccountDTO, auth: Authentication): ResponseEntity<Unit> {
+
+
+        if (dto.username == (auth.principal as UserDetails).username) {
+
+        } else {
+            throw IllegalArgumentException()
+        }
+
         val newAccountId = service.createAccount(dto)
 
         val location = ServletUriComponentsBuilder.fromCurrentRequest()

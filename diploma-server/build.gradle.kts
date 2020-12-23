@@ -107,16 +107,14 @@ tasks {
 
     withType<Test> {
         useJUnitPlatform {
-            excludeTags("integration")
+            excludeTags(/*"integration"*/)
         }
         jvmArgs = listOf(springActiveProfiles)
     }
 
     jar {
         manifest {
-            attributes(
-                "Main-Class" to applicationMainClass
-            )
+            attributes["Main-Class"] = applicationMainClass
         }
     }
 

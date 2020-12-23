@@ -2,7 +2,7 @@ object Versions {
     const val gradle              = "6.7.1"
     const val javaGlobal          = "14"
     const val kotlinGlobal        = "1.4.20"
-    const val nodeJS              = "14.8.0"
+    const val nodeJS              = "14.15.1"
     const val nodeJSGradlePlugin  = "3.0.0-rc2"
     const val assertJCore         = "3.17.2"
     const val junitJupiter        = "5.7.0"

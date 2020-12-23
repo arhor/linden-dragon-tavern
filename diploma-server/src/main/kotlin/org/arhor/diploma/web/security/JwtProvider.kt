@@ -60,7 +60,7 @@ class JwtProvider(
 
     override fun validate(token: String): Boolean {
         try {
-            return jwtParser.parseClaimsJws(token).body.expiration.before(Date())
+            return jwtParser.parseClaimsJws(token).body.expiration.after(Date())
         } catch (e: SignatureException) {
             log.error("Invalid JWT signature -> Message: {} ", e.message)
         } catch (e: MalformedJwtException) {

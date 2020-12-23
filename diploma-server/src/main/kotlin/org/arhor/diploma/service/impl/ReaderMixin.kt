@@ -33,7 +33,7 @@ class ReaderMixin<
     override fun getList(): List<D> {
         return repository
             .findAll()
-            .map { converter.entityToDto(it) }
+            .map(converter::entityToDto)
             .toList()
     }
 
@@ -41,7 +41,7 @@ class ReaderMixin<
         return repository
             .findAll(PageRequest.of(page, size))
             .toList()
-            .mapNotNull { converter.entityToDto(it) }
+            .mapNotNull(converter::entityToDto)
             .toList()
     }
 
