@@ -9,8 +9,9 @@ private typealias SpellDataProvider = DataProviderImplDefault<Spell, Spell.Detai
 @Service
 class SpellProviderImpl(loader: ResourceLoader) : SpellProvider, SpellDataProvider(loader) {
 
+    override val resourceName get() = "spell"
     override val resourcePath get() = "classpath:data/5e-SRD-Spells.json"
-    override val resourceType = Array<Spell.Details>::class.java
+    override val resourceType get() = Array<Spell.Details>::class.java
 
     override fun shrinkData(details: Spell.Details): Spell {
         return Spell(

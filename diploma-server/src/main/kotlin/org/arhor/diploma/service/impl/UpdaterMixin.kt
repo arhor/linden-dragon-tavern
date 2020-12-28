@@ -22,7 +22,7 @@ class UpdaterMixin<
                 .findById(it)
                 .orElseThrow {
                     EntityNotFoundException(
-                        entityName = repository.getEntityName(),
+                        entityType = repository.getEntityName(),
                         propertyName = KEY_PROPERTY,
                         propertyValue = it
                     )

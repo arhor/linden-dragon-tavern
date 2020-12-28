@@ -3,6 +3,7 @@ package org.arhor.diploma.aspect
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
+import org.aspectj.lang.annotation.Pointcut
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.lang.invoke.MethodHandles
@@ -20,8 +21,10 @@ class LoggingAspect {
         }
     }
 
+    @Pointcut("@annotation(org.springframework.web.bind.annotation.ExceptionHandler)")
+    fun exceptionHandlerMethod() { /* no-op */ }
+
     companion object {
-        @JvmStatic
         private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

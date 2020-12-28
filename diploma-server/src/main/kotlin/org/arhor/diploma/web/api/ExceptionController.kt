@@ -8,7 +8,6 @@ import org.arhor.diploma.exception.InvalidCsrfTokenException
 import org.arhor.diploma.exception.MissingCsrfTokenException
 import org.arhor.diploma.web.model.MessageResponse
 import org.arhor.diploma.web.model.messageResponse
-import org.slf4j.LoggerFactory
 import org.springframework.context.MessageSource
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
-import java.io.IOException
-import java.lang.invoke.MethodHandles
 import java.util.*
 
 @RestControllerAdvice
@@ -28,13 +25,12 @@ class ExceptionController(
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentTypeMismatchException::class)
     fun argumentClassCastException(e: MethodArgumentTypeMismatchException, lang: Locale): MessageResponse {
-        log.error("Argument class cast exception", e)
         return messageResponse {
             error {
                 code = 400
-                text = localize(lang, "error.wrong.argument")
+                text = lang.localize("error.wrong.argument")
                 details = listOf(
-                    localize(lang, "error.wrong.argument.details", e.name, e.value)
+                    lang.localize("error.wrong.argument.details", e.name, e.value)
                 )
             }
         }
@@ -43,13 +39,12 @@ class ExceptionController(
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(MissingCsrfTokenException::class)
     fun missingCsrfTokenException(e: MissingCsrfTokenException, lang: Locale): MessageResponse {
-        log.error(e.message, e)
         return messageResponse {
             error {
                 code = 403
-                text = localize(lang, "error.csrf.missing")
+                text = lang.localize("error.csrf.missing")
                 details = listOf(
-                    localize(lang, "error.csrf.missing.details")
+                    lang.localize("error.csrf.missing.details")
                 )
             }
         }
@@ -58,13 +53,12 @@ class ExceptionController(
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidCsrfTokenException::class)
     fun invalidCsrfTokenException(e: InvalidCsrfTokenException, lang: Locale): MessageResponse {
-        log.error(e.message, e)
         return messageResponse {
             error {
                 code = 403
-                text = localize(lang, "error.csrf.invalid")
+                text = lang.localize("error.csrf.invalid")
                 details = listOf(
-                    localize(lang, "error.csrf.invalid.details", e.expected, e.actual)
+                    lang.localize("error.csrf.invalid.details", e.expected, e.actual)
                 )
             }
         }
@@ -73,67 +67,57 @@ class ExceptionController(
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException::class)
     fun entityNotFoundException(e: EntityNotFoundException, lang: Locale): MessageResponse {
-        log.error("Resource not found", e)
         return messageResponse {
             error {
                 code = 404
-                text = localize(lang, "error.entity.notfound")
+                text = lang.localize("error.entity.notfound")
                 details = listOf(
-                    localize(lang, "error.entity.notfound.details", e.entityName, e.propertyName, e.propertyValue)
+                    lang.localize("error.entity.notfound.details", e.entityType, e.propertyName, e.propertyValue)
                 )
             }
         }
     }
 
-    @Throws(IOException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidFormatException::class)
     fun invalidFormatException(e: InvalidFormatException, lang: Locale): MessageResponse {
-        log.error("Invalid JSON message", e)
         val parser = e.processor as JsonParser
-
-        val propertyValue = e.value
-        val propertyName = parser.currentName
-        val targetType = e.targetType.simpleName
 
         return messageResponse {
             error {
                 code = 400
-                text = localize(lang, "error.json.format.invalid")
+                text = lang.localize("error.json.format.invalid")
                 details = listOf(
-                    localize(lang, "error.json.format.invalid.details", propertyValue, propertyName, targetType)
+                    lang.localize(
+                        "error.json.format.invalid.details",
+                        e.value,
+                        parser.currentName,
+                        e.targetType.simpleName
+                    )
                 )
             }
         }
     }
 
-    @Throws(IOException::class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(JsonProcessingException::class)
     fun jsonProcessingException(e: JsonProcessingException, lang: Locale): MessageResponse {
-        log.error("JSON processing exception", e)
         val value = when (val processor = e.processor) {
             is JsonParser -> processor.currentName ?: processor.text
             else -> "[UNKNOWN JSON PROCESSOR]"
         }
-        val location = e.location
         return messageResponse {
             error {
                 code = 400
-                text = localize(lang, "error.json.parse")
+                text = lang.localize("error.json.parse")
                 details = listOf(
-                    localize(lang, "error.json.parse.details", value, location.lineNr, location.columnNr)
+                    lang.localize("error.json.parse.details", value, e.location.lineNr, e.location.columnNr)
                 )
             }
         }
     }
 
-    private fun localize(lang: Locale, label: String, vararg args: Any?): String {
-        return messageSource.getMessage(label, args, lang)
-    }
-
-    companion object {
-        @JvmStatic
-        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
+    private fun Locale.localize(label: String, vararg args: Any?): String {
+        return messageSource.getMessage(label, args, this)
     }
 }

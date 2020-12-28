@@ -19,7 +19,7 @@ class DeleterMixin<
             .findById(id)
             .orElseThrow {
                 EntityNotFoundException(
-                    entityName = repository.getEntityName(),
+                    entityType = repository.getEntityName(),
                     propertyName = UpdaterMixin.KEY_PROPERTY,
                     propertyValue = id
                 )

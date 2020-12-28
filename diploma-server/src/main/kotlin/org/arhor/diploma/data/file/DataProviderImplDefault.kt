@@ -3,6 +3,7 @@ package org.arhor.diploma.data.file
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.arhor.diploma.commons.Identifiable
+import org.arhor.diploma.exception.EntityNotFoundException
 import org.slf4j.LoggerFactory
 import org.springframework.core.io.ResourceLoader
 import java.io.Serializable
@@ -21,6 +22,7 @@ abstract class DataProviderImplDefault<
 
     private val objectMapper: ObjectMapper = jacksonObjectMapper()
 
+    protected abstract val resourceName: String
     protected abstract val resourcePath: String
     protected abstract val resourceType: Class<Array<D>>
 
@@ -41,7 +43,11 @@ abstract class DataProviderImplDefault<
     }
 
     override fun getDetails(id: K): D {
-        return data.first { it.getId() == id }
+        return data.find { it.getId() == id } ?: throw EntityNotFoundException(
+            entityType = resourceName,
+            propertyName = "id",
+            propertyValue = id
+        )
     }
 
     override fun getDetailsList(): List<D> {
