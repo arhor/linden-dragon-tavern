@@ -4,14 +4,6 @@ import javax.annotation.Nonnull;
 import java.util.function.Supplier;
 
 public interface Lazy<T> extends RichSupplier<T> {
-
-    /**
-     * Method shows is this lazy instance already computed or not.
-     *
-     * @return `true` if associated context is computed, otherwise `false`
-     */
-    boolean isComputed();
-
     /**
      * Create lazy evaluation context which uses provided source to compute value.
      * Not thread-safe.
@@ -36,4 +28,11 @@ public interface Lazy<T> extends RichSupplier<T> {
     static <T> Lazy<T> evalSafe(@Nonnull Supplier<T> source) {
         return new SafeLazy<>(source);
     }
+
+    /**
+     * Method shows is this lazy instance already computed or not.
+     *
+     * @return `true` if associated context is computed, otherwise `false`
+     */
+    boolean isComputed();
 }

@@ -30,8 +30,8 @@ class VerifyApp(private val verifiers: List<Verifiable>) : StartupTask {
             val result = verifier.verify()
             val verifierNum = width.format(i)
             when (result) {
-                is Success -> log.info("$verifierNum: [SUCCESS] ${result.value}")
-                is Failure -> log.error("$verifierNum: [FAILURE] ${result.error.message}")
+                is Success -> log.info("{}: [SUCCESS] {}", verifierNum, result.value)
+                is Failure -> log.error("{}: [FAILURE] {}", verifierNum, result.error.message)
             }
             result
         }.all { it.isSuccess }
@@ -50,13 +50,15 @@ class VerifyApp(private val verifiers: List<Verifiable>) : StartupTask {
             .filterKeys { it == Priority.FIRST || it == Priority.LAST }
             .filterValues { it.size > 1 }
             .forEach { (priority, samePriorityVerifiers) ->
-                val verifiersNames = samePriorityVerifiers.map { it::class.simpleName }
-                log.warn("There are several startup verifiers with priority `${priority}`: $verifiersNames")
+                log.warn(
+                    "There are several startup verifiers with priority `{}`: {}",
+                    priority,
+                    samePriorityVerifiers.map { it::class.simpleName }
+                )
             }
     }
 
     companion object {
-        @JvmStatic
         private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

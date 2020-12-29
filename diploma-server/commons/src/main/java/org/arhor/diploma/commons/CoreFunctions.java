@@ -2,7 +2,7 @@ package org.arhor.diploma.commons;
 
 import java.util.function.Supplier;
 
-public class CoreFunctions {
+public final class CoreFunctions {
 
     private CoreFunctions() {
         throw new IllegalStateException("Must not be instantiated!");
