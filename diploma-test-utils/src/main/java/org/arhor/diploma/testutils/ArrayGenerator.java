@@ -20,8 +20,9 @@ final class ArrayGenerator<T> implements ParameterGenerator {
         final T[] array = allocateArray(parameter);
 
         if (array != EMPTY_ARRAY) {
+            var generator = getGeneratorForType(arrayType);
             for (int i = 0; i < array.length; i++) {
-                Object element = getGeneratorForType(arrayType).generate(randomizer, parameter);
+                Object element = generator.generate(randomizer, parameter);
                 array[i] = (T) element;
             }
         }
