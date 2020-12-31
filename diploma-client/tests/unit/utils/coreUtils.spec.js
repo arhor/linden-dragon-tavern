@@ -1,19 +1,21 @@
 import * as coreUtils from '@/utils/coreUtils.js';
 
-describe('coreUtils.js', () => {
-    test('should return true for any reference which is not null or undefined', () => {
-        const existingRefs = [0, '', [], {}, false];
+describe('refExists', () => {
+    test.each`
+        reference    | expected
+        ${0}         | ${true}
+        ${''}        | ${true}
+        ${[]}        | ${true}
+        ${{}}        | ${true}
+        ${false}     | ${true}
+        ${null}      | ${false}
+        ${undefined} | ${false}
+        ${void 0}    | ${false}
+    `('should return "$expected" for "$reference"', ({ reference, expected }) => {
+        // when
+        const result = coreUtils.refExists(reference);
 
-        existingRefs.forEach((obj) => {
-            expect(coreUtils.refExists(obj)).toBe(true);
-        });
-    });
-
-    test('should return false for any reference which is null or undefined', () => {
-        const emptyRefs = [null, undefined, void 0];
-
-        emptyRefs.forEach((obj) => {
-            expect(coreUtils.refExists(obj)).toBe(false);
-        });
+        // then
+        expect(result).toBe(expected);
     });
 });

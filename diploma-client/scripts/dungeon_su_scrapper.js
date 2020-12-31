@@ -83,11 +83,11 @@ function parseMonsterInfo(html, index) {
             ] = /(\d{1,2})(\s{0,5}\(([-+]?\d{0,2})\))?(\s{0,5}\(([-+]?\d{1,2})\))/g.exec(
                 $(elem)
                     .find('div:has(strong)')
-                    .text()
+                    .text(),
             );
 
             return {
-                [abilityAbbrToEng(abbr)]: value
+                [abilityAbbrToEng(abbr)]: value,
             };
         })
         .reduce((prev, next) => Object.assign(prev, next), {});
@@ -129,7 +129,7 @@ function parseMonsterInfo(html, index) {
         languages,
         cr,
         source,
-        additional
+        additional,
     };
 }
 
@@ -194,7 +194,7 @@ class ProgressLogger {
                 process.stdout &&
                 process.stdout.clearLine &&
                 process.stdout.cursorTo &&
-                process.stdout.write
+                process.stdout.write,
         );
     }
 }

@@ -2,6 +2,8 @@ const path = require('path');
 const CompressionPlugin = require('compression-webpack-plugin');
 
 module.exports = {
+    publicPath: './',
+
     transpileDependencies: ['vuetify'],
 
     productionSourceMap: false,

@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-    <title>dnd-homebrew-app</title>
-  </head>
-  <script>
-    void (function(ctx) {
-      "use strict";
-      var startupTime = 0;
-      var timer = setInterval(function() {
-        if (startupTime >= 1 && ctx.appController) {
-          ctx.appController.main();
-          clearInterval(timer);
-        }
-        startupTime += 0.5;
-      }, 500);
-    })(window);
-  </script>
-  <body>
-    <!--[if lt IE 9]>
-      <p>
-        You are using an <strong>outdated</strong> browser. Please
-        <a href="http://browsehappy.com/">upgrade your browser</a> to improve
-        your experience.
-      </p>
-    <![endif]-->
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="app"></div>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
+        <title>dnd-homebrew-app</title>
+    </head>
+    <script>
+        void (function(ctx) {
+            'use strict';
+            var startupTime = 0;
+            var timer = setInterval(function() {
+                if (startupTime >= 1 && ctx.appController) {
+                    ctx.appController.main();
+                    clearInterval(timer);
+                }
+                startupTime += 0.5;
+            }, 500);
+        })(window);
+    </script>
+    <body>
+        <!--[if lt IE 9]>
+            <p>
+                You are using an <strong>outdated</strong> browser. Please
+                <a href="http://browsehappy.com/">upgrade your browser</a> to improve your
+                experience.
+            </p>
+        <![endif]-->
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <div id="app"></div>
+    </body>
 </html>

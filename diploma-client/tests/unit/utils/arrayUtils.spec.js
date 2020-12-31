@@ -1,55 +1,59 @@
 import * as arrayUtils from '@/utils/arrayUtils.js';
 
-describe('arrayUtils.js', () => {
-    test('should return true only for array instance', () => {
-        const emptyArrays = [[], new Array(), Array.of()];
-
-        emptyArrays.forEach((array) => {
+describe('isEmptyArray', () => {
+    test.each([[[]], [new Array()], [Array.of()]])(
+        'should return true only for array instance',
+        (array) => {
+            // when
             const result = arrayUtils.isEmptyArray(array);
 
+            // then
             expect(result).toBe(true);
-        });
-    });
+        },
+    );
 
-    test('should return false for null, undefined, strings etc.', () => {
-        const nonArrays = [null, undefined, 'array', 10, true, false];
+    test.each([[null], [undefined], ['array'], [10], [true], [false]])(
+        'should return false for "%s"',
+        (value) => {
+            // when
+            const result = arrayUtils.isEmptyArray(value);
 
-        nonArrays.forEach((some) => {
-            const result = arrayUtils.isEmptyArray(some);
-
+            // then
             expect(result).toBe(false);
-        });
+        },
+    );
+
+    test.each([
+        [[1]],
+        [new Array(true, false)],
+        [Array.of('one', 'two', 'three')],
+        [Array.from('array')],
+    ])('should return false for the array: %s', (array) => {
+        // when
+        const result = arrayUtils.isEmptyArray(array);
+
+        // then
+        expect(result).toBe(false);
     });
+});
 
-    test('should return true for any filled array', () => {
-        const filledArrays = [
-            [1],
-            new Array(true, false),
-            Array.of('one', 'two', 'three'),
-            Array.from('array'),
-        ];
-
-        filledArrays.forEach((array) => {
-            const result = arrayUtils.isEmptyArray(array);
-
-            expect(result).toBe(false);
-        });
-    });
-
+describe('commaSeparate', () => {
     test('should return comma separated string representation of passed array', () => {
+        // given
         const arrayToJoin = ['one', 'two', 'three'];
+
+        // when
         const result = arrayUtils.commaSeparate(arrayToJoin);
 
+        // then
         expect(result).toMatch('one, two, three');
     });
 
-    test('should return empty string for null, undefined or epmty array', () => {
-        const arrays = [null, undefined, []];
+    test.each([[null], [undefined], [[]]])('should return empty string for %s', (array) => {
+        // when
+        const result = arrayUtils.commaSeparate(array);
 
-        arrays.forEach((array) => {
-            const result = arrayUtils.commaSeparate(array);
-
-            expect(result).toMatch('');
-        });
+        // then
+        expect(result).toMatch('');
     });
 });
