@@ -1,7 +1,7 @@
 package org.arhor.diploma.service.mapping;
 
 import org.arhor.diploma.commons.Converter;
-import org.arhor.diploma.data.persist.domain.Account;
+import org.arhor.diploma.data.persistence.domain.Account;
 import org.arhor.diploma.service.dto.AccountDTO;
 import org.arhor.diploma.testutils.RandomParameter;
 import org.junit.jupiter.api.Test;

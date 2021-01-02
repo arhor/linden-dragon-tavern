@@ -2,8 +2,8 @@ package org.arhor.diploma.repository;
 
 import org.arhor.diploma.testutils.IntegrationTest;
 import org.arhor.diploma.DatabaseIntegrationTest;
-import org.arhor.diploma.data.persist.domain.Account;
-import org.arhor.diploma.data.persist.repository.AccountRepository;
+import org.arhor.diploma.data.persistence.domain.Account;
+import org.arhor.diploma.data.persistence.repository.AccountRepository;
 import org.arhor.diploma.testutils.RandomParameter;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,7 +1,7 @@
 package org.arhor.diploma.service.impl
 
-import org.arhor.diploma.data.persist.domain.Account
-import org.arhor.diploma.data.persist.repository.AccountRepository
+import org.arhor.diploma.data.persistence.domain.Account
+import org.arhor.diploma.data.persistence.repository.AccountRepository
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
 import org.arhor.diploma.service.mapping.AccountConverter
@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.lang.invoke.MethodHandles
+import javax.annotation.PostConstruct
 import kotlin.reflect.KProperty1
 
 @Service
@@ -22,6 +23,19 @@ class AccountServiceImpl(
     private val repository: AccountRepository,
     converter: AccountConverter
 ) : AbstractService<Account, AccountDTO, Long>(converter, repository), AccountService {
+
+    @PostConstruct
+    fun lola() {
+        repository.save(
+            Account().apply {
+                username = "Maxim"
+                password = "123456789"
+                email = "test@test"
+                firstName = "Max"
+                lastName = "Burishinets"
+            }
+        )
+    }
 
     override fun loadUserByUsername(username: String?): UserDetails {
         return username?.let {

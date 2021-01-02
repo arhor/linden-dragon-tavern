@@ -1,8 +1,8 @@
 package org.arhor.diploma.service.impl;
 
 import org.arhor.diploma.commons.MutableIdentity;
-import org.arhor.diploma.data.persist.domain.core.DomainObject;
-import org.arhor.diploma.data.persist.repository.BaseRepository;
+import org.arhor.diploma.data.persistence.domain.core.DomainObject;
+import org.arhor.diploma.data.persistence.repository.BaseRepository;
 import org.arhor.diploma.exception.EntityNotFoundException;
 import org.arhor.diploma.testutils.RandomParameter;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;

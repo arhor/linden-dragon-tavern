@@ -1,4 +1,4 @@
-package org.arhor.diploma.data.persist.domain
+package org.arhor.diploma.data.persistence.domain
 
 import org.arhor.diploma.commons.BitSet32
 import javax.persistence.Column

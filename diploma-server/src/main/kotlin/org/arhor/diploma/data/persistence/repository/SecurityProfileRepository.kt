@@ -1,6 +1,6 @@
-package org.arhor.diploma.data.persist.repository
+package org.arhor.diploma.data.persistence.repository
 
-import org.arhor.diploma.data.persist.domain.SecurityProfile
+import org.arhor.diploma.data.persistence.domain.SecurityProfile
 import org.springframework.stereotype.Repository
 
 @Repository

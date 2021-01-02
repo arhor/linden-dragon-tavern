@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
 @Configuration
-@EntityScan("org.arhor.diploma.data.persist.domain")
-@EnableJpaRepositories("org.arhor.diploma.data.persist.repository")
+@EntityScan("org.arhor.diploma.data.persistence.domain")
+@EnableJpaRepositories("org.arhor.diploma.data.persistence.repository")
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 @EnableTransactionManagement
 class DatabaseConfig
