@@ -4,7 +4,7 @@ plugins {
 
 group = "org.arhor"
 version = "0.0.1-SNAPSHOT"
-description = "commons"
+description = "server-commons"
 
 repositories {
     mavenLocal()

@@ -47,7 +47,7 @@ dependencies {
     runtimeOnly("org.postgresql:postgresql")
 
     implementation(project(":diploma-shared"))
-    implementation(project(":diploma-server:commons"))
+    implementation(project(":diploma-server:server-commons"))
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
