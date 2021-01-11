@@ -17,20 +17,16 @@ import java.lang.invoke.MethodHandles
 class AuditAspect(private val auditEventRepository: AuditEventRepository) {
 
     @Pointcut("within(@org.springframework.stereotype.Repository *)")
-    fun repository() { /* no-op */
-    }
+    fun repository() { /* no-op */ }
 
     @Pointcut("!within(@org.arhor.diploma.data.persistence.DisableAudit *)")
-    fun auditEnabled() { /* no-op */
-    }
+    fun auditEnabled() { /* no-op */ }
 
     @Pointcut("execution(* org.arhor.diploma.data.persistence.repository.*Repository.save*(..))")
-    fun saveEvent() { /* no-op */
-    }
+    fun saveEvent() { /* no-op */ }
 
     @Pointcut("execution(* org.arhor.diploma.data.persistence.repository.*Repository.delete*(..))")
-    fun deleteEvent() { /* no-op */
-    }
+    fun deleteEvent() { /* no-op */ }
 
     @Around(value = "repository() && auditEnabled() && (saveEvent() || deleteEvent()) && target(repository)")
     fun <T : DomainObject<K>, K : Serializable> handlePersistenceEvent(

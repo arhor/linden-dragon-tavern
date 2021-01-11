@@ -1,4 +1,4 @@
-package org.arhor.diploma.config
+package org.arhor.diploma.data.config
 
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.context.annotation.Configuration

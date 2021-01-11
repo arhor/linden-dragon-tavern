@@ -13,6 +13,15 @@ plugins {
 }
 
 allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven {
+            setUrl("https://repo.spring.io/milestone")
+        }
+    }
+
     tasks {
         withType<JavaCompile> {
             options.compilerArgs.addAll(

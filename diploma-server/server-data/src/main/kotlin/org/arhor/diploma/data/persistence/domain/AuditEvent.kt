@@ -1,7 +1,7 @@
 package org.arhor.diploma.data.persistence.domain
 
+import org.arhor.diploma.data.STATIC_HASH_CODE
 import org.arhor.diploma.data.persistence.domain.core.DomainObject
-import org.arhor.diploma.util.Common
 import java.time.LocalDateTime
 import javax.persistence.*
 
@@ -42,7 +42,7 @@ class AuditEvent : DomainObject<Long>() {
     }
 
     override fun hashCode(): Int {
-        return Common.STATIC_HASH_CODE
+        return STATIC_HASH_CODE
     }
 
     override fun toString(): String {

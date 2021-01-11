@@ -1,6 +1,6 @@
-package org.arhor.diploma.config
+package org.arhor.diploma.data.config
 
-import org.arhor.diploma.util.Cache
+import org.arhor.diploma.data.Cache
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.EnableCaching
