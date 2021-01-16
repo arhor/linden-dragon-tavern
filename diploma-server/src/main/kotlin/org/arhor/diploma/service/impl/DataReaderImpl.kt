@@ -21,7 +21,7 @@ abstract class DataReaderImpl<T : Identifiable<K>, K : Serializable>(
     protected val data: Set<T> by lazy(::loadData)
 
     override fun getOne(id: K): T {
-        return data.first { it.getId() == id }
+        return data.first { it.id == id }
     }
 
     override fun getList(): List<T> {

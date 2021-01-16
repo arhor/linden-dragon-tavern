@@ -17,8 +17,10 @@ data class Monster(
     val challengeRating: Double
 ) : Identifiable<String> {
 
-    @JsonIgnore
-    override fun getId(): String? = name
+
+    override val id: String
+        @JsonIgnore
+        get() = name
 
     @JsonInclude(NON_NULL)
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -45,7 +47,8 @@ data class Monster(
         val legendaryActions: List<Action>?
     ) : Identifiable<String> {
 
-        @JsonIgnore
-        override fun getId(): String? = name
+        override val id: String
+            @JsonIgnore
+            get() = name
     }
 }

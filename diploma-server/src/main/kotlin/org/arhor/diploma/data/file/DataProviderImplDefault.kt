@@ -43,7 +43,7 @@ abstract class DataProviderImplDefault<
     }
 
     override fun getDetails(id: K): D {
-        return data.find { it.getId() == id } ?: throw EntityNotFoundException(
+        return data.find { it.id == id } ?: throw EntityNotFoundException(
             entityType = resourceName,
             propertyName = "id",
             propertyValue = id

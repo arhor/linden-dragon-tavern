@@ -1,26 +1,46 @@
 package org.arhor.diploma.data.persistence.domain.core
 
-import org.arhor.diploma.commons.MutableIdentity
+import org.arhor.diploma.commons.Identifiable
+import org.arhor.diploma.data.persistence.domain.extension.ObjectExtensionLoader
+import org.arhor.diploma.commons.Extensible
 import java.io.Serializable
-import javax.persistence.GeneratedValue
-import javax.persistence.GenerationType
-import javax.persistence.Id
-import javax.persistence.MappedSuperclass
+import javax.persistence.*
 
 @MappedSuperclass
-abstract class DomainObject<T : Serializable> : MutableIdentity<T> {
+@EntityListeners(ObjectExtensionLoader::class)
+abstract class DomainObject<T : Serializable> : Identifiable<T>, Extensible, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private var id: T? = null
+    override var id: T? = null
 
-    override fun getId(): T? {
-        return id
+    // ******* Domain object extension infrastructure *******
+
+    abstract val tableName: String
+
+    @Transient
+    private val _extState: MutableMap<String, Any?> = HashMap()
+
+    final override val names: Set<String>
+        get() = _extState.keys.toSet()
+
+    final override operator fun get(name: String): Any? {
+        return _extState[name]
     }
 
-    override fun setId(id: T?) {
-        this.id = id
+    final override operator fun set(name: String, value: Any?) {
+        _extState[name] = value
     }
+
+    final override fun remove(name: String) {
+        _extState.remove(name)
+    }
+
+    final override fun clear() {
+        _extState.clear()
+    }
+
+    // ******* `equals`/`hashCode` overrides *******
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

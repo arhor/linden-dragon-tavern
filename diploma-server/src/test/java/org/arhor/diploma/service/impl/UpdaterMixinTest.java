@@ -1,6 +1,6 @@
 package org.arhor.diploma.service.impl;
 
-import org.arhor.diploma.commons.MutableIdentity;
+import org.arhor.diploma.commons.Identifiable;
 import org.arhor.diploma.data.persistence.domain.core.DomainObject;
 import org.arhor.diploma.data.persistence.repository.BaseRepository;
 import org.arhor.diploma.exception.EntityNotFoundException;
@@ -27,13 +27,13 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 class UpdaterMixinTest {
 
-    @Mock private Converter<DomainObject<String>, MutableIdentity<String>> converter;
+    @Mock private Converter<DomainObject<String>, Identifiable<String>> converter;
     @Mock private BaseRepository<DomainObject<String>, String> repository;
-    @Mock private MutableIdentity<String> testDto;
+    @Mock private Identifiable<String> testDto;
     @Mock private DomainObject<String> testEntity;
 
     @InjectMocks
-    private UpdaterMixin<DomainObject<String>, MutableIdentity<String>, String> updaterUnderTest;
+    private UpdaterMixin<DomainObject<String>, Identifiable<String>, String> updaterUnderTest;
 
     @Test
     void shouldThrowIllegalArgumentException() {

@@ -11,6 +11,9 @@ import javax.persistence.*
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 class Account : AuditableDomainObject<Long>() {
 
+    override val tableName: String
+        get() = "accounts"
+
     @Column(unique = true, nullable = false, length = 30)
     var username: String? = null
 

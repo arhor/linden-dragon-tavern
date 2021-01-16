@@ -29,7 +29,7 @@ class DeleterMixin<
     }
 
     override fun delete(item: D) {
-        item.getId()?.let { delete(it) }
+        item.id?.let { delete(it) }
             ?: throw IllegalArgumentException("Passed item has not set $KEY_PROPERTY value, so it cannot be deleted")
     }
 

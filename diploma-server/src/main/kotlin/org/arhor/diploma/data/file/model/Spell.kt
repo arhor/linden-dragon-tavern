@@ -93,10 +93,12 @@ data class Spell(
         val subclasses: List<String>,
     ) : Identifiable<String> {
 
-        @JsonIgnore
-        override fun getId(): String? = name
+        override val id: String
+            @JsonIgnore
+            get() = name
     }
 
-    @JsonIgnore
-    override fun getId(): String? = name
+    override val id: String
+        @JsonIgnore
+        get() = name
 }

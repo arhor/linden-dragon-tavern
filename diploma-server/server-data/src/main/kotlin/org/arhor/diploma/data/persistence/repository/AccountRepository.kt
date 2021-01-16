@@ -1,6 +1,7 @@
 package org.arhor.diploma.data.persistence.repository
 
 import org.arhor.diploma.data.Cache
+import org.arhor.diploma.data.audit.Audit
 import org.arhor.diploma.data.persistence.domain.Account
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.Cacheable
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
 
+@Audit(table = "test_audit_table")
 @Repository
 interface AccountRepository : BaseRepository<Account, Long> {
 
@@ -31,6 +33,6 @@ interface AccountRepository : BaseRepository<Account, Long> {
     @Transactional
     @CacheEvict(cacheNames = [Cache.Names.ACCOUNT_BY_USERNAME], key = "#entity.username")
     override fun delete(entity: Account) {
-        entity.getId()?.let { deleteById(it) }
+        entity.id?.let { deleteById(it) }
     }
 }

@@ -1,10 +1,9 @@
-package org.arhor.diploma.data.persistence.domain
+package org.arhor.diploma.data.audit
 
 import org.arhor.diploma.data.persistence.domain.core.DomainObject
 import javax.persistence.*
 
-@Entity
-@Table(name = "audit_data")
+
 class AuditData : DomainObject<Long>() {
 
     @Column(nullable = false)
@@ -19,4 +18,7 @@ class AuditData : DomainObject<Long>() {
     @ManyToOne(optional = false)
     @MapsId("audit_event_id")
     var auditEvent: AuditEvent? = null
+
+    override val tableName: String
+        get() = TODO("Not yet implemented")
 }

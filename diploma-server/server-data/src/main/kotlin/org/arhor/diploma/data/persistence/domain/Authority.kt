@@ -13,6 +13,9 @@ import javax.persistence.Table
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 class Authority : DomainObject<Long>() {
 
+    override val tableName: String
+        get() = "authorities"
+
     @Column(unique = true, nullable = false)
     var name: String? = null
 

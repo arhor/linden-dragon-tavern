@@ -4,5 +4,5 @@ import java.io.Serializable
 
 interface Identifiable<T : Serializable> {
 
-    fun getId(): T?
+    val id: T?
 }

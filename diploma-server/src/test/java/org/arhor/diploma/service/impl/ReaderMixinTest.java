@@ -1,6 +1,6 @@
 package org.arhor.diploma.service.impl;
 
-import org.arhor.diploma.commons.MutableIdentity;
+import org.arhor.diploma.commons.Identifiable;
 import org.arhor.diploma.data.persistence.domain.core.DomainObject;
 import org.arhor.diploma.data.persistence.repository.BaseRepository;
 import org.arhor.diploma.exception.EntityNotFoundException;
@@ -33,14 +33,14 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 class ReaderMixinTest {
 
-    @Mock private Converter<DomainObject<String>, MutableIdentity<String>> converter;
+    @Mock private Converter<DomainObject<String>, Identifiable<String>> converter;
     @Mock private BaseRepository<DomainObject<String>, String> repository;
-    @Mock private MutableIdentity<String> testDto;
+    @Mock private Identifiable<String> testDto;
     @Mock private DomainObject<String> testEntity;
     @Mock private Page<DomainObject<String>> pageResponse;
 
     @InjectMocks
-    private ReaderMixin<DomainObject<String>, MutableIdentity<String>, String> readerUnderTest;
+    private ReaderMixin<DomainObject<String>, Identifiable<String>, String> readerUnderTest;
 
     @Test
     void shouldReturnProperResultList() {

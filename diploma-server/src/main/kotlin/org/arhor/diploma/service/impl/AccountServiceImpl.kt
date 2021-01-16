@@ -14,8 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.lang.invoke.MethodHandles
-import javax.annotation.PostConstruct
-import kotlin.reflect.KProperty1
 
 @Service
 @Transactional
@@ -23,19 +21,6 @@ class AccountServiceImpl(
     private val repository: AccountRepository,
     converter: AccountConverter
 ) : AbstractService<Account, AccountDTO, Long>(converter, repository), AccountService {
-
-    @PostConstruct
-    fun lola() {
-        repository.save(
-            Account().apply {
-                username = "Maxim"
-                password = "123456789"
-                email = "test@test"
-                firstName = "Max"
-                lastName = "Burishinets"
-            }
-        )
-    }
 
     override fun loadUserByUsername(username: String?): UserDetails {
         return username?.let {
@@ -62,9 +47,6 @@ class AccountServiceImpl(
     override fun getAccounts(page: Int, size: Int) = getList(page, size)
 
     override fun createAccount(accountDTO: AccountDTO): Long {
-
-        val kMutableProperty1: KProperty1<AccountDTO, String?> = AccountDTO::email
-
         accountDTO.username
             ?.let { username -> repository.findByUsername(username) }
             ?.ifPresent { account ->
@@ -73,7 +55,7 @@ class AccountServiceImpl(
                 throw RuntimeException(message)
             }
 
-        return create(accountDTO).getId() ?: throw IllegalStateException("Entity ID must be generated!")
+        return create(accountDTO).id ?: throw IllegalStateException("Entity ID must be generated!")
     }
 
     override fun deleteAccount(id: Long) {

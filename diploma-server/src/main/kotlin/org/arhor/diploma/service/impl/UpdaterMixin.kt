@@ -17,7 +17,7 @@ class UpdaterMixin<
 ) : Updater<D, K> {
 
     override fun update(item: D): D {
-        return item.getId()?.let {
+        return item.id?.let {
             val entity = repository
                 .findById(it)
                 .orElseThrow {

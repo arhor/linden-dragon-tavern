@@ -1,5 +1,6 @@
 package org.arhor.diploma.service.dto
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import org.arhor.diploma.commons.Identifiable
 
@@ -10,7 +11,7 @@ data class Skill(
     var abilityScore: String?
 ) : Identifiable<String> {
 
-    override fun getId(): String? {
-        return name
-    }
+    override val id: String?
+        @JsonIgnore
+        get() = name
 }

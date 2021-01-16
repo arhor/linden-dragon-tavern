@@ -16,7 +16,7 @@ class CreatorMixin<
 ) : Creator<D, K> {
 
     override fun create(item: D): D {
-        item.getId()?.let {
+        item.id?.let {
             throw IllegalArgumentException("New entity must have $KEY_PROPERTY = null, but passed object has [$it]")
         }
 

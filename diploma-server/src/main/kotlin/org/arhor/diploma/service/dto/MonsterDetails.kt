@@ -30,8 +30,7 @@ data class MonsterDetails(
     val legendaryActions: List<Action>?
 ) : Identifiable<String> {
 
-    @JsonIgnore
-    override fun getId(): String? {
-        return name
-    }
+    override val id: String
+        @JsonIgnore
+        get() = name
 }

@@ -1,6 +1,6 @@
 package org.arhor.diploma.service.impl;
 
-import org.arhor.diploma.commons.MutableIdentity;
+import org.arhor.diploma.commons.Identifiable;
 import org.arhor.diploma.data.persistence.domain.core.DomainObject;
 import org.arhor.diploma.data.persistence.repository.BaseRepository;
 import org.arhor.diploma.exception.EntityNotFoundException;
@@ -26,11 +26,11 @@ import static org.mockito.Mockito.*;
 class DeleterMixinTest {
 
     @Mock private BaseRepository<DomainObject<String>, String> repository;
-    @Mock private MutableIdentity<String> testDto;
+    @Mock private Identifiable<String> testDto;
     @Mock private DomainObject<String> testEntity;
 
     @InjectMocks
-    private DeleterMixin<DomainObject<String>, MutableIdentity<String>, String> deleterUnderTest;
+    private DeleterMixin<DomainObject<String>, Identifiable<String>, String> deleterUnderTest;
 
     @Test
     void shouldThrowIllegalArgumentException() {
