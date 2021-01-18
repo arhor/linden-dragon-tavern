@@ -1,7 +1,8 @@
 package org.arhor.diploma.data.persistence.domain
 
-import org.arhor.diploma.data.persistence.domain.core.AuditableDomainObject
 import org.arhor.diploma.data.STATIC_HASH_CODE
+import org.arhor.diploma.data.persistence.domain.core.AuditableDomainObject
+import org.arhor.diploma.data.persistence.domain.core.DomainObject
 import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import javax.persistence.*
@@ -9,6 +10,11 @@ import javax.persistence.*
 @Entity
 @Table(name = "security_profiles")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@SequenceGenerator(
+    name = DomainObject.SEQ_GEN_NAME,
+    sequenceName = "security_profiles_id_seq",
+    allocationSize = DomainObject.SEQ_ALLOC_SIZE,
+)
 class SecurityProfile : AuditableDomainObject<Long>() {
 
     override val tableName: String

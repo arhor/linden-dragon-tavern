@@ -6,11 +6,17 @@ import org.hibernate.annotations.Cache
 import org.hibernate.annotations.CacheConcurrencyStrategy
 import javax.persistence.Column
 import javax.persistence.Entity
+import javax.persistence.SequenceGenerator
 import javax.persistence.Table
 
 @Entity
 @Table(name = "authorities")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@SequenceGenerator(
+    name = DomainObject.SEQ_GEN_NAME,
+    sequenceName = "authorities_id_seq",
+    allocationSize = DomainObject.SEQ_ALLOC_SIZE
+)
 class Authority : DomainObject<Long>() {
 
     override val tableName: String

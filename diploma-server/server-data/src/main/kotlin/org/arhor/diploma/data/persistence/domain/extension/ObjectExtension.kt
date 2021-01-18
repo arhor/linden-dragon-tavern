@@ -1,21 +1,15 @@
 package org.arhor.diploma.data.persistence.domain.extension
 
 import org.arhor.diploma.commons.Identifiable
-import org.arhor.diploma.data.persistence.domain.core.CompositeId3
 import java.io.Serializable
 import javax.persistence.*
 
 @Entity
 @Table(name = "object_extension")
-class ObjectExtension : Identifiable<CompositeId3<Long, String, String>> {
+class ObjectExtension : Identifiable<ObjectExtension.CompositeId> {
 
     @EmbeddedId
-    @AttributeOverrides(
-        AttributeOverride(name = "value1", column = Column(name = "obj_id")),
-        AttributeOverride(name = "value2", column = Column(name = "obj_table")),
-        AttributeOverride(name = "value3", column = Column(name = "field_name")),
-    )
-    override var id: CompositeId3<Long, String, String>? = null
+    override var id: CompositeId? = null
 
     @Column(name = "field_type")
     var fieldType: String? = null

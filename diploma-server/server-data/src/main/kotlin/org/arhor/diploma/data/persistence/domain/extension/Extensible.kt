@@ -1,4 +1,4 @@
-package org.arhor.diploma.commons
+package org.arhor.diploma.data.persistence.domain.extension
 
 interface Extensible {
 

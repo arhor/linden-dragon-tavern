@@ -2,45 +2,27 @@ package org.arhor.diploma.data.persistence.domain.core
 
 import org.arhor.diploma.commons.Identifiable
 import org.arhor.diploma.data.persistence.domain.extension.ObjectExtensionLoader
-import org.arhor.diploma.commons.Extensible
+import org.arhor.diploma.data.persistence.domain.extension.Extensible
+import org.arhor.diploma.data.persistence.domain.extension.ExtendedState
 import java.io.Serializable
 import javax.persistence.*
 
+/**
+ * Base class for any entity used in the application.
+ *
+ * @param T primary key type
+ */
 @MappedSuperclass
 @EntityListeners(ObjectExtensionLoader::class)
-abstract class DomainObject<T : Serializable> : Identifiable<T>, Extensible, Serializable {
+abstract class DomainObject<T : Serializable>
+    : Identifiable<T>, Serializable, Extensible by ExtendedState() {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_GEN_NAME)
+    @Column(name = "id", nullable = false, updatable = false)
     override var id: T? = null
 
-    // ******* Domain object extension infrastructure *******
-
     abstract val tableName: String
-
-    @Transient
-    private val _extState: MutableMap<String, Any?> = HashMap()
-
-    final override val names: Set<String>
-        get() = _extState.keys.toSet()
-
-    final override operator fun get(name: String): Any? {
-        return _extState[name]
-    }
-
-    final override operator fun set(name: String, value: Any?) {
-        _extState[name] = value
-    }
-
-    final override fun remove(name: String) {
-        _extState.remove(name)
-    }
-
-    final override fun clear() {
-        _extState.clear()
-    }
-
-    // ******* `equals`/`hashCode` overrides *******
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -53,5 +35,20 @@ abstract class DomainObject<T : Serializable> : Identifiable<T>, Extensible, Ser
 
     override fun hashCode(): Int {
         return id?.hashCode() ?: 0
+    }
+
+    companion object {
+        /**
+         * Sequence generator name to be used in subclasses in pair with [javax.persistence.SequenceGenerator]
+         * annotation to define database primary key sequence name for the concrete entity.
+         */
+        const val SEQ_GEN_NAME = "SEQ_GEN"
+
+        /**
+         * Number of pre-allocated keys by the sequence generator:
+         * - in cases when there is only one database client it can be greater then 1
+         * - in cases when there are multiple database clients it MUST be set to 1
+         */
+        const val SEQ_ALLOC_SIZE = 50
     }
 }

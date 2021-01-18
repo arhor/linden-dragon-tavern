@@ -9,24 +9,17 @@ import javax.persistence.*
 class ObjectExtensionLoader {
 
     @Autowired
-    fun init(database: EntityManager) {
-        ObjectExtensionLoader.database = database
+    fun init(database: ObjectExtensionRepository) {
+        ObjectExtensionLoader.repository = database
     }
 
     @PostLoad
     fun loadExtendedState(obj: DomainObject<*>) {
-        database.createQuery(
-            """
-            SELECT ext
-            FROM ObjectExtension ext
-            WHERE ext.id.value1 = ?1
-              AND ext.id.value2 = ?2
-            """.trimIndent(),
-            OBJ_EXT_TYPE)
-            .setParameter(1, obj.id)
-            .setParameter(2, obj.tableName)
-            .resultList
-            .forEach { obj[it.id!!.value3!!] = it.fieldValue }
+        repository
+            .findObjectExtensions(obj.id, obj.tableName)
+            .associate { it.id!!.fieldName to it.fieldValue }
+
+
     }
 
     @PrePersist
@@ -60,8 +53,6 @@ class ObjectExtensionLoader {
     }
 
     companion object {
-        private val OBJ_EXT_TYPE = ObjectExtension::class.java
-
-        private lateinit var database: EntityManager
+        private lateinit var repository: ObjectExtensionRepository
     }
 }
