@@ -1,5 +1,6 @@
-package org.arhor.diploma.data.audit
+package org.arhor.diploma.data.persistence.audit
 
+import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject
 import org.arhor.diploma.data.persistence.domain.core.DomainObject
 import org.arhor.diploma.data.persistence.repository.BaseRepository
 import org.aspectj.lang.ProceedingJoinPoint
@@ -7,7 +8,6 @@ import org.aspectj.lang.annotation.Around
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Pointcut
 import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
 import java.io.Serializable
 import java.lang.invoke.MethodHandles
 import java.time.LocalDateTime
@@ -20,43 +20,45 @@ import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.javaType
 
 @Aspect
-@Component
+//@Component
 class AuditAspect(private val auditEventRepository: AuditEventRepository) {
 
     private val auditMetadata: ConcurrentMap<KClass<*>, Audit> = ConcurrentHashMap()
     private val shouldNotBeAudited: MutableSet<KClass<*>> = ConcurrentSkipListSet()
 
     @Pointcut("@within(audit)")
-    fun auditEnabled(audit: Audit) { /* no-op */ }
+    fun auditEnabled(audit: Audit) { /* no-op */
+    }
 
     @Pointcut("execution(* org.arhor.diploma.data.persistence.repository.BaseRepository+.save*(..))")
-    fun saveEvent() { /* no-op */ }
+    fun saveEvent() { /* no-op */
+    }
 
     @Pointcut("execution(* org.arhor.diploma.data.persistence.repository.BaseRepository+.delete*(..))")
-    fun deleteEvent() { /* no-op */ }
+    fun deleteEvent() { /* no-op */
+    }
 
-    @Around(value = "(saveEvent() || deleteEvent()) && target(domainObjRepository)")
-    fun <T : DomainObject<K>, K : Serializable> handlePersistenceEvent(
-        joinPoint: ProceedingJoinPoint,
-        domainObjRepository: BaseRepository<T, K>,
-    ): Any? {
+    @Around(value = "(saveEvent() || deleteEvent()) && target(repository)")
+    fun <T, K> handlePersistenceEvent(jp: ProceedingJoinPoint, repository: BaseRepository<T, K>): Any?
+            where T : DeletableDomainObject<K>,
+                  K : Serializable {
 
-        val repositoryClass = domainObjRepository::class
+        val repositoryClass = repository::class
 
         if (shouldNotBeAudited.contains(repositoryClass)) {
-            return joinPoint.proceed()
+            return jp.proceed()
         }
 
         val auditAnnotation = findAuditAnnotation(repositoryClass)
 
         if (auditAnnotation == null) {
             shouldNotBeAudited.add(repositoryClass)
-            return joinPoint.proceed()
+            return jp.proceed()
         } else {
             auditMetadata[repositoryClass] = auditAnnotation as Audit
         }
 
-        val result: Any? = joinPoint.proceed()
+        val result: Any? = jp.proceed()
 
         auditEventRepository.saveAuditEvent(
             AuditEvent(

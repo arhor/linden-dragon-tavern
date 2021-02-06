@@ -1,21 +1,21 @@
 package org.arhor.diploma.service.impl
 
+import org.arhor.diploma.commons.Converter
 import org.arhor.diploma.commons.Identifiable
-import org.arhor.diploma.data.persistence.domain.core.DomainObject
+import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject
 import org.arhor.diploma.data.persistence.repository.BaseRepository
 import org.arhor.diploma.exception.EntityNotFoundException
 import org.arhor.diploma.service.Reader
-import org.arhor.diploma.commons.Converter
 import org.springframework.data.domain.PageRequest
 import java.io.Serializable
 
-class ReaderMixin<
-        E : DomainObject<K>,
-        D : Identifiable<K>,
-        K : Serializable>(
+class ReaderMixin<E, D, K>(
     private val converter: Converter<E, D>,
     private val repository: BaseRepository<E, K>
-) : Reader<D, K> {
+) : Reader<D, K>
+        where E : DeletableDomainObject<K>,
+              D : Identifiable<K>,
+              K : Serializable {
 
     override fun getOne(id: K): D {
         return repository
@@ -23,9 +23,9 @@ class ReaderMixin<
             .map { converter.entityToDto(it) }
             .orElseThrow {
                 EntityNotFoundException(
-                    entityType = repository.getEntityName(),
-                    propertyName = KEY_PROPERTY,
-                    propertyValue = id
+                    entityType = repository.entityType.simpleName,
+                    propName = KEY_PROPERTY,
+                    propValue = id
                 )
             }
     }

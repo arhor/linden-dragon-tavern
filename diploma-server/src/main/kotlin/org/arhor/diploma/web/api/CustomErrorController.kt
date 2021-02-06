@@ -1,7 +1,7 @@
 package org.arhor.diploma.web.api
 
-import org.arhor.diploma.config.props.CustomProperties
 import org.arhor.diploma.web.model.messageResponse
+import org.springframework.boot.autoconfigure.web.ErrorProperties
 import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeAttribute
 import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeStacktrace
 import org.springframework.boot.web.error.ErrorAttributeOptions
@@ -17,8 +17,9 @@ import javax.servlet.RequestDispatcher
 @RestController
 class CustomErrorController(
     private val attributes: ErrorAttributes,
-    private val customProps: CustomProperties
 ) : ErrorController {
+
+    private val errorProps = ErrorProperties()
 
     override fun getErrorPath(): String = ERROR_PATH
 
@@ -68,7 +69,7 @@ class CustomErrorController(
 
     private fun getErrorAttributeOptions(req: WebRequest): ErrorAttributeOptions {
         var options = ErrorAttributeOptions.defaults()
-        if (customProps.error.isIncludeException) {
+        if (errorProps.isIncludeException) {
             options = options.including(ErrorAttributeOptions.Include.EXCEPTION)
         }
         if (isIncludeStackTrace(req)) {
@@ -84,13 +85,13 @@ class CustomErrorController(
     }
 
     private fun isIncludeMessage(req: WebRequest): Boolean {
-        return isIncludeAttribute(customProps.error.includeMessage) {
+        return isIncludeAttribute(errorProps.includeMessage) {
             getBooleanParameter(req, "message")
         }
     }
 
     private fun isIncludeBindingErrors(req: WebRequest): Boolean {
-        return isIncludeAttribute(customProps.error.includeBindingErrors) {
+        return isIncludeAttribute(errorProps.includeBindingErrors) {
             getBooleanParameter(req, "errors")
         }
     }
@@ -104,7 +105,7 @@ class CustomErrorController(
     }
 
     private fun isIncludeStackTrace(req: WebRequest): Boolean {
-        return when (customProps.error.includeStacktrace) {
+        return when (errorProps.includeStacktrace) {
             IncludeStacktrace.ALWAYS -> true
             IncludeStacktrace.ON_PARAM -> getBooleanParameter(req, "trace")
             else -> false

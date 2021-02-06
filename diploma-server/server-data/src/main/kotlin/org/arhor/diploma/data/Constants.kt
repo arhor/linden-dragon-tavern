@@ -1,8 +1,5 @@
 package org.arhor.diploma.data
 
-// Because of Hibernate entities with generated ID should have fixed hashCode value
-const val STATIC_HASH_CODE = 31
-
 object Cache {
 
     object Names {

@@ -9,6 +9,9 @@ data class CompositeId3<A, B, C>(
     var value2: B,
     var value3: C,
 ) : Serializable
+        where A : Serializable,
+              B : Serializable,
+              C : Serializable
 
 
 

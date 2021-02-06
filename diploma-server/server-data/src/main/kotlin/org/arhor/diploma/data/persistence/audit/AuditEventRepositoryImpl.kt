@@ -1,13 +1,19 @@
-package org.arhor.diploma.data.audit
+package org.arhor.diploma.data.persistence.audit
 
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.core.ResultSetExtractor
 import org.springframework.stereotype.Repository
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.ConcurrentMap
+import javax.persistence.EntityManager
+import javax.persistence.PersistenceContext
 
 @Repository
 class AuditEventRepositoryImpl(private val db: JdbcTemplate) : AuditEventRepository {
+
+    @PersistenceContext
+    lateinit var em: EntityManager
 
     private val existingAuditTables: ConcurrentMap<String, Boolean> = ConcurrentHashMap()
     private val failedAuditTables: MutableSet<String> = HashSet()
@@ -21,15 +27,13 @@ class AuditEventRepositoryImpl(private val db: JdbcTemplate) : AuditEventReposit
     private fun insertNewAuditRecord(auditTableName: String, event: AuditEvent) {
         val (_, type, entityId, principal, timestamp) = event
 
-
-
-        db.update(
-            "INSERT INTO $auditTableName (type,entityId,principal,timestamp) VALUES (?,?,?,?)",
-            type,
-            entityId,
-            principal,
-            timestamp
-        )
+//        db.update(
+//            "INSERT INTO $auditTableName (type,entityId,principal,timestamp) VALUES (?,?,?,?)",
+//            type,
+//            entityId,
+//            principal,
+//            timestamp
+//        )
     }
 
     private fun ensureAuditTableExists(table: String): Boolean {

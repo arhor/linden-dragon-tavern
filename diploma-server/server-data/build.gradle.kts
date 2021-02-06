@@ -46,13 +46,13 @@ dependencies {
     testImplementation("org.flywaydb:flyway-core")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.security:spring-security-test")
-    testImplementation("org.testcontainers:postgresql:${Versions.testcontainers}")
-    testImplementation("org.testcontainers:junit-jupiter:${Versions.testcontainers}")
+    testImplementation("org.testcontainers:postgresql:${Deps.testcontainers}")
+    testImplementation("org.testcontainers:junit-jupiter:${Deps.testcontainers}")
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion(Versions.javaGlobal)
-    targetCompatibility = JavaVersion.toVersion(Versions.javaGlobal)
+    sourceCompatibility = JavaVersion.toVersion(Deps.javaGlobal)
+    targetCompatibility = JavaVersion.toVersion(Deps.javaGlobal)
 }
 
 allOpen {

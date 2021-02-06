@@ -72,7 +72,7 @@ class ExceptionController(
                 code = 404
                 text = lang.localize("error.entity.notfound")
                 details = listOf(
-                    lang.localize("error.entity.notfound.details", e.entityType, e.propertyName, e.propertyValue)
+                    lang.localize("error.entity.notfound.details", e.entityType, e.propName, e.propValue)
                 )
             }
         }

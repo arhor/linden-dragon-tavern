@@ -1,20 +1,20 @@
 package org.arhor.diploma.service.impl
 
+import org.arhor.diploma.commons.Converter
 import org.arhor.diploma.commons.Identifiable
-import org.arhor.diploma.data.persistence.domain.core.DomainObject
+import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject
 import org.arhor.diploma.data.persistence.repository.BaseRepository
 import org.arhor.diploma.exception.EntityNotFoundException
 import org.arhor.diploma.service.Updater
-import org.arhor.diploma.commons.Converter
 import java.io.Serializable
 
-class UpdaterMixin<
-        E : DomainObject<K>,
-        D : Identifiable<K>,
-        K : Serializable>(
+class UpdaterMixin<E, D, K>(
     private val converter: Converter<E, D>,
-    private val repository: BaseRepository<E, K>
-) : Updater<D, K> {
+    private val repository: BaseRepository<E, K>,
+) : Updater<D, K>
+        where E : DeletableDomainObject<K>,
+              D : Identifiable<K>,
+              K : Serializable {
 
     override fun update(item: D): D {
         return item.id?.let {
@@ -22,9 +22,9 @@ class UpdaterMixin<
                 .findById(it)
                 .orElseThrow {
                     EntityNotFoundException(
-                        entityType = repository.getEntityName(),
-                        propertyName = KEY_PROPERTY,
-                        propertyValue = it
+                        entityType = repository.entityType.simpleName,
+                        propName = KEY_PROPERTY,
+                        propValue = it
                     )
                 }
 

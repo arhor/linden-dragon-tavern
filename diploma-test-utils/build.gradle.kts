@@ -14,14 +14,14 @@ repositories {
 }
 
 dependencies {
-    implementation("ch.qos.logback:logback-core:${Versions.logback}")
-    implementation("ch.qos.logback:logback-classic:${Versions.logback}")
-    implementation("org.slf4j:slf4j-api:${Versions.slf4j}")
-    implementation("org.assertj:assertj-core:${Versions.assertJCore}")
-    implementation("org.junit.jupiter:junit-jupiter-api:${Versions.junitJupiter}")
+    implementation("ch.qos.logback:logback-core:${Deps.logback}")
+    implementation("ch.qos.logback:logback-classic:${Deps.logback}")
+    implementation("org.slf4j:slf4j-api:${Deps.slf4j}")
+    implementation("org.assertj:assertj-core:${Deps.assertJCore}")
+    implementation("org.junit.jupiter:junit-jupiter-api:${Deps.junitJupiter}")
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion(Versions.javaGlobal)
-    targetCompatibility = JavaVersion.toVersion(Versions.javaGlobal)
+    sourceCompatibility = JavaVersion.toVersion(Deps.javaGlobal)
+    targetCompatibility = JavaVersion.toVersion(Deps.javaGlobal)
 }

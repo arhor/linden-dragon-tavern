@@ -1,7 +1,7 @@
 package org.arhor.diploma.service.impl;
 
 import org.arhor.diploma.commons.Identifiable;
-import org.arhor.diploma.data.persistence.domain.core.DomainObject;
+import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject;
 import org.arhor.diploma.data.persistence.repository.BaseRepository;
 import org.arhor.diploma.exception.EntityNotFoundException;
 import org.arhor.diploma.testutils.RandomParameter;
@@ -25,12 +25,12 @@ import static org.mockito.Mockito.*;
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 class DeleterMixinTest {
 
-    @Mock private BaseRepository<DomainObject<String>, String> repository;
+    @Mock private BaseRepository<DeletableDomainObject<String>, String> repository;
     @Mock private Identifiable<String> testDto;
-    @Mock private DomainObject<String> testEntity;
+    @Mock private DeletableDomainObject<String> testEntity;
 
     @InjectMocks
-    private DeleterMixin<DomainObject<String>, Identifiable<String>, String> deleterUnderTest;
+    private DeleterMixin<DeletableDomainObject<String>, Identifiable<String>, String> deleterUnderTest;
 
     @Test
     void shouldThrowIllegalArgumentException() {
@@ -55,7 +55,7 @@ class DeleterMixinTest {
 
         doReturn(testId).when(testDto).getId();
         doReturn(Optional.empty()).when(repository).findById(testId);
-        doReturn(entityName).when(repository).getEntityName();
+        doReturn(entityName).when(repository).getEntityType();
 
         // when
         ThrowingCallable action = () -> deleterUnderTest.delete(testDto);

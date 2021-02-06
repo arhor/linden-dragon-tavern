@@ -29,7 +29,7 @@ configurations {
 dependencies {
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
-    kapt("org.mapstruct:mapstruct-processor:${Versions.mapstruct}")
+    kapt("org.mapstruct:mapstruct-processor:${Deps.mapstruct}")
     kapt("org.springframework:spring-context-indexer")
 
     implementation(project(":diploma-shared"))
@@ -41,9 +41,9 @@ dependencies {
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    implementation("io.jsonwebtoken:jjwt:${Versions.jsonWebToken}")
-    implementation("org.mapstruct:mapstruct:${Versions.mapstruct}")
-    implementation("org.apache.pdfbox:pdfbox:${Versions.pdfBox}")
+    implementation("io.jsonwebtoken:jjwt:${Deps.jsonWebToken}")
+    implementation("org.mapstruct:mapstruct:${Deps.mapstruct}")
+    implementation("org.apache.pdfbox:pdfbox:${Deps.pdfBox}")
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-aop")
@@ -56,16 +56,11 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
 }
 
-val applicationMainClass = "org.arhor.diploma.DiplomaApp"
-val springActiveProfiles = "-Dspring.profiles.active=default,dev"
+val springActiveProfiles = "-Dspring.profiles.active=default,dev,test"
 
 java {
-    sourceCompatibility = JavaVersion.toVersion(Versions.javaGlobal)
-    targetCompatibility = JavaVersion.toVersion(Versions.javaGlobal)
-}
-
-springBoot {
-    mainClass.set(applicationMainClass)
+    sourceCompatibility = JavaVersion.toVersion(Deps.javaGlobal)
+    targetCompatibility = JavaVersion.toVersion(Deps.javaGlobal)
 }
 
 tasks {
@@ -74,12 +69,6 @@ tasks {
             excludeTags(/*"integration"*/)
         }
         jvmArgs = listOf(springActiveProfiles)
-    }
-
-    jar {
-        manifest {
-            attributes["Main-Class"] = applicationMainClass
-        }
     }
 
     bootRun {

@@ -10,12 +10,13 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
+import java.lang.invoke.MethodHandles
 import java.util.*
 
 @Component
 class JwtProvider(
     private val objectMapper: ObjectMapper
-) : TokenProvider<Authentication> {
+) : TokenProvider {
 
     private val jwtParser: JwtParser by lazy(LazyThreadSafetyMode.NONE) {
         Jwts.parser().setSigningKey(secret ?: generateRandomKey())
@@ -33,17 +34,13 @@ class JwtProvider(
         return key
     }
 
-    override fun generate(auth: Authentication): String {
+    override fun generate(principal: UserDetails): String {
         return Jwts.builder()
-            .setSubject(auth.generateSubject())
+            .setSubject(principal.asJsonString())
             .setIssuedAt(Date())
             .setExpiration(Date(System.currentTimeMillis() + (expire ?: DEFAULT_EXPIRE)))
             .signWith(SignatureAlgorithm.HS512, secret)
             .compact()
-    }
-
-    private fun Authentication.generateSubject(): String {
-        return asJsonString { principal }
     }
 
     override fun parse(token: String): String {
@@ -75,31 +72,24 @@ class JwtProvider(
         return false
     }
 
-    private fun asJsonString(principalSource: () -> Any): String {
-        val principal = principalSource() as UserDetails
-
+    private fun UserDetails.asJsonString(): String {
         val roles =
-            principal.authorities.stream()
+            authorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(toArrayNode(objectMapper))
 
         return objectMapper.createObjectNode()
-            .put(FIELD_USERNAME, principal.username)
+            .put(FIELD_USERNAME, username)
             .set<ArrayNode>(FIELD_ROLES, roles)
             .toString()
     }
 
-    override fun authHeaderName(): String {
-        return "Authentication"
-    }
+    override fun authHeaderName(): String = "Authentication"
 
-    override fun authTokenType(): String {
-        return "Bearer"
-    }
+    override fun authTokenType(): String = "Bearer"
 
     companion object {
-        @JvmStatic
-        private val log = LoggerFactory.getLogger(JwtProvider::class.java)
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
 
         const val FIELD_USERNAME = "username"
         const val FIELD_ROLES = "roles"

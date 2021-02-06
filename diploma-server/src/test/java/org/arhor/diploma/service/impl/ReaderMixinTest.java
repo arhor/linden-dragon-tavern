@@ -1,6 +1,7 @@
 package org.arhor.diploma.service.impl;
 
 import org.arhor.diploma.commons.Identifiable;
+import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject;
 import org.arhor.diploma.data.persistence.domain.core.DomainObject;
 import org.arhor.diploma.data.persistence.repository.BaseRepository;
 import org.arhor.diploma.exception.EntityNotFoundException;
@@ -34,13 +35,13 @@ import static org.mockito.Mockito.*;
 class ReaderMixinTest {
 
     @Mock private Converter<DomainObject<String>, Identifiable<String>> converter;
-    @Mock private BaseRepository<DomainObject<String>, String> repository;
+    @Mock private BaseRepository<DeletableDomainObject<String>, String> repository;
     @Mock private Identifiable<String> testDto;
-    @Mock private DomainObject<String> testEntity;
-    @Mock private Page<DomainObject<String>> pageResponse;
+    @Mock private DeletableDomainObject<String> testEntity;
+    @Mock private Page<DeletableDomainObject<String>> pageResponse;
 
     @InjectMocks
-    private ReaderMixin<DomainObject<String>, Identifiable<String>, String> readerUnderTest;
+    private ReaderMixin<DeletableDomainObject<String>, Identifiable<String>, String> readerUnderTest;
 
     @Test
     void shouldReturnProperResultList() {
@@ -86,7 +87,7 @@ class ReaderMixinTest {
         final var entityName = "TEST_ENTITY";
 
         doReturn(Optional.empty()).when(repository).findById(search);
-        doReturn(entityName).when(repository).getEntityName();
+        doReturn(entityName).when(repository).getEntityType();
 
         // when
         ThrowingCallable action = () -> readerUnderTest.getOne(search);

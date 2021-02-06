@@ -9,7 +9,7 @@ import javax.persistence.*
 class ObjectExtension : Identifiable<ObjectExtension.CompositeId> {
 
     @EmbeddedId
-    override var id: CompositeId? = null
+    override lateinit var id: CompositeId
 
     @Column(name = "field_type")
     var fieldType: String? = null

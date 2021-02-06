@@ -1,10 +1,15 @@
 package org.arhor.diploma.config
 
 import org.arhor.diploma.service.AccountService
-import org.arhor.diploma.web.security.JWTConfigurer
-import org.arhor.diploma.web.security.JwtAuthEntryPoint
+import org.arhor.diploma.util.SpringProfile
+import org.arhor.diploma.web.filter.CustomAuthFilter
+import org.arhor.diploma.web.filter.CustomCsrfFilter
+import org.arhor.diploma.web.security.TokenProvider
+import org.slf4j.LoggerFactory
+import org.springframework.boot.web.servlet.FilterRegistrationBean
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Profile
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
@@ -12,50 +17,54 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
 import org.springframework.security.config.http.SessionCreationPolicy
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.AuthenticationEntryPoint
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
+import org.springframework.web.filter.CorsFilter
+import java.lang.invoke.MethodHandles
+import javax.servlet.http.HttpServletResponse
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class WebSecurityConfig(
-    private val unauthorizedHandler: JwtAuthEntryPoint,
-    private val jwtConfigurer: JWTConfigurer,
     private val accountService: AccountService,
-    private val encoder: PasswordEncoder
+    private val authFilter: CustomAuthFilter,
 ) : WebSecurityConfigurerAdapter() {
 
+    @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder) {
         auth.userDetailsService(accountService)
-            .passwordEncoder(encoder)
+            .passwordEncoder(passwordEncoder())
     }
 
+    @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.csrf().disable()
             .cors()
             .and()
-            .headers()
-            .contentSecurityPolicy(SECURITY_POLICY_DIRECTIVES)
+            .authorizeRequests()
+            .anyRequest().permitAll()
+            .and()
+            .headers().contentSecurityPolicy(SECURITY_POLICY_DIRECTIVES)
             .and()
             .referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN)
             .and()
             .featurePolicy(FEATURE_POLICY_DIRECTIVES)
             .and()
-            .frameOptions()
-            .deny()
+            .frameOptions().deny()
             .and()
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .authorizeRequests()
-            .anyRequest().permitAll()
-            .and()
-            .exceptionHandling()
-            .authenticationEntryPoint(unauthorizedHandler)
+            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler())
             .and()
             .httpBasic().disable()
             .formLogin().disable()
-            .apply(jwtConfigurer)
+            .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter::class.java)
     }
 
     @Bean
@@ -63,8 +72,56 @@ class WebSecurityConfig(
         return super.authenticationManagerBean()
     }
 
+    @Bean
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder(5)
+
+    @Bean
+    fun unauthorizedHandler(): AuthenticationEntryPoint {
+        return AuthenticationEntryPoint { _, res, err ->
+            log.error("Unauthorized error. Message - {}", err.message)
+            res.sendError(HttpServletResponse.SC_UNAUTHORIZED, err.message)
+        }
+    }
+
+    @Configuration
+    class WebFilters {
+        @Bean
+        fun authFilter(provider: TokenProvider, accountService: AccountService): CustomAuthFilter {
+            return CustomAuthFilter(provider, accountService)
+        }
+
+        @Bean
+        fun corsFilter(): CorsFilter {
+            val source = UrlBasedCorsConfigurationSource()
+            val config = CorsConfiguration().apply { applyPermitDefaultValues() }
+
+            if (config.allowedOrigins?.isNotEmpty() == true) {
+                log.debug("Registering CORS filter")
+
+                source.registerCorsConfiguration("/api/**", config)
+                source.registerCorsConfiguration("/management/**", config)
+                source.registerCorsConfiguration("/v2/api-docs", config)
+            }
+
+            return CorsFilter(source)
+        }
+
+        @Bean
+        @Profile("!${SpringProfile.DEVELOPMENT}")
+        fun csrfFilter(): FilterRegistrationBean<CustomCsrfFilter> {
+            val csrfFilterBean = FilterRegistrationBean<CustomCsrfFilter>()
+
+            csrfFilterBean.order = 1
+            csrfFilterBean.filter = CustomCsrfFilter()
+            csrfFilterBean.addUrlPatterns("/api/*")
+
+            return csrfFilterBean
+        }
+    }
+
     companion object {
-        @JvmStatic
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
+
         private val SECURITY_POLICY_DIRECTIVES = arrayOf(
             "default-src 'self'",
             "frame-src 'self' data:",
@@ -74,7 +131,6 @@ class WebSecurityConfig(
             "font-src 'self' data:"
         ).joinToString(separator = "; ")
 
-        @JvmStatic
         private val FEATURE_POLICY_DIRECTIVES = arrayOf(
             "geolocation 'none'",
             "midi 'none'",

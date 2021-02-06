@@ -59,7 +59,6 @@ class AccountController(private val service: AccountService) {
     }
 
     companion object {
-        @JvmStatic
         private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

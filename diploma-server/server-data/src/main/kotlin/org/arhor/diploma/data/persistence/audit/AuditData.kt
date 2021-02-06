@@ -1,4 +1,4 @@
-package org.arhor.diploma.data.audit
+package org.arhor.diploma.data.persistence.audit
 
 import org.arhor.diploma.data.persistence.domain.core.DomainObject
 import javax.persistence.*

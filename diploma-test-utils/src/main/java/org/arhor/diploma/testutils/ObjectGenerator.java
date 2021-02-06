@@ -79,8 +79,7 @@ final class ObjectGenerator implements ParameterGenerator {
 
     private boolean isAccessModifiersAreValid(Field declaredField) {
         final int mod = declaredField.getModifiers();
-        return Modifier.isFinal(mod)
-                || Modifier.isStatic(mod);
+        return !(Modifier.isFinal(mod) || Modifier.isStatic(mod));
     }
 
     private static boolean isFieldCanBeGenerated(Class<?> fieldType, ObjectGenerationStrategy strategy) {

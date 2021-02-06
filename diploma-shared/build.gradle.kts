@@ -13,16 +13,18 @@ repositories {
 }
 
 kotlin {
-
     jvm {
-        val main by compilations.getting {
+        compilations.all {
             kotlinOptions {
-                jvmTarget = Versions.javaGlobal
+                jvmTarget = Deps.javaGlobal
             }
+        }
+        testRuns["test"].executionTask.configure {
+            useJUnitPlatform()
         }
     }
 
-    js {
+    js(/*IR*/) {
         browser()
         compilations["main"].kotlinOptions {
                 metaInfo = false
@@ -34,6 +36,7 @@ kotlin {
     }
 
     sourceSets {
+        // Common
         val commonMain by getting {
             dependencies {
                 implementation ("org.jetbrains.kotlin:kotlin-stdlib-common")
@@ -41,10 +44,12 @@ kotlin {
         }
         val commonTest by getting {
             dependencies {
-                implementation ("org.jetbrains.kotlin:kotlin-test-common")
-                implementation ("org.jetbrains.kotlin:kotlin-test-annotations-common")
+                implementation(kotlin("test-common"))
+                implementation(kotlin("test-annotations-common"))
             }
         }
+
+        // JVM
         val jvmMain by getting {
             dependencies {
                 implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -53,10 +58,13 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-                implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
+                implementation(kotlin("test-junit5"))
+                implementation("org.junit.jupiter:junit-jupiter-api:${Deps.junitJupiter}")
+                runtimeOnly("org.junit.jupiter:junit-jupiter-engine:${Deps.junitJupiter}")
             }
         }
+
+        // JS
         val jsMain by getting {
             dependencies {
                 implementation ("org.jetbrains.kotlin:kotlin-stdlib-js")

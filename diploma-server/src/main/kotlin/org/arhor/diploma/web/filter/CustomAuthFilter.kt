@@ -2,6 +2,7 @@ package org.arhor.diploma.web.filter
 
 import org.arhor.diploma.web.security.TokenProvider
 import org.slf4j.LoggerFactory
+import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -13,8 +14,8 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 class CustomAuthFilter(
-    private val tokenProvider: TokenProvider<*>,
-    private val userDetailsService: UserDetailsService
+    private val tokenProvider: TokenProvider,
+    private val userDetailsService: UserDetailsService,
 ) : OncePerRequestFilter() {
 
     override fun doFilterInternal(

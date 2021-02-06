@@ -13,16 +13,12 @@ object Common {
 
 object SpringProfile {
     const val DEVELOPMENT = "dev"
-    const val TEST = "test"
-    const val PRODUCTION = "prod"
-    const val CLOUD = "cloud"
-    const val HEROKU = "heroku"
-    const val AWS_ECS = "aws-ecs"
-    const val AZURE = "azure"
-    const val SWAGGER = "swagger"
-    const val NO_LIQUIBASE = "no-liquibase"
-    const val K8S = "k8s"
-    const val HAZELCAST = "hazelcast"
+    const val PRODUCTION  = "prod"
+    const val TEST        = "test"
+    const val CLOUD       = "cloud"
+    const val HEROKU      = "heroku"
+    const val SWAGGER     = "swagger"
+    const val HAZELCAST   = "hazelcast"
 }
 
 object Cache {

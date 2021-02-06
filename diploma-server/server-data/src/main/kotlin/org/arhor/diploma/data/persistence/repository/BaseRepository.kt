@@ -1,6 +1,6 @@
 package org.arhor.diploma.data.persistence.repository
 
-import org.arhor.diploma.data.persistence.domain.core.DomainObject
+import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
@@ -11,11 +11,14 @@ import org.springframework.data.repository.NoRepositoryBean
 import org.springframework.transaction.annotation.Transactional
 import java.io.Serializable
 import java.util.*
+import kotlin.reflect.KClass
 
 @NoRepositoryBean
-interface BaseRepository<T : DomainObject<K>, K : Serializable> : JpaRepository<T, K> {
+interface BaseRepository<T, K> : JpaRepository<T, K>
+        where T : DeletableDomainObject<K>,
+              K : Serializable {
 
-    fun getEntityName(): String
+    val entityType: KClass<T>
 
     @Transactional(readOnly = true)
     @Query("SELECT e FROM #{#entityName} e WHERE e.isDeleted = false")

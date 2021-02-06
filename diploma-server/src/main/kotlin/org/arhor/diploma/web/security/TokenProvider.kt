@@ -1,8 +1,10 @@
 package org.arhor.diploma.web.security
 
-interface TokenProvider<A> {
+import org.springframework.security.core.userdetails.UserDetails
 
-    fun generate(auth: A): String
+interface TokenProvider {
+
+    fun generate(principal: UserDetails): String
 
     fun parse(token: String): String
 

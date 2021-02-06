@@ -1,7 +1,8 @@
 package org.arhor.diploma.web.api
 
+import org.arhor.diploma.web.model.AuthResponse
 import org.arhor.diploma.web.model.SignInRequest
-import org.arhor.diploma.web.model.SignInResponse
+import org.arhor.diploma.web.model.SignUpRequest
 import org.arhor.diploma.web.security.TokenProvider
 import org.slf4j.LoggerFactory
 import org.springframework.http.MediaType
@@ -10,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import java.lang.invoke.MethodHandles
 
@@ -21,11 +23,16 @@ import java.lang.invoke.MethodHandles
 )
 class AuthController(
     private val authManager: AuthenticationManager,
-    private val tokenProvider: TokenProvider<Authentication>
+    private val tokenProvider: TokenProvider
 ) {
 
-    @PostMapping("/token")
-    fun authenticate(@RequestBody signIn: SignInRequest): SignInResponse {
+    @PostMapping("/sign-up")
+    fun register(@RequestBody signUp: SignUpRequest): AuthResponse {
+        TODO("IMPLEMENT ME!!!")
+    }
+
+    @PostMapping("/sign-in")
+    fun authenticate(@RequestBody signIn: SignInRequest): AuthResponse {
         log.debug("authentication started: [${signIn}]")
 
         val auth = authManager.authenticate(
@@ -35,30 +42,24 @@ class AuthController(
             )
         )
 
-        SecurityContextHolder.getContext().authentication = auth
-
-        return convertToSignInResponse(auth).also {
-            log.debug("authentication succeed: [{}]", it)
-        }
+        return auth.toAuthResponse { log.debug("token granted: [{}]", it.accessToken) }
     }
 
     @GetMapping("/refresh")
     @PreAuthorize("isAuthenticated()")
-    fun refresh(auth: Authentication): SignInResponse {
-        return convertToSignInResponse(auth).also {
-            log.debug("token refreshed: [{}]", it)
-        }
+    fun refresh(auth: Authentication): AuthResponse {
+        log.debug("refreshing token: [${auth}]")
+        return auth.toAuthResponse { log.debug("token refreshed: [{}]", it.accessToken) }
     }
 
-    private fun convertToSignInResponse(auth: Authentication): SignInResponse {
-        return SignInResponse(
-            tokenProvider.generate(auth),
+    private inline fun Authentication.toAuthResponse(additionalAction: (AuthResponse) -> Unit = {}): AuthResponse {
+        return AuthResponse(
+            tokenProvider.generate(principal as UserDetails),
             tokenProvider.authTokenType()
-        )
+        ).also(additionalAction)
     }
 
     companion object {
-        @JvmStatic
         private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

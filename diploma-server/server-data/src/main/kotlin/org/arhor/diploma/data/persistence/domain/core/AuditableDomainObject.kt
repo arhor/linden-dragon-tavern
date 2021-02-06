@@ -9,7 +9,8 @@ import javax.persistence.PrePersist
 import javax.persistence.PreUpdate
 
 @MappedSuperclass
-abstract class AuditableDomainObject<T : Serializable> : DeletableDomainObject<T>(), Auditable {
+abstract class AuditableDomainObject<T> : DeletableDomainObject<T>(), Auditable
+        where T : Serializable {
 
     @Column
     override var created: LocalDateTime? = null

@@ -1,12 +1,9 @@
 package org.arhor.diploma.exception
 
-data class EntityNotFoundException(
-    val entityType: String = UNKNOWN,
-    val propertyName: String = UNKNOWN,
-    val propertyValue: Any
-) : RuntimeException("[${entityType}] with property [${propertyName}] = [${propertyValue}] is not found") {
+private const val UNKNOWN = "unknown"
 
-    companion object {
-        const val UNKNOWN = "unknown"
-    }
-}
+data class EntityNotFoundException(
+    val entityType: String?,
+    val propName: String?,
+    val propValue: Any?
+) : RuntimeException("[${entityType ?: UNKNOWN}] with property [${propName ?: UNKNOWN}]=[${propValue}] is not found")

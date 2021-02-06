@@ -15,7 +15,7 @@ class AuthService extends BaseService {
     }
 
     async signIn({ username, password }) {
-        const { data } = await axios.post('/auth/token', {
+        const { data } = await axios.post('/auth/sign-in', {
             username,
             password,
         });

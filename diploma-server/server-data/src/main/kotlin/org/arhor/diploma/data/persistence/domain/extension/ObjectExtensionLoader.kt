@@ -9,17 +9,14 @@ import javax.persistence.*
 class ObjectExtensionLoader {
 
     @Autowired
-    fun init(database: ObjectExtensionRepository) {
-        ObjectExtensionLoader.repository = database
+    fun init(repository: ObjectExtensionRepository) {
+        ObjectExtensionLoader.repository = repository
     }
 
     @PostLoad
-    fun loadExtendedState(obj: DomainObject<*>) {
-        repository
-            .findObjectExtensions(obj.id, obj.tableName)
-            .associate { it.id!!.fieldName to it.fieldValue }
-
-
+    fun postLoad(obj: DomainObject<*>) {
+        obj.extraData.dataProvider = { repository.findObjectExtensionsAsMap(obj.id, obj.tableName) }
+        obj.extraData.dataConsumer = { data -> println(data) }
     }
 
     @PrePersist

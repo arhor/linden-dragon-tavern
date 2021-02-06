@@ -1,5 +1,5 @@
-object Versions {
-    const val gradle              = "6.7.1"
+object Deps {
+    const val gradle              = "6.8.1"
     const val javaGlobal          = "14"
     const val kotlinGlobal        = "1.4.20"
     const val nodeJS              = "14.15.1"
@@ -13,8 +13,8 @@ object Versions {
     const val jsonWebToken        = "0.9.1"
     const val testcontainers      = "1.14.0"
     const val flywayGradlePlugin  = "7.0.0"
-    const val springBoot          = "2.4.0"
-    const val springDepManagement = "1.0.10.RELEASE"
+    const val springBoot          = "2.4.2"
+    const val springDepManagement = "1.0.11.RELEASE"
     const val logback             = "1.2.3"
     const val slf4j               = "1.7.30"
 }

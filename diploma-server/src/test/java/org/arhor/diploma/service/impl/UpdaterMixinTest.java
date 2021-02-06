@@ -1,6 +1,7 @@
 package org.arhor.diploma.service.impl;
 
 import org.arhor.diploma.commons.Identifiable;
+import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject;
 import org.arhor.diploma.data.persistence.domain.core.DomainObject;
 import org.arhor.diploma.data.persistence.repository.BaseRepository;
 import org.arhor.diploma.exception.EntityNotFoundException;
@@ -28,12 +29,12 @@ import static org.mockito.Mockito.*;
 class UpdaterMixinTest {
 
     @Mock private Converter<DomainObject<String>, Identifiable<String>> converter;
-    @Mock private BaseRepository<DomainObject<String>, String> repository;
+    @Mock private BaseRepository<DeletableDomainObject<String>, String> repository;
     @Mock private Identifiable<String> testDto;
-    @Mock private DomainObject<String> testEntity;
+    @Mock private DeletableDomainObject<String> testEntity;
 
     @InjectMocks
-    private UpdaterMixin<DomainObject<String>, Identifiable<String>, String> updaterUnderTest;
+    private UpdaterMixin<DeletableDomainObject<String>, Identifiable<String>, String> updaterUnderTest;
 
     @Test
     void shouldThrowIllegalArgumentException() {
@@ -58,7 +59,7 @@ class UpdaterMixinTest {
 
         doReturn(testId).when(testDto).getId();
         doReturn(Optional.empty()).when(repository).findById(testId);
-        doReturn(entityName).when(repository).getEntityName();
+        doReturn(entityName).when(repository).getEntityType();
 
         // when
         ThrowingCallable action = () -> updaterUnderTest.update(testDto);

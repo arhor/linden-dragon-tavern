@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: ${SERVER.PORT:8080}
 
   servlet:
     session:
@@ -28,15 +28,18 @@ spring:
   application:
     name: diploma-server
 
+  profiles:
+    active: ${SPRING_PROFILES:dev}
+
   jmx:
     enabled: false
 
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/diploma_db
-    username: postgres
-    password: password
+    url: ${DATABASE.URL}
+    username: ${DATABASE.USERNAME}
+    password: ${DATABASE.PASSWORD}
     # required by the option `hibernate.connection.provider_disables_autocommit: true`
     hikari:
       auto-commit: false

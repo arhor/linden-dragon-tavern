@@ -2,6 +2,9 @@ package org.arhor.diploma.commons
 
 import java.util.*
 
+/**
+ *
+ */
 sealed class CompactBitSet : Iterable<Boolean> {
 
     abstract fun size(): Int
@@ -15,7 +18,6 @@ sealed class CompactBitSet : Iterable<Boolean> {
             private var index = 0
             override fun hasNext() = index < size()
             override fun nextBoolean() = get(index++)
-
         }
     }
 
@@ -34,6 +36,9 @@ sealed class CompactBitSet : Iterable<Boolean> {
     }
 }
 
+/**
+ *
+ */
 class BitSet32 : CompactBitSet() {
 
     var valuesHolder: Int = 0
@@ -66,6 +71,9 @@ class BitSet32 : CompactBitSet() {
     }
 }
 
+/**
+ *
+ */
 class BitSet64 : CompactBitSet() {
 
     var valuesHolder: Long = 0L
