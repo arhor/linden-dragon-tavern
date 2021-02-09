@@ -2,11 +2,18 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Home from '@/modules/home';
-import breadcrumbs from '@/routes/breadcrumbs.js';
+import sharedLib from '@/lib/diploma-shared.js';
+import store from '@/store';
+
+import { about, home, maps, monsters, spells } from '@/routes/breadcrumbs.js';
+import { composeGuards, createAuthoritiesGuard, createLoginGuard } from '@/routes/guards.js';
 
 Vue.use(VueRouter);
 
-const { about, spells, maps, monsters, home } = breadcrumbs;
+const { Account } = sharedLib.org.arhor.diploma.Authorities;
+
+const isLoggedIn = createLoginGuard(store);
+const hasAuthorities = createAuthoritiesGuard(store);
 
 const routes = [
     {
@@ -24,6 +31,7 @@ const routes = [
         meta: {
             breadcrumbs: [home],
         },
+        beforeEnter: composeGuards(isLoggedIn, hasAuthorities(Account.VIEW)),
     },
     {
         path: '/about',

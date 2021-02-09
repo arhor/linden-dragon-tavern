@@ -45,6 +45,7 @@ data class Account(
     var securityProfile: SecurityProfile? = null
 
     override fun hashCode(): Int {
+        this::javaClass.hashCode()
         return classBasedStaticHashCode()
     }
 }

@@ -49,9 +49,25 @@ export function generateUUID() {
 }
 
 /**
- * @param obj {*}
+ * @param {*} obj
  * @return {boolean}
  */
 export function refExists(obj) {
-    return obj !== void 0 && obj !== null;
+    return !(isUndefined(obj) || isNull(obj));
+}
+
+/**
+ * @param {*} value
+ * @return {boolean}
+ */
+export function isUndefined(value) {
+    return value === void 0;
+}
+
+/**
+ * @param {*} value
+ * @return {boolean}
+ */
+export function isNull(value) {
+    return value === null;
 }

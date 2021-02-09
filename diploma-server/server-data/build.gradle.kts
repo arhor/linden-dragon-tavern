@@ -61,7 +61,7 @@ allOpen {
     annotation("javax.persistence.Embeddable")
 }
 
-flyway {
+flyway {// move to the env variables
     driver = "org.postgresql.Driver"
     url = "jdbc:postgresql://localhost:5432/diploma_db"
     user = "postgres"
@@ -71,7 +71,7 @@ flyway {
 }
 
 tasks {
-    named<org.springframework.boot.gradle.tasks.bundling.BootJar>("bootJar") {
+    bootJar {
         enabled = false
     }
 
