@@ -4,15 +4,17 @@ import '@/assets/style/main.scss';
 import '@/plugins/cookies.js';
 
 import App from '@/App.vue';
+import i18n from '@/plugins/i18n.js';
 import router from '@/routes';
 import store from '@/store';
-import vuetify from '@/plugins/vuetify';
+import vuetify from '@/plugins/vuetify.js';
 
 Vue.config.productionTip = false;
 
 window.appController = {
     main() {
         new Vue({
+            i18n,
             vuetify,
             router,
             store,

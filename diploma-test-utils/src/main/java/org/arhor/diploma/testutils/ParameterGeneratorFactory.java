@@ -25,12 +25,24 @@ public final class ParameterGeneratorFactory {
 
         if (type.isArray()) {
             Class<?> componentType = type.getComponentType();
-            log.debug("Array [{}] is used to generate value", componentType);
-            return GENERATOR_CACHE.computeIfAbsent(componentType, ArrayGenerator::new);
+            if (log.isDebugEnabled()) {
+                log.debug("Array [{}] is used to generate value", shortenPackagesPrefix(componentType));
+            }
+            return GENERATOR_CACHE.computeIfAbsent(type, arrayType -> new ArrayGenerator<>(componentType));
         }
 
         log.debug("[{}] generator is not found, using Object generator as a fallback", type);
 
         return GENERATOR_CACHE.computeIfAbsent(type, ObjectGenerator::new);
+    }
+
+    private static String shortenPackagesPrefix(Class<?> objClass) {
+        String[] names = objClass.getName().split("\\.");
+        for (int i = 0, namesLength = names.length; i < namesLength; i++) {
+            if (i != namesLength - 1) {
+                names[i] = names[i].substring(0, 1);
+            }
+        }
+        return String.join(".", names);
     }
 }

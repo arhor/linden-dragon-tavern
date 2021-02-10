@@ -6,7 +6,12 @@ import sharedLib from '@/lib/diploma-shared.js';
 import store from '@/store';
 
 import { about, home, maps, monsters, spells } from '@/routes/breadcrumbs.js';
-import { composeGuards, createAuthoritiesGuard, createLoginGuard } from '@/routes/guards.js';
+import {
+    composeGuards,
+    createAuthoritiesGuard,
+    createLangGuard,
+    createLoginGuard,
+} from '@/routes/guards.js';
 
 Vue.use(VueRouter);
 
@@ -14,6 +19,7 @@ const { Account } = sharedLib.org.arhor.diploma.Authorities;
 
 const isLoggedIn = createLoginGuard(store);
 const hasAuthorities = createAuthoritiesGuard(store);
+const checkLang = createLangGuard();
 
 const routes = [
     {
@@ -23,6 +29,7 @@ const routes = [
         meta: {
             breadcrumbs: [home],
         },
+        beforeEnter: composeGuards(checkLang),
     },
     {
         path: '/account',
@@ -31,7 +38,7 @@ const routes = [
         meta: {
             breadcrumbs: [home],
         },
-        beforeEnter: composeGuards(isLoggedIn, hasAuthorities(Account.VIEW)),
+        beforeEnter: composeGuards(isLoggedIn, hasAuthorities(Account.VIEW), checkLang),
     },
     {
         path: '/about',
@@ -40,6 +47,7 @@ const routes = [
         meta: {
             breadcrumbs: [about],
         },
+        beforeEnter: composeGuards(checkLang),
     },
     {
         path: '/monsters',
@@ -48,6 +56,7 @@ const routes = [
         meta: {
             breadcrumbs: [home, monsters],
         },
+        beforeEnter: composeGuards(checkLang),
     },
     {
         path: '/spells',
@@ -56,6 +65,7 @@ const routes = [
         meta: {
             breadcrumbs: [home, spells],
         },
+        beforeEnter: composeGuards(checkLang),
     },
     {
         path: '/maps',
@@ -64,10 +74,12 @@ const routes = [
         meta: {
             breadcrumbs: [home, maps],
         },
+        beforeEnter: composeGuards(checkLang),
     },
     {
         path: '*',
         component: () => import('@/components/DndPageNotFound.vue'),
+        beforeEnter: composeGuards(checkLang),
     },
 ];
 

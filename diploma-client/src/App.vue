@@ -29,6 +29,9 @@
             <v-btn v-for="{ path, name } in appBarLinks" :key="name" :to="path" text>
                 {{ name }}
             </v-btn>
+
+            <dnd-lang-selector />
+
             <dnd-download-button :url="characterSheetUrl" />
 
             <v-btn to="/account" fab dark>
@@ -55,11 +58,13 @@ import { mapState } from 'vuex';
 import DndAppSettings from '@/components/DndAppSettings.vue';
 import DndBreadcrumbs from '@/components/DndBreadcrumbs.vue';
 import DndDownloadButton from '@/components/DndDownloadButton.vue';
+import DndLangSelector from '@/components/DndLangSelector';
+
 import { SERVER_API_URL } from '@/api/server-api.js';
 
 export default {
     name: 'App',
-    components: { DndDownloadButton, DndBreadcrumbs, DndAppSettings },
+    components: { DndLangSelector, DndDownloadButton, DndBreadcrumbs, DndAppSettings },
     data: () => ({
         appName: 'D&D Homebrew App',
         displayDrawer: false,

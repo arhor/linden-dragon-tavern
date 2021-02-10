@@ -2,6 +2,7 @@ package org.arhor.diploma.service.impl;
 
 import org.arhor.diploma.commons.Converter;
 import org.arhor.diploma.commons.Identifiable;
+import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject;
 import org.arhor.diploma.data.persistence.domain.core.DomainObject;
 import org.arhor.diploma.data.persistence.repository.BaseRepository;
 import org.arhor.diploma.testutils.RandomParameter;
@@ -26,16 +27,16 @@ import static org.mockito.Mockito.verifyNoInteractions;
 class CreatorMixinTest {
 
     @Mock
-    private Converter<DomainObject<String>, Identifiable<String>> converter;
+    private Converter<DeletableDomainObject<String>, Identifiable<String>> converter;
     @Mock
-    private BaseRepository<DomainObject<String>, String> repository;
+    private BaseRepository<DeletableDomainObject<String>, String> repository;
     @Mock
     private Identifiable<String> testDto;
     @Mock
-    private DomainObject<String> testEntity;
+    private DeletableDomainObject<String> testEntity;
 
     @InjectMocks
-    private CreatorMixin<DomainObject<String>, Identifiable<String>, String> creatorUnderTest;
+    private CreatorMixin<DeletableDomainObject<String>, Identifiable<String>, String> creatorUnderTest;
 
     @Test
     void shouldThrowIllegalArgumentException(@RandomParameter final String testId) {

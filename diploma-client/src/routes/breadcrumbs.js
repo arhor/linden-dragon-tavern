@@ -1,24 +1,31 @@
-export const home = {
-    text: 'Home',
-    to: '/',
-};
+export class Breadcrumb {
+    constructor({ label, link }) {
+        this.label = label;
+        this.link = link;
+    }
+}
 
-export const about = {
-    text: 'About',
-    to: '/about',
-};
+export const home = new Breadcrumb({
+    label: 'views.home',
+    link: '/',
+});
 
-export const monsters = {
-    text: 'Monsters',
-    to: '/monsters',
-};
+export const about = new Breadcrumb({
+    label: 'About',
+    link: '/about',
+});
 
-export const spells = {
-    text: 'Spells',
-    to: '/spells',
-};
+export const monsters = new Breadcrumb({
+    label: 'Monsters',
+    link: '/monsters',
+});
 
-export const maps = {
-    text: 'Maps',
-    to: '/maps',
-};
+export const spells = new Breadcrumb({
+    label: 'Spells',
+    link: '/spells',
+});
+
+export const maps = new Breadcrumb({
+    label: 'Maps',
+    link: '/maps',
+});

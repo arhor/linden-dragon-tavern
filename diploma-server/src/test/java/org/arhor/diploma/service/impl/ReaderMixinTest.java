@@ -1,5 +1,6 @@
 package org.arhor.diploma.service.impl;
 
+import kotlin.jvm.JvmClassMappingKt;
 import org.arhor.diploma.commons.Identifiable;
 import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject;
 import org.arhor.diploma.data.persistence.domain.core.DomainObject;
@@ -84,10 +85,10 @@ class ReaderMixinTest {
     @Test
     void shouldThrowAnException(@RandomParameter final String search) {
         // given
-        final var entityName = "TEST_ENTITY";
+        final var entityType = JvmClassMappingKt.getKotlinClass(String.class);
 
         doReturn(Optional.empty()).when(repository).findById(search);
-        doReturn(entityName).when(repository).getEntityType();
+        doReturn(entityType).when(repository).getEntityType();
 
         // when
         ThrowingCallable action = () -> readerUnderTest.getOne(search);
@@ -95,9 +96,9 @@ class ReaderMixinTest {
         // then
         assertThatThrownBy(action)
                 .isInstanceOf(EntityNotFoundException.class)
-                .hasFieldOrPropertyWithValue("entityName", entityName)
-                .hasFieldOrPropertyWithValue("propertyName", ReaderMixin.KEY_PROPERTY)
-                .hasFieldOrPropertyWithValue("propertyValue", search);
+                .hasFieldOrPropertyWithValue("entityType", entityType.getSimpleName())
+                .hasFieldOrPropertyWithValue("propName", ReaderMixin.KEY_PROPERTY)
+                .hasFieldOrPropertyWithValue("propValue", search);
 
         verify(repository).findById(search);
     }

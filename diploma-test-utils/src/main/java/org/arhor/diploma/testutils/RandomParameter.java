@@ -64,7 +64,9 @@ public @interface RandomParameter {
                             .getStore(NAMESPACE)
                             .getOrComputeIfAbsent(Random.class);
 
-            return getGeneratorForType(requiredType).generate(randomizer, parameter);
+            Object result = getGeneratorForType(requiredType).generate(randomizer, parameter);
+
+            return result;
         }
 
         private void validateAnnotationParams(RandomParameter parameter) {

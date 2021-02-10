@@ -1,5 +1,6 @@
 package org.arhor.diploma.service.impl;
 
+import kotlin.jvm.JvmClassMappingKt;
 import org.arhor.diploma.commons.Identifiable;
 import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject;
 import org.arhor.diploma.data.persistence.repository.BaseRepository;
@@ -51,11 +52,11 @@ class DeleterMixinTest {
     @Test
     void shouldThrowEntityNotFoundException(@RandomParameter final String testId) {
         // given
-        final var entityName = "TEST_ENTITY";
+        final var entityType = JvmClassMappingKt.getKotlinClass(String.class);
 
         doReturn(testId).when(testDto).getId();
         doReturn(Optional.empty()).when(repository).findById(testId);
-        doReturn(entityName).when(repository).getEntityType();
+        doReturn(entityType).when(repository).getEntityType();
 
         // when
         ThrowingCallable action = () -> deleterUnderTest.delete(testDto);
@@ -63,9 +64,9 @@ class DeleterMixinTest {
         // then
         assertThatThrownBy(action)
                 .isInstanceOf(EntityNotFoundException.class)
-                .hasFieldOrPropertyWithValue("entityName", entityName)
-                .hasFieldOrPropertyWithValue("propertyName", UpdaterMixin.KEY_PROPERTY)
-                .hasFieldOrPropertyWithValue("propertyValue", testId);
+                .hasFieldOrPropertyWithValue("entityType", entityType.getSimpleName())
+                .hasFieldOrPropertyWithValue("propName", UpdaterMixin.KEY_PROPERTY)
+                .hasFieldOrPropertyWithValue("propValue", testId);
 
         verify(repository).findById(testId);
     }

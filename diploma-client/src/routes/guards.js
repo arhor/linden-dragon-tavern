@@ -1,4 +1,5 @@
 import { isUndefined } from '@/utils/coreUtils';
+import { loadLanguageAsync } from '@/plugins/i18n';
 
 /**
  * @see https://github.com/atanas-dev/vue-router-multiguard
@@ -42,7 +43,6 @@ export const createAuthoritiesGuard = (store) => (...requiredAuthorities) => {
                 break;
             }
         }
-
         if (hasAccess) {
             next();
         } else {
@@ -51,3 +51,13 @@ export const createAuthoritiesGuard = (store) => (...requiredAuthorities) => {
         }
     };
 };
+
+export function createLangGuard() {
+    return (to, from, next) => {
+        if (to.params.lang) {
+            loadLanguageAsync(to.params.lang).then(() => next());
+        } else {
+            next();
+        }
+    };
+}

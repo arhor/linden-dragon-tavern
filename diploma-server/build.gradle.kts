@@ -56,6 +56,7 @@ dependencies {
     testImplementation("org.springframework.security:spring-security-test")
 }
 
+val applicationMainClass = "org.arhor.diploma.DiplomaApp"
 val springActiveProfiles = "-Dspring.profiles.active=default,dev,test"
 
 java {
@@ -63,12 +64,15 @@ java {
     targetCompatibility = JavaVersion.toVersion(Deps.javaGlobal)
 }
 
+springBoot {
+    mainClass.set(applicationMainClass)
+}
+
 tasks {
-    withType<Test> {
-        useJUnitPlatform {
-            excludeTags(/*"integration"*/)
+    jar {
+        manifest {
+            attributes["Main-Class"] = applicationMainClass
         }
-        jvmArgs = listOf(springActiveProfiles)
     }
 
     bootRun {
@@ -78,5 +82,12 @@ tasks {
             "-XX:MaxRAM=100m",
             "-Xss512k"
         )
+    }
+
+    withType<Test> {
+        useJUnitPlatform {
+            excludeTags(/*"integration"*/)
+        }
+        jvmArgs = listOf(springActiveProfiles)
     }
 }

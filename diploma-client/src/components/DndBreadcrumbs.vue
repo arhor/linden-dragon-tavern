@@ -4,8 +4,8 @@
             <v-icon>mdi-chevron-right</v-icon>
         </template>
         <template v-slot:item="{ item }">
-            <v-breadcrumbs-item :to="item.to" :disabled="item.disabled">
-                {{ item.text.toUpperCase() }}
+            <v-breadcrumbs-item :to="item.link" :disabled="item.disabled">
+                {{ $t(item.label).toUpperCase() }}
             </v-breadcrumbs-item>
         </template>
     </v-breadcrumbs>
