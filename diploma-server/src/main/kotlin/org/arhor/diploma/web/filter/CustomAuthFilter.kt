@@ -24,7 +24,7 @@ class CustomAuthFilter(
         next: FilterChain
     ) {
         try {
-            val authHeader: String? = req.getHeader(tokenProvider.authHeaderName())
+            val authHeader: String? = req.getHeader(tokenProvider.authHeaderName)
 
             if (authHeader != null) {
                 val token = tokenProvider.parse(authHeader)
@@ -39,7 +39,7 @@ class CustomAuthFilter(
                 }
             }
         } catch (e: Exception) {
-            log.error("Can NOT set user authentication -> Message: {}", e.message)
+            log.error("Cannot set user authentication -> Message: {}", e.message)
         }
         next.doFilter(req, res)
     }

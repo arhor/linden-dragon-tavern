@@ -5,6 +5,11 @@ import java.util.*
 @Suppress("unused")
 class IntArray2D private constructor(@JvmField val rows: Int, @JvmField val cols: Int) {
 
+    init {
+        require(rows >= 0) { "rows number must not be negative" }
+        require(cols >= 0) { "cols number must not be negative" }
+    }
+
     private val buffer: IntArray = IntArray(rows * cols)
 
     operator fun get(row: Int, col: Int): Int {
@@ -58,8 +63,15 @@ class IntArray2D private constructor(@JvmField val rows: Int, @JvmField val cols
 
     companion object {
         @JvmStatic
+        val EMPTY = IntArray2D(0, 0)
+
+        @JvmStatic
         fun create(rows: Int, cols: Int): IntArray2D {
-            return IntArray2D(rows, cols)
+            return if (rows != 0 && cols != 0) {
+                IntArray2D(rows, cols)
+            } else {
+                EMPTY
+            }
         }
 
         @JvmStatic

@@ -14,8 +14,8 @@ interface AccountConverter : Converter<Account, AccountDTO> {
 
     @IgnoreAuditProps
     @Mapping(target = "securityProfile", ignore = true)
-    override fun dtoToEntity(dto: AccountDTO): Account
+    override fun mapDtoToEntity(item: AccountDTO): Account
 
     @InheritInverseConfiguration
-    override fun entityToDto(entity: Account): AccountDTO
+    override fun mapEntityToDto(item: Account): AccountDTO
 }

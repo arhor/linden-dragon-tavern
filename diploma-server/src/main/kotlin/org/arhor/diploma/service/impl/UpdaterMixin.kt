@@ -30,7 +30,7 @@ class UpdaterMixin<E, D, K>(
 
             val saved = repository.save(entity)
 
-            return converter.entityToDto(saved)
+            return converter.mapEntityToDto(saved)
 
         } ?: throw IllegalArgumentException("Passed item has not set $KEY_PROPERTY value, so it cannot be updated")
     }

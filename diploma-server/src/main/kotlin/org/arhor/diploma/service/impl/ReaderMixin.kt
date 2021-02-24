@@ -20,7 +20,7 @@ class ReaderMixin<E, D, K>(
     override fun getOne(id: K): D {
         return repository
             .findById(id)
-            .map { converter.entityToDto(it) }
+            .map(converter::mapEntityToDto)
             .orElseThrow {
                 EntityNotFoundException(
                     entityType = repository.entityType.simpleName,
@@ -33,7 +33,7 @@ class ReaderMixin<E, D, K>(
     override fun getList(): List<D> {
         return repository
             .findAll()
-            .map(converter::entityToDto)
+            .map(converter::mapEntityToDto)
             .toList()
     }
 
@@ -41,7 +41,7 @@ class ReaderMixin<E, D, K>(
         return repository
             .findAll(PageRequest.of(page, size))
             .toList()
-            .mapNotNull(converter::entityToDto)
+            .mapNotNull(converter::mapEntityToDto)
             .toList()
     }
 

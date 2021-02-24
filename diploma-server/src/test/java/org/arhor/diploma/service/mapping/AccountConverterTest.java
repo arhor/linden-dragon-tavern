@@ -28,7 +28,7 @@ class AccountConverterTest {
     @Test
     void shouldConvertAllFieldsCorrectly(@RandomParameter final Account account) {
         // when
-        var dto = mapper.entityToDto(account);
+        var dto = mapper.mapEntityToDto(account);
 
         // then
         assertThat(dto).isNotNull();

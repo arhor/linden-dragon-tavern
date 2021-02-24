@@ -1,4 +1,4 @@
-package org.arhor.diploma.data.config
+package org.arhor.diploma.config
 
 import org.arhor.diploma.data.Cache
 import org.slf4j.LoggerFactory

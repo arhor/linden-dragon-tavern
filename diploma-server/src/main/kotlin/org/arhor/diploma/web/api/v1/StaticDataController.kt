@@ -2,7 +2,10 @@ package org.arhor.diploma.web.api.v1
 
 import org.arhor.diploma.commons.Identifiable
 import org.arhor.diploma.data.file.DataProvider
-import org.arhor.diploma.util.bound
+import org.arhor.diploma.util.DEFAULT_PAGE
+import org.arhor.diploma.util.DEFAULT_SIZE
+import org.arhor.diploma.util.maxBound
+import org.arhor.diploma.util.minBound
 import org.slf4j.Logger
 import org.springframework.http.ResponseEntity
 import java.io.Serializable
@@ -24,12 +27,14 @@ abstract class StaticDataController<
     }
 
     protected fun getEntityDetailsList(page: Int?, size: Int?): ResponseEntity<List<D>> {
-        val entityDetailsList = if ((page == null) and (size == null)) {
+        val entityDetailsList = if ((page == null) && (size == null)) {
             log.debug("fetching all {} details list", resourceName)
             dataProvider.getDetailsList()
         } else {
-            log.debug("fetching {} details list: page {}, size {}", resourceName, page, size)
-            bound<Int, List<D>>(dataProvider::getDetailsList)(page, size)
+            val safePage = page.minBound(DEFAULT_PAGE)
+            val safeSize = size.maxBound(DEFAULT_SIZE)
+            log.debug("fetching {} details list: page {}, size {}", resourceName, safePage, safeSize)
+            dataProvider.getDetailsList(safePage, safeSize)
         }
         return ResponseEntity.ok(entityDetailsList)
     }
@@ -39,8 +44,10 @@ abstract class StaticDataController<
             log.debug("fetching all {} details list", resourceName)
             dataProvider.getDetailsList(query)
         } else {
-            log.debug("fetching {} details list: page {}, size {}", resourceName, page, size)
-            bound<Int, List<D>>(dataProvider::getDetailsList)(page, size)
+            val safePage = page.minBound(DEFAULT_PAGE)
+            val safeSize = size.maxBound(DEFAULT_SIZE)
+            log.debug("fetching {} details list: page {}, size {}", resourceName, safePage, safeSize)
+            dataProvider.getDetailsList(safePage, safeSize)
         }
         return ResponseEntity.ok(entityDetailsList)
     }
@@ -56,8 +63,10 @@ abstract class StaticDataController<
             log.debug("fetching all {} list", resourceName)
             dataProvider.getList()
         } else {
-            log.debug("fetching {} list: page {}, size {}", resourceName, page, size)
-            bound<Int, List<T>>(dataProvider::getList)(page, size)
+            val safePage = page.minBound(DEFAULT_PAGE)
+            val safeSize = size.maxBound(DEFAULT_SIZE)
+            log.debug("fetching {} list: page {}, size {}", resourceName, safePage, safeSize)
+            dataProvider.getList(safePage, safeSize)
         }
         return ResponseEntity.ok(entityList)
     }

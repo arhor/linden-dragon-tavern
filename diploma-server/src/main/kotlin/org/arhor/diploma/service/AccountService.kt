@@ -3,7 +3,7 @@ package org.arhor.diploma.service
 import org.arhor.diploma.service.dto.AccountDTO
 import org.springframework.security.core.userdetails.UserDetailsService
 
-interface AccountService : UserDetailsService {
+interface AccountService : CrudService<AccountDTO, Long>, UserDetailsService {
 
     fun getAccountById(id: Long): AccountDTO
 

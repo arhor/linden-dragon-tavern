@@ -12,6 +12,7 @@ import {
     createLangGuard,
     createLoginGuard,
 } from '@/routes/guards.js';
+import { loadLanguageAsync } from '@/plugins/i18n';
 
 Vue.use(VueRouter);
 
@@ -19,7 +20,7 @@ const { Account } = sharedLib.org.arhor.diploma.Authorities;
 
 const isLoggedIn = createLoginGuard(store);
 const hasAuthorities = createAuthoritiesGuard(store);
-const checkLang = createLangGuard();
+const checkLang = createLangGuard(loadLanguageAsync);
 
 const routes = [
     {

@@ -55,7 +55,7 @@ class AuthController(
     private inline fun Authentication.toAuthResponse(additionalAction: (AuthResponse) -> Unit = {}): AuthResponse {
         return AuthResponse(
             tokenProvider.generate(principal as UserDetails),
-            tokenProvider.authTokenType()
+            tokenProvider.authTokenType
         ).also(additionalAction)
     }
 

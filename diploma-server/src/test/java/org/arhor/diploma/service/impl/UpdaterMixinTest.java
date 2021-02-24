@@ -82,7 +82,7 @@ class UpdaterMixinTest {
         doReturn(testId).when(testDto).getId();
         doReturn(Optional.of(testEntity)).when(repository).findById(testId);
         doReturn(testEntity).when(repository).save(testEntity);
-        doReturn(testDto).when(converter).entityToDto(testEntity);
+        doReturn(testDto).when(converter).mapEntityToDto(testEntity);
 
         // when
         final var result = updaterUnderTest.update(testDto);

@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletResponse
 class WebSecurityConfig(
     private val accountService: AccountService,
     private val authFilter: CustomAuthFilter,
+    private val authEntryPoint: AuthenticationEntryPoint,
 ) : WebSecurityConfigurerAdapter() {
 
     @Throws(Exception::class)
@@ -47,8 +48,7 @@ class WebSecurityConfig(
         http.csrf().disable()
             .cors()
             .and()
-            .authorizeRequests()
-            .anyRequest().permitAll()
+            .authorizeRequests().anyRequest().permitAll()
             .and()
             .headers().contentSecurityPolicy(SECURITY_POLICY_DIRECTIVES)
             .and()
@@ -60,7 +60,7 @@ class WebSecurityConfig(
             .and()
             .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
-            .exceptionHandling().authenticationEntryPoint(unauthorizedHandler())
+            .exceptionHandling().authenticationEntryPoint(authEntryPoint)
             .and()
             .httpBasic().disable()
             .formLogin().disable()
@@ -74,14 +74,6 @@ class WebSecurityConfig(
 
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder(5)
-
-    @Bean
-    fun unauthorizedHandler(): AuthenticationEntryPoint {
-        return AuthenticationEntryPoint { _, res, err ->
-            log.error("Unauthorized error. Message - {}", err.message)
-            res.sendError(HttpServletResponse.SC_UNAUTHORIZED, err.message)
-        }
-    }
 
     @Configuration
     class WebFilters {

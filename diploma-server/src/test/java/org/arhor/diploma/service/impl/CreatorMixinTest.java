@@ -3,7 +3,6 @@ package org.arhor.diploma.service.impl;
 import org.arhor.diploma.commons.Converter;
 import org.arhor.diploma.commons.Identifiable;
 import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject;
-import org.arhor.diploma.data.persistence.domain.core.DomainObject;
 import org.arhor.diploma.data.persistence.repository.BaseRepository;
 import org.arhor.diploma.testutils.RandomParameter;
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
@@ -58,9 +57,9 @@ class CreatorMixinTest {
     void shouldCreatePassedObjectWithoutException() {
         // given
         doReturn(null).when(testDto).getId();
-        doReturn(testEntity).when(converter).dtoToEntity(testDto);
+        doReturn(testEntity).when(converter).mapDtoToEntity(testDto);
         doReturn(testEntity).when(repository).save(testEntity);
-        doReturn(testDto).when(converter).entityToDto(testEntity);
+        doReturn(testDto).when(converter).mapEntityToDto(testEntity);
 
         // when
         final var result = creatorUnderTest.create(testDto);

@@ -1,6 +1,7 @@
 package org.arhor.diploma.web.api
 
 import org.arhor.diploma.web.model.messageResponse
+import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.web.ErrorProperties
 import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeAttribute
 import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeStacktrace
@@ -12,12 +13,11 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.context.request.WebRequest
+import java.lang.invoke.MethodHandles
 import javax.servlet.RequestDispatcher
 
 @RestController
-class CustomErrorController(
-    private val attributes: ErrorAttributes,
-) : ErrorController {
+class AppErrorController(private val errorAttrs: ErrorAttributes) : ErrorController {
 
     private val errorProps = ErrorProperties()
 
@@ -43,10 +43,12 @@ class CustomErrorController(
     }
 
     private fun errorAttributes(req: WebRequest): Map<String, Any?> {
-        val springErrorAttributes = attributes.getErrorAttributes(
+        val springErrorAttributes = errorAttrs.getErrorAttributes(
             req,
             getErrorAttributeOptions(req)
         )
+
+        log.debug("current error-attributes: {}", springErrorAttributes)
 
         for ((key, value) in springErrorAttributes) {
             if (key == "trace" && value is String) {
@@ -117,6 +119,7 @@ class CustomErrorController(
     }
 
     companion object {
+        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
         private const val DEFAULT_ERROR_PATH = "/api/error"
         private const val ERROR_PATH = "\${server.error.path:\${error.path:$DEFAULT_ERROR_PATH}}"
     }

@@ -53,7 +53,7 @@ class SpellController(
     @GetMapping
     fun getSpellList(
         @RequestParam(required = false) page: Int?,
-        @RequestParam(required = false) size: Int?
+        @RequestParam(required = false) size: Int?,
     ): ResponseEntity<List<Spell>> {
         return getEntityList(page, size)
     }

@@ -47,7 +47,7 @@ class ReaderMixinTest {
     @Test
     void shouldReturnProperResultList() {
         // given
-        doReturn(testDto).when(converter).entityToDto(testEntity);
+        doReturn(testDto).when(converter).mapEntityToDto(testEntity);
         doReturn(List.of(testEntity)).when(repository).findAll();
         
         // when
@@ -60,14 +60,14 @@ class ReaderMixinTest {
                 .hasSize(1)
                 .contains(testDto);
 
-        verify(converter).entityToDto(testEntity);
+        verify(converter).mapEntityToDto(testEntity);
         verify(repository).findAll();
     }
 
     @Test
     void shouldReturnExactlyRequiredObject(@RandomParameter final String search) {
         // given
-        doReturn(testDto).when(converter).entityToDto(testEntity);
+        doReturn(testDto).when(converter).mapEntityToDto(testEntity);
         doReturn(Optional.of(testEntity)).when(repository).findById(search);
 
         // when
@@ -78,7 +78,7 @@ class ReaderMixinTest {
                 .isNotNull()
                 .isSameAs(testDto);
 
-        verify(converter).entityToDto(testEntity);
+        verify(converter).mapEntityToDto(testEntity);
         verify(repository).findById(search);
     }
 
@@ -127,7 +127,7 @@ class ReaderMixinTest {
 
         doReturn(pageResponse).when(repository).findAll(any(Pageable.class));
         doReturn(entities).when(pageResponse).toList();
-        doReturn(testDto).when(converter).entityToDto(testEntity);
+        doReturn(testDto).when(converter).mapEntityToDto(testEntity);
 
         // when
         final var result = readerUnderTest.getList(page, size);
@@ -137,6 +137,6 @@ class ReaderMixinTest {
                 .isNotNull()
                 .hasSize(size);
 
-        verify(converter, times(size)).entityToDto(testEntity);
+        verify(converter, times(size)).mapEntityToDto(testEntity);
     }
 }

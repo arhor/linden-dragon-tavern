@@ -20,10 +20,10 @@ class CreatorMixin<E, D, K>(
             throw IllegalArgumentException("New entity must have $KEY_PROPERTY = null, but passed object has [$it]")
         }
 
-        val newEntity = converter.dtoToEntity(item)
+        val newEntity = converter.mapDtoToEntity(item)
         val savedEntity = repository.save(newEntity)
 
-        return converter.entityToDto(savedEntity)
+        return converter.mapEntityToDto(savedEntity)
     }
 
     companion object {

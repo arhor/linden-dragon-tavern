@@ -5,12 +5,12 @@ package org.arhor.diploma.commons
  * Since it is used basically as interface implemented by MapStruct library,
  * argument and return types marked as nullable.
  *
- * @param E entity type
- * @param D dto type
+ * @param A entity type
+ * @param B dto type
  */
-interface Converter<E, D> {
+interface Converter<A, B> {
 
-    fun entityToDto(entity: E): D
+    fun mapEntityToDto(item: A): B
 
-    fun dtoToEntity(dto: D): E
+    fun mapDtoToEntity(item: B): A
 }
