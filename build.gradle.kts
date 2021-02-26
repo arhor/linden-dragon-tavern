@@ -37,6 +37,7 @@ allprojects {
                 freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=enable")
                 jvmTarget = Deps.javaGlobal
                 javaParameters = true
+                useIR = true
             }
         }
     }

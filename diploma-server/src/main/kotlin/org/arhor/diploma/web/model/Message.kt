@@ -9,15 +9,15 @@ enum class Severity { INFO, WARN, ERROR }
 data class Message(
     val severity: Severity,
     val timestamp: LocalDateTime,
-    val code: Int?,
-    val text: String?,
+    val code: ErrorCode,
+    val text: String? = null,
     val details: List<Any>?
 )
 
 class MessageBuilder(
     val severity: Severity,
     var timestamp: LocalDateTime = LocalDateTime.now(),
-    var code: Int? = null,
+    var code: ErrorCode = ErrorCode.UNCATEGORIZED,
     var text: String? = null,
     var details: List<Any> = emptyList()
 )

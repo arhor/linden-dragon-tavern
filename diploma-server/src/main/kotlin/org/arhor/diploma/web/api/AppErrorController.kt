@@ -1,5 +1,6 @@
 package org.arhor.diploma.web.api
 
+import org.arhor.diploma.web.model.ErrorCode
 import org.arhor.diploma.web.model.messageResponse
 import org.slf4j.LoggerFactory
 import org.springframework.boot.autoconfigure.web.ErrorProperties
@@ -34,7 +35,6 @@ class AppErrorController(private val errorAttrs: ErrorAttributes) : ErrorControl
         return ResponseEntity(
             messageResponse {
                 error {
-                    code = status.value()
                     text = "Unhandled error. Please, create proper exception handler for it."
                     details = listOf(errorAttributes(req))
                 }

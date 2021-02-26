@@ -6,33 +6,42 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import org.arhor.diploma.exception.EntityNotFoundException
 import org.arhor.diploma.exception.InvalidCsrfTokenException
 import org.arhor.diploma.exception.MissingCsrfTokenException
+import org.arhor.diploma.web.model.ErrorCode
 import org.arhor.diploma.web.model.MessageResponse
 import org.arhor.diploma.web.model.messageResponse
 import org.springframework.context.MessageSource
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.security.core.AuthenticationException
+import org.springframework.validation.FieldError
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import org.springframework.web.context.request.WebRequest
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
 import java.util.*
 
-
 @RestControllerAdvice
 class AppExceptionHandler(
-    private val messageSource: MessageSource
+    private val messageSource: MessageSource,
 ) : ResponseEntityExceptionHandler() {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentTypeMismatchException::class)
-    fun handleArgumentClassCastException(e: MethodArgumentTypeMismatchException, lang: Locale): MessageResponse {
+    fun handleArgumentClassCastException(
+        ex: MethodArgumentTypeMismatchException,
+        lang: Locale
+    ): MessageResponse {
+
         return messageResponse {
             error {
-                code = 400
+                code = ErrorCode.UNCATEGORIZED
                 text = lang.localize("error.wrong.argument")
                 details = listOf(
-                    lang.localize("error.wrong.argument.details", e.name, e.value)
+                    lang.localize("error.wrong.argument.details", ex.name, ex.value)
                 )
             }
         }
@@ -40,10 +49,14 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(MissingCsrfTokenException::class)
-    fun handleMissingCsrfTokenException(e: MissingCsrfTokenException, lang: Locale): MessageResponse {
+    fun handleMissingCsrfTokenException(
+        ex: MissingCsrfTokenException,
+        lang: Locale
+    ): MessageResponse {
+
         return messageResponse {
             error {
-                code = 403
+                code = ErrorCode.SECURITY_VIOLATION
                 text = lang.localize("error.csrf.missing")
                 details = listOf(
                     lang.localize("error.csrf.missing.details")
@@ -54,11 +67,16 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidCsrfTokenException::class)
-    fun handleInvalidCsrfTokenException(ex: InvalidCsrfTokenException, lang: Locale): MessageResponse {
+    fun handleInvalidCsrfTokenException(
+        ex: InvalidCsrfTokenException,
+        lang: Locale
+    ): MessageResponse {
+
         val (expected, actual) = ex
+
         return messageResponse {
             error {
-                code = 403
+                code = ErrorCode.SECURITY_VIOLATION
                 text = lang.localize("error.csrf.invalid")
                 details = listOf(
                     lang.localize("error.csrf.invalid.details", expected, actual)
@@ -69,11 +87,16 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException::class)
-    fun handleEntityNotFoundException(ex: EntityNotFoundException, lang: Locale): MessageResponse {
+    fun handleEntityNotFoundException(
+        ex: EntityNotFoundException,
+        lang: Locale
+    ): MessageResponse {
+
         val (entityType, propName, propValue) = ex
+
         return messageResponse {
             error {
-                code = 404
+                code = ErrorCode.UNCATEGORIZED
                 text = lang.localize("error.entity.notfound")
                 details = listOf(
                     lang.localize("error.entity.notfound.details", entityType, propName, propValue)
@@ -84,18 +107,23 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidFormatException::class)
-    fun handleInvalidFormatException(e: InvalidFormatException, lang: Locale): MessageResponse {
-        val parser = e.processor as JsonParser
+    fun handleInvalidFormatException(
+        ex: InvalidFormatException,
+        lang: Locale
+    ): MessageResponse {
+
+        val parser = ex.processor as JsonParser
+
         return messageResponse {
             error {
-                code = 400
+                code = ErrorCode.VALIDATION_FAILED
                 text = lang.localize("error.json.format.invalid")
                 details = listOf(
                     lang.localize(
                         "error.json.format.invalid.details",
-                        e.value,
+                        ex.value,
                         parser.currentName,
-                        e.targetType.simpleName
+                        ex.targetType.simpleName
                     )
                 )
             }
@@ -104,17 +132,27 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(JsonProcessingException::class)
-    fun handleJsonProcessingException(e: JsonProcessingException, lang: Locale): MessageResponse {
-        val value = when (val processor = e.processor) {
+    fun handleJsonProcessingException(
+        ex: JsonProcessingException,
+        lang: Locale
+    ): MessageResponse {
+
+        val value = when (val processor = ex.processor) {
             is JsonParser -> processor.currentName ?: processor.text
             else -> "[UNKNOWN JSON PROCESSOR]"
         }
+
         return messageResponse {
             error {
-                code = 400
+                code = ErrorCode.UNCATEGORIZED
                 text = lang.localize("error.json.parse")
                 details = listOf(
-                    lang.localize("error.json.parse.details", value, e.location.lineNr, e.location.columnNr)
+                    lang.localize(
+                        "error.json.parse.details",
+                        value,
+                        ex.location.lineNr,
+                        ex.location.columnNr
+                    )
                 )
             }
         }
@@ -122,17 +160,62 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AuthenticationException::class)
-    fun handleAccessDeniedException(ex: AuthenticationException, lang: Locale): MessageResponse {
+    fun handleAccessDeniedException(
+        ex: AuthenticationException,
+        lang: Locale
+    ): MessageResponse {
+
         return messageResponse {
             error {
-                code = 401
+                code = ErrorCode.SECURITY_VIOLATION
                 text = lang.localize("error.credentials.bad")
-                details = ex.message?.let { listOf(it) } ?: emptyList()
             }
         }
+    }
+
+    override fun handleMethodArgumentNotValid(
+        ex: MethodArgumentNotValidException,
+        headers: HttpHeaders,
+        status: HttpStatus,
+        request: WebRequest
+    ): ResponseEntity<Any> {
+
+        val locale = request.locale
+
+        return handleExceptionInternal(
+            ex,
+            messageResponse {
+                error {
+                    code = ErrorCode.VALIDATION_FAILED
+                    text = locale.localize("error.validation.failed")
+                    details = errorMessagesGroupedByField(ex, locale)
+                }
+            },
+            headers,
+            status,
+            request
+        )
+    }
+
+    private fun errorMessagesGroupedByField(
+        ex: MethodArgumentNotValidException,
+        lang: Locale
+    ): List<FieldErrorDetails> {
+
+        return ex.allErrors
+            .map { it as FieldError }
+            .groupBy({ it.field }, { it.defaultMessage })
+            .map { (field, messages) ->
+                FieldErrorDetails(
+                    field = lang.localize(field),
+                    messages = messages.filterNotNull()
+                )
+            }
     }
 
     private fun Locale.localize(label: String, vararg args: Any?): String {
         return messageSource.getMessage(label, args, this)
     }
+
+    private data class FieldErrorDetails(val field: String, val messages: List<String>)
 }

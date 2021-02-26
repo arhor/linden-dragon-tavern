@@ -20,7 +20,7 @@ const store = new Vuex.Store({
     },
     getters: {},
     actions: {
-        switchTheme: ({ commit }) => {
+        switchTheme: ({commit}) => {
             commit(mutation.SWITCH_THEME);
         },
     },

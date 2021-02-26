@@ -1,7 +1,9 @@
 package org.arhor.diploma.service.impl
 
+import org.arhor.diploma.Roles
 import org.arhor.diploma.data.persistence.domain.Account
 import org.arhor.diploma.data.persistence.repository.AccountRepository
+import org.arhor.diploma.data.persistence.repository.SecurityProfileRepository
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
 import org.arhor.diploma.service.mapping.AccountConverter
@@ -18,13 +20,14 @@ import java.lang.invoke.MethodHandles
 @Service
 @Transactional
 class AccountServiceImpl(
-    private val repository: AccountRepository,
+    private val accRepository: AccountRepository,
+    private val secRepository: SecurityProfileRepository,
     converter: AccountConverter
-) : AbstractService<Account, AccountDTO, Long>(converter, repository), AccountService {
+) : AbstractService<Account, AccountDTO, Long>(converter, accRepository), AccountService {
 
     override fun loadUserByUsername(username: String?): UserDetails {
         return username?.let {
-            repository
+            accRepository
                 .findByUsername(it)
                 .map { account ->
                     val status = !account.isDeleted
@@ -46,16 +49,20 @@ class AccountServiceImpl(
 
     override fun getAccounts(page: Int, size: Int) = getList(page, size)
 
-    override fun createAccount(accountDTO: AccountDTO): Long {
+    @Transactional
+    override fun createAccount(accountDTO: AccountDTO): AccountDTO {
         accountDTO.username
-            ?.let { username -> repository.findByUsername(username) }
+            ?.let { username -> accRepository.findByUsername(username) }
             ?.ifPresent { account ->
-                val message = "Username '${account.username}' is already taken"
-                log.error(message)
-                throw RuntimeException(message)
+                throw RuntimeException("Username '${account.username}' is already taken")
             }
 
-        return create(accountDTO).id ?: throw IllegalStateException("Entity ID must be generated!")
+        val userSecurityProfile = secRepository.findByNameOrNull(Roles.USER.name)
+            ?: throw RuntimeException("Missing security profile: 'USER'")
+
+        return create(accountDTO) {
+            securityProfile = userSecurityProfile
+        }
     }
 
     override fun deleteAccount(id: Long) {
@@ -63,16 +70,26 @@ class AccountServiceImpl(
     }
 
     private fun extractAuthorities(account: Account): Collection<GrantedAuthority> {
-        return account.securityProfile
-            ?.securityAuthorities
-            ?.mapNotNull { profileAuthority -> profileAuthority.authority }
-            ?.mapNotNull { authority -> authority.name }
-            ?.map { name -> SimpleGrantedAuthority(name) }
-            ?: emptyList()
+        val securityProfile = account.securityProfile
+
+        val authorities = when {
+            securityProfile == null -> {
+                emptyList()
+            }
+            securityProfile.isSynthetic -> {
+                listOf("ROLE_${securityProfile.name}")
+            }
+            else -> {
+                securityProfile.securityAuthorities
+                    .mapNotNull { it.authority }
+                    .mapNotNull { it.name }
+            }
+        }
+
+        return authorities.map { SimpleGrantedAuthority(it) }
     }
 
     companion object {
-        @JvmStatic
         private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

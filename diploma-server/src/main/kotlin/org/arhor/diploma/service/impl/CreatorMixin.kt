@@ -10,17 +10,18 @@ import java.io.Serializable
 class CreatorMixin<E, D, K>(
     private val converter: Converter<E, D>,
     private val repository: BaseRepository<E, K>
-) : Creator<D, K>
+) : Creator<E, D, K>
         where E : DeletableDomainObject<K>,
               D : Identifiable<K>,
               K : Serializable {
 
-    override fun create(item: D): D {
+    override fun create(item: D, init: E.() -> Unit): D {
         item.id?.let {
             throw IllegalArgumentException("New entity must have $KEY_PROPERTY = null, but passed object has [$it]")
         }
 
         val newEntity = converter.mapDtoToEntity(item)
+        init(newEntity)
         val savedEntity = repository.save(newEntity)
 
         return converter.mapEntityToDto(savedEntity)

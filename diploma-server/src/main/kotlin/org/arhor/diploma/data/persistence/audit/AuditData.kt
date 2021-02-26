@@ -6,6 +6,11 @@ import javax.persistence.*
 
 class AuditData : DomainObject<Long>() {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false, updatable = false)
+    override var id: Long? = null
+
     @Column(nullable = false)
     var property: String? = null
 

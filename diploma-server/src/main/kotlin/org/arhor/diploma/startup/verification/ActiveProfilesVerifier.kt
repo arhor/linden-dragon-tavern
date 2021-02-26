@@ -28,4 +28,9 @@ class ActiveProfilesVerifier(private val env: Environment) : Verifiable {
         }
         return Success("There are no mutually exclusive profiles.")
     }
+
+
+    private val mutuallyExclusiveProfiles: Map<String, Set<String>> = mapOf(
+        SpringProfile.DEVELOPMENT to hashSetOf(SpringProfile.PRODUCTION, SpringProfile.CLOUD),
+    )
 }

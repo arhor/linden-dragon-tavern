@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
+import org.springframework.security.config.core.GrantedAuthorityDefaults
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -26,7 +27,6 @@ import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
 import java.lang.invoke.MethodHandles
-import javax.servlet.http.HttpServletResponse
 
 @Configuration
 @EnableWebSecurity
@@ -43,12 +43,19 @@ class WebSecurityConfig(
             .passwordEncoder(passwordEncoder())
     }
 
+    @Bean
+    fun grantedAuthorityDefaults(): GrantedAuthorityDefaults {
+        return GrantedAuthorityDefaults(ROLE_PREFIX)
+    }
+
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.csrf().disable()
             .cors()
             .and()
-            .authorizeRequests().anyRequest().permitAll()
+            .authorizeRequests()
+            .antMatchers("/api/certificates").hasRole("ADMIN")// "ROLE_ADMIN"
+            .anyRequest().permitAll()
             .and()
             .headers().contentSecurityPolicy(SECURITY_POLICY_DIRECTIVES)
             .and()
@@ -113,6 +120,8 @@ class WebSecurityConfig(
 
     companion object {
         private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
+
+        const val ROLE_PREFIX = "ROLE_"
 
         private val SECURITY_POLICY_DIRECTIVES = arrayOf(
             "default-src 'self'",

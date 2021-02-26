@@ -1,7 +1,9 @@
 package org.arhor.diploma
 
-object Roles {
-    const val USER = "ROLE_USER"
-    const val ADMIN = "ROLE_ADMIN"
-    const val ANONYMOUS = "ROLE_ANONYMOUS"
+enum class Roles(val persistent: Boolean = true) {
+    USER,
+    ADMIN,
+    ANONYMOUS(false);
+
+    fun prefixed(): String = "ROLE_${toString()}"
 }

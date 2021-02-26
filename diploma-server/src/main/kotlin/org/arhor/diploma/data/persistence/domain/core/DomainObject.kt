@@ -15,28 +15,10 @@ import javax.persistence.*
 @EntityListeners(ObjectExtensionLoader::class)
 abstract class DomainObject<T : Serializable> : Identifiable<T>, Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", nullable = false, updatable = false)
-    override var id: T? = null
-
     @Transient
     final val extraData: ExtraDataHolder = ExtraDataHolder()
 
     abstract val tableName: String
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is DomainObject<*>) return false
-
-        if (id != other.id) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        return id?.hashCode() ?: 0
-    }
 
     companion object {
         /**
@@ -51,6 +33,6 @@ abstract class DomainObject<T : Serializable> : Identifiable<T>, Serializable {
          * - in cases when there is only one database client it can be greater then 1
          * - in cases when there are multiple database clients it MUST be set to 1
          */
-        const val SEQ_ALLOC_SIZE = 25
+        const val SEQ_ALLOC_SIZE = 1
     }
 }

@@ -10,6 +10,7 @@ import javax.persistence.*
 @Table(name = "security_profiles")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 data class SecurityProfile(
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "${SEQ_GEN_NAME}_security_profiles")
     @SequenceGenerator(
@@ -22,15 +23,27 @@ data class SecurityProfile(
 
     @Column(unique = true, nullable = false)
     var name: String? = null,
+
+    @Column(name = "synthetic", nullable = false)
+    var isSynthetic: Boolean = false
+
 ) : AuditableDomainObject<Long>() {
 
     override val tableName: String
         get() = "security_profiles"
 
-    @OneToMany(mappedBy = "securityProfile", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(
+        mappedBy = "securityProfile",
+        cascade = [CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH],
+        orphanRemoval = true
+    )
     private val _accounts: MutableList<Account> = mutableListOf()
 
-    @OneToMany(mappedBy = "securityProfile", cascade = [CascadeType.ALL], orphanRemoval = true)
+    @OneToMany(
+        mappedBy = "securityProfile",
+        cascade = [CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH],
+        orphanRemoval = true
+    )
     private val _securityAuthorities: MutableList<SecurityProfileAuthority> = mutableListOf()
 
     val accounts: List<Account>

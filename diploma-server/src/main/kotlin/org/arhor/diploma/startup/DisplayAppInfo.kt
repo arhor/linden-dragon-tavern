@@ -43,7 +43,6 @@ class DisplayAppInfo(private val env: Environment) : StartupTask {
     }
 
     companion object {
-        @JvmStatic
         private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

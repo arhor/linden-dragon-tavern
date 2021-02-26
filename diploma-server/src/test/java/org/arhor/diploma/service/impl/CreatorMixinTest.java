@@ -1,5 +1,6 @@
 package org.arhor.diploma.service.impl;
 
+import kotlin.Unit;
 import org.arhor.diploma.commons.Converter;
 import org.arhor.diploma.commons.Identifiable;
 import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject;

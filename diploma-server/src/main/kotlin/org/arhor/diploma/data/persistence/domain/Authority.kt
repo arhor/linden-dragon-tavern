@@ -10,6 +10,7 @@ import javax.persistence.*
 @Table(name = "authorities")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
 data class Authority(
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "${SEQ_GEN_NAME}_authorities")
     @SequenceGenerator(
@@ -21,7 +22,8 @@ data class Authority(
     override var id: Long? = null,
 
     @Column(name = "name", unique = true, nullable = false)
-    var name: String? = null,
+    var name: String? = null
+
 ) : DomainObject<Long>() {
 
     override val tableName: String

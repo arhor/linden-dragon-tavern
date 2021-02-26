@@ -1,7 +1,7 @@
 package org.arhor.diploma.web
 
 import org.arhor.diploma.commons.Identifiable
-import org.arhor.diploma.service.CrudService
+import org.arhor.diploma.service.Reader
 import org.arhor.diploma.util.DEFAULT_PAGE
 import org.arhor.diploma.util.DEFAULT_SIZE
 import org.arhor.diploma.util.maxBound
@@ -12,14 +12,15 @@ import org.springframework.hateoas.server.mvc.linkTo
 import org.springframework.security.core.Authentication
 import java.io.Serializable
 
-internal inline fun <E, K, reified CONTROLLER> CrudService<E, K>.createPagedModel(
+internal inline fun <D, K, reified CONTROLLER> Reader<D, K>.createPagedModel(
     page: Int?,
     size: Int?,
     auth: Authentication?,
     crossinline getPage: CONTROLLER.(Int?, Int?, Authentication?) -> PagedModel<*>,
-    mapper: (E) -> RepresentationModel<*> = { item: Any -> RepresentationModel.of(item) },
+    mapper: (D) -> RepresentationModel<*> = { item: Any -> RepresentationModel.of(item) },
 ): PagedModel<*>
-        where E : Identifiable<K>, K : Serializable {
+        where D : Identifiable<K>,
+              K : Serializable {
 
     val safePage = page.minBound(DEFAULT_PAGE)
     val safeSize = size.maxBound(DEFAULT_SIZE)

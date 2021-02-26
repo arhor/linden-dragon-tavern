@@ -15,11 +15,12 @@ CREATE TABLE IF NOT EXISTS authorities
 -- START >>> table 'security_profiles'
 CREATE TABLE IF NOT EXISTS security_profiles
 (
-    id      BIGSERIAL   NOT NULL PRIMARY KEY,
-    name    VARCHAR(50) NOT NULL UNIQUE,
-    created TIMESTAMP   NOT NULL DEFAULT NOW(),
-    updated TIMESTAMP   NULL,
-    deleted BOOLEAN     NOT NULL DEFAULT FALSE
+    id        BIGSERIAL   NOT NULL PRIMARY KEY,
+    name      VARCHAR(50) NOT NULL UNIQUE,
+    created   TIMESTAMP   NOT NULL,
+    updated   TIMESTAMP   NULL,
+    deleted   BOOLEAN     NOT NULL DEFAULT FALSE,
+    synthetic BOOLEAN     NOT NULL DEFAULT FALSE
 )
     WITH (OIDS = FALSE);
 -- END <<< table 'security_profiles'

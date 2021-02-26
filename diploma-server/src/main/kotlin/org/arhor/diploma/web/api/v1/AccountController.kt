@@ -2,17 +2,10 @@ package org.arhor.diploma.web.api.v1
 
 import org.arhor.diploma.Authorities.Account
 import org.arhor.diploma.service.AccountService
-import org.arhor.diploma.service.CrudService
 import org.arhor.diploma.service.dto.AccountDTO
-import org.arhor.diploma.util.DEFAULT_PAGE
-import org.arhor.diploma.util.DEFAULT_SIZE
-import org.arhor.diploma.util.maxBound
-import org.arhor.diploma.util.minBound
 import org.arhor.diploma.web.createPagedModel
 import org.slf4j.LoggerFactory
-import org.springframework.data.web.PagedResourcesAssembler
 import org.springframework.hateoas.PagedModel
-import org.springframework.hateoas.PagedModel.PageMetadata
 import org.springframework.hateoas.RepresentationModel
 import org.springframework.hateoas.server.mvc.linkTo
 import org.springframework.http.HttpStatus
@@ -24,12 +17,15 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.lang.invoke.MethodHandles
+import javax.validation.Valid
+import javax.validation.executable.ValidateOnExecution
 
 @RestController
 @RequestMapping(
     path = ["/api/v1/accounts"],
     produces = [MediaType.APPLICATION_JSON_VALUE]
 )
+@ValidateOnExecution
 class AccountController(private val service: AccountService) {
 
     @GetMapping
@@ -39,8 +35,6 @@ class AccountController(private val service: AccountService) {
         @RequestParam(required = false) size: Int?,
         auth: Authentication?,
     ): PagedModel<*> {
-
-
         return service.createPagedModel(page, size, auth, AccountController::getAccounts) { account ->
             account.toRepresentationModel(auth)
         }
@@ -51,21 +45,13 @@ class AccountController(private val service: AccountService) {
         return service.getAccountById(id).toRepresentationModel(auth)
     }
 
-    @PutMapping
-    @PreAuthorize("isAuthenticated() and hasAuthority('${Account.EDIT}')")
-    @ResponseStatus(HttpStatus.CREATED)
-    fun updateAccount(@RequestBody account: AccountDTO, auth: Authentication?): ResponseEntity<Unit> {
-        if (selfRequest(account, auth)) {
-            TODO("implement me")
-        } else {
-            throw IllegalArgumentException()
-        }
-
-        val newAccountId = service.createAccount(account)
+    @PostMapping
+    fun createAccount(@Valid @RequestBody account: AccountDTO): ResponseEntity<Unit> {
+        val createdAccount = service.createAccount(account)
 
         val location = ServletUriComponentsBuilder.fromCurrentRequest()
             .path("/{id}")
-            .buildAndExpand(newAccountId)
+            .buildAndExpand(createdAccount.id)
             .toUri()
 
         return ResponseEntity.created(location).build()
@@ -85,39 +71,8 @@ class AccountController(private val service: AccountService) {
     }
 
     private fun AccountDTO.toRepresentationModel(auth: Authentication?): RepresentationModel<*> {
-        val account = this
-        return RepresentationModel.of(account)
+        return RepresentationModel.of(this)
             .add(linkTo<AccountController> { getAccount(id!!, auth) }.withSelfRel())
-            .addIf(canUpdate(account, auth)) {
-                linkTo<AccountController> {
-                    updateAccount(
-                        account,
-                        auth
-                    )
-                }.withRel("update")
-            }
-            .addIf(canDelete(account, auth)) {
-                linkTo<AccountController> {
-                    deleteAccount(
-                        account.id!!,
-                        auth
-                    )
-                }.withRel("delete")
-            }
-    }
-
-    private fun canUpdate(account: AccountDTO, auth: Authentication?): Boolean {
-        if (selfRequest(account, auth) && (auth != null)) {
-            return auth.isAuthenticated && auth.authorities.map { it.authority }.contains(Account.EDIT)
-        }
-        return false
-    }
-
-    private fun canDelete(account: AccountDTO, auth: Authentication?): Boolean {
-        if (selfRequest(account, auth) && (auth != null)) {
-            return auth.isAuthenticated && auth.authorities.map { it.authority }.contains(Account.EDIT)
-        }
-        return false
     }
 
     private fun selfRequest(account: AccountDTO, auth: Authentication?): Boolean {

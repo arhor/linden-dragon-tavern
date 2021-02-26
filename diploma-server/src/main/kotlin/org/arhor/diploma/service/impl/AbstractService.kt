@@ -13,8 +13,8 @@ abstract class AbstractService<
         K : Serializable>(
     protected val converter: Converter<E, D>,
     private val repository: BaseRepository<E, K>
-) : CrudService<D, K>,
-    Creator<D, K> by CreatorMixin(converter, repository),
+) : CrudService<E, D, K>,
+    Creator<E, D, K> by CreatorMixin(converter, repository),
     Reader <D, K> by ReaderMixin(converter, repository),
     Updater<D, K> by UpdaterMixin(converter, repository),
     Deleter<D, K> by DeleterMixin(repository)
