@@ -1,7 +1,12 @@
 (function (_, Kotlin) {
   'use strict';
   var Kind_OBJECT = Kotlin.Kind.OBJECT;
+  var Enum = Kotlin.kotlin.Enum;
+  var Kind_CLASS = Kotlin.Kind.CLASS;
+  var throwISE = Kotlin.throwISE;
   var numberToInt = Kotlin.numberToInt;
+  Roles.prototype = Object.create(Enum.prototype);
+  Roles.prototype.constructor = Roles;
   function Authorities() {
     Authorities_instance = this;
   }
@@ -49,23 +54,76 @@
       new CsrfUtils();
     }return CsrfUtils_instance;
   }
-  function Roles() {
-    Roles_instance = this;
-    this.USER = 'ROLE_USER';
-    this.ADMIN = 'ROLE_ADMIN';
-    this.ANONYMOUS = 'ROLE_ANONYMOUS';
+  function JwtStruct() {
+    JwtStruct_instance = this;
+    this.USERNAME = 'username';
+    this.ROLES = 'roles';
   }
-  Roles.$metadata$ = {
+  JwtStruct.$metadata$ = {
     kind: Kind_OBJECT,
-    simpleName: 'Roles',
+    simpleName: 'JwtStruct',
     interfaces: []
   };
-  var Roles_instance = null;
-  function Roles_getInstance() {
-    if (Roles_instance === null) {
-      new Roles();
-    }return Roles_instance;
+  var JwtStruct_instance = null;
+  function JwtStruct_getInstance() {
+    if (JwtStruct_instance === null) {
+      new JwtStruct();
+    }return JwtStruct_instance;
   }
+  function Roles(name, ordinal, persistent) {
+    if (persistent === void 0)
+      persistent = true;
+    Enum.call(this);
+    this.persistent = persistent;
+    this.name$ = name;
+    this.ordinal$ = ordinal;
+  }
+  function Roles_initFields() {
+    Roles_initFields = function () {
+    };
+    Roles$USER_instance = new Roles('USER', 0);
+    Roles$ADMIN_instance = new Roles('ADMIN', 1);
+    Roles$ANONYMOUS_instance = new Roles('ANONYMOUS', 2, false);
+  }
+  var Roles$USER_instance;
+  function Roles$USER_getInstance() {
+    Roles_initFields();
+    return Roles$USER_instance;
+  }
+  var Roles$ADMIN_instance;
+  function Roles$ADMIN_getInstance() {
+    Roles_initFields();
+    return Roles$ADMIN_instance;
+  }
+  var Roles$ANONYMOUS_instance;
+  function Roles$ANONYMOUS_getInstance() {
+    Roles_initFields();
+    return Roles$ANONYMOUS_instance;
+  }
+  Roles.prototype.prefixed = function () {
+    return 'ROLE_' + this.toString();
+  };
+  Roles.$metadata$ = {
+    kind: Kind_CLASS,
+    simpleName: 'Roles',
+    interfaces: [Enum]
+  };
+  function Roles$values() {
+    return [Roles$USER_getInstance(), Roles$ADMIN_getInstance(), Roles$ANONYMOUS_getInstance()];
+  }
+  Roles.values = Roles$values;
+  function Roles$valueOf(name) {
+    switch (name) {
+      case 'USER':
+        return Roles$USER_getInstance();
+      case 'ADMIN':
+        return Roles$ADMIN_getInstance();
+      case 'ANONYMOUS':
+        return Roles$ANONYMOUS_getInstance();
+      default:throwISE('No enum constant org.arhor.diploma.Roles.' + name);
+    }
+  }
+  Roles.valueOf_61zpoe$ = Roles$valueOf;
   function Utils() {
     Utils_instance = this;
   }
@@ -102,9 +160,19 @@
   Object.defineProperty(package$diploma, 'CsrfUtils', {
     get: CsrfUtils_getInstance
   });
-  Object.defineProperty(package$diploma, 'Roles', {
-    get: Roles_getInstance
+  Object.defineProperty(package$diploma, 'JwtStruct', {
+    get: JwtStruct_getInstance
   });
+  Object.defineProperty(Roles, 'USER', {
+    get: Roles$USER_getInstance
+  });
+  Object.defineProperty(Roles, 'ADMIN', {
+    get: Roles$ADMIN_getInstance
+  });
+  Object.defineProperty(Roles, 'ANONYMOUS', {
+    get: Roles$ANONYMOUS_getInstance
+  });
+  package$diploma.Roles = Roles;
   Object.defineProperty(package$diploma, 'Utils', {
     get: Utils_getInstance
   });

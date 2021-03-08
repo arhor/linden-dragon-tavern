@@ -20,6 +20,16 @@ export const monsters = new Breadcrumb({
     link: '/monsters',
 });
 
+export const characters = new Breadcrumb({
+    label: 'views.characters',
+    link: '/characters',
+});
+
+export const newCharacter = new Breadcrumb({
+    label: 'views.newCharacter',
+    link: '/new-character',
+});
+
 export const spells = new Breadcrumb({
     label: 'Spells',
     link: '/spells',

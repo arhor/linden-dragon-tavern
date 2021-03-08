@@ -24,6 +24,7 @@ class SpringSecurityAuditorAware : AuditorAware<String> {
                         else -> null
                     }
                 }
+
         return Optional.of(currentUserLogin ?: Common.SYSTEM_ACCOUNT)
     }
 }

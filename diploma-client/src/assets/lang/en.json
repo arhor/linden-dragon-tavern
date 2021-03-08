@@ -1,7 +1,9 @@
 {
     "en": {
         "views": {
-            "home": "home"
+            "home": "home",
+            "characters": "characters",
+            "newCharacter": "new character"
         }
     }
 }

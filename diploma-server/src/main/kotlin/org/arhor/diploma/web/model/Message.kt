@@ -3,8 +3,6 @@ package org.arhor.diploma.web.model
 import com.fasterxml.jackson.annotation.JsonPropertyOrder
 import java.time.LocalDateTime
 
-enum class Severity { INFO, WARN, ERROR }
-
 @JsonPropertyOrder("severity", "timestamp", "code", "text", "details")
 data class Message(
     val severity: Severity,
@@ -12,15 +10,10 @@ data class Message(
     val code: ErrorCode,
     val text: String? = null,
     val details: List<Any>?
-)
+) {
 
-class MessageBuilder(
-    val severity: Severity,
-    var timestamp: LocalDateTime = LocalDateTime.now(),
-    var code: ErrorCode = ErrorCode.UNCATEGORIZED,
-    var text: String? = null,
-    var details: List<Any> = emptyList()
-)
+    enum class Severity { INFO, WARN, ERROR }
+}
 
 /**
  * Represents general message response from the server.
@@ -44,6 +37,14 @@ class MessageBuilder(
  */
 data class MessageResponse(val messages: List<Message>)
 
+class MessageBuilder(
+    val severity: Message.Severity,
+    var timestamp: LocalDateTime = LocalDateTime.now(),
+    var code: ErrorCode = ErrorCode.UNCATEGORIZED,
+    var text: String? = null,
+    var details: List<Any> = emptyList()
+)
+
 @DslMarker
 annotation class MessageResponseMaker
 
@@ -52,17 +53,17 @@ class MessageResponseBuilder {
 
     private val messages = mutableListOf<Message>()
 
-    fun info(init: MessageBuilder.() -> Unit) = initMessage(Severity.INFO, init)
+    fun info(init: MessageBuilder.() -> Unit) = initMessage(Message.Severity.INFO, init)
 
-    fun warn(init: MessageBuilder.() -> Unit) = initMessage(Severity.WARN, init)
+    fun warn(init: MessageBuilder.() -> Unit) = initMessage(Message.Severity.WARN, init)
 
-    fun error(init: MessageBuilder.() -> Unit) = initMessage(Severity.ERROR, init)
+    fun error(init: MessageBuilder.() -> Unit) = initMessage(Message.Severity.ERROR, init)
 
     fun build(): MessageResponse {
         return MessageResponse(messages.toList())
     }
 
-    private inline fun initMessage(severity: Severity, init: MessageBuilder.() -> Unit) {
+    private inline fun initMessage(severity: Message.Severity, init: MessageBuilder.() -> Unit) {
         val builder = MessageBuilder(severity)
         builder.init()
 

@@ -105,7 +105,7 @@ tasks {
 
     withType<Test> {
         useJUnitPlatform {
-            excludeTags(/*"integration"*/)
+            excludeTags("integration-test")
         }
         jvmArgs = listOf(springActiveProfiles)
     }

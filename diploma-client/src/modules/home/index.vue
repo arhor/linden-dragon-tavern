@@ -41,6 +41,7 @@ export default {
             { name: 'Monsters', path: '/monsters', status: 'in progress' },
             { name: 'Spells', path: '/spells', status: 'in progress' },
             { name: 'Maps', path: '/maps', status: 'in progress' },
+            { name: 'Characters', path: '/characters', status: 'in progress' },
         ],
     },
     methods: {

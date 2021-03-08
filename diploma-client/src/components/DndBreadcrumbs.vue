@@ -21,10 +21,7 @@ export default {
         updateBreadcrumbs() {
             this.breadcrumbs =
                 this.$route.meta?.breadcrumbs?.map((breadcrumb, idx, items) => {
-                    return {
-                        ...breadcrumb,
-                        disabled: Boolean(idx === items.length - 1),
-                    };
+                    return { ...breadcrumb, disabled: Boolean(idx === items.length - 1) };
                 }) ?? [];
         },
     },

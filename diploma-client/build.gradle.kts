@@ -51,26 +51,23 @@ tasks {
             args.set(listOf("run", "test:unit"))
         }
 
-    val buildClient =
-        register<NpmTask>("buildClient") {
-            dependsOn(clientTest)
-            group = "build"
-            description = "Builds production version of the app client"
-            workingDir.fileValue(projectDir)
-            args.set(listOf("run", "build"))
-        }
+    register<NpmTask>("buildClient") {
+        dependsOn(clientTest)
+        group = "build"
+        description = "Builds production version of the app client"
+        workingDir.fileValue(projectDir)
+        args.set(listOf("run", "build"))
+    }
 
-    val clientStart =
-        register<NpmTask>("clientStart") {
-            dependsOn(npmInstall, injectSharedLib)
-            description = "Starts client development server"
-            workingDir.fileValue(projectDir)
-            args.set(listOf("run", "serve"))
-        }
+    register<NpmTask>("clientStart") {
+        dependsOn(npmInstall, injectSharedLib)
+        description = "Starts client development server"
+        workingDir.fileValue(projectDir)
+        args.set(listOf("run", "serve"))
+    }
 
-    val scrap =
-        register<NodeTask>("scrap") {
-            dependsOn(npmInstall)
-            script.fileValue(file("scripts/dungeon_su_scrapper.js"))
-        }
+    register<NodeTask>("scrap") {
+        dependsOn(npmInstall)
+        script.fileValue(file("scripts/dungeon_su_scrapper.js"))
+    }
 }

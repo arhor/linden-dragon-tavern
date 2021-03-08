@@ -2,20 +2,20 @@ import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import axios from 'axios';
 
-import { default as messages } from '@/assets/lang/ru.json';
+import { default as messages } from '@/assets/lang/en.json';
 import { refExists } from '@/utils/coreUtils';
 
 Vue.use(VueI18n);
 
 const i18n = new VueI18n({
-    locale: 'ru',
-    fallbackLocale: 'ru',
+    locale: 'en',
+    fallbackLocale: 'en',
     messages,
 });
 
 export default i18n;
 
-const loadedLanguages = ['ru'];
+const loadedLanguages = ['en'];
 
 export async function loadLanguageAsync(lang) {
     if (!refExists(lang)) {

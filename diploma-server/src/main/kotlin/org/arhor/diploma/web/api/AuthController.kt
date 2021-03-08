@@ -26,11 +26,6 @@ class AuthController(
     private val tokenProvider: TokenProvider
 ) {
 
-    @PostMapping("/sign-up")
-    fun register(@RequestBody signUp: SignUpRequest): AuthResponse {
-        TODO("IMPLEMENT ME!!!")
-    }
-
     @PostMapping("/sign-in")
     fun authenticate(@RequestBody signIn: SignInRequest): AuthResponse {
         log.debug("authentication started: [${signIn}]")
@@ -42,21 +37,29 @@ class AuthController(
             )
         )
 
-        return auth.toAuthResponse { log.debug("token granted: [{}]", it.accessToken) }
+        val authResponse = AuthResponse(
+            tokenProvider.generate(auth.principal as UserDetails),
+            tokenProvider.authTokenType
+        )
+
+        log.debug("token granted: [{}]", authResponse.accessToken)
+
+        return authResponse
     }
 
     @GetMapping("/refresh")
     @PreAuthorize("isAuthenticated()")
     fun refresh(auth: Authentication): AuthResponse {
         log.debug("refreshing token: [${auth}]")
-        return auth.toAuthResponse { log.debug("token refreshed: [{}]", it.accessToken) }
-    }
 
-    private inline fun Authentication.toAuthResponse(additionalAction: (AuthResponse) -> Unit = {}): AuthResponse {
-        return AuthResponse(
-            tokenProvider.generate(principal as UserDetails),
+        val authResponse = AuthResponse(
+            tokenProvider.generate(auth.principal as UserDetails),
             tokenProvider.authTokenType
-        ).also(additionalAction)
+        )
+
+        log.debug("token refreshed: [{}]", authResponse.accessToken)
+
+        return authResponse
     }
 
     companion object {
