@@ -9,18 +9,37 @@
             </template>
         </v-stepper-header>
 
-        <v-stepper-items>
-            <v-stepper-content v-for="(step, i) in steps" :key="`step-${i + 1}`" :step="i + 1">
-                <component :is="step.component" @step-complete="handleStepComplete" />
-            </v-stepper-content>
-        </v-stepper-items>
+        <v-row align="center" justify="center" align-content="center">
+            <v-col cols="4">
+                <character-info
+                    :name="'Arhor'"
+                    :str="20"
+                    :dex="0"
+                    :con="0"
+                    :int="0"
+                    :wis="0"
+                    :cha="0"
+                />
+            </v-col>
+            <v-col cols="8">
+                <v-stepper-items>
+                    <v-stepper-content
+                        v-for="(step, i) in steps"
+                        :key="`step-${i + 1}`"
+                        :step="i + 1"
+                    >
+                        <component :is="step.component" @step-complete="handleStepComplete" />
+                    </v-stepper-content>
+                </v-stepper-items>
+            </v-col>
+        </v-row>
     </v-stepper>
 </template>
 
 <script>
+import CharacterInfo from '@/modules/characters/components/CharacterCreator/CharacterInfo.vue';
 import {
     StepAbilities,
-    StepAppearance,
     StepClass,
     StepOrigin,
     StepRace,
@@ -29,17 +48,20 @@ import {
 
 export default {
     name: 'CharacterCreator',
+
+    components: { CharacterInfo },
+
     data: () => ({
         steps: [
             { title: 'Origin', component: StepOrigin },
             { title: 'Race', component: StepRace },
-            { title: 'Appearance', component: StepAppearance },
             { title: 'Class', component: StepClass },
             { title: 'Skills', component: StepSkills },
             { title: 'Abilities', component: StepAbilities },
         ],
         currentStep: 1,
     }),
+
     methods: {
         handleStepComplete() {
             // temp-behavior: loop should be removed after implementation complete
