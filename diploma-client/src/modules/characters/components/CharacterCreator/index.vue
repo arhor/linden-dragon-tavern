@@ -11,15 +11,7 @@
 
         <v-row align="center" justify="center" align-content="center">
             <v-col cols="4">
-                <character-info
-                    :name="'Arhor'"
-                    :str="20"
-                    :dex="0"
-                    :con="0"
-                    :int="0"
-                    :wis="0"
-                    :cha="0"
-                />
+                <character-info v-bind="character" />
             </v-col>
             <v-col cols="8">
                 <v-stepper-items>
@@ -28,7 +20,7 @@
                         :key="`step-${i + 1}`"
                         :step="i + 1"
                     >
-                        <component :is="step.component" @step-complete="handleStepComplete" />
+                        <component :is="step.component" @data-changed="handleChanges" />
                     </v-stepper-content>
                 </v-stepper-items>
             </v-col>
@@ -38,6 +30,13 @@
 
 <script>
 import CharacterInfo from '@/modules/characters/components/CharacterCreator/CharacterInfo.vue';
+import {
+    Abilities,
+    Class,
+    Origin,
+    Race,
+    Skills,
+} from '@/modules/characters/components/CharacterCreator/model';
 import {
     StepAbilities,
     StepClass,
@@ -60,16 +59,21 @@ export default {
             { title: 'Abilities', component: StepAbilities },
         ],
         currentStep: 1,
+        character: {
+            abilities: new Abilities(),
+            class: new Class(),
+            origin: new Origin(),
+            race: new Race(),
+            skills: new Skills(),
+        },
     }),
 
     methods: {
-        handleStepComplete() {
-            // temp-behavior: loop should be removed after implementation complete
-            if (this.currentStep === this.steps.length) {
-                this.currentStep = 1;
-            } else {
-                this.currentStep++;
-            }
+        handleChanges(changes) {
+            this.character = {
+                ...this.character,
+                ...changes,
+            };
         },
     },
 };

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VueCompositionAPI from '@vue/composition-api';
 
 import '@/assets/style/main.scss';
 import '@/plugins/cookies.js';
@@ -9,6 +10,7 @@ import router from '@/routes';
 import store from '@/store';
 import vuetify from '@/plugins/vuetify.js';
 
+Vue.use(VueCompositionAPI);
 Vue.config.productionTip = false;
 
 window.appController = {

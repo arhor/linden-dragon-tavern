@@ -1,14 +1,28 @@
 <template>
     <div>
-        <v-card class="mb-12" color="grey lighten-1" height="325px"></v-card>
-        <v-btn color="primary" @click="$emit('step-complete')">Continue</v-btn>
-        <v-btn text>Cancel</v-btn>
+        <v-card color="grey lighten-1" height="400px" tile></v-card>
     </div>
 </template>
 
 <script>
+import Step from '@/modules/characters/components/CharacterCreator/steps/Step';
+import { Abilities } from '@/modules/characters/components/CharacterCreator/model';
+
 export default {
     name: 'StepAbilities',
-    data: () => ({}),
+
+    extends: Step,
+
+    data: () => ({
+        abilities: new Abilities(),
+    }),
+
+    computed: {
+        stepData() {
+            return {
+                abilities: this.abilities.clone(),
+            };
+        },
+    },
 };
 </script>

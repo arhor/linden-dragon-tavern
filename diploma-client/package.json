@@ -16,6 +16,7 @@
         "format": "prettier --write \"+(src|tests)/**/*.+(js|jsx|json|css|md|vue|html)\""
     },
     "dependencies": {
+        "@vue/composition-api": "^1.0.0-rc.3",
         "axios": "^0.21.1",
         "core-js": "^3.6.5",
         "vue": "^2.6.12",

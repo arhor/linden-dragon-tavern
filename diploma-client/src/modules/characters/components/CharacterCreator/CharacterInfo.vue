@@ -1,7 +1,7 @@
 <template>
-    <v-card class="mx-6" color="grey lighten-1" height="400px">
+    <v-card class="mx-6 mt-5 elevation-0" color="grey lighten-1" height="400px" tile>
         <v-row justify="space-around" class="py-3">
-            <span class="white--text">{{ $t('name') }}: {{ name }}</span>
+            <span class="white--text">{{ $t('name') }}: {{ origin.name }}</span>
         </v-row>
 
         <v-row
@@ -10,51 +10,56 @@
             justify="space-around"
             class="py-5 px-16"
         >
-            <v-avatar
+            <ability-point
                 v-for="(ability, j) in abilityRow"
                 :key="`ability-${j}`"
-                color="secondary"
-                size="60"
-            >
-                <span class="white--text">
-                    {{ $t(ability.title).toUpperCase() }}
-                    <br />
-                    {{ ability.value }}
-                </span>
-            </v-avatar>
+                :title="$t(ability.title).toUpperCase()"
+                :value="ability.value"
+            />
         </v-row>
     </v-card>
 </template>
 
 <script>
+import { computed } from '@vue/composition-api';
+
+import AbilityPoint from '@/modules/characters/components/CharacterCreator/AbilityPoint';
+import {
+    Abilities,
+    Class,
+    Origin,
+    Race,
+    Skills,
+} from '@/modules/characters/components/CharacterCreator/model';
+
 export default {
     name: 'CharacterInfo',
 
+    components: { AbilityPoint },
+
     props: {
-        name: String,
-        str: { type: Number, required: true },
-        dex: { type: Number, required: true },
-        con: { type: Number, required: true },
-        int: { type: Number, required: true },
-        wis: { type: Number, required: true },
-        cha: { type: Number, required: true },
+        origin: { type: Origin },
+        race: { type: Race },
+        class: { type: Class },
+        skills: { type: Skills },
+        abilities: { type: Abilities },
     },
 
-    computed: {
-        abilityRows() {
-            return [
-                [
-                    { title: 'STR', value: this.str },
-                    { title: 'DEX', value: this.dex },
-                    { title: 'CON', value: this.con },
-                ],
-                [
-                    { title: 'INT', value: this.int },
-                    { title: 'WIS', value: this.wis },
-                    { title: 'CHA', value: this.cha },
-                ],
-            ];
-        },
+    setup(props) {
+        const abilityRows = computed(() => [
+            [
+                { title: 'str', value: props.abilities.str },
+                { title: 'dex', value: props.abilities.dex },
+                { title: 'con', value: props.abilities.con },
+            ],
+            [
+                { title: 'int', value: props.abilities.int },
+                { title: 'wis', value: props.abilities.wis },
+                { title: 'cha', value: props.abilities.cha },
+            ],
+        ]);
+
+        return { abilityRows };
     },
 };
 </script>

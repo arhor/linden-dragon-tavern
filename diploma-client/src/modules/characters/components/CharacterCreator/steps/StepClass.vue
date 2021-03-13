@@ -1,14 +1,15 @@
 <template>
     <div>
-        <v-card class="mb-12" color="grey lighten-1" height="325px"></v-card>
-        <v-btn color="primary" @click="$emit('step-complete')">Continue</v-btn>
-        <v-btn text>Cancel</v-btn>
+        <v-card color="grey lighten-1" height="400px" tile></v-card>
     </div>
 </template>
 
 <script>
+import Step from '@/modules/characters/components/CharacterCreator/steps/Step';
+
 export default {
     name: 'StepClass',
-    data: () => ({}),
+
+    extends: Step,
 };
 </script>
