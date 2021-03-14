@@ -9,7 +9,7 @@ fun main(args: Array<String>) {
     runApplication<DiplomaApp>(*args)
 }
 
-@SpringBootApplication
+@SpringBootApplication(proxyBeanMethods = false)
 class DiplomaApp(private val startupTasks: List<StartupTask>) : CommandLineRunner {
 
     override fun run(vararg args: String) {

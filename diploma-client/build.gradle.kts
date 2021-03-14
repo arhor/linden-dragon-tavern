@@ -12,7 +12,7 @@ version = "0.0.1-SNAPSHOT"
 description = "diploma-client"
 
 node {
-    version.set(Deps.nodeJS)
+    version.set(Versions.nodeJS)
     download.set(true)
 }
 

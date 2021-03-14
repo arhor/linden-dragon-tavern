@@ -16,7 +16,7 @@ kotlin {
     jvm {
         compilations.all {
             kotlinOptions {
-                jvmTarget = Deps.javaGlobal
+                jvmTarget = Versions.javaGlobal
             }
         }
         testRuns["test"].executionTask.configure {
@@ -59,8 +59,8 @@ kotlin {
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit5"))
-                implementation("org.junit.jupiter:junit-jupiter-api:${Deps.junitJupiter}")
-                runtimeOnly("org.junit.jupiter:junit-jupiter-engine:${Deps.junitJupiter}")
+                implementation("org.junit.jupiter:junit-jupiter-api:${Versions.junitJupiter}")
+                runtimeOnly("org.junit.jupiter:junit-jupiter-engine:${Versions.junitJupiter}")
             }
         }
 

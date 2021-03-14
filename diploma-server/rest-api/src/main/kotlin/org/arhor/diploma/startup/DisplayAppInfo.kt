@@ -14,29 +14,36 @@ class DisplayAppInfo(private val env: Environment) : StartupTask {
 
     override val priority = Priority.LAST
 
-    override fun execute() {
-        val appName = env.getProperty("spring.application.name")
-        val serverPort = env.getProperty("server.port")
-        val contextPath = env.getProperty("server.servlet.context-path")?.takeIf { it.isNotBlank() } ?: "/"
+    private val appName: String?
+        get() = env.getProperty("spring.application.name")
 
-        val protocol = when (env.getProperty("server.ssl.key-store")) {
+    private val serverPort: String?
+        get() = env.getProperty("server.port")
+
+    private val contextPath: String
+        get() = env.getProperty("server.servlet.context-path")?.takeIf { it.isNotBlank() } ?: "/"
+
+    private val protocol: String
+        get() = when (env.getProperty("server.ssl.key-store")) {
             null -> "http"
             else -> "https"
         }
 
-        val hostAddress = try {
+    private val hostAddress: String
+        get() = try {
             InetAddress.getLocalHost().hostAddress
         } catch (e: UnknownHostException) {
             log.warn("The host name could not be determined, using `localhost` as fallback")
             "localhost"
         }
 
+    override fun execute() {
         log.info(
             """
 --------------------------------------------------------------------------------
     Application `${appName}` is running! Access URLs:
-    - Local:      ${protocol}://localhost:${serverPort}${contextPath}
-    - External:   ${protocol}://${hostAddress}:${serverPort}${contextPath}
+    - Local:     ${protocol}://localhost:${serverPort}${contextPath}
+    - External:  ${protocol}://${hostAddress}:${serverPort}${contextPath}
     - java ver.: ${System.getProperty("java.version")}
 --------------------------------------------------------------------------------"""
         )

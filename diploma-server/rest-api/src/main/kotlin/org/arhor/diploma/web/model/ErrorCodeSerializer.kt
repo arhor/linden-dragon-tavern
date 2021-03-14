@@ -9,7 +9,7 @@ class ErrorCodeSerializer : StdSerializer<ErrorCode>(ErrorCode::class.java) {
     override fun serialize(value: ErrorCode, gen: JsonGenerator, provider: SerializerProvider) {
         val type = value.type.name
         val code = value.code.toString().padStart(NUM_CODE_MAX_LENGTH, NUM_CODE_PAD_SYMBOL)
-        value.code.describeConstable()
+
         gen.writeString("$type-$code")
     }
 

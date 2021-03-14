@@ -37,9 +37,9 @@ spring:
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver
-    url: ${DATABASE.URL}
-    username: ${DATABASE.USERNAME}
-    password: ${DATABASE.PASSWORD}
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
     # required by the option `hibernate.connection.provider_disables_autocommit: true`
     hikari:
       auto-commit: false
