@@ -39,8 +39,4 @@ class SecurityProfilesVerifier(
             Failure(ex)
         }
     }
-
-    companion object {
-        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
-    }
 }

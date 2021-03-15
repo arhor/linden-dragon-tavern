@@ -1,7 +1,6 @@
 package org.arhor.diploma.web.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.databind.node.ArrayNode
 import io.jsonwebtoken.*
 import org.arhor.diploma.JwtStruct
 import org.slf4j.LoggerFactory
@@ -17,10 +16,10 @@ class JwtProvider(
     private val objectMapper: ObjectMapper
 ) : TokenProvider {
 
-    @Value("\${security.jwt.secret}")
+    @Value("\${security.jwt.secret:}")
     var secret: String? = null
 
-    @Value("\${security.jwt.expire}")
+    @Value("\${security.jwt.expire:${DEFAULT_EXPIRE}}")
     var expire: Int? = null
 
     override val authHeaderName: String
@@ -30,7 +29,7 @@ class JwtProvider(
         get() = "Bearer"
 
     private val jwtParser: JwtParser by lazy(LazyThreadSafetyMode.NONE) {
-        Jwts.parser().setSigningKey(secret ?: generateRandomKey())
+        Jwts.parser().setSigningKey(secret?.takeIf { it.isNotBlank() } ?: generateRandomKey())
     }
 
     private fun generateRandomKey(): String {

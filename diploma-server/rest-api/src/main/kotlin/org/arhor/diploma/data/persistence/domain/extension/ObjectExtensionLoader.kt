@@ -21,32 +21,32 @@ class ObjectExtensionLoader {
 
     @PrePersist
     fun prePersist(obj: DomainObject<*>) {
-        println(obj)
+        /* no-op */
     }
 
     @PreUpdate
     fun preUpdate(obj: DomainObject<*>) {
-        println(obj)
+        /* no-op */
     }
 
     @PreRemove
     fun preRemove(obj: DomainObject<*>) {
-        println(obj)
+        /* no-op */
     }
 
     @PostRemove
     fun postRemove(obj: DomainObject<*>) {
-        println(obj)
+        /* no-op */
     }
 
     @PostUpdate
     fun postUpdate(obj: DomainObject<*>) {
-        println(obj)
+        /* no-op */
     }
 
     @PostPersist
     fun postPersist(obj: DomainObject<*>) {
-        println(obj)
+        /* no-op */
     }
 
     companion object {

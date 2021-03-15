@@ -5,14 +5,14 @@ plugins {
     id("org.springframework.boot")
     id("io.spring.dependency-management")
 
-    id("com.github.ayltai.spring-graalvm-native-plugin") version "1.4.3"
-
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.kapt")
     id("org.jetbrains.kotlin.plugin.noarg")
     id("org.jetbrains.kotlin.plugin.allopen")
     id("org.jetbrains.kotlin.plugin.spring")
     id("org.jetbrains.kotlin.plugin.jpa")
+
+    id("com.github.ayltai.spring-graalvm-native-plugin") version "1.4.3"
 }
 
 group = "org.arhor"
@@ -71,8 +71,6 @@ dependencies {
     testImplementation("org.testcontainers:postgresql:${Versions.testcontainers}")
     testImplementation("org.testcontainers:junit-jupiter:${Versions.testcontainers}")
 }
-
-val springActiveProfiles = "-Dspring.profiles.active=default,dev,test"
 
 java {
     sourceCompatibility = JavaVersion.toVersion(Versions.javaGlobal)
@@ -154,7 +152,7 @@ nativeImage {
 tasks {
     bootRun {
         jvmArgs = listOf(
-            springActiveProfiles,
+            "-Dspring.profiles.active=default,dev",
             "-XX:+UseSerialGC",
             "-XX:MaxRAM=100m",
             "-Xss512k"
@@ -169,6 +167,8 @@ tasks {
         useJUnitPlatform {
             excludeTags("integration-test")
         }
-        jvmArgs = listOf(springActiveProfiles)
+        jvmArgs = listOf(
+            "-Dspring.profiles.active=default,test"
+        )
     }
 }
