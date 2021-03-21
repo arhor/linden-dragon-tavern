@@ -2,6 +2,7 @@ package org.arhor.diploma.web.api.v1
 
 import org.arhor.diploma.commons.Identifiable
 import org.arhor.diploma.data.file.DataProvider
+import org.arhor.diploma.extensions.slf4j.debug
 import org.arhor.diploma.util.DEFAULT_PAGE
 import org.arhor.diploma.util.DEFAULT_SIZE
 import org.arhor.diploma.util.maxBound
@@ -21,19 +22,19 @@ abstract class StaticDataController<
 ) {
 
     protected fun getEntityDetails(name: K): ResponseEntity<D> {
-        log.debug("fetching {} details by name: {}", resourceName, name)
+        log.debug { "fetching $resourceName details by name: $name" }
         val entityDetails = dataProvider.getDetails(name)
         return ResponseEntity.ok(entityDetails)
     }
 
     protected fun getEntityDetailsList(page: Int?, size: Int?): ResponseEntity<List<D>> {
         val entityDetailsList = if ((page == null) && (size == null)) {
-            log.debug("fetching all {} details list", resourceName)
+            log.debug { "fetching all $resourceName details list" }
             dataProvider.getDetailsList()
         } else {
             val safePage = page.minBound(DEFAULT_PAGE)
             val safeSize = size.maxBound(DEFAULT_SIZE)
-            log.debug("fetching {} details list: page {}, size {}", resourceName, safePage, safeSize)
+            log.debug { "fetching $resourceName details list: page $safePage, size $safeSize" }
             dataProvider.getDetailsList(safePage, safeSize)
         }
         return ResponseEntity.ok(entityDetailsList)
@@ -41,31 +42,31 @@ abstract class StaticDataController<
 
     protected fun getEntityDetailsList(page: Int?, size: Int?, query: Predicate<D>): ResponseEntity<List<D>> {
         val entityDetailsList = if ((page == null) and (size == null)) {
-            log.debug("fetching all {} details list", resourceName)
+            log.debug { "fetching all $resourceName details list" }
             dataProvider.getDetailsList(query)
         } else {
             val safePage = page.minBound(DEFAULT_PAGE)
             val safeSize = size.maxBound(DEFAULT_SIZE)
-            log.debug("fetching {} details list: page {}, size {}", resourceName, safePage, safeSize)
+            log.debug { "fetching $resourceName details list: page $safePage, size $safeSize" }
             dataProvider.getDetailsList(safePage, safeSize)
         }
         return ResponseEntity.ok(entityDetailsList)
     }
 
     protected fun getEntity(name: K): ResponseEntity<T> {
-        log.debug("fetching {} by name: {}", resourceName, name)
+        log.debug { "fetching $resourceName by name: $name" }
         val entity = dataProvider.getOne(name)
         return ResponseEntity.ok(entity)
     }
 
     protected fun getEntityList(page: Int?, size: Int?): ResponseEntity<List<T>> {
         val entityList = if ((page == null) and (size == null)) {
-            log.debug("fetching all {} list", resourceName)
+            log.debug { "fetching all $resourceName list" }
             dataProvider.getList()
         } else {
             val safePage = page.minBound(DEFAULT_PAGE)
             val safeSize = size.maxBound(DEFAULT_SIZE)
-            log.debug("fetching {} list: page {}, size {}", resourceName, safePage, safeSize)
+            log.debug { "fetching $resourceName list: page $safePage, size $safeSize" }
             dataProvider.getList(safePage, safeSize)
         }
         return ResponseEntity.ok(entityList)

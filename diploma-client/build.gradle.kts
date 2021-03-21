@@ -7,7 +7,6 @@ plugins {
     id("idea")
 }
 
-group = "org.arhor"
 version = "0.0.1-SNAPSHOT"
 description = "diploma-client"
 
@@ -38,8 +37,11 @@ tasks {
         register<Copy>("injectSharedLib") {
             dependsOn(":diploma-shared:build")
 
-            from(Paths.get(project(":diploma-shared").buildDir.toString(), "compiled-js"))
-            into(Paths.get(project(":diploma-client").projectDir.toString(), "src", "lib"))
+            val sharedBldDir = project(":diploma-shared").buildDir.toString()
+            val clientPrjDir = project(":diploma-client").projectDir.toString()
+
+            from(Paths.get(sharedBldDir, "compiled-js"))
+            into(Paths.get(clientPrjDir, "src", "lib"))
         }
 
     val clientTest =

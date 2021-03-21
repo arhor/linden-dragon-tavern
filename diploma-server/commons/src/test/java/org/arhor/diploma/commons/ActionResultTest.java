@@ -3,11 +3,9 @@ package org.arhor.diploma.commons;
 import org.arhor.diploma.commons.ActionResult.Success;
 import org.arhor.diploma.commons.ActionResult.Failure;
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.annotation.Testable;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Testable
 class ActionResultTest {
 
     @Test

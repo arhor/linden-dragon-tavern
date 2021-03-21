@@ -2,7 +2,10 @@ package org.arhor.diploma.web.security
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import io.jsonwebtoken.*
+import io.jsonwebtoken.security.SecurityException
 import org.arhor.diploma.JwtStruct
+import org.arhor.diploma.extensions.slf4j.debug
+import org.arhor.diploma.extensions.slf4j.error
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.GrantedAuthority
@@ -35,16 +38,11 @@ class JwtProvider(
     private fun generateRandomKey(): String {
         return UUID.randomUUID()
             .toString()
-            .also { log.debug("Using randomly generated signing key for JWT: ${it}.") }
+            .also { log.debug { "Using randomly generated signing key for JWT: ${it}." } }
     }
 
     override fun generate(principal: UserDetails): String {
-        val roles =
-            principal.authorities//.asSequence()
-                .map(GrantedAuthority::getAuthority)
-//                .fold(objectMapper.createArrayNode()) { result, authority ->
-//                    result.add(authority)
-//                }
+        val roles = principal.authorities.map(GrantedAuthority::getAuthority)
 
         val dateNow = Date()
         val dateExp = Date(dateNow.time + (expire ?: DEFAULT_EXPIRE))
@@ -73,18 +71,30 @@ class JwtProvider(
     override fun validate(token: String): Boolean {
         try {
             return jwtParser.parseClaimsJws(token).body.expiration.after(Date())
-        } catch (e: SignatureException) {
-            log.error("Invalid JWT signature -> Message: {} ", e.message)
+        } catch (e: SecurityException) {
+            log.error { "Invalid JWT signature -> Message: ${e.message} " }
         } catch (e: MalformedJwtException) {
-            log.error("Invalid JWT token -> Message: {}", e.message)
+            log.error { "Invalid JWT token -> Message: ${e.message}" }
         } catch (e: ExpiredJwtException) {
-            log.error("Expired JWT token -> Message: {}", e.message)
+            log.error { "Expired JWT token -> Message: ${e.message}" }
         } catch (e: UnsupportedJwtException) {
-            log.error("Unsupported JWT token -> Message: {}", e.message)
-        } catch (e: IllegalArgumentException) {
-            log.error("JWT claims string is empty -> Message: {}", e.message)
+            log.error { "Unsupported JWT token -> Message: ${e.message}" }
+        } catch (e: Throwable) {
+            log.error { "JWT claims string is empty -> Message: ${e.message}" }
         }
         return false
+    }
+
+    override fun extractUsernameAndRoles(authHeader: String): Pair<String, Collection<String>> {
+        val token = parse(authHeader)
+
+        val subject = jwtParser.parseClaimsJws(token).body.subject
+        val objectTree = objectMapper.readTree(subject)
+
+        val username = objectTree.findValue(JwtStruct.USERNAME).asText()
+        val roles = objectTree.findValue(JwtStruct.ROLES).map { role -> role.asText() }
+
+        return username to roles
     }
 
     companion object {

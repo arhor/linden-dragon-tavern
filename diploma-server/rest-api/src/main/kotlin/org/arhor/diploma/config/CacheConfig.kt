@@ -1,6 +1,7 @@
 package org.arhor.diploma.config
 
 import org.arhor.diploma.data.Cache
+import org.arhor.diploma.extensions.slf4j.info
 import org.slf4j.LoggerFactory
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.EnableCaching
@@ -18,7 +19,7 @@ class CacheConfig {
     @CacheEvict(allEntries = true, value = [Cache.Names.ACCOUNT])
     @Scheduled(fixedDelay = 5 * 60 * 1000, initialDelay = 500)
     fun accountCacheEvict() {
-        log.info("Flush {} cache(s)", listOf(Cache.Names.ACCOUNT))
+        log.info { "Flush [${Cache.Names.ACCOUNT}] cache(s)" }
     }
 
     companion object {

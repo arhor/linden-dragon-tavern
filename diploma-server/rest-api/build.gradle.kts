@@ -1,21 +1,15 @@
-import org.flywaydb.gradle.task.AbstractFlywayTask
-
 plugins {
     id("org.flywaydb.flyway")
     id("org.springframework.boot")
     id("io.spring.dependency-management")
-
     id("org.jetbrains.kotlin.jvm")
     id("org.jetbrains.kotlin.kapt")
     id("org.jetbrains.kotlin.plugin.noarg")
     id("org.jetbrains.kotlin.plugin.allopen")
     id("org.jetbrains.kotlin.plugin.spring")
     id("org.jetbrains.kotlin.plugin.jpa")
-
-    id("com.github.ayltai.spring-graalvm-native-plugin") version "1.4.3"
 }
 
-group = "org.arhor"
 version = "0.0.1-SNAPSHOT"
 description = "diploma-server:rest-api"
 
@@ -39,20 +33,22 @@ dependencies {
     kapt("org.springframework:spring-context-indexer")
 
     runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:${Versions.jsonWebToken}")
 
     implementation(project(":diploma-shared"))
     implementation(project(":diploma-server:commons"))
+    implementation(project(":diploma-extensions:slf4j-ext"))
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    implementation("io.jsonwebtoken:jjwt:${Versions.jsonWebToken}")
+    implementation("io.jsonwebtoken:jjwt-api:${Versions.jsonWebToken}")
     implementation("org.mapstruct:mapstruct:${Versions.mapstruct}")
     implementation("org.apache.pdfbox:pdfbox:${Versions.pdfBox}")
-
-    implementation("javax.cache:cache-api:1.0.0") // required to compile native-image
 
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-aop")
@@ -97,58 +93,6 @@ flyway {
     locations = arrayOf("classpath:db/migration")
 }
 
-nativeImage {
-    mainClassName = "org.arhor.diploma.DiplomaAppKt"
-
-    reportExceptionStackTraces      = true
-    traceClassInitializationFor     = listOf("")
-    maxHeapSize                     = "8G"
-    javaVersion                     = "11"
-    toolVersion                     = "21.0.0.2"
-
-    removeXmlSupport  = true
-    removeSpelSupport = false
-    removeYamlSupport = false
-    removeJmxSupport  = true
-
-    initializeAtBuildTime = listOf(
-        "jdk.management.jfr.SettingDescriptorInfo",
-        "jdk.xml.internal.SecuritySupport",
-        "jdk.xml.internal.JdkXmlUtils",
-        "javax.xml.parsers.FactoryFinder",
-        "com.oracle.truffle.js.scriptengine.GraalJSEngineFactory",
-        "com.sun.org.apache.xerces.internal.util.PropertyState",
-        "com.sun.org.apache.xerces.internal.impl.XMLEntityManager",
-        "com.sun.org.apache.xerces.internal.impl.XMLDocumentScannerImpl",
-        "com.sun.org.apache.xerces.internal.impl.dtd.XMLNSDTDValidator",
-        "com.sun.org.apache.xerces.internal.util.FeatureState",
-        "com.sun.org.apache.xerces.internal.impl.XMLEntityScanner",
-        "com.sun.org.apache.xerces.internal.impl.XMLScanner",
-        "com.sun.org.apache.xerces.internal.impl.XMLDTDScannerImpl",
-        "com.sun.org.apache.xerces.internal.impl.Constants",
-        "com.sun.org.apache.xerces.internal.impl.XMLVersionDetector",
-        "com.sun.org.apache.xerces.internal.impl.dv.dtd.DTDDVFactoryImpl",
-        "com.sun.org.apache.xerces.internal.util.XMLSymbols",
-        "com.sun.org.apache.xerces.internal.impl.dtd.XMLDTDProcessor",
-        "com.sun.org.apache.xerces.internal.impl.dtd.XMLDTDValidator",
-        "com.sun.org.apache.xerces.internal.impl.XMLNSDocumentScannerImpl",
-        "com.sun.org.apache.xerces.internal.util.XMLChar",
-        "com.sun.org.apache.xerces.internal.impl.XMLDocumentFragmentScannerImpl",
-        "com.sun.org.apache.xerces.internal.impl.XMLEntityManager\$EncodingInfo",
-        "com.sun.org.apache.xerces.internal.xni.NamespaceContext",
-        "com.sun.xml.internal.stream.util.ThreadLocalBufferAllocator",
-        "com.sun.jmx.mbeanserver.Introspector",
-        "com.sun.jmx.defaults.JmxProperties",
-        "com.sun.jmx.mbeanserver.MBeanInstantiator",
-        "com.sun.jmx.mbeanserver.MXBeanLookup",
-        "org.apache.commons.logging.LogFactory",
-        "org.apache.logging.log4j.core.async.AsyncLoggerContext",
-        "org.apache.logging.log4j.core.config.yaml.YamlConfiguration",
-        "org.apache.logging.log4j.core.pattern.JAnsiTextRenderer",
-        "org.springframework.core.codec.Decoder"
-    )
-}
-
 tasks {
     bootRun {
         jvmArgs = listOf(
@@ -159,7 +103,7 @@ tasks {
         )
     }
 
-    withType<AbstractFlywayTask> {
+    withType<org.flywaydb.gradle.task.AbstractFlywayTask> {
         dependsOn("processResources")
     }
 
@@ -168,7 +112,7 @@ tasks {
             excludeTags("integration-test")
         }
         jvmArgs = listOf(
-            "-Dspring.profiles.active=default,test"
+            "-Dspring.profiles.active=test"
         )
     }
 }

@@ -14,4 +14,6 @@ interface TokenProvider {
     fun parseUsername(token: String): String?
 
     fun validate(token: String): Boolean
+
+    fun extractUsernameAndRoles(authHeader: String): Pair<String, Collection<String>>
 }

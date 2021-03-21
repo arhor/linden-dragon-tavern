@@ -1,35 +1,22 @@
 package org.arhor.diploma.config
 
-import org.slf4j.LoggerFactory
 import org.springframework.boot.web.server.MimeMappings
 import org.springframework.boot.web.server.WebServerFactory
 import org.springframework.boot.web.server.WebServerFactoryCustomizer
-import org.springframework.boot.web.servlet.ServletContextInitializer
 import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.env.Environment
 import org.springframework.http.MediaType
 import java.io.File
 import java.io.UnsupportedEncodingException
-import java.lang.invoke.MethodHandles
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 import java.nio.file.Paths
-import javax.servlet.ServletContext
-import javax.servlet.ServletException
 
 @Configuration
 class WebServerConfig(
     private val env: Environment
-) : ServletContextInitializer, WebServerFactoryCustomizer<WebServerFactory> {
-
-    @Throws(ServletException::class)
-    override fun onStartup(servletContext: ServletContext?) {
-        if (env.activeProfiles.isNotEmpty()) {
-            log.info("Web application configuration, using profiles: {}", *env.activeProfiles)
-        }
-        log.info("Web application fully configured")
-    }
+) : WebServerFactoryCustomizer<WebServerFactory> {
 
     /**
      * Customize the Servlet engine: Mime types, the document root, the cache.
@@ -84,10 +71,5 @@ class WebServerConfig(
             extractionEndIndex <= 0 -> ""
             else -> extractedPath.substring(0, extractionEndIndex)
         }
-    }
-
-    companion object {
-        @JvmStatic
-        private val log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass())
     }
 }

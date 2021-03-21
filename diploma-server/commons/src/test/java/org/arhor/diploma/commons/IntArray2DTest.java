@@ -4,9 +4,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.platform.commons.annotation.Testable;
-import org.junit.platform.commons.logging.Logger;
-import org.junit.platform.commons.logging.LoggerFactory;
 
 import java.util.Random;
 import java.util.stream.IntStream;
@@ -14,10 +11,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@Testable
 class IntArray2DTest {
-
-    private static final Logger log = LoggerFactory.getLogger(IntArray2DTest.class);
 
     @Test
     void shouldCreateEmptyArrayWithDefinedSize() {

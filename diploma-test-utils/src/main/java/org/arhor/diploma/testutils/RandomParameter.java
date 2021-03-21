@@ -12,7 +12,6 @@ import java.lang.annotation.Target;
 import java.util.Random;
 
 import static org.arhor.diploma.testutils.ObjectGenerationStrategy.ONLY_PRIMITIVES;
-import static org.arhor.diploma.testutils.ParameterGeneratorFactory.getGeneratorForType;
 
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
@@ -64,9 +63,7 @@ public @interface RandomParameter {
                             .getStore(NAMESPACE)
                             .getOrComputeIfAbsent(Random.class);
 
-            Object result = getGeneratorForType(requiredType).generate(randomizer, parameter);
-
-            return result;
+            return ParameterGeneratorFactory.getGeneratorForType(requiredType).generate(randomizer, parameter);
         }
 
         private void validateAnnotationParams(RandomParameter parameter) {

@@ -2,6 +2,8 @@ package org.arhor.diploma.startup
 
 import org.arhor.diploma.commons.Priority
 import org.arhor.diploma.commons.StartupTask
+import org.arhor.diploma.extensions.slf4j.info
+import org.arhor.diploma.extensions.slf4j.warn
 import org.slf4j.LoggerFactory
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
@@ -33,12 +35,13 @@ class DisplayAppInfo(private val env: Environment) : StartupTask {
         get() = try {
             InetAddress.getLocalHost().hostAddress
         } catch (e: UnknownHostException) {
-            log.warn("The host name could not be determined, using `localhost` as fallback")
-            "localhost"
+            val defaultHost = "localhost"
+            log.warn { "The host name could not be determined, using `${defaultHost}` as fallback" }
+            defaultHost
         }
 
     override fun execute() {
-        log.info(
+        log.info {
             """
 --------------------------------------------------------------------------------
     Application `${appName}` is running! Access URLs:
@@ -46,7 +49,7 @@ class DisplayAppInfo(private val env: Environment) : StartupTask {
     - External:  ${protocol}://${hostAddress}:${serverPort}${contextPath}
     - java ver.: ${System.getProperty("java.version")}
 --------------------------------------------------------------------------------"""
-        )
+        }
     }
 
     companion object {

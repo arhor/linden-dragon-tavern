@@ -1,5 +1,6 @@
 package org.arhor.diploma.web.api
 
+import org.arhor.diploma.extensions.slf4j.debug
 import org.arhor.diploma.web.model.AuthResponse
 import org.arhor.diploma.web.model.SignInRequest
 import org.arhor.diploma.web.model.SignUpRequest
@@ -28,7 +29,7 @@ class AuthController(
 
     @PostMapping("/sign-in")
     fun authenticate(@RequestBody signIn: SignInRequest): AuthResponse {
-        log.debug("authentication started: [${signIn}]")
+        log.debug { "authentication started: [${signIn}]" }
 
         val auth = authManager.authenticate(
             UsernamePasswordAuthenticationToken(
@@ -42,7 +43,7 @@ class AuthController(
             tokenProvider.authTokenType
         )
 
-        log.debug("token granted: [{}]", authResponse.accessToken)
+        log.debug { "token granted: [${authResponse.accessToken}]"  }
 
         return authResponse
     }
@@ -50,14 +51,14 @@ class AuthController(
     @GetMapping("/refresh")
     @PreAuthorize("isAuthenticated()")
     fun refresh(auth: Authentication): AuthResponse {
-        log.debug("refreshing token: [${auth}]")
+        log.debug { "refreshing token: [${auth}]" }
 
         val authResponse = AuthResponse(
             tokenProvider.generate(auth.principal as UserDetails),
             tokenProvider.authTokenType
         )
 
-        log.debug("token refreshed: [{}]", authResponse.accessToken)
+        log.debug { "token refreshed: [${authResponse.accessToken}]" }
 
         return authResponse
     }

@@ -89,13 +89,19 @@ spring:
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: diploma-server-scheduling-
+      thread-name-prefix: ds-scheduling-
       pool:
         size: 2
 
   output:
     ansi:
       enabled: detect
+
+logging:
+  level:
+    javax.activation: WARN
+    javax.management.remote: WARN
+    javax.xml.bind: WARN
 
 security:
   jwt:

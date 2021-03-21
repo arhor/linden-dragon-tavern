@@ -1,7 +1,7 @@
 pluginManagement {
     repositories {
-        gradlePluginPortal()
         maven { url = uri("https://repo.spring.io/release") }
+        gradlePluginPortal()
     }
 }
 
@@ -12,3 +12,4 @@ include(":diploma-server:commons")
 include(":diploma-server:rest-api")
 include(":diploma-shared")
 include(":diploma-test-utils")
+include(":diploma-extensions:slf4j-ext")

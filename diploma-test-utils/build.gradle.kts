@@ -7,12 +7,6 @@ group = "org.arhor"
 version = "0.0.1-SNAPSHOT"
 description = "diploma-test-utils"
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    jcenter()
-}
-
 dependencies {
     implementation("ch.qos.logback:logback-core:${Versions.logback}")
     implementation("ch.qos.logback:logback-classic:${Versions.logback}")

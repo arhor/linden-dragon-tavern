@@ -1,8 +1,6 @@
 package org.arhor.diploma.commons;
 
 import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.annotation.Testable;
-import org.mockito.Mock;
 
 import java.util.function.Supplier;
 
@@ -10,7 +8,6 @@ import static org.arhor.diploma.commons.CoreFunctions.coalesce;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-@Testable
 class CoreFunctionsTest {
 
     @Test

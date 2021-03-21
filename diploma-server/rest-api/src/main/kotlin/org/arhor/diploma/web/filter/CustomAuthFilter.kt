@@ -2,7 +2,6 @@ package org.arhor.diploma.web.filter
 
 import org.arhor.diploma.web.security.TokenProvider
 import org.slf4j.LoggerFactory
-import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -24,24 +23,27 @@ class CustomAuthFilter(
         next: FilterChain
     ) {
         try {
-            val authHeader: String? = req.getHeader(tokenProvider.authHeaderName)
-
-            if (authHeader != null) {
-                val token = tokenProvider.parse(authHeader)
-                if (tokenProvider.validate(token)) {
-                    tokenProvider.parseUsername(token)
-                        ?.let(userDetailsService::loadUserByUsername)
-                        ?.let { user -> UsernamePasswordAuthenticationToken(user, token, user.authorities) }
-                        ?.let { auth ->
-                            auth.details = WebAuthenticationDetailsSource().buildDetails(req)
-                            SecurityContextHolder.getContext().authentication = auth
-                        }
-                }
+            req.getHeader(tokenProvider.authHeaderName)?.let {
+                attemptAuthenticate(it, req)
             }
         } catch (e: Exception) {
             log.error("Cannot set user authentication -> Message: {}", e.message)
         }
         next.doFilter(req, res)
+    }
+
+    private fun attemptAuthenticate(authHeader: String, req: HttpServletRequest) {
+        val token = tokenProvider.parse(authHeader)
+
+        if (tokenProvider.validate(token)) {
+            tokenProvider.parseUsername(token)
+                ?.let(userDetailsService::loadUserByUsername)
+                ?.let { user -> UsernamePasswordAuthenticationToken(user, token, user.authorities) }
+                ?.let { auth ->
+                    auth.details = WebAuthenticationDetailsSource().buildDetails(req)
+                    SecurityContextHolder.getContext().authentication = auth
+                }
+        }
     }
 
     companion object {

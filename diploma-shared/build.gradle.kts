@@ -6,12 +6,6 @@ group = "org.arhor"
 version = "0.0.1-SNAPSHOT"
 description = "diploma-shared"
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    jcenter()
-}
-
 kotlin {
     jvm {
         compilations.all {
@@ -24,7 +18,7 @@ kotlin {
         }
     }
 
-    js(/*IR*/) {
+    js {
         browser()
         compilations["main"].kotlinOptions {
                 metaInfo = false
@@ -39,7 +33,7 @@ kotlin {
         // Common
         val commonMain by getting {
             dependencies {
-                implementation ("org.jetbrains.kotlin:kotlin-stdlib-common")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
             }
         }
         val commonTest by getting {
@@ -52,8 +46,7 @@ kotlin {
         // JVM
         val jvmMain by getting {
             dependencies {
-                implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
             }
         }
         val jvmTest by getting {
@@ -67,12 +60,12 @@ kotlin {
         // JS
         val jsMain by getting {
             dependencies {
-                implementation ("org.jetbrains.kotlin:kotlin-stdlib-js")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
             }
         }
         val jsTest by getting {
             dependencies {
-                implementation ("org.jetbrains.kotlin:kotlin-stdlib-js")
+                implementation("org.jetbrains.kotlin:kotlin-stdlib-js")
             }
         }
     }

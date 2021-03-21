@@ -5,6 +5,9 @@ import org.arhor.diploma.commons.ActionResult.Success
 import org.arhor.diploma.commons.Priority
 import org.arhor.diploma.commons.StartupTask
 import org.arhor.diploma.commons.Verifiable
+import org.arhor.diploma.extensions.slf4j.error
+import org.arhor.diploma.extensions.slf4j.info
+import org.arhor.diploma.extensions.slf4j.warn
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.lang.invoke.MethodHandles
@@ -22,7 +25,7 @@ class VerifyApp(private val verifiers: List<Verifiable>) : StartupTask {
 
     override fun execute() {
         log.info("Starting app verification")
-        log.info("Found [${verifiers.size}] verifiers to run")
+        log.info { "Found [${verifiers.size}] verifiers to run" }
 
         val width = DecimalFormat("0".repeat(verifiers.size.toString().length))
 
@@ -30,8 +33,8 @@ class VerifyApp(private val verifiers: List<Verifiable>) : StartupTask {
             val result = verifier.verify()
             val verifierNum = width.format(i)
             when (result) {
-                is Success -> log.info("{}: [SUCCESS] {}", verifierNum, result.value)
-                is Failure -> log.error("{}: [FAILURE] {}", verifierNum, result.error.message)
+                is Success -> log.info  { "${verifierNum}: [SUCCESS] ${result.value}" }
+                is Failure -> log.error { "${verifierNum}: [FAILURE] ${result.error.message}" }
             }
             result
         }.all { it.isSuccess }
@@ -50,12 +53,13 @@ class VerifyApp(private val verifiers: List<Verifiable>) : StartupTask {
             .filterKeys { it == Priority.FIRST || it == Priority.LAST }
             .filterValues { it.size > 1 }
             .forEach { (priority, samePriorityVerifiers) ->
-                log.warn(
-                    "There are several startup verifiers with priority `{}`: {}",
-                    priority,
-                    samePriorityVerifiers.map { it::class.simpleName }
-                )
+                log.warn { duplicatesMsg(priority, samePriorityVerifiers) }
             }
+    }
+
+    private fun duplicatesMsg(priority: Priority, verifiers: List<Verifiable>): String {
+        val duplicates = verifiers.map { it::class.simpleName }.joinToString()
+        return  "There are several startup verifiers with priority `${priority}`: [${duplicates}]"
     }
 
     companion object {

@@ -11,15 +11,11 @@
         <withJansi>false</withJansi>
         <encoder>
             <pattern>
-                %cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%logger{36}) - %msg%n
+                %cyan(%d{HH:mm:ss.SSS}) %gray([%thread]) %highlight(%-5level) %magenta(%-36logger{36}) - %msg%n
             </pattern>
         </encoder>
     </appender>
 
-
-    <logger name="javax.activation" level="WARN"/>
-    <logger name="javax.management.remote" level="WARN"/>
-    <logger name="javax.xml.bind" level="WARN"/>
     <logger name="ch.qos.logback" level="WARN"/>
     <logger name="com.hazelcast" level="INFO"/>
     <logger name="com.sun" level="WARN"/>
