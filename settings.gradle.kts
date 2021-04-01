@@ -9,7 +9,7 @@ rootProject.name = "diploma"
 
 include(":diploma-client")
 include(":diploma-server:commons")
-include(":diploma-server:rest-api")
+include(":diploma-server:module-dnd")
+include(":diploma-server:server-app")
 include(":diploma-shared")
 include(":diploma-test-utils")
-include(":diploma-extensions:slf4j-ext")
