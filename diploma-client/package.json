@@ -11,6 +11,7 @@
         "build": "vue-cli-service build",
         "test:unit": "vue-cli-service test:unit",
         "lint": "vue-cli-service lint",
+        "dll": "vue-cli-service dll",
         "fetchData": "node ./scripts/dungeon_su_scrapper.js",
         "fix-lint": "vue-cli-service lint --fix",
         "format": "prettier --write \"+(src|tests)/**/*.+(js|jsx|json|css|md|vue|html)\""
@@ -51,6 +52,7 @@
         "prettier": "^1.19.1",
         "sass": "^1.26.11",
         "sass-loader": "^8.0.2",
+        "vue-cli-plugin-dll": "~1.1.12",
         "vue-cli-plugin-vuetify": "~2.0.9",
         "vue-template-compiler": "^2.6.12",
         "vuetify-loader": "^1.6.0",

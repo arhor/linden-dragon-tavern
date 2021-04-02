@@ -1,4 +1,5 @@
 import com.github.gradle.node.npm.task.NpmTask
+import com.github.gradle.node.npm.task.NpxTask
 import com.github.gradle.node.task.NodeTask
 import java.nio.file.Paths
 
@@ -33,28 +34,34 @@ dependencies {
 }
 
 tasks {
-    val injectSharedLib =
-        register<Copy>("injectSharedLib") {
-            dependsOn(":diploma-shared:build")
+    val injectSharedLib = register<Copy>("injectSharedLib") {
+        dependsOn(":diploma-shared:build")
 
-            val sharedBldDir = project(":diploma-shared").buildDir.toString()
-            val clientPrjDir = project(":diploma-client").projectDir.toString()
+        val sharedBldDir = project(":diploma-shared").buildDir.toString()
+        val clientPrjDir = project(":diploma-client").projectDir.toString()
 
-            from(Paths.get(sharedBldDir, "compiled-js"))
-            into(Paths.get(clientPrjDir, "src", "lib"))
-        }
+        from(Paths.get(sharedBldDir, "compiled-js"))
+        into(Paths.get(clientPrjDir, "src", "lib"))
+    }
 
-    val clientTest =
-        register<NpmTask>("clientTest") {
-            dependsOn(npmInstall, injectSharedLib)
-            group = "verification"
-            description = "Runs JS tests in client project"
-            workingDir.fileValue(projectDir)
-            args.set(listOf("run", "test:unit"))
-        }
+    val clientTest = register<NpmTask>("clientTest") {
+        dependsOn(npmInstall, injectSharedLib)
+        group = "verification"
+        description = "Runs JS tests in client project"
+        workingDir.fileValue(projectDir)
+        args.set(listOf("run", "test:unit"))
+    }
+
+    val dll = register<NpmTask>("dll") {
+        dependsOn(clientTest)
+        group = "build"
+        description = "Builds production version of the app client"
+        workingDir.fileValue(projectDir)
+        args.set(listOf("run", "dll"))
+    }
 
     register<NpmTask>("buildClient") {
-        dependsOn(clientTest)
+        dependsOn(clientTest, dll)
         group = "build"
         description = "Builds production version of the app client"
         workingDir.fileValue(projectDir)
@@ -66,6 +73,22 @@ tasks {
         description = "Starts client development server"
         workingDir.fileValue(projectDir)
         args.set(listOf("run", "serve"))
+    }
+
+    register<NpmTask>("npmAudit") {
+        workingDir.fileValue(projectDir)
+        args.set(listOf("audit"))
+    }
+
+    register<NpmTask>("npmAuditFix") {
+        workingDir.fileValue(projectDir)
+        args.set(listOf("audit", "fix"))
+    }
+
+    register<NpxTask>("updateBrowsersList") {
+        workingDir.fileValue(projectDir)
+        command.set("browserslist@latest")
+        args.set(listOf("--update-db"))
     }
 
     register<NodeTask>("scrap") {

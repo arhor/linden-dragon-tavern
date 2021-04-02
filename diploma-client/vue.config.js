@@ -1,6 +1,8 @@
 const path = require('path');
-const CompressionPlugin = require('compression-webpack-plugin');
 
+/**
+ * @type {import('@vue/cli-service').ProjectOptions}
+ */
 module.exports = {
     publicPath: './',
 
@@ -8,20 +10,22 @@ module.exports = {
 
     productionSourceMap: false,
 
+    pluginOptions: {
+        dll: {
+            entry: {
+                vue: ['vue', 'vue-router', 'vue-cookies', 'vue-i18n', 'vuex'],
+                vuetify: ['vuetify'],
+                kotlin: ['kotlin'],
+            },
+            cacheFilePath: path.resolve(__dirname, './public')
+        }
+    },
+
     configureWebpack: {
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, 'src'),
             },
         },
-        plugins: [
-            new CompressionPlugin({
-                filename: '[path].gz[query]',
-                algorithm: 'gzip',
-                test: new RegExp('\\.(js|jsx|css)$'),
-                threshold: 10240,
-                minRatio: 0.8,
-            }),
-        ],
     },
 };
