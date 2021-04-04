@@ -16,4 +16,5 @@ export const Default = Template.bind({});
 Default.args = {
     type: 'DEX',
     count: 23,
+    modificator: '+2',
 };
