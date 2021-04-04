@@ -1,7 +1,7 @@
 <template>
     <div class="counter">
         <div v-if="modificator" class="counter_modificator">{{ modificator }}</div>
-        <span class="counter_type">{{ type }}</span>
+        <span class="counter_type">{{ processType(type) }}</span>
         <span class="counter_count">{{ count }}</span>
     </div>
 </template>
@@ -20,6 +20,11 @@ export default {
         },
         modificator: {
             type: String,
+        },
+    },
+    methods: {
+        processType(type) {
+            return type.toUpperCase().slice(0, 3);
         },
     },
 };
