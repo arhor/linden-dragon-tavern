@@ -1,12 +1,14 @@
 package org.arhor.diploma.dnd.web.api.v1
 
 import mu.KLogger
-import mu.KLogging
+import mu.KotlinLogging
 import org.arhor.diploma.dnd.data.model.Spell
 import org.arhor.diploma.dnd.data.repository.SpellProvider
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+
+private val logger = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping(
@@ -42,6 +44,4 @@ class SpellController(
     ): ResponseEntity<List<Spell>> {
         return getEntityList(page, size)
     }
-
-    companion object : KLogging()
 }

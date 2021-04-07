@@ -6,7 +6,7 @@ import io.jsonwebtoken.JwtParser
 import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
-import mu.KLogging
+import mu.KotlinLogging
 import org.arhor.diploma.JwtStruct
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.GrantedAuthority
@@ -14,6 +14,10 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Component
 import java.security.Key
 import java.util.*
+
+private const val DEFAULT_EXPIRE = 600
+
+private val logger = KotlinLogging.logger {}
 
 @Component
 class JwtProvider(
@@ -87,9 +91,5 @@ class JwtProvider(
         val roles = objectTree.findValue(JwtStruct.ROLES).map { role -> role.asText() }
 
         return username to roles
-    }
-
-    companion object : KLogging() {
-        const val DEFAULT_EXPIRE = 600
     }
 }

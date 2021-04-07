@@ -1,6 +1,6 @@
 package org.arhor.diploma.web.api
 
-import mu.KLogging
+import mu.KotlinLogging
 import org.arhor.diploma.web.model.messageResponse
 import org.springframework.boot.autoconfigure.web.ErrorProperties
 import org.springframework.boot.autoconfigure.web.ErrorProperties.IncludeAttribute
@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.context.request.WebRequest
 import javax.servlet.RequestDispatcher
+
+private const val DEFAULT_ERROR_PATH = "/api/error"
+private const val ERROR_PATH = "\${server.error.path:\${error.path:$DEFAULT_ERROR_PATH}}"
+
+private val logger = KotlinLogging.logger {}
 
 @RestController
 class AppErrorController(private val errorAttrs: ErrorAttributes) : ErrorController {
@@ -114,10 +119,5 @@ class AppErrorController(private val errorAttrs: ErrorAttributes) : ErrorControl
 
     private fun getBooleanParameter(req: WebRequest, param: String): Boolean {
         return req.getParameter(param)?.equals("true", ignoreCase = true) ?: false
-    }
-
-    companion object : KLogging() {
-        private const val DEFAULT_ERROR_PATH = "/api/error"
-        private const val ERROR_PATH = "\${server.error.path:\${error.path:$DEFAULT_ERROR_PATH}}"
     }
 }

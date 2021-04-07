@@ -13,8 +13,8 @@ class ChecksumCalcMD5Test {
         @RandomParameter(length = 50) source: String
     ) {
         // when
-        val checksum1 = ChecksumCalcMD5.calculate(source.byteInputStream())
-        val checksum2 = ChecksumCalcMD5.calculate(source.byteInputStream())
+        val checksum1 = ChecksumCalcMD5.calculate(source::byteInputStream)
+        val checksum2 = ChecksumCalcMD5.calculate(source::byteInputStream)
 
         // then
         assertThat(checksum1).isEqualTo(checksum2)

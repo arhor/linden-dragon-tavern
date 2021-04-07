@@ -2,7 +2,7 @@ package org.arhor.diploma.dnd.data.repository
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import mu.KLogging
+import mu.KotlinLogging
 import org.arhor.diploma.commons.Identifiable
 import org.arhor.diploma.commons.data.EntityNotFoundException
 import org.arhor.diploma.commons.file.ChecksumCalc
@@ -18,6 +18,8 @@ import java.util.function.Predicate
 import javax.annotation.PostConstruct
 import kotlin.concurrent.withLock
 import kotlin.streams.toList
+
+private val logger = KotlinLogging.logger {}
 
 abstract class DataProviderImplDefault<T, D, K>(
     private val resourceLoader: ResourceLoader
@@ -121,7 +123,8 @@ abstract class DataProviderImplDefault<T, D, K>(
             logger.debug { "calculating checksum for '${resourceName}'" }
 
             lock.withLock {
-                val latestChecksum = checksumCalc.calculate(resource.file)
+
+                val latestChecksum = checksumCalc.calculate(resource::getInputStream)
 
                 if (!this::checksum.isInitialized) {
                     logger.debug { "'${resourceName}'checksum calculating for the first time" }
@@ -154,6 +157,4 @@ abstract class DataProviderImplDefault<T, D, K>(
             .use { reader -> objectMapper.createParser(reader).readValueAs(resourceType) }
             .let { values -> setOf(*values) }
     }
-
-    companion object : KLogging()
 }

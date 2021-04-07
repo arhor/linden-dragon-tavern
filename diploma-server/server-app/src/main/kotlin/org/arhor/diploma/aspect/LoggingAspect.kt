@@ -1,10 +1,12 @@
 package org.arhor.diploma.aspect
 
-import mu.KLogging
+import mu.KotlinLogging
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.annotation.Aspect
 import org.aspectj.lang.annotation.Before
 import org.springframework.stereotype.Component
+
+private val logger = KotlinLogging.logger {}
 
 @Aspect
 @Component
@@ -18,6 +20,4 @@ class LoggingAspect {
             }
         }
     }
-
-    companion object : KLogging()
 }

@@ -1,6 +1,5 @@
 package org.arhor.diploma.service.impl
 
-import mu.KLogging
 import org.arhor.diploma.Roles
 import org.arhor.diploma.data.persistence.domain.Account
 import org.arhor.diploma.data.persistence.repository.AccountRepository
@@ -87,6 +86,4 @@ class AccountServiceImpl(
 
         return authorities.map { SimpleGrantedAuthority(it) }
     }
-
-    companion object : KLogging()
 }

@@ -1,6 +1,6 @@
 package org.arhor.diploma.startup
 
-import mu.KLogging
+import mu.KotlinLogging
 import org.arhor.diploma.commons.ActionResult.Failure
 import org.arhor.diploma.commons.ActionResult.Success
 import org.arhor.diploma.commons.Priority
@@ -9,6 +9,8 @@ import org.arhor.diploma.commons.Verifiable
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.stereotype.Component
 import java.text.DecimalFormat
+
+private val logger = KotlinLogging.logger {}
 
 @Component
 class VerifyApp(
@@ -60,6 +62,4 @@ class VerifyApp(
         val duplicates = verifiers.map { it::class.simpleName }.joinToString()
         return  "There are several startup verifiers with priority `${priority}`: [${duplicates}]"
     }
-
-    companion object : KLogging()
 }

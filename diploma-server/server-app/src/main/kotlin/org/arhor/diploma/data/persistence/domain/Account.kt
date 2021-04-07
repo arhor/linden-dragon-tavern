@@ -36,7 +36,7 @@ data class Account(
 
     companion object {
         const val TABLE_NAME = "accounts"
-        private const val SEQ_GENERATOR = "${SEQ_GEN_NAME}_${TABLE_NAME}"
-        private const val SEQ_NAME = "${TABLE_NAME}_id_seq"
+        const val SEQ_GENERATOR = "${SEQ_GEN_NAME}_${TABLE_NAME}"
+        const val SEQ_NAME = "${TABLE_NAME}_id_seq"
     }
 }

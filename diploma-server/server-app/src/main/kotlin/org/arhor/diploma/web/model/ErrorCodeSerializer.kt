@@ -4,6 +4,9 @@ import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.SerializerProvider
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 
+private const val NUM_CODE_MAX_LENGTH = 5
+private const val NUM_CODE_PAD_SYMBOL = '0'
+
 class ErrorCodeSerializer : StdSerializer<ErrorCode>(ErrorCode::class.java) {
 
     override fun serialize(value: ErrorCode, gen: JsonGenerator, provider: SerializerProvider) {
@@ -11,10 +14,5 @@ class ErrorCodeSerializer : StdSerializer<ErrorCode>(ErrorCode::class.java) {
         val code = value.code.toString().padStart(NUM_CODE_MAX_LENGTH, NUM_CODE_PAD_SYMBOL)
 
         gen.writeString("$type-$code")
-    }
-
-    companion object {
-        const val NUM_CODE_MAX_LENGTH = 5
-        const val NUM_CODE_PAD_SYMBOL = '0'
     }
 }

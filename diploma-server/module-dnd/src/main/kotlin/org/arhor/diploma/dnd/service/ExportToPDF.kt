@@ -4,6 +4,10 @@ import org.apache.pdfbox.pdmodel.PDDocument
 import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Component
 
+private const val CHAR_SHEET_PAGE_1 = "classpath:dnd/sheets/5E_CharacterSheet_Fillable_Page1.pdf"
+private const val CHAR_SHEET_PAGE_2 = "classpath:dnd/sheets/5E_CharacterSheet_Fillable_Page2.pdf"
+private const val CHAR_SHEET_PAGE_3 = "classpath:dnd/sheets/5E_CharacterSheet_Fillable_Page3.pdf"
+
 @Component
 class ExportToPDF(private val resourceLoader: ResourceLoader) {
 
@@ -23,11 +27,5 @@ class ExportToPDF(private val resourceLoader: ResourceLoader) {
                 }
             }
         }
-    }
-
-    companion object {
-        const val CHAR_SHEET_PAGE_1 = "classpath:dnd/sheets/5E_CharacterSheet_Fillable_Page1.pdf"
-        const val CHAR_SHEET_PAGE_2 = "classpath:dnd/sheets/5E_CharacterSheet_Fillable_Page2.pdf"
-        const val CHAR_SHEET_PAGE_3 = "classpath:dnd/sheets/5E_CharacterSheet_Fillable_Page3.pdf"
     }
 }

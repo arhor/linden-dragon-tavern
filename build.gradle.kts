@@ -57,21 +57,22 @@ tasks {
     }
 
     register("buildCompositeApp") {
-        dependsOn(":diploma-client:buildClient")
+        dependsOn(":diploma-client:buildFull")
+        mustRunAfter(":diploma-client:buildFull")
 
         group = "build"
 
-        doFirst {
+        doLast {
             print("copying client build files into the server resource directory")
             copy {
                 val clientPrjDir = project(":diploma-client").projectDir.toString()
-                val serverBldDir = project(":diploma-server:rest-api").buildDir.toString()
+                val serverBldDir = project(":diploma-server:server-app").buildDir.toString()
 
                 from(Paths.get(clientPrjDir, "dist"))
                 into(Paths.get(serverBldDir, "resources", "main", "static"))
             }
         }
 
-        finalizedBy(":diploma-server:rest-api:build")
+        finalizedBy(":diploma-server:server-app:build")
     }
 }

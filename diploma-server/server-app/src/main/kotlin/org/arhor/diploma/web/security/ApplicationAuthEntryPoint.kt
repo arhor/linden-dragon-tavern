@@ -1,11 +1,13 @@
 package org.arhor.diploma.web.security
 
-import mu.KLogging
+import mu.KotlinLogging
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.stereotype.Component
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+
+private val logger = KotlinLogging.logger {}
 
 @Component
 class ApplicationAuthEntryPoint : AuthenticationEntryPoint {
@@ -18,6 +20,4 @@ class ApplicationAuthEntryPoint : AuthenticationEntryPoint {
         logger.error(exc) { "Unauthorized error. Message - ${exc.message}" }
         res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Error -> Unauthorized")
     }
-
-    companion object : KLogging()
 }

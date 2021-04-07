@@ -7,6 +7,8 @@ import org.arhor.diploma.data.persistence.repository.BaseRepository
 import org.arhor.diploma.service.Deleter
 import java.io.Serializable
 
+private const val KEY_PROPERTY = "id"
+
 class DeleterMixin<E, D, K>(
     private val repository: BaseRepository<E, K>,
 ) : Deleter<D, K>
@@ -20,7 +22,7 @@ class DeleterMixin<E, D, K>(
             .orElseThrow {
                 EntityNotFoundException(
                     entityType = repository.entityType.simpleName,
-                    propName = UpdaterMixin.KEY_PROPERTY,
+                    propName = KEY_PROPERTY,
                     propValue = id
                 )
             }
@@ -31,9 +33,5 @@ class DeleterMixin<E, D, K>(
     override fun delete(item: D) {
         item.id?.let { delete(it) }
             ?: throw IllegalArgumentException("Passed item has not set $KEY_PROPERTY value, so it cannot be deleted")
-    }
-
-    companion object {
-        const val KEY_PROPERTY = "id"
     }
 }

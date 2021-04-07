@@ -44,8 +44,8 @@ tasks {
         into(Paths.get(clientPrjDir, "src", "lib"))
     }
 
-    val clientTest = register<NpmTask>("clientTest") {
-        dependsOn(npmInstall, injectSharedLib)
+    val test = register<NpmTask>("test") {
+        dependsOn(npmInstall)
         group = "verification"
         description = "Runs JS tests in client project"
         workingDir.fileValue(projectDir)
@@ -53,19 +53,26 @@ tasks {
     }
 
     val dll = register<NpmTask>("dll") {
-        dependsOn(clientTest)
+        dependsOn(npmInstall)
         group = "build"
-        description = "Builds production version of the app client"
+        description = "Builds vendors bundle"
         workingDir.fileValue(projectDir)
         args.set(listOf("run", "dll"))
     }
 
-    register<NpmTask>("buildClient") {
-        dependsOn(clientTest, dll)
+    val build = register<NpmTask>("build") {
+        dependsOn(npmInstall, injectSharedLib, test)
         group = "build"
         description = "Builds production version of the app client"
         workingDir.fileValue(projectDir)
         args.set(listOf("run", "build"))
+    }
+
+    register("buildFull") {
+        group = "build"
+        description = "Builds dll and sources"
+        dependsOn(dll)
+        finalizedBy(build)
     }
 
     register<NpmTask>("clientStart") {

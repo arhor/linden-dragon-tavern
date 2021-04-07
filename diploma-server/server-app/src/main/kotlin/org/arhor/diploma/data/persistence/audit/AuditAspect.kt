@@ -1,6 +1,5 @@
 package org.arhor.diploma.data.persistence.audit
 
-import mu.KLogging
 import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject
 import org.arhor.diploma.data.persistence.domain.core.DomainObject
 import org.arhor.diploma.data.persistence.repository.BaseRepository
@@ -17,6 +16,8 @@ import kotlin.reflect.KClass
 import kotlin.reflect.full.isSubtypeOf
 import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.javaType
+
+private val REPOSITORY_TYPE = BaseRepository::class.starProjectedType
 
 @Aspect
 //@Component
@@ -87,9 +88,5 @@ class AuditAspect(private val auditEventRepository: AuditEventRepository) {
         oldObject!!::class.members
 
         return diff
-    }
-
-    companion object : KLogging() {
-        private val REPOSITORY_TYPE = BaseRepository::class.starProjectedType
     }
 }

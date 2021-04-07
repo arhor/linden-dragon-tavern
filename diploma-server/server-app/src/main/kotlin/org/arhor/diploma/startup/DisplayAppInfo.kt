@@ -1,12 +1,14 @@
 package org.arhor.diploma.startup
 
-import mu.KLogging
+import mu.KotlinLogging
 import org.arhor.diploma.commons.Priority
 import org.arhor.diploma.commons.StartupTask
 import org.springframework.core.env.Environment
 import org.springframework.stereotype.Component
 import java.net.InetAddress
 import java.net.UnknownHostException
+
+private val logger = KotlinLogging.logger {}
 
 @Component
 class DisplayAppInfo(private val env: Environment) : StartupTask {
@@ -48,6 +50,4 @@ class DisplayAppInfo(private val env: Environment) : StartupTask {
 --------------------------------------------------------------------------------"""
         }
     }
-
-    companion object : KLogging()
 }

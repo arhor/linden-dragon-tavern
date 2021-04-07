@@ -3,7 +3,6 @@ package org.arhor.diploma.web.api
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import mu.KLogging
 import org.arhor.diploma.commons.data.DataAccessException
 import org.arhor.diploma.commons.data.EntityNotFoundException
 import org.arhor.diploma.exception.InvalidCsrfTokenException
@@ -247,6 +246,4 @@ class AppExceptionHandler(
     }
 
     private data class FieldErrorDetails(val field: String, val messages: List<String>)
-
-    companion object : KLogging()
 }

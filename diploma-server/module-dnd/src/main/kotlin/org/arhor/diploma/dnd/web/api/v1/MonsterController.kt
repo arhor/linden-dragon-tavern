@@ -1,12 +1,14 @@
 package org.arhor.diploma.dnd.web.api.v1
 
 import mu.KLogger
-import mu.KLogging
+import mu.KotlinLogging
 import org.arhor.diploma.dnd.data.model.Monster
 import org.arhor.diploma.dnd.data.repository.MonsterProvider
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+
+private val logger = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping(
@@ -45,6 +47,4 @@ class MonsterController(
     ): ResponseEntity<List<Monster>> {
         return getEntityList(page, size)
     }
-
-    companion object : KLogging()
 }

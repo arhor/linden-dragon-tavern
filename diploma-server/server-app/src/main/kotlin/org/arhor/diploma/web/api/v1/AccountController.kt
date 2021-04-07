@@ -1,6 +1,6 @@
 package org.arhor.diploma.web.api.v1
 
-import mu.KLogging
+import mu.KotlinLogging
 import org.arhor.diploma.Authorities.Account
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import javax.validation.Valid
 import javax.validation.executable.ValidateOnExecution
+
+private val logger = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping(
@@ -46,6 +48,9 @@ class AccountController(private val service: AccountService) {
 
     @PostMapping
     fun createAccount(@Valid @RequestBody account: AccountDTO): ResponseEntity<Unit> {
+
+        logger.debug("creating an account")
+
         val createdAccount = service.createAccount(account)
 
         val location = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -77,6 +82,4 @@ class AccountController(private val service: AccountService) {
     private fun selfRequest(account: AccountDTO, auth: Authentication?): Boolean {
         return account.username == (auth?.principal as UserDetails?)?.username
     }
-
-    companion object : KLogging()
 }

@@ -1,13 +1,15 @@
 package org.arhor.diploma.commons.file
 
-import mu.KLogging
+import mu.KotlinLogging
 import java.io.File
 import java.io.InputStream
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
 
-object ChecksumCalcMD5 : ChecksumCalc, KLogging() {
+private val logger = KotlinLogging.logger {}
+
+object ChecksumCalcMD5 : ChecksumCalc {
 
     private val digest: MessageDigest?
         get() = try {
@@ -21,16 +23,22 @@ object ChecksumCalcMD5 : ChecksumCalc, KLogging() {
         return calculate(file.inputStream())
     }
 
-    fun calculate(stream: InputStream): String {
+    override fun calculate(stream: InputStream): String {
         return digest?.let {
 
-            stream.buffered().chunked { chunk, size ->
-                it.update(chunk, 0, size)
+            stream.buffered().use { bufferedStream ->
+                bufferedStream.chunked { chunk, size ->
+                    it.update(chunk, 0, size)
+                }
             }
 
             BigInteger(1, it.digest())
                 .toString(16)
                 .padStart(32, '0')
         } ?: ""
+    }
+
+    override fun calculate(source: () -> InputStream): String {
+        return calculate(source())
     }
 }

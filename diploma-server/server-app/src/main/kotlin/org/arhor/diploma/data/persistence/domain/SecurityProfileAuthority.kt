@@ -28,7 +28,5 @@ data class SecurityProfileAuthority(
     @MapsId("authority_id")
     var authority: Authority? = null
 
-    override fun hashCode(): Int {
-        return classBasedStaticHashCode()
-    }
+    override fun hashCode(): Int = classBasedStaticHashCode()
 }

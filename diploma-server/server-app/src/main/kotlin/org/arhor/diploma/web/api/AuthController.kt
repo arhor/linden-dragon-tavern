@@ -1,6 +1,6 @@
 package org.arhor.diploma.web.api
 
-import mu.KLogging
+import mu.KotlinLogging
 import org.arhor.diploma.web.model.AuthResponse
 import org.arhor.diploma.web.model.SignInRequest
 import org.arhor.diploma.web.security.TokenProvider
@@ -11,6 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
+
+private val logger = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping(
@@ -58,6 +60,4 @@ class AuthController(
 
         return authResponse
     }
-
-    companion object : KLogging()
 }

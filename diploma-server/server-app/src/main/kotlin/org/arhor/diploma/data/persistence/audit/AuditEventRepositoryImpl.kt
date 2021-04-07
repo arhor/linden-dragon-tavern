@@ -8,6 +8,10 @@ import java.util.concurrent.ConcurrentMap
 import javax.persistence.EntityManager
 import javax.persistence.PersistenceContext
 
+private val BOOL_RESULT: ResultSetExtractor<Boolean> = ResultSetExtractor {
+    it.next() && (it.getBoolean(1))
+}
+
 @Repository
 class AuditEventRepositoryImpl(private val db: JdbcTemplate) : AuditEventRepository {
 
@@ -73,12 +77,6 @@ class AuditEventRepositoryImpl(private val db: JdbcTemplate) : AuditEventReposit
         } else {
             failedAuditTables.add(tableName)
             false
-        }
-    }
-
-    companion object {
-        private val BOOL_RESULT: ResultSetExtractor<Boolean> = ResultSetExtractor {
-            it.next() && (it.getBoolean(1))
         }
     }
 }
