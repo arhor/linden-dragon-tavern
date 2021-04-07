@@ -1,6 +1,6 @@
 package org.arhor.diploma.config
 
-import mu.KLogging
+import mu.KotlinLogging
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.util.SpringProfile
 import org.arhor.diploma.web.filter.CustomAuthFilter
@@ -26,6 +26,32 @@ import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWrite
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import org.springframework.web.filter.CorsFilter
+
+private const val ROLE_PREFIX = "ROLE_"
+
+private val SECURITY_POLICY_DIRECTIVES = arrayOf(
+    "default-src 'self'",
+    "frame-src 'self' data:",
+    "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com",
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data:",
+    "font-src 'self' data:"
+).joinToString(separator = "; ")
+
+private val FEATURE_POLICY_DIRECTIVES = arrayOf(
+    "geolocation 'none'",
+    "midi 'none'",
+    "sync-xhr 'none'",
+    "microphone 'none'",
+    "camera 'none'",
+    "magnetometer 'none'",
+    "gyroscope 'none'",
+    "speaker 'none'",
+    "fullscreen 'self'",
+    "payment 'none'"
+).joinToString(separator = "; ")
+
+private val logger = KotlinLogging.logger {}
 
 @Configuration
 @EnableWebSecurity
@@ -112,32 +138,5 @@ class WebSecurityConfig(
                 addUrlPatterns("/api/*")
             }
         }
-    }
-
-    companion object : KLogging() {
-
-        const val ROLE_PREFIX = "ROLE_"
-
-        private val SECURITY_POLICY_DIRECTIVES = arrayOf(
-            "default-src 'self'",
-            "frame-src 'self' data:",
-            "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com",
-            "style-src 'self' 'unsafe-inline'",
-            "img-src 'self' data:",
-            "font-src 'self' data:"
-        ).joinToString(separator = "; ")
-
-        private val FEATURE_POLICY_DIRECTIVES = arrayOf(
-            "geolocation 'none'",
-            "midi 'none'",
-            "sync-xhr 'none'",
-            "microphone 'none'",
-            "camera 'none'",
-            "magnetometer 'none'",
-            "gyroscope 'none'",
-            "speaker 'none'",
-            "fullscreen 'self'",
-            "payment 'none'"
-        ).joinToString(separator = "; ")
     }
 }
