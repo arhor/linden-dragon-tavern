@@ -1,6 +1,6 @@
 package org.arhor.diploma.web.filter
 
-import mu.KLogging
+import mu.KotlinLogging
 import org.arhor.diploma.web.security.TokenProvider
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder
@@ -10,6 +10,8 @@ import org.springframework.web.filter.OncePerRequestFilter
 import javax.servlet.FilterChain
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+
+private val logger = KotlinLogging.logger {}
 
 class CustomAuthFilter(
     private val tokenProvider: TokenProvider,
@@ -44,6 +46,4 @@ class CustomAuthFilter(
                 }
         }
     }
-
-    companion object : KLogging()
 }
