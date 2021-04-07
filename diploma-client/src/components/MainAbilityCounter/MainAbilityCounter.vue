@@ -1,6 +1,6 @@
 <template>
     <div class="counter">
-        <div v-if="modificator" class="counter_modificator">{{ modificator }}</div>
+        <div v-if="modifier" class="counter_modifier">{{ modifier }}</div>
         <span class="counter_type">{{ processType(type) }}</span>
         <span class="counter_count">{{ count }}</span>
     </div>
@@ -9,6 +9,7 @@
 <script>
 export default {
     name: 'MainAbilityCounter',
+
     props: {
         type: {
             type: String,
@@ -16,12 +17,13 @@ export default {
         },
         count: {
             type: Number,
-            requred: true,
+            required: true,
         },
-        modificator: {
+        modifier: {
             type: String,
         },
     },
+
     methods: {
         processType(type) {
             return type.toUpperCase().slice(0, 3);
@@ -57,7 +59,7 @@ export default {
     color: white;
 }
 
-.counter_modificator {
+.counter_modifier {
     background: no-repeat url('../../assets/svg/horns.svg') bottom;
     width: 50px;
     height: 35px;

@@ -47,7 +47,7 @@ class DeleterMixinTest {
         // then
         assertThatThrownBy(action)
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(UpdaterMixin.KEY_PROPERTY);
+                .hasMessageContaining(DeleterMixin.KEY_PROPERTY);
 
         verifyNoInteractions(repository);
     }
@@ -68,7 +68,7 @@ class DeleterMixinTest {
         assertThatThrownBy(action)
                 .isInstanceOf(EntityNotFoundException.class)
                 .hasFieldOrPropertyWithValue("entityType", entityType.getSimpleName())
-                .hasFieldOrPropertyWithValue("propName", UpdaterMixin.KEY_PROPERTY)
+                .hasFieldOrPropertyWithValue("propName", DeleterMixin.KEY_PROPERTY)
                 .hasFieldOrPropertyWithValue("propValue", testId);
 
         verify(repository).findById(testId);

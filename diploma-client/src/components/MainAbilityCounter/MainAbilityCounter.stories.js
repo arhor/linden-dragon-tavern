@@ -1,4 +1,4 @@
-import MainAbilityCounter from './MainAbilityCounter.vue';
+import MainAbilityCounter from '@/components/MainAbilityCounter/MainAbilityCounter.vue';
 
 export default {
     component: MainAbilityCounter,
@@ -9,12 +9,12 @@ export default {
 const Template = (args, { argTypes }) => ({
     components: { MainAbilityCounter },
     props: Object.keys(argTypes),
-    template: '<MainAbilityCounter v-bind="$props"/>',
+    template: '<main-ability-counter v-bind="$props"/>',
 });
 
 export const Default = Template.bind({});
 Default.args = {
     type: 'DEX',
     count: 23,
-    modificator: '+2',
+    modifier: '+2',
 };

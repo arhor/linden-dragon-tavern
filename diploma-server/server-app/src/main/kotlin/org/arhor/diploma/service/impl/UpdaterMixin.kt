@@ -8,8 +8,6 @@ import org.arhor.diploma.data.persistence.repository.BaseRepository
 import org.arhor.diploma.service.Updater
 import java.io.Serializable
 
-private const val KEY_PROPERTY = "id"
-
 class UpdaterMixin<E, D, K>(
     private val converter: Converter<E, D>,
     private val repository: BaseRepository<E, K>,
@@ -35,5 +33,9 @@ class UpdaterMixin<E, D, K>(
             return converter.mapEntityToDto(saved)
 
         } ?: throw IllegalArgumentException("Passed item has not set $KEY_PROPERTY value, so it cannot be updated")
+    }
+
+    companion object {
+        const val KEY_PROPERTY = "id"
     }
 }

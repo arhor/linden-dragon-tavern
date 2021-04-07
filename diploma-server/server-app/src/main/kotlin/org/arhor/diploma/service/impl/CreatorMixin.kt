@@ -7,8 +7,6 @@ import org.arhor.diploma.data.persistence.repository.BaseRepository
 import org.arhor.diploma.service.Creator
 import java.io.Serializable
 
-private const val KEY_PROPERTY = "id"
-
 class CreatorMixin<E, D, K>(
     private val converter: Converter<E, D>,
     private val repository: BaseRepository<E, K>
@@ -27,5 +25,9 @@ class CreatorMixin<E, D, K>(
         val savedEntity = repository.save(newEntity)
 
         return converter.mapEntityToDto(savedEntity)
+    }
+
+    companion object {
+        const val KEY_PROPERTY = "id"
     }
 }

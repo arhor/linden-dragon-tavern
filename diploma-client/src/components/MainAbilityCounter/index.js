@@ -1,1 +1,1 @@
-export * from './MainAbilityCounter'
+export * from '@/components/MainAbilityCounter/MainAbilityCounter.vue';

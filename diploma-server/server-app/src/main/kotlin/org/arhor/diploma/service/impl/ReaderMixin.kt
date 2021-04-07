@@ -9,8 +9,6 @@ import org.arhor.diploma.service.Reader
 import org.springframework.data.domain.PageRequest
 import java.io.Serializable
 
-private const val KEY_PROPERTY = "id"
-
 class ReaderMixin<E, D, K>(
     private val converter: Converter<E, D>,
     private val repository: BaseRepository<E, K>
@@ -49,5 +47,9 @@ class ReaderMixin<E, D, K>(
 
     override fun getTotalSize(): Long {
         return repository.count()
+    }
+
+    companion object {
+        const val KEY_PROPERTY = "id"
     }
 }
