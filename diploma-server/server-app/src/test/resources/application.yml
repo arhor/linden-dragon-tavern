@@ -3,6 +3,9 @@ embedded:
     enabled: true
 
 spring:
+  profiles:
+    active: test
+
   datasource:
     driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
     url: jdbc:tc:postgresql://${embedded.postgresql.host}:${embedded.postgresql.port}/${embedded.postgresql.database}
