@@ -56,13 +56,13 @@ tasks {
         gradleVersion = Versions.gradle
     }
 
-    val buildCompositeApp = register("buildCompositeApp") {
+    register("stage") {
         dependsOn(":diploma-client:buildFull")
         mustRunAfter(":diploma-client:buildFull")
 
         group = "build"
 
-        doLast {
+        doFirst {
             copy {
                 val clientPrjDir = project(":diploma-client").projectDir.toString()
                 val serverBldDir = project(":diploma-server:server-app").buildDir.toString()
@@ -72,10 +72,6 @@ tasks {
             }
         }
 
-        finalizedBy(":diploma-server:server-app:build")
-    }
-
-    register("stage") {
-        dependsOn(buildCompositeApp, ":diploma-server:server-app:flywayMigrate")
+        finalizedBy(":diploma-server:server-app:build", ":diploma-server:server-app:flywayMigrate")
     }
 }
