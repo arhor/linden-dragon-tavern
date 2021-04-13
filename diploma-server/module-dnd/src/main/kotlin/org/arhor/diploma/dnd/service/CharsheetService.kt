@@ -1,8 +1,8 @@
 package org.arhor.diploma.dnd.service
 
-import java.io.File
+import org.springframework.core.io.Resource
 
 interface CharsheetService {
 
-    fun getEmptyCharsheet(): File
+    fun getEmptyCharsheet(): Resource
 }

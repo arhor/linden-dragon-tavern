@@ -2,7 +2,6 @@ package org.arhor.diploma.dnd.web.api.v1
 
 import mu.KotlinLogging
 import org.arhor.diploma.dnd.service.CharsheetService
-import org.springframework.core.io.FileSystemResource
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
@@ -17,15 +16,14 @@ private val logger = KotlinLogging.logger {}
 class CharacterSheetController(private val service: CharsheetService) {
 
     @GetMapping(produces = [MediaType.APPLICATION_PDF_VALUE])
-    fun downloadCharsheet(): ResponseEntity<FileSystemResource> {
+    fun downloadCharsheet(): ResponseEntity<*> {
         logger.debug("downloading empty character sheet")
 
-        val file = service.getEmptyCharsheet()
-        val resource = FileSystemResource(file)
+        val resource = service.getEmptyCharsheet()
 
         return ResponseEntity.ok()
-            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=${file.name}")
-            .contentLength(file.length())
+            .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=${resource.filename}")
+            .contentLength(resource.contentLength())
             .body(resource)
     }
 }
