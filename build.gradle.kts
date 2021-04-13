@@ -75,22 +75,7 @@ tasks {
         finalizedBy(":diploma-server:server-app:build")
     }
 
-    val copyCompositeApp = register("copyCompositeApp") {
-        dependsOn(buildCompositeApp)
-
-        doLast {
-            copy {
-                val serverBldDir = project(":diploma-server:server-app").buildDir.toString()
-                val projectPrjDir = rootProject.buildDir.toString()
-
-                from(Paths.get(serverBldDir, "libs"))
-                into(Paths.get(projectPrjDir, "libs"))
-            }
-        }
-    }
-
     register("stage") {
-        dependsOn("clean")
-        finalizedBy(copyCompositeApp)
+        dependsOn(buildCompositeApp)
     }
 }
