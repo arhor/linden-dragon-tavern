@@ -106,10 +106,6 @@ tasks {
         )
     }
 
-    withType<org.flywaydb.gradle.task.AbstractFlywayTask> {
-        dependsOn("processResources")
-    }
-
     withType<Test> {
         useJUnitPlatform {
             excludeTags("integration-test")
