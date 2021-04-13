@@ -34,15 +34,17 @@ dependencies {
 }
 
 tasks {
-    val injectSharedLib = register<Copy>("injectSharedLib") {
+    val injectSharedLib = register("injectSharedLib") {
         dependsOn(":diploma-shared:build")
 
         doLast {
-            val sharedBldDir = project(":diploma-shared").buildDir.toString()
-            val clientPrjDir = project(":diploma-client").projectDir.toString()
+            copy {
+                val sharedBldDir = project(":diploma-shared").buildDir.toString()
+                val clientPrjDir = project(":diploma-client").projectDir.toString()
 
-            from(Paths.get(sharedBldDir, "compiled-js"))
-            into(Paths.get(clientPrjDir, "src", "lib"))
+                from(Paths.get(sharedBldDir, "compiled-js"))
+                into(Paths.get(clientPrjDir, "src", "lib"))
+            }
         }
     }
 
