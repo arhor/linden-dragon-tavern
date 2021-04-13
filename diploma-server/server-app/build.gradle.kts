@@ -87,9 +87,9 @@ allOpen {
 }
 
 flyway {
-    url = System.getenv("DATABASE_URL") ?: "jdbc:postgresql://localhost:5432/diploma_db"
-    user = System.getenv("DATABASE_USERNAME") ?: "postgres"
-    password = System.getenv("DATABASE_PASSWORD") ?: "password"
+    url = System.getenv("JDBC_DATABASE_URL") ?: "jdbc:postgresql://localhost:5432/diploma_db"
+    user = System.getenv("JDBC_DATABASE_USERNAME") ?: "postgres"
+    password = System.getenv("JDBC_DATABASE_PASSWORD") ?: "password"
 
     driver = "org.postgresql.Driver"
     encoding = "UTF-8"

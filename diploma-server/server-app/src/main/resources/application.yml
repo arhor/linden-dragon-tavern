@@ -1,5 +1,5 @@
 server:
-  port: ${SERVER.PORT:8080}
+  port: ${PORT:5000}
 
   servlet:
     session:
@@ -37,9 +37,9 @@ spring:
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
     # required by the option `hibernate.connection.provider_disables_autocommit: true`
     hikari:
       auto-commit: false

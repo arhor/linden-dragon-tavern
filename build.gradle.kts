@@ -56,7 +56,7 @@ tasks {
         gradleVersion = Versions.gradle
     }
 
-    register("buildCompositeApp") {
+    val buildCompositeApp = register("buildCompositeApp") {
         dependsOn(":diploma-client:buildFull")
         mustRunAfter(":diploma-client:buildFull")
 
@@ -74,5 +74,20 @@ tasks {
         }
 
         finalizedBy(":diploma-server:server-app:build")
+    }
+
+    val copyCompositeApp = register<Copy>("copyCompositeApp") {
+        dependsOn(buildCompositeApp)
+
+        val serverBldDir = project(":diploma-server:server-app").buildDir.toString()
+        val projectPrjDir = rootProject.buildDir.toString()
+
+        from(Paths.get(serverBldDir, "libs"))
+        into(Paths.get(projectPrjDir, "libs"))
+    }
+
+    register("stage") {
+        dependsOn("clean")
+        finalizedBy(copyCompositeApp)
     }
 }

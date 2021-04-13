@@ -25,9 +25,9 @@ sealed class ActionResult<out T> {
         }
     }
 
-    inline fun <R> map(f: (T?) -> R): ActionResult<R> {
+    inline fun <R> map(f: (T?) -> R?): ActionResult<R> {
         return when (this) {
-            is Success<T> -> actionResult { f(value) }
+            is Success<T> -> executeCatching { f(value) }
             is Failure -> this
         }
     }
@@ -56,7 +56,7 @@ sealed class ActionResult<out T> {
         fun failure(error: Throwable): Failure = Failure(error)
 
         @JvmStatic
-        inline fun <T> actionResult(action: () -> T?): ActionResult<T> {
+        inline fun <T> executeCatching(action: () -> T?): ActionResult<T> {
             return try {
                 Success(action())
             } catch (error: Throwable) {

@@ -1,7 +1,6 @@
 package org.arhor.diploma.commons.file
 
 import mu.KotlinLogging
-import java.io.File
 import java.io.InputStream
 import java.math.BigInteger
 import java.security.MessageDigest
@@ -19,14 +18,10 @@ object ChecksumCalcMD5 : ChecksumCalc {
             null
         }
 
-    override fun calculate(file: File): String {
-        return calculate(file.inputStream())
-    }
-
-    override fun calculate(stream: InputStream): String {
+    override fun calculate(source: () -> InputStream): String {
         return digest?.let {
 
-            stream.buffered().use { bufferedStream ->
+            source().buffered().use { bufferedStream ->
                 bufferedStream.chunked { chunk, size ->
                     it.update(chunk, 0, size)
                 }
@@ -36,9 +31,5 @@ object ChecksumCalcMD5 : ChecksumCalc {
                 .toString(16)
                 .padStart(32, '0')
         } ?: ""
-    }
-
-    override fun calculate(source: () -> InputStream): String {
-        return calculate(source())
     }
 }
