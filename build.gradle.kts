@@ -76,6 +76,6 @@ tasks {
     }
 
     register("stage") {
-        dependsOn(buildCompositeApp)
+        dependsOn(buildCompositeApp, ":diploma-server:server-app:flywayMigrate")
     }
 }

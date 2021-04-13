@@ -29,7 +29,7 @@ spring:
     name: diploma-server
 
   profiles:
-    active: ${SPRING_PROFILES:dev}
+    active: ${SPRING_ACTIVE_PROFILES:dev}
 
   jmx:
     enabled: false
