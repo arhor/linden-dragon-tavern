@@ -3,6 +3,7 @@ package org.arhor.diploma.web.api
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
+import mu.KotlinLogging
 import org.arhor.diploma.commons.data.DataAccessException
 import org.arhor.diploma.commons.data.EntityNotFoundException
 import org.arhor.diploma.exception.InvalidCsrfTokenException
@@ -23,32 +24,45 @@ import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.context.request.WebRequest
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler
+import java.io.FileNotFoundException
 import java.util.*
+
+private val log = KotlinLogging.logger {}
 
 @RestControllerAdvice
 class AppExceptionHandler(
     private val messageSource: MessageSource,
 ) : ResponseEntityExceptionHandler() {
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Throwable::class)
     fun defaultExceptionHandler(ex: Throwable, lang: Locale): MessageResponse {
 
+        log.error("Unhandled error. Please, create proper exception handler for it.", ex)
+
         return messageResponse {
             error {
-                code = ErrorCode.UNCATEGORIZED
-                text = "Unhandled error. Please, create proper exception handler for it."
-                details = ex.message?.let { listOf(it) } ?: emptyList()
+                text = "Internal Server Error. Please, contact system administrator."
+            }
+        }
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(FileNotFoundException::class)
+    fun handleFileNotFound(ex: FileNotFoundException, lang: Locale): MessageResponse {
+
+        return messageResponse {
+            error {
+                code = ErrorCode.FILE_NOT_FOUND
+                text = "File Not Found"
+                details = listOf(ex.message)
             }
         }
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentTypeMismatchException::class)
-    fun handleArgumentClassCastException(
-        ex: MethodArgumentTypeMismatchException,
-        lang: Locale
-    ): MessageResponse {
+    fun handleArgumentClassCast(ex: MethodArgumentTypeMismatchException, lang: Locale): MessageResponse {
 
         return messageResponse {
             error {
@@ -63,7 +77,7 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(MissingCsrfTokenException::class)
-    fun handleMissingCsrfTokenException(
+    fun handleMissingCsrfToken(
         ex: MissingCsrfTokenException,
         lang: Locale
     ): MessageResponse {
@@ -81,7 +95,7 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler(InvalidCsrfTokenException::class)
-    fun handleInvalidCsrfTokenException(
+    fun handleInvalidCsrfToken(
         ex: InvalidCsrfTokenException,
         lang: Locale
     ): MessageResponse {
@@ -101,7 +115,7 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(DataAccessException::class)
-    fun handleDataAccessException(
+    fun handleDataAccess(
         ex: DataAccessException,
         lang: Locale
     ): MessageResponse {
@@ -115,7 +129,7 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(EntityNotFoundException::class)
-    fun handleEntityNotFoundException(
+    fun handleEntityNotFound(
         ex: EntityNotFoundException,
         lang: Locale
     ): MessageResponse {
@@ -135,7 +149,7 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidFormatException::class)
-    fun handleInvalidFormatException(
+    fun handleInvalidFormat(
         ex: InvalidFormatException,
         lang: Locale
     ): MessageResponse {
@@ -160,7 +174,7 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(JsonProcessingException::class)
-    fun handleJsonProcessingException(
+    fun handleJsonProcessing(
         ex: JsonProcessingException,
         lang: Locale
     ): MessageResponse {
@@ -188,7 +202,7 @@ class AppExceptionHandler(
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(AuthenticationException::class)
-    fun handleAccessDeniedException(
+    fun handleAccessDenied(
         ex: AuthenticationException,
         lang: Locale
     ): MessageResponse {
@@ -208,15 +222,15 @@ class AppExceptionHandler(
         request: WebRequest
     ): ResponseEntity<Any> {
 
-        val locale = request.locale
+        val lang = request.locale
 
         return handleExceptionInternal(
             ex,
             messageResponse {
                 error {
                     code = ErrorCode.VALIDATION_FAILED
-                    text = locale.localize("error.validation.failed")
-                    details = errorMessagesGroupedByField(ex, locale)
+                    text = lang.localize("error.validation.failed")
+                    details = errorMessagesGroupedByField(ex, lang)
                 }
             },
             headers,

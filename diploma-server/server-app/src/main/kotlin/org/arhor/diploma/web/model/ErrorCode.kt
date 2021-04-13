@@ -8,6 +8,7 @@ enum class ErrorCode(val type: Type, val code: Int) {
     // @formatter:off
 
     UNCATEGORIZED      (type = GEN, code = 0),
+    FILE_NOT_FOUND     (type = GEN, code = 1),
 
     VALIDATION_FAILED  (type = VAL, code = 0),
 

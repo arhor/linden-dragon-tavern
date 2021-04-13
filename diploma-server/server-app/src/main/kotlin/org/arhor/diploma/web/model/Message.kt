@@ -42,7 +42,7 @@ class MessageBuilder(
     var timestamp: LocalDateTime = LocalDateTime.now(),
     var code: ErrorCode = ErrorCode.UNCATEGORIZED,
     var text: String? = null,
-    var details: List<Any> = emptyList()
+    var details: List<Any?> = emptyList()
 )
 
 @DslMarker
@@ -65,6 +65,7 @@ class MessageResponseBuilder {
 
     private inline fun initMessage(severity: Message.Severity, init: MessageBuilder.() -> Unit) {
         val builder = MessageBuilder(severity)
+
         builder.init()
 
         messages.add(
@@ -73,7 +74,7 @@ class MessageResponseBuilder {
                 timestamp = builder.timestamp,
                 code = builder.code,
                 text = builder.text,
-                details = builder.details
+                details = builder.details.filterNotNull()
             )
         )
     }
