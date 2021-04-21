@@ -1,6 +1,5 @@
 package org.arhor.diploma.data.persistence.domain
 
-import org.arhor.diploma.data.classBasedStaticHashCode
 import org.arhor.diploma.data.persistence.domain.core.AuditableDomainObject
 import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column
@@ -26,8 +25,6 @@ data class AccountDetails(
 
     override val tableName: String
         get() = TABLE_NAME
-
-    override fun hashCode(): Int = classBasedStaticHashCode()
 
     companion object {
         const val TABLE_NAME = "account_details"

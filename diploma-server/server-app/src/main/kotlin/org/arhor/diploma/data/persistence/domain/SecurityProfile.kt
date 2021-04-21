@@ -5,7 +5,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.relational.core.mapping.Column
 import org.springframework.data.relational.core.mapping.Table
 
-@Table("security_profiles")
+@Table(SecurityProfile.TABLE_NAME)
 data class SecurityProfile(
 
     @Id
@@ -21,11 +21,12 @@ data class SecurityProfile(
 ) : AuditableDomainObject<Long>() {
 
     override val tableName: String
-        get() = "security_profiles"
+        get() = TABLE_NAME
 
     companion object {
         const val TABLE_NAME = "security_profiles"
-        const val SEQ_GENERATOR = "${SEQ_GEN_NAME}_${TABLE_NAME}"
-        const val SEQ_NAME = "${TABLE_NAME}_id_seq"
+        const val CACHE = "${TABLE_NAME}_cache"
+        const val CACHE_BY_ID = "${CACHE}_by_id"
+        const val CACHE_BY_USERNAME = "${CACHE}_by_username"
     }
 }

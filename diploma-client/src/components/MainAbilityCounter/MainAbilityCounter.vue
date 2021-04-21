@@ -60,7 +60,7 @@ export default {
 }
 
 .counter_modifier {
-    background: no-repeat url('../../assets/svg/horns.svg') bottom;
+    background: no-repeat url('~@/assets/svg/horns.svg') bottom;
     width: 50px;
     height: 35px;
     margin-right: 3px;
