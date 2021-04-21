@@ -21,7 +21,7 @@ interface AccountRepository : PagingAndSortingRepository<Account, Long> {
 
     @Transactional(readOnly = true)
     @Cacheable(cacheNames = [Cache.Names.ACCOUNT_BY_USERNAME], key = "#username")
-    @Query("SELECT a FROM accounts a WHERE a.deleted = false AND a.username = :username")
+    @Query("SELECT a.* FROM accounts a WHERE a.deleted = false AND a.username = :username")
     fun findByUsername(username: String): Optional<Account>
 
     @Modifying
@@ -32,8 +32,8 @@ interface AccountRepository : PagingAndSortingRepository<Account, Long> {
 
     @JvmDefault
     @Transactional
-    @CacheEvict(cacheNames = [Cache.Names.ACCOUNT_BY_USERNAME], key = "#entity.username")
-    override fun delete(entity: Account) {
-        entity.id?.let { deleteById(it) }
+    @CacheEvict(cacheNames = [Cache.Names.ACCOUNT_BY_USERNAME], key = "#account.username")
+    override fun delete(account: Account) {
+        account.id?.let { deleteById(it) }
     }
 }

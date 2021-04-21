@@ -6,17 +6,14 @@ import mu.KotlinLogging
 import org.arhor.diploma.commons.Identifiable
 import org.arhor.diploma.commons.data.EntityNotFoundException
 import org.arhor.diploma.commons.file.ChecksumCalc
-import org.arhor.diploma.commons.time.MINUTE
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.Resource
 import org.springframework.core.io.ResourceLoader
-import org.springframework.scheduling.annotation.Scheduled
 import java.io.Serializable
 import java.util.concurrent.locks.Lock
 import java.util.concurrent.locks.ReentrantLock
 import java.util.function.Predicate
 import javax.annotation.PostConstruct
-import kotlin.concurrent.withLock
 import kotlin.streams.toList
 
 private val logger = KotlinLogging.logger {}
@@ -29,12 +26,6 @@ abstract class DataProviderImplDefault<T, D, K>(
           K : Serializable {
 
     private val objectMapper: ObjectMapper = jacksonObjectMapper()
-    private val lock: Lock = ReentrantLock()
-
-    @Autowired
-    private lateinit var checksumCalc: ChecksumCalc
-
-    private lateinit var checksum: String
 
     protected abstract val resourceName: String
     protected abstract val resourcePath: String
@@ -43,9 +34,6 @@ abstract class DataProviderImplDefault<T, D, K>(
     protected var data: Set<D> = emptySet()
 
     protected abstract fun shrinkData(details: D): T
-
-    @Scheduled(fixedDelay = 5 * MINUTE, initialDelay = 5 * MINUTE)
-    fun reloadOnChanges() = reload()
 
     override fun getOne(id: K): T {
         return getDetails(id).let(::shrinkData)
@@ -119,35 +107,12 @@ abstract class DataProviderImplDefault<T, D, K>(
             null
         }
 
-        if ((resource != null) && resource.isReadable) {
-            logger.debug { "calculating checksum for '${resourceName}'" }
-
-            lock.withLock {
-
-                val latestChecksum = checksumCalc.calculate(resource::getInputStream)
-
-                if (!this::checksum.isInitialized) {
-                    logger.debug { "'${resourceName}'checksum calculating for the first time" }
-                    checksum = latestChecksum
-
-                    return readDataSetFromResource(resource)
-                }
-
-                if (checksum != latestChecksum) {
-                    logger.debug { "'${resourceName}' checksum mismatch - old: $checksum, new: $latestChecksum" }
-
-                    return readDataSetFromResource(resource)
-                }
-
-                logger.debug { "'${resourceName}' checksum did not changed" }
-
-                return this.data
-            }
+        return if ((resource != null) && resource.isReadable) {
+            readDataSetFromResource(resource)
         } else {
             logger.debug { "resource from '${resourcePath}' is not readable" }
+            emptySet()
         }
-
-        return emptySet()
     }
 
     private fun readDataSetFromResource(resource: Resource): Set<D> {

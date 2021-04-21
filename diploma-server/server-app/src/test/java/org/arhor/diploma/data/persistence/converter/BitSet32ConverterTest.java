@@ -12,23 +12,26 @@ import org.junit.jupiter.api.extension.ExtendWith;
 @ExtendWith({RandomParameter.Resolver.class})
 class BitSet32ConverterTest {
 
-    private static BitSet32Converter converterUnderTest;
+    private static BitSet32ReadingConverter readingConverter;
+    private static BitSet32WritingConverter writingConverter;
 
     @BeforeAll
     static void setUp() {
-        converterUnderTest = new BitSet32Converter();
+        readingConverter = new BitSet32ReadingConverter();
+        writingConverter = new BitSet32WritingConverter();
     }
 
     @AfterAll
     static void tearDown() {
-        converterUnderTest = null;
+        readingConverter = null;
+        writingConverter = null;
     }
 
     @Test
     void shouldCorrectlySerializeAndDeserializeValue(@RandomParameter final int valueBefore) {
         // when
-        BitSet32 bitSet32 = converterUnderTest.convertToEntityAttribute(valueBefore);
-        Integer valueAfter = converterUnderTest.convertToDatabaseColumn(bitSet32);
+        BitSet32 bitSet32 = readingConverter.convert(valueBefore);
+        Integer valueAfter = writingConverter.convert(bitSet32);
 
         // then
         assertThat(bitSet32).isNotNull();

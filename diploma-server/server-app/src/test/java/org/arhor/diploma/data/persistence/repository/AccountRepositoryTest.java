@@ -17,41 +17,41 @@ class AccountRepositoryTest extends DatabaseIntegrationTest {
     @Autowired
     private AccountRepository repository;
 
-    @Test
-    @Transactional
-    void shouldSoftlyDeleteAccount(@RandomParameter final Account account) {
-        // given
-        account.setId(null);
+//    @Test
+//    @Transactional
+//    void shouldSoftlyDeleteAccount(@RandomParameter final Account account) {
+//        // given
+//        account.setId(null);
+//
+//        final var savedAccount = repository.save(account);
+//        final var accountId = savedAccount.getId();
+//
+//        // when
+//        repository.delete(savedAccount);
+//
+//        // then
+//        assertThat(accountId).isNotNull();
+//        assertThat(repository.findById(accountId)).isEmpty();
+//        assertThat(repository.findDeletedIds()).contains(accountId);
+//    }
 
-        final var savedAccount = repository.save(account);
-        final var accountId = savedAccount.getId();
-
-        // when
-        repository.delete(savedAccount);
-
-        // then
-        assertThat(accountId).isNotNull();
-        assertThat(repository.findById(accountId)).isEmpty();
-        assertThat(repository.findDeletedIds()).contains(accountId);
-    }
-
-    @Test
-    @Transactional
-    void shouldSoftlyDeleteAccountById(@RandomParameter final Account account) {
-        // given
-        account.setId(null);
-
-        final var savedAccount = repository.save(account);
-        final var accountId = savedAccount.getId();
-
-        // when
-        repository.deleteById(accountId);
-
-        // then
-        assertThat(accountId).isNotNull();
-        assertThat(repository.findById(accountId)).isEmpty();
-        assertThat(repository.findDeletedIds()).contains(accountId);
-    }
+//    @Test
+//    @Transactional
+//    void shouldSoftlyDeleteAccountById(@RandomParameter final Account account) {
+//        // given
+//        account.setId(null);
+//
+//        final var savedAccount = repository.save(account);
+//        final var accountId = savedAccount.getId();
+//
+//        // when
+//        repository.deleteById(accountId);
+//
+//        // then
+//        assertThat(accountId).isNotNull();
+//        assertThat(repository.findById(accountId)).isEmpty();
+//        assertThat(repository.findDeletedIds()).contains(accountId);
+//    }
 
     @Test
     @Transactional

@@ -19,7 +19,7 @@ interface SecurityProfileRepository : BaseRepository<SecurityProfile, Long> {
     fun findAllByNames(names: List<String>): List<SecurityProfile>
 
     @Transactional(readOnly = true)
-    @Query("SELECT p FROM security_profiles p WHERE p.name = :name")
+    @Query("SELECT p.* FROM security_profiles p WHERE p.name = :name")
     fun findByName(name: String): Optional<SecurityProfile>
 
     @JvmDefault
