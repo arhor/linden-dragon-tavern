@@ -23,7 +23,7 @@ class SecurityProfilesVerifier(
             val profiles = securityProfileRepository.findAllByNames(allRoles).map { it.name }
 
             val createdProfiles = allRoles.subtract(profiles)
-                .map { roleToCreate -> SecurityProfile(name = roleToCreate, isSynthetic = true) }
+                .map { roleToCreate -> SecurityProfile(id = null, name = roleToCreate, isSynthetic = true) }
                 .let { newProfiles -> securityProfileRepository.saveAll(newProfiles) }
                 .map { it.name }
 

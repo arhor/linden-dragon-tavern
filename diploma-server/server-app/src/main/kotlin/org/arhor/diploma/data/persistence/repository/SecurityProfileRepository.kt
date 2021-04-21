@@ -1,11 +1,13 @@
 package org.arhor.diploma.data.persistence.repository
 
 import org.arhor.diploma.data.persistence.domain.SecurityProfile
-import org.springframework.data.jpa.repository.Query
+import org.springframework.data.jdbc.repository.query.Query
+import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
 import java.util.*
 import kotlin.reflect.KClass
 
+@Repository
 interface SecurityProfileRepository : BaseRepository<SecurityProfile, Long> {
 
     @JvmDefault
@@ -13,11 +15,11 @@ interface SecurityProfileRepository : BaseRepository<SecurityProfile, Long> {
         get() = SecurityProfile::class
 
     @Transactional(readOnly = true)
-    @Query("SELECT p FROM SecurityProfile p WHERE p.name IN :names")
+    @Query("SELECT p.* FROM security_profiles p WHERE p.name IN (:names)")
     fun findAllByNames(names: List<String>): List<SecurityProfile>
 
     @Transactional(readOnly = true)
-    @Query("SELECT p FROM SecurityProfile p WHERE p.name = :name")
+    @Query("SELECT p FROM security_profiles p WHERE p.name = :name")
     fun findByName(name: String): Optional<SecurityProfile>
 
     @JvmDefault

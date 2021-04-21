@@ -14,10 +14,6 @@ import org.mapstruct.Mappings
 interface AccountConverter : Converter<Account, AccountDTO> {
 
     @IgnoreAuditProps
-    @Mappings(
-        Mapping(source = "firstName", target = "accountDetails.firstName"),
-        Mapping(source = "lastName", target = "accountDetails.lastName")
-    )
     override fun mapDtoToEntity(item: AccountDTO): Account
 
     @InheritInverseConfiguration

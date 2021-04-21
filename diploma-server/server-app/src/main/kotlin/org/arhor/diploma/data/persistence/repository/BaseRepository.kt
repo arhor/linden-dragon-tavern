@@ -4,10 +4,10 @@ import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.domain.Sort
-import org.springframework.data.jpa.repository.JpaRepository
-import org.springframework.data.jpa.repository.Modifying
-import org.springframework.data.jpa.repository.Query
+import org.springframework.data.jdbc.repository.query.Modifying
+import org.springframework.data.jdbc.repository.query.Query
 import org.springframework.data.repository.NoRepositoryBean
+import org.springframework.data.repository.PagingAndSortingRepository
 import org.springframework.transaction.annotation.Transactional
 import java.io.Serializable
 import java.util.*
@@ -15,14 +15,16 @@ import kotlin.reflect.KClass
 
 @Suppress("unused")
 @NoRepositoryBean
-interface BaseRepository<T, K> : JpaRepository<T, K>
+interface BaseRepository<T, K> : PagingAndSortingRepository<T, K>
         where T : DeletableDomainObject<K>,
               K : Serializable {
 
     val entityType: KClass<T>
 
+    val tableName: String
+
     @Transactional(readOnly = true)
-    @Query("SELECT e FROM #{#entityName} e WHERE e.isDeleted = false")
+    @Query("SELECT e.* FROM #{#entityName} e WHERE e.deleted = false")
     override fun findAll(): MutableList<T>
 
     @Transactional(readOnly = true)
@@ -78,7 +80,7 @@ interface BaseRepository<T, K> : JpaRepository<T, K>
 
     @JvmDefault
     @Transactional
-    override fun deleteInBatch(entities: Iterable<T>) {
+    fun deleteInBatch(entities: Iterable<T>) {
         deleteAllById(entities.mapNotNull { it.id })
     }
 

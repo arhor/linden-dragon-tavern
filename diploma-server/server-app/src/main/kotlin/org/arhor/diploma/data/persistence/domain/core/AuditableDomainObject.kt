@@ -1,14 +1,10 @@
 package org.arhor.diploma.data.persistence.domain.core
 
 import org.arhor.diploma.commons.Auditable
+import org.springframework.data.relational.core.mapping.Column
 import java.io.Serializable
 import java.time.LocalDateTime
-import javax.persistence.Column
-import javax.persistence.MappedSuperclass
-import javax.persistence.PrePersist
-import javax.persistence.PreUpdate
 
-@MappedSuperclass
 abstract class AuditableDomainObject<T> : DeletableDomainObject<T>(), Auditable
         where T : Serializable {
 
@@ -18,12 +14,10 @@ abstract class AuditableDomainObject<T> : DeletableDomainObject<T>(), Auditable
     @Column
     override var updated: LocalDateTime? = null
 
-    @PrePersist
     override fun onCreate() {
         created = LocalDateTime.now()
     }
 
-    @PreUpdate
     override fun onUpdate() {
         updated = LocalDateTime.now()
     }

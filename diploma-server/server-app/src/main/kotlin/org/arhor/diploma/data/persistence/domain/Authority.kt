@@ -2,22 +2,18 @@ package org.arhor.diploma.data.persistence.domain
 
 import org.arhor.diploma.data.classBasedStaticHashCode
 import org.arhor.diploma.data.persistence.domain.core.DomainObject
-import org.hibernate.annotations.Cache
-import org.hibernate.annotations.CacheConcurrencyStrategy
-import javax.persistence.*
+import org.springframework.data.annotation.Id
+import org.springframework.data.relational.core.mapping.Column
+import org.springframework.data.relational.core.mapping.Table
 
-@Entity
-@Table(name = Authority.TABLE_NAME)
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Table(Authority.TABLE_NAME)
 data class Authority(
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = SEQ_GENERATOR)
-    @SequenceGenerator(name = SEQ_GENERATOR, sequenceName = SEQ_NAME, allocationSize = SEQ_ALLOC_SIZE)
-    @Column(name = "id", nullable = false, updatable = false)
+    @Column("id")
     override var id: Long? = null,
 
-    @Column(name = "name", unique = true, nullable = false)
+    @Column("name")
     var name: String? = null
 
 ) : DomainObject<Long>() {

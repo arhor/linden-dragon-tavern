@@ -2,6 +2,7 @@ package org.arhor.diploma.service.impl
 
 import org.arhor.diploma.Roles
 import org.arhor.diploma.data.persistence.domain.Account
+import org.arhor.diploma.data.persistence.domain.SecurityProfile
 import org.arhor.diploma.data.persistence.repository.AccountRepository
 import org.arhor.diploma.data.persistence.repository.SecurityProfileRepository
 import org.arhor.diploma.service.AccountService
@@ -21,7 +22,7 @@ class AccountServiceImpl(
     private val accRepository: AccountRepository,
     private val secRepository: SecurityProfileRepository,
     converter: AccountConverter
-) : AbstractService<Account, AccountDTO, Long>(converter, accRepository), AccountService {
+) : /*AbstractService<Account, AccountDTO, Long>(converter, accRepository),*/ AccountService {
 
     override fun loadUserByUsername(username: String?): UserDetails {
         return username?.let {
@@ -58,17 +59,47 @@ class AccountServiceImpl(
         val userSecurityProfile = secRepository.findByNameOrNull(Roles.USER.name)
             ?: throw RuntimeException("Missing security profile: 'USER'")
 
-        return create(accountDTO) {
-            accountDetails?.securityProfile = userSecurityProfile
-        }
+        return create(accountDTO)
     }
 
     override fun deleteAccount(id: Long) {
         delete(id)
     }
 
+    override fun create(item: AccountDTO, init: Account.() -> Unit): AccountDTO {
+        TODO("Not yet implemented")
+    }
+
+    override fun getOne(id: Long): AccountDTO {
+        TODO("Not yet implemented")
+    }
+
+    override fun getList(): List<AccountDTO> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getList(page: Int, size: Int): List<AccountDTO> {
+        TODO("Not yet implemented")
+    }
+
+    override fun getTotalSize(): Long {
+        TODO("Not yet implemented")
+    }
+
+    override fun update(item: AccountDTO): AccountDTO {
+        TODO("Not yet implemented")
+    }
+
+    override fun delete(id: Long) {
+        TODO("Not yet implemented")
+    }
+
+    override fun delete(item: AccountDTO) {
+        TODO("Not yet implemented")
+    }
+
     private fun extractAuthorities(account: Account): Collection<GrantedAuthority> {
-        val securityProfile = account.accountDetails?.securityProfile
+        val securityProfile = SecurityProfile(null, null, false)// account.accountDetails?.securityProfile
 
         val authorities = when {
             securityProfile == null -> {
@@ -77,10 +108,10 @@ class AccountServiceImpl(
             securityProfile.isSynthetic -> {
                 listOf("ROLE_${securityProfile.name}")
             }
-            else -> {
-                securityProfile.securityAuthorities
-                    .mapNotNull { it.authority }
-                    .mapNotNull { it.name }
+            else -> { listOf("MONYA")
+//                securityProfile.securityAuthorities
+//                    .mapNotNull { it.authority }
+//                    .mapNotNull { it.name }
             }
         }
 

@@ -1,24 +1,17 @@
 package org.arhor.diploma.data.persistence.domain.core
 
 import org.arhor.diploma.commons.Identifiable
-import org.arhor.diploma.data.persistence.domain.extension.ExtraDataHolder
-import org.arhor.diploma.data.persistence.domain.extension.ObjectExtensionLoader
 import java.io.Serializable
-import javax.persistence.EntityListeners
-import javax.persistence.MappedSuperclass
-import javax.persistence.Transient
 
 /**
  * Base class for any entity used in the application.
  *
  * @param T primary key type
  */
-@MappedSuperclass
-@EntityListeners(ObjectExtensionLoader::class)
 abstract class DomainObject<T : Serializable> : Identifiable<T>, Serializable {
 
-    @Transient
-    final val extraData: ExtraDataHolder = ExtraDataHolder()
+//    @Transient
+//    val extraData: ExtraDataHolder = ExtraDataHolder()
 
     abstract val tableName: String
 
