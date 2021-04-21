@@ -21,8 +21,6 @@ interface BaseRepository<T, K> : PagingAndSortingRepository<T, K>
 
     val entityType: KClass<T>
 
-    val tableName: String
-
     @Transactional(readOnly = true)
     @Query("SELECT e.* FROM #{#entityName} e WHERE e.deleted = false")
     override fun findAll(): MutableList<T>
