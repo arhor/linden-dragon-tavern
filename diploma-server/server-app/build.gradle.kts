@@ -41,6 +41,7 @@ dependencies {
     implementation(project(":diploma-shared"))
     implementation(project(":diploma-server:commons"))
 
+    runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("io.r2dbc:r2dbc-postgresql")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:${Versions.jsonWebToken}")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:${Versions.jsonWebToken}")
