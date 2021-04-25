@@ -4,8 +4,10 @@ import io.r2dbc.spi.ConnectionFactories
 import io.r2dbc.spi.ConnectionFactory
 import mu.KotlinLogging
 import org.arhor.diploma.util.SpringProfile
+import org.springframework.boot.autoconfigure.r2dbc.R2dbcProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Primary
 import org.springframework.context.annotation.Profile
 import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories
 import org.springframework.transaction.annotation.EnableTransactionManagement
@@ -18,13 +20,27 @@ val log = KotlinLogging.logger {}
 @EnableTransactionManagement
 class DatabaseConfig {
 
+//    @Bean
+//    @Profile("!${SpringProfile.DEVELOPMENT}")
+//    fun connectionFactory(): ConnectionFactory {
+//        val uri = URI(System.getenv("DATABASE_URL"))
+//
+//        val (username, password) = uri.userInfo.split(":").toTypedArray()
+//
+//        return ConnectionFactories.get("r2dbcs:postgres://${username}:${password}@${uri.host}:${uri.port}/${uri.path}")
+//    }
+
     @Bean
-    @Profile("!${SpringProfile.DEVELOPMENT}")
-    fun connectionFactory(): ConnectionFactory {
+    @Primary
+    fun r2dbcProperties(): R2dbcProperties {
         val uri = URI(System.getenv("DATABASE_URL"))
 
         val (username, password) = uri.userInfo.split(":").toTypedArray()
 
-        return ConnectionFactories.get("r2dbcs:postgres://${username}:${password}@${uri.host}:${uri.port}/${uri.path}")
+        return R2dbcProperties().apply {
+            this.url = "r2dbc:postgres://${uri.host}:${uri.port}/${uri.path}"
+            this.username = username
+            this.password = password
+        }
     }
 }
