@@ -28,8 +28,9 @@ spring:
     enabled: false
 
   r2dbc:
-    properties:
-        sslMode: REQUIRE
+    url: ${JDBC_DATABASE_URL}
+    username: ${JDBC_DATABASE_USERNAME}
+    password: ${JDBC_DATABASE_PASSWORD}
 
   messages:
     basename: messages

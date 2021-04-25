@@ -31,9 +31,11 @@ class DatabaseConfig {
         log.info { rawDbUri }
         log.info { jdbcDbUri }
         log.info { dbUri }
+        log.info { jdbcDbUri.replace("jdbc", "r2dbc") }
 
         return ConnectionFactories.get(
-            "r2dbc:postgres://${username}:${password}@${dbUri.host}:${dbUri.port}/${dbUri.path}"
+//            "r2dbc:postgres://${username}:${password}@${dbUri.host}:${dbUri.port}/${dbUri.path}"
+            jdbcDbUri.replace("jdbc", "r2dbc")
         )
     }
 }
