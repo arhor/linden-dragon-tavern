@@ -15,21 +15,26 @@ private val logger = KotlinLogging.logger {}
 class AccountHandler(private val service: AccountService) {
 
     suspend fun getAccounts(request: ServerRequest): ServerResponse {
-        logger.debug { "fetching accounts" }
-
         val page = request.queryParamOrNull("page")?.toInt()
         val size = request.queryParamOrNull("size")?.toInt()
+
+        logger.debug { "fetching accounts page: $page, size: $size" }
 
         val result = service.getList(page ?: 0, size ?: 0).toList()
 
         return ServerResponse.ok().bodyValueAndAwait(result)
     }
 
-//    @GetMapping("/{id}")
-//    suspend fun getAccount(@PathVariable id: Long): RepresentationModel<*> {
-//        return service.getAccountById(id).toRepresentationModel(auth)
-//    }
-//
+    suspend fun getAccount(request: ServerRequest): ServerResponse {
+        val id = request.pathVariable("id").toLong()
+
+        logger.debug { "fetching account with id: $id" }
+
+        val result = service.getAccountById(id)
+
+        return ServerResponse.ok().bodyValueAndAwait(result)
+    }
+
 //    @PostMapping
 //    suspend fun createAccount(@Valid @RequestBody account: AccountDTO): ResponseEntity<Unit> {
 //

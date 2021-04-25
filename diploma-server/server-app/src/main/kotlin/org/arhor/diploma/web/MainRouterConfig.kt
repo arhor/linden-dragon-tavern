@@ -10,12 +10,14 @@ class MainRouterConfig {
 
     @Bean
     fun mainRouter(accountHandler: AccountHandler) = coRouter {
-
+        // @formatter:off
         "/api/v1".nest {
 
             "/accounts".nest {
-                GET("", accountHandler::getAccounts)
+                GET(""     , accountHandler::getAccounts)
+                GET("/{id}", accountHandler::getAccount)
             }
         }
+        // @formatter:on
     }
 }

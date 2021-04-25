@@ -3,6 +3,3 @@ spring:
     url: r2dbc:postgresql://localhost:5432/diploma_db
     username: postgres
     password: password
-
-  jpa:
-    show-sql: true
