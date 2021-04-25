@@ -25,6 +25,8 @@ class DatabaseConfig {
 
         val (username, password) = dbUri.userInfo.split(":").toTypedArray()
 
+        log.info { dbUri }
+
         return ConnectionFactories.get(
             "r2dbc:postgres://${username}:${password}@${dbUri.host}:${dbUri.port}/${dbUri.path}"
         )
