@@ -27,11 +27,6 @@ spring:
   jmx:
     enabled: false
 
-  r2dbc:
-    url: ${JDBC_DATABASE_URL}
-    username: ${JDBC_DATABASE_USERNAME}
-    password: ${JDBC_DATABASE_PASSWORD}
-
   messages:
     basename: messages
 
