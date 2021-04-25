@@ -1,16 +1,18 @@
 package org.arhor.diploma.service
 
+import kotlinx.coroutines.flow.Flow
 import org.arhor.diploma.data.persistence.domain.Account
 import org.arhor.diploma.service.dto.AccountDTO
-import org.springframework.security.core.userdetails.UserDetailsService
+//import org.springframework.security.core.userdetails.ReactiveUserDetailsService
+//import org.springframework.security.core.userdetails.UserDetailsService
 
-interface AccountService : CrudService<Account, AccountDTO, Long>, UserDetailsService {
+interface AccountService : CrudService<Account, AccountDTO, Long> /*, ReactiveUserDetailsService*/ {
 
-    fun getAccountById(id: Long): AccountDTO
+    suspend fun getAccountById(id: Long): AccountDTO
 
-    fun getAccounts(page: Int, size: Int): List<AccountDTO>
+    suspend fun getAccounts(page: Int, size: Int): Flow<AccountDTO>
 
-    fun createAccount(accountDTO: AccountDTO): AccountDTO
+    suspend fun createAccount(accountDTO: AccountDTO): AccountDTO
 
-    fun deleteAccount(id: Long)
+    suspend fun deleteAccount(id: Long)
 }

@@ -5,13 +5,9 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
 import org.arhor.diploma.commons.Identifiable
 import org.arhor.diploma.commons.data.EntityNotFoundException
-import org.arhor.diploma.commons.file.ChecksumCalc
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.io.Resource
 import org.springframework.core.io.ResourceLoader
 import java.io.Serializable
-import java.util.concurrent.locks.Lock
-import java.util.concurrent.locks.ReentrantLock
 import java.util.function.Predicate
 import javax.annotation.PostConstruct
 import kotlin.streams.toList

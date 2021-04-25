@@ -5,5 +5,5 @@ import java.io.Serializable
 
 interface Updater<T : Identifiable<K>, K : Serializable> {
 
-    fun update(item: T): T
+    suspend fun update(item: T): T
 }

@@ -1,21 +1,19 @@
 package org.arhor.diploma.data.persistence.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import java.util.Optional;
-
-import org.arhor.diploma.data.persistence.domain.Account;
-import org.arhor.diploma.testutils.RandomParameter;
-import org.junit.jupiter.api.Test;
-import org.junit.platform.commons.annotation.Testable;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
+import kotlinx.coroutines.runBlocking
+import org.arhor.diploma.data.persistence.domain.Account
+import org.arhor.diploma.testutils.RandomParameter
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
+import org.junit.platform.commons.annotation.Testable
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.transaction.annotation.Transactional
 
 @Testable
-class AccountRepositoryTest extends DatabaseIntegrationTest {
+class AccountRepositoryTest : DatabaseIntegrationTest() {
 
     @Autowired
-    private AccountRepository repository;
+    private lateinit var repository: AccountRepository
 
 //    @Test
 //    @Transactional
@@ -55,17 +53,16 @@ class AccountRepositoryTest extends DatabaseIntegrationTest {
 
     @Test
     @Transactional
-    void shouldFindAccountByUsername(@RandomParameter final Account account) {
+    fun shouldFindAccountByUsername(@RandomParameter account: Account): Unit = runBlocking {
         // given
-        account.setId(null);
-
-        final var savedAccount = repository.save(account);
-        final var savedAccountUsername = savedAccount.getUsername();
+        val savedAccount = repository.save(account.apply { id = null })
 
         // when
-        Optional<Account> optionalAccount = repository.findByUsername(savedAccountUsername);
+        val optionalAccount = repository.findByUsername(savedAccount.username!!)
 
         // then
-        assertThat(optionalAccount).contains(savedAccount);
+        assertThat(optionalAccount)
+            .isNotNull
+            .isEqualTo(savedAccount)
     }
 }

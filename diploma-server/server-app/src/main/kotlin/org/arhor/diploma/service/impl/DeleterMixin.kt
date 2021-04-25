@@ -3,32 +3,32 @@ package org.arhor.diploma.service.impl
 import org.arhor.diploma.commons.Identifiable
 import org.arhor.diploma.commons.data.EntityNotFoundException
 import org.arhor.diploma.data.persistence.domain.core.DeletableDomainObject
-import org.arhor.diploma.data.persistence.repository.BaseRepository
 import org.arhor.diploma.service.Deleter
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import java.io.Serializable
 
 class DeleterMixin<E, D, K>(
-    private val repository: BaseRepository<E, K>,
+    private val repository: CoroutineCrudRepository<E, K>,
 ) : Deleter<D, K>
-        where E : DeletableDomainObject<K>,
-              D : Identifiable<K>,
-              K : Serializable {
+    where E : DeletableDomainObject<K>,
+          D : Identifiable<K>,
+          K : Serializable {
 
-    override fun delete(id: K) {
-        val entity = repository
-            .findById(id)
-            .orElseThrow {
-                EntityNotFoundException(
-                    entityType = repository.entityType.simpleName,
-                    propName = KEY_PROPERTY,
-                    propValue = id
-                )
-            }
+    override suspend fun delete(id: K) {
+        val entity = repository.findById(id)
 
-        repository.delete(entity)
+        if (entity != null) {
+            repository.delete(entity)
+        } else {
+            throw EntityNotFoundException(
+                entityType = "IMPLEMENT ME",
+                propName = KEY_PROPERTY,
+                propValue = id
+            )
+        }
     }
 
-    override fun delete(item: D) {
+    override suspend fun delete(item: D) {
         item.id?.let { delete(it) }
             ?: throw IllegalArgumentException("Passed item has not set $KEY_PROPERTY value, so it cannot be deleted")
     }

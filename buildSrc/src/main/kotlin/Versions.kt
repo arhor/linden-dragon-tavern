@@ -12,7 +12,7 @@ object Versions {
     const val mapstruct           = "1.4.2.Final"
     const val pdfBox              = "2.0.21"
     const val jsonWebToken        = "0.11.2"
-    const val testcontainers      = "1.14.0"
+    const val testcontainers      = "1.15.3"
     const val flywayGradlePlugin  = "7.0.0"
     const val logback             = "1.2.3"
     const val slf4j               = "1.7.30"

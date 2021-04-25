@@ -1,29 +1,20 @@
 package org.arhor.diploma.data.persistence.repository
 
+import kotlinx.coroutines.flow.Flow
 import org.arhor.diploma.data.persistence.domain.SecurityProfile
-import org.springframework.data.jdbc.repository.query.Query
+import org.springframework.data.r2dbc.repository.Query
+import org.springframework.data.repository.kotlin.CoroutineCrudRepository
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
-import java.util.*
-import kotlin.reflect.KClass
 
 @Repository
-interface SecurityProfileRepository : BaseRepository<SecurityProfile, Long> {
-
-    @JvmDefault
-    override val entityType: KClass<SecurityProfile>
-        get() = SecurityProfile::class
+interface SecurityProfileRepository : CoroutineCrudRepository<SecurityProfile, Long> {
 
     @Transactional(readOnly = true)
     @Query("SELECT p.* FROM security_profiles p WHERE p.name IN (:names)")
-    fun findAllByNames(names: List<String>): List<SecurityProfile>
+    suspend fun findAllByNames(names: List<String>): Flow<SecurityProfile>
 
     @Transactional(readOnly = true)
     @Query("SELECT p.* FROM security_profiles p WHERE p.name = :name")
-    fun findByName(name: String): Optional<SecurityProfile>
-
-    @JvmDefault
-    fun findByNameOrNull(name: String): SecurityProfile? {
-        return findByName(name).orElse(null)
-    }
+    suspend fun findByName(name: String): SecurityProfile?
 }

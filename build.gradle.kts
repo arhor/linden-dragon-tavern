@@ -42,7 +42,10 @@ allprojects {
 
         withType<KotlinCompile> {
             kotlinOptions {
-                freeCompilerArgs = listOf("-Xjsr305=strict", "-Xjvm-default=enable")
+                freeCompilerArgs = listOf(
+                    "-Xjsr305=strict",
+                    "-Xjvm-default=enable"
+                )
                 jvmTarget = Versions.javaGlobal
                 javaParameters = true
                 useIR = true

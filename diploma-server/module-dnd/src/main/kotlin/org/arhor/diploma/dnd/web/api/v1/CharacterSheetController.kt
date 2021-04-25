@@ -4,26 +4,24 @@ import mu.KotlinLogging
 import org.arhor.diploma.dnd.service.CharsheetService
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.stereotype.Component
+import org.springframework.web.reactive.function.server.ServerRequest
+import org.springframework.web.reactive.function.server.ServerResponse
+import org.springframework.web.reactive.function.server.bodyValueAndAwait
 
 private val logger = KotlinLogging.logger {}
 
-@RestController
-@RequestMapping(path = ["/api/v1/charsheets"])
+@Component
 class CharacterSheetController(private val service: CharsheetService) {
 
-    @GetMapping(produces = [MediaType.APPLICATION_PDF_VALUE])
-    fun downloadCharsheet(): ResponseEntity<*> {
+    suspend fun downloadCharsheet(request: ServerRequest): ServerResponse {
         logger.debug("downloading empty character sheet")
 
         val resource = service.getEmptyCharsheet()
 
-        return ResponseEntity.ok()
+        return ServerResponse.ok()
             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=${resource.filename}")
-            .contentLength(resource.contentLength())
-            .body(resource)
+            .contentType(MediaType.APPLICATION_PDF)
+            .bodyValueAndAwait(resource)
     }
 }

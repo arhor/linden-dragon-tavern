@@ -9,13 +9,13 @@ interface Creator<E, D, K>
               D : Identifiable<K>,
               K : Serializable {
 
-    fun create(item: D, init: E.() -> Unit): D
+    suspend fun create(item: D, init: E.() -> Unit): D
 
     /**
      * For Java-interop since Java does not support method argument default values
      */
     @JvmDefault
-    fun create(item: D): D {
-        return create(item, {})
+    suspend fun create(item: D): D {
+        return create(item) {}
     }
 }

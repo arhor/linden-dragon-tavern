@@ -10,16 +10,21 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
-@IntegrationTest
-@SpringBootTest(classes = {TestConfig.class})
-@Testcontainers(disabledWithoutDocker = true)
-@ExtendWith({RandomParameter.Resolver.class, SpringExtension.class})
-public abstract class DatabaseIntegrationTest {
+typealias PostgresTestDatabase = PostgreSQLContainer<*>
 
-    @Container
-    private static final PostgreSQLContainer<?> POSTGRES =
-            new PostgreSQLContainer<>("postgres:11.7")
-                    .withDatabaseName("diploma_test_db")
-                    .withUsername("postgres")
-                    .withPassword("password");
+@IntegrationTest
+@SpringBootTest(classes = [TestConfig::class])
+@Testcontainers(disabledWithoutDocker = true)
+@ExtendWith(RandomParameter.Resolver::class, SpringExtension::class)
+abstract class DatabaseIntegrationTest {
+
+    companion object {
+        @Container
+        @JvmStatic
+        private val POSTGRES =
+            PostgresTestDatabase("postgres:11.7")
+                .withDatabaseName("diploma_test_db")
+                .withUsername("postgres")
+                .withPassword("password");
+    }
 }
