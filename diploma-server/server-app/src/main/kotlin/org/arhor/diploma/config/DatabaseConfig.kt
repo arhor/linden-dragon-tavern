@@ -23,12 +23,13 @@ class DatabaseConfig {
     fun connectionFactory(): ConnectionFactory {
 
         val rawDbUri = System.getenv("DATABASE_URL")
-
+        val jdbcDbUri = System.getenv("JDBC_DATABASE_URL")
         val dbUri = URI(rawDbUri)
 
         val (username, password) = dbUri.userInfo.split(":").toTypedArray()
 
         log.info { rawDbUri }
+        log.info { jdbcDbUri }
         log.info { dbUri }
 
         return ConnectionFactories.get(
