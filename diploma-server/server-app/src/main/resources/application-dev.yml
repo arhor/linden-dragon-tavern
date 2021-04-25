@@ -1,5 +1,5 @@
-#spring:
-#  r2dbc:
-#    url: r2dbc:postgresql://localhost:5432/diploma_db
-#    username: postgres
-#    password: password
+spring:
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/diploma_db
+    username: postgres
+    password: password
