@@ -21,21 +21,10 @@ class DatabaseConfig {
     @Bean
     @Profile("!${SpringProfile.DEVELOPMENT}")
     fun connectionFactory(): ConnectionFactory {
+        val uri = URI(System.getenv("DATABASE_URL"))
 
-        val rawDbUri = System.getenv("DATABASE_URL")
-        val jdbcDbUri = System.getenv("JDBC_DATABASE_URL")
-        val dbUri = URI(rawDbUri)
+        val (username, password) = uri.userInfo.split(":").toTypedArray()
 
-        val (username, password) = dbUri.userInfo.split(":").toTypedArray()
-
-        log.info { rawDbUri }
-        log.info { jdbcDbUri }
-        log.info { dbUri }
-        log.info { jdbcDbUri.replace("jdbc", "r2dbc") }
-
-        return ConnectionFactories.get(
-//            "r2dbc:postgres://${username}:${password}@${dbUri.host}:${dbUri.port}/${dbUri.path}"
-            jdbcDbUri.replace("jdbc", "r2dbc")
-        )
+        return ConnectionFactories.get("r2dbcs:postgres://${username}:${password}@${uri.host}:${uri.port}/${uri.path}")
     }
 }
