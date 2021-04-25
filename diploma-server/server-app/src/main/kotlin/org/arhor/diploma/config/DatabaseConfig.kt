@@ -27,7 +27,8 @@ class DatabaseConfig {
             this.url = "r2dbc:postgres://${uri.host}:${uri.port}/${uri.path}"
             this.username = username
             this.password = password
-            this.properties["sslmode"] = "require"
+//            this.properties["sslmode"] = "require"
+            this.properties["ssl"] = "true"
         }
     }
 }
