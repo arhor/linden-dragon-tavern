@@ -24,7 +24,7 @@ class DatabaseConfig {
         val (username, password) = uri.userInfo.split(":")
 
         return R2dbcProperties().apply {
-            this.url = "r2dbc:postgres://${uri.host}:${uri.port}/${uri.path}"
+            this.url = "r2dbc:postgres://${uri.host}:${uri.port}${uri.path}"
             this.username = username
             this.password = password
             this.properties["sslMode"] = "require"
