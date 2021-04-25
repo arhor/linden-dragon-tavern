@@ -21,7 +21,7 @@ class DatabaseConfig {
     fun r2dbcProperties(): R2dbcProperties {
         val uri = URI(System.getenv("DATABASE_URL"))
 
-        val (username, password) = uri.userInfo.split(":").toTypedArray()
+        val (username, password) = uri.userInfo.split(":")
 
         return R2dbcProperties().apply {
             this.url = "r2dbc:postgres://${uri.host}:${uri.port}/${uri.path}"

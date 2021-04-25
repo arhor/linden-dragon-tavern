@@ -13,7 +13,7 @@ object Common {
 
 object SpringProfile {
     const val DEVELOPMENT = "dev"
-    const val PRODUCTION  = "prod"
+    const val PRODUCTION  = "production"
     const val TEST        = "test"
     const val CLOUD       = "cloud"
     const val HEROKU      = "heroku"
