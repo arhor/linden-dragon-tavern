@@ -7,12 +7,14 @@ import org.arhor.diploma.data.persistence.domain.Account
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.EnableCaching
 import org.springframework.context.annotation.Configuration
+import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.scheduling.annotation.Scheduled
 
 private val logger = KotlinLogging.logger {}
 
-@EnableCaching
 @Configuration
+@EnableCaching
+@EnableScheduling
 class CacheConfig {
 
     /**

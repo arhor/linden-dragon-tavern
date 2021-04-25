@@ -17,7 +17,7 @@ class DatabaseConfig {
 
     @Bean
     @Primary
-    @Profile(SpringProfile.PRODUCTION)
+    @Profile(SpringProfile.HEROKU)
     fun r2dbcProperties(): R2dbcProperties {
         val uri = URI(System.getenv("DATABASE_URL"))
 
