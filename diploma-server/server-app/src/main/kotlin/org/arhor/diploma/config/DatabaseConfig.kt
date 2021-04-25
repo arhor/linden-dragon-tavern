@@ -21,10 +21,14 @@ class DatabaseConfig {
     @Bean
     @Profile("!${SpringProfile.DEVELOPMENT}")
     fun connectionFactory(): ConnectionFactory {
-        val dbUri = URI(System.getenv("DATABASE_URL"))
+
+        val rawDbUri = System.getenv("DATABASE_URL")
+
+        val dbUri = URI(rawDbUri)
 
         val (username, password) = dbUri.userInfo.split(":").toTypedArray()
 
+        log.info { rawDbUri }
         log.info { dbUri }
 
         return ConnectionFactories.get(
