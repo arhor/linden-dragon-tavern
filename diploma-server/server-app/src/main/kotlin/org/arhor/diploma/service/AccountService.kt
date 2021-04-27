@@ -3,10 +3,8 @@ package org.arhor.diploma.service
 import kotlinx.coroutines.flow.Flow
 import org.arhor.diploma.data.persistence.domain.Account
 import org.arhor.diploma.service.dto.AccountDTO
-//import org.springframework.security.core.userdetails.ReactiveUserDetailsService
-//import org.springframework.security.core.userdetails.UserDetailsService
 
-interface AccountService : CrudService<Account, AccountDTO, Long> /*, ReactiveUserDetailsService*/ {
+interface AccountService : CrudService<Account, AccountDTO, Long> {
 
     suspend fun getAccountById(id: Long): AccountDTO
 

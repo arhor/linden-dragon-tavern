@@ -3,13 +3,11 @@ package org.arhor.diploma.dnd
 import org.arhor.diploma.dnd.web.api.v1.CharacterSheetController
 import org.arhor.diploma.dnd.web.api.v1.MonsterController
 import org.arhor.diploma.dnd.web.api.v1.SpellController
-import org.springframework.boot.autoconfigure.SpringBootApplication
-import org.springframework.boot.runApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.server.coRouter
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class DnDRouterConfig {
 
     @Bean

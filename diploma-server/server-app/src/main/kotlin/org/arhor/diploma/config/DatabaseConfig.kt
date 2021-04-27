@@ -16,7 +16,7 @@ val log = KotlinLogging.logger {}
 
 const val DATABASE_URL = "DATABASE_URL"
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableR2dbcRepositories("org.arhor.diploma")
 @EnableTransactionManagement
 class DatabaseConfig {

@@ -34,11 +34,6 @@ class MonsterController(
             .bodyValueAndAwait(result)
     }
 
-    class UserMaxim {
-        lateinit var name: String
-        lateinit var age: String
-    }
-
     suspend fun getMonsterDetailsList(request: ServerRequest): ServerResponse {
         val page = request.queryParamOrNull("page")?.toInt()
         val size = request.queryParamOrNull("size")?.toInt()

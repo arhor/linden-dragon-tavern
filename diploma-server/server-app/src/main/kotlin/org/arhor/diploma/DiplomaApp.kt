@@ -6,7 +6,6 @@ import org.springframework.boot.ApplicationRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
-
 fun main(args: Array<String>) {
     runApplication<DiplomaApp>(*args)
 }

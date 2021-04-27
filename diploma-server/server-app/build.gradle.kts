@@ -41,7 +41,6 @@ dependencies {
     implementation(project(":diploma-shared"))
     implementation(project(":diploma-server:commons"))
 
-    runtimeOnly("org.postgresql:postgresql")
     runtimeOnly("io.r2dbc:r2dbc-postgresql")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:${Versions.jsonWebToken}")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:${Versions.jsonWebToken}")
@@ -63,10 +62,12 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-aop")
     implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation("org.springframework.boot:spring-boot-starter-data-r2dbc")
-//    implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-reactor-netty")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
+
+    testRuntimeOnly("org.postgresql:postgresql")
 
     testImplementation(project(":diploma-test-utils"))
     testImplementation("io.projectreactor:reactor-test")

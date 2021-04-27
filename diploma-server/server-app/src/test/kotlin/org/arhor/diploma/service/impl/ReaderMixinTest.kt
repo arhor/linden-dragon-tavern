@@ -11,7 +11,6 @@ import org.arhor.diploma.testutils.RandomParameter
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.junit.platform.commons.annotation.Testable
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito.doReturn
@@ -21,9 +20,7 @@ import org.mockito.junit.jupiter.MockitoSettings
 import org.mockito.quality.Strictness
 import org.springframework.data.domain.Page
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
-import java.util.*
 
-@Testable
 @ExtendWith(MockitoExtension::class, RandomParameter.Resolver::class)
 @MockitoSettings(strictness = Strictness.STRICT_STUBS)
 class ReaderMixinTest {
@@ -38,7 +35,7 @@ class ReaderMixinTest {
     private lateinit var readerUnderTest: ReaderMixin<DeletableDomainObject<String>, Identifiable<String>, String>
 
     @Test
-    fun `getList should return proper result`(): Unit = runBlocking {
+    fun `getList should return correct DTO list for object returned by repository`(): Unit = runBlocking {
         // given
         doReturn(testDto).`when`(converter).mapEntityToDto(testEntity)
         doReturn(flowOf(testEntity)).`when`(repository).findAll()
@@ -58,7 +55,10 @@ class ReaderMixinTest {
     }
 
     @Test
-    fun shouldReturnExactlyRequiredObject(@RandomParameter search: String): Unit = runBlocking {
+    fun `getOne should return correct DTO for object returned by repository`(
+        // given
+        @RandomParameter search: String
+    ): Unit = runBlocking {
         // given
         doReturn(testDto).`when`(converter).mapEntityToDto(testEntity)
         doReturn(testEntity).`when`(repository).findById(search)

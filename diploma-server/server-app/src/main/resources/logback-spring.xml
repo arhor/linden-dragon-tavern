@@ -7,7 +7,7 @@
 
     <shutdownHook class="ch.qos.logback.core.hook.DelayingShutdownHook"/>
 
-    <springProfile name="dev">
+    <springProfile name="dev,test">
         <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
             <withJansi>false</withJansi>
             <encoder>

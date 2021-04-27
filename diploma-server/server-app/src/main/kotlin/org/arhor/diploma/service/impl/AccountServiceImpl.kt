@@ -28,27 +28,6 @@ class AccountServiceImpl(
     private val converter: AccountConverter
 ) : AccountService {
 
-//    override fun findByUsername(username: String): Mono<UserDetails> {
-//        return mono {
-//            username.let {
-//                accRepository
-//                    .findByUsername(it)
-//                    ?.let { account ->
-//                        val status = !account.isDeleted
-//                        User(
-//                            account.username,
-//                            account.password,
-//                            status,
-//                            status,
-//                            status,
-//                            status,
-//                            extractAuthorities(account)
-//                        )
-//                    } ?: throw UsernameNotFoundException(username)
-//            }
-//        }
-//    }
-
     override suspend fun getAccountById(id: Long) = getOne(id)
 
     override suspend fun getAccounts(page: Int, size: Int) = getList(page, size)
@@ -100,24 +79,4 @@ class AccountServiceImpl(
     override suspend fun delete(item: AccountDTO) {
         TODO("Not yet implemented")
     }
-
-//    private fun extractAuthorities(account: Account): Collection<GrantedAuthority> {
-//        val securityProfile = SecurityProfile(null, null, false)// account.accountDetails?.securityProfile
-//
-//        val authorities = when {
-//            securityProfile == null -> {
-//                emptyList()
-//            }
-//            securityProfile.isSynthetic -> {
-//                listOf("ROLE_${securityProfile.name}")
-//            }
-//            else -> { listOf("MONYA")
-////                securityProfile.securityAuthorities
-////                    .mapNotNull { it.authority }
-////                    .mapNotNull { it.name }
-//            }
-//        }
-//
-//        return authorities.map { SimpleGrantedAuthority(it) }
-//    }
 }

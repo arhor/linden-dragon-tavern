@@ -6,13 +6,10 @@ spring:
   profiles:
     active: test
 
-  datasource:
-    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-    url: jdbc:tc:postgresql://${embedded.postgresql.host}:${embedded.postgresql.port}/${embedded.postgresql.database}
-    username: ${embedded.postgresql.account}
-    password: ${embedded.postgresql.password}
-    hikari:
-      auto-commit: false
+#  r2dbc:
+#    url: r2dbc:tc:postgresql://${embedded.postgresql.host}:${embedded.postgresql.port}/${embedded.postgresql.database}
+#    username: ${embedded.postgresql.account}
+#    password: ${embedded.postgresql.password}
 
   flyway:
     enabled: true

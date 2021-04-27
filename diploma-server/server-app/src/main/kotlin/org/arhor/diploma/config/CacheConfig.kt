@@ -12,7 +12,7 @@ import org.springframework.scheduling.annotation.Scheduled
 
 private val logger = KotlinLogging.logger {}
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 @EnableCaching
 @EnableScheduling
 class CacheConfig {
@@ -23,6 +23,6 @@ class CacheConfig {
     @CacheEvict(allEntries = true, value = [Account.CACHE])
     @Scheduled(fixedDelay = 5 * MINUTE, initialDelay = SECOND)
     fun accountCacheEvict() {
-        logger.info { "Flush [${Account.CACHE}] cache(s)" }
+        logger.debug { "Flush [${Account.CACHE}] cache(s)" }
     }
 }

@@ -1,34 +1,83 @@
-//package org.arhor.diploma.config
-//
-//import mu.KotlinLogging
-//import org.arhor.diploma.service.AccountService
-//import org.arhor.diploma.util.SpringProfile
-//import org.arhor.diploma.web.filter.CustomAuthFilter
-//import org.arhor.diploma.web.filter.CustomCsrfFilter
-//import org.arhor.diploma.web.security.TokenProvider
-//import org.springframework.boot.web.servlet.FilterRegistrationBean
-//import org.springframework.context.annotation.Bean
-//import org.springframework.context.annotation.Configuration
-//import org.springframework.context.annotation.Profile
-//import org.springframework.security.authentication.AuthenticationManager
-//import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
-//import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
-//import org.springframework.security.config.core.GrantedAuthorityDefaults
-//import org.springframework.security.config.http.SessionCreationPolicy
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-//import org.springframework.security.crypto.password.PasswordEncoder
-//import org.springframework.security.web.AuthenticationEntryPoint
-//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-//import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter
-//import org.springframework.web.cors.CorsConfiguration
-//import org.springframework.web.cors.UrlBasedCorsConfigurationSource
-//import org.springframework.web.filter.CorsFilter
-//
-//private const val ROLE_PREFIX = "ROLE_"
-//
+package org.arhor.diploma.config
+
+import kotlinx.coroutines.reactor.mono
+import org.arhor.diploma.Roles
+import org.arhor.diploma.data.persistence.domain.Account
+import org.arhor.diploma.data.persistence.repository.AccountRepository
+import org.arhor.diploma.data.persistence.repository.SecurityProfileRepository
+import org.springframework.context.annotation.Bean
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
+import org.springframework.security.config.web.server.ServerHttpSecurity
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.web.server.SecurityWebFilterChain
+import reactor.core.publisher.Mono
+
+@EnableWebFluxSecurity
+class WebSecurityConfig {
+
+    @Bean
+    fun userDetailsService(
+        accRepository: AccountRepository,
+        secRepository: SecurityProfileRepository
+    ): ReactiveUserDetailsService {
+
+        return object : ReactiveUserDetailsService {
+
+            override fun findByUsername(username: String): Mono<UserDetails> {
+                return mono {
+                    accRepository
+                        .findByUsername(username)?.let { account ->
+                            val status = !account.isDeleted
+                            User(
+                                account.username,
+                                account.password,
+                                status,
+                                status,
+                                status,
+                                status,
+                                extractAuthorities(account)
+                            )
+                        } ?: throw UsernameNotFoundException(username)
+                }
+            }
+
+            private suspend fun extractAuthorities(account: Account): Collection<GrantedAuthority> {
+                val securityProfile = secRepository.findByAccountId(account.id!!)
+
+                val authorities = when {
+                    securityProfile == null -> emptyList()
+                    securityProfile.isSynthetic -> listOf("ROLE_${securityProfile.name}")
+                    else -> listOf(Roles.USER.prefixed()) // TODO: extract real profile authorities
+                }
+
+                return authorities.map { SimpleGrantedAuthority(it) }
+            }
+        }
+    }
+
+    @Bean
+    fun springSecurityFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
+        http.authorizeExchange()
+            .anyExchange().permitAll()
+            .and()
+            .httpBasic()
+            .and()
+            .formLogin().disable()
+
+        return http.build()
+    }
+
+    @Bean
+    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder(5)
+}
+
 //private val SECURITY_POLICY_DIRECTIVES = arrayOf(
 //    "default-src 'self'",
 //    "frame-src 'self' data:",
@@ -68,18 +117,12 @@
 //            .passwordEncoder(passwordEncoder())
 //    }
 //
-//    @Bean
-//    fun grantedAuthorityDefaults(): GrantedAuthorityDefaults {
-//        return GrantedAuthorityDefaults(ROLE_PREFIX)
-//    }
-//
 //    @Throws(Exception::class)
 //    override fun configure(http: HttpSecurity) {
 //        http.csrf().disable()
 //            .cors()
 //            .and()
 //            .authorizeRequests()
-//            .antMatchers("/api/certificates").hasRole("ADMIN")// "ROLE_ADMIN"
 //            .anyRequest().permitAll()
 //            .and()
 //            .headers().contentSecurityPolicy(SECURITY_POLICY_DIRECTIVES)
@@ -98,14 +141,6 @@
 //            .formLogin().disable()
 //            .addFilterBefore(authFilter, UsernamePasswordAuthenticationFilter::class.java)
 //    }
-//
-//    @Bean
-//    override fun authenticationManagerBean(): AuthenticationManager {
-//        return super.authenticationManagerBean()
-//    }
-//
-//    @Bean
-//    fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder(5)
 //
 //    @Configuration
 //    class WebFilters {

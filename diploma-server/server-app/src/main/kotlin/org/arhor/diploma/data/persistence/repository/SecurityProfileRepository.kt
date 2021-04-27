@@ -17,4 +17,16 @@ interface SecurityProfileRepository : CoroutineCrudRepository<SecurityProfile, L
     @Transactional(readOnly = true)
     @Query("SELECT p.* FROM security_profiles p WHERE p.name = :name")
     suspend fun findByName(name: String): SecurityProfile?
+
+    @Transactional(readOnly = true)
+    @Query(
+        """
+        SELECT p.*
+          FROM security_profiles p
+          JOIN account_details d ON p.id = d.profile_id
+          JOIN accounts a ON d.username = a.username
+         WHERE a.id = :accountId
+        """
+    )
+    suspend fun findByAccountId(accountId: Long): SecurityProfile?
 }

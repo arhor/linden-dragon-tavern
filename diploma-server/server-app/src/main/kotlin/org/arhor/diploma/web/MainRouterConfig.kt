@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.reactive.function.server.coRouter
 
-@Configuration
+@Configuration(proxyBeanMethods = false)
 class MainRouterConfig {
 
     @Bean
