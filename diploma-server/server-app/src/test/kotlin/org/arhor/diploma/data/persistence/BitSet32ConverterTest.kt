@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(RandomParameter.Resolver::class)
-class BitSet32ConverterTest {
+internal class BitSet32ConverterTest {
 
     @Test
     fun `should correctly serialize and deserialize value`(

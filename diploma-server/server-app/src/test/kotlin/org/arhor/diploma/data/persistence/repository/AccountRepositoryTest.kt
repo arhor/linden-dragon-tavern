@@ -8,7 +8,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 
-class AccountRepositoryTest : DatabaseIntegrationTest() {
+internal class AccountRepositoryTest : DatabaseIntegrationTest() {
 
     @Autowired
     private lateinit var repository: AccountRepository

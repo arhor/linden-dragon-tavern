@@ -7,7 +7,7 @@ import org.arhor.diploma.commons.ActionResult.Success
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ActionResultTest {
+internal class ActionResultTest {
 
     @Test
     fun `executeCatching should return Success instance`() {

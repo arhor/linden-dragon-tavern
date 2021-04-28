@@ -11,7 +11,7 @@ class SpaWebFilter : WebFilter {
 
     override fun filter(exchange: ServerWebExchange, chain: WebFilterChain): Mono<Void> {
         return chain.filter(
-            if (isNotValidApiPath(exchange.request.uri.path)) {
+            if (exchange.request.uri.path.let { !it.startsWith(SERVER_API_PREFIX) && it.matches(PATTERN) }) {
                 exchange.mutate()
                     .request(
                         exchange.request.mutate()
@@ -22,10 +22,6 @@ class SpaWebFilter : WebFilter {
                 exchange
             }
         )
-    }
-
-    private fun isNotValidApiPath(path: String): Boolean {
-        return !path.startsWith(SERVER_API_PREFIX) && path.matches(PATTERN)
     }
 
     companion object {

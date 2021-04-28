@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
 @ExtendWith(RandomParameter.Resolver::class)
-class ChecksumCalcMD5Test {
+internal class ChecksumCalcMD5Test {
 
     @Test
     fun `calculate method should return the same checksum for the same sources`(

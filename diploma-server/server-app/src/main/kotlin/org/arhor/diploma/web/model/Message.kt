@@ -19,13 +19,13 @@ data class Message(
  * Represents general message response from the server.
  *
  * JSON form:
- *
+ * ```
  * {
  *   "messages": [
  *     {
  *       "severity": "ERROR",
  *       "timestamp": "2021-02-24T13:03:24.7504",
- *       "code": 400,
+ *       "code": "GEN-00000",
  *       "text": "Validation failed",
  *       "details": [
  *         "field 'username' should not be blank",
@@ -34,6 +34,7 @@ data class Message(
  *     }
  *   ]
  * }
+ * ```
  */
 data class MessageResponse(val messages: List<Message>)
 

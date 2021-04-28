@@ -27,23 +27,30 @@ class ExceptionConverter(private val messages: MessageSource) {
     fun convertToStatusAndResponse(exception: Throwable, lang: Locale): Pair<HttpStatus, MessageResponse> {
         // @formatter:off
         return when (exception) {
-            is FileNotFoundException               -> handleFileNotFound(exception, lang)
-            is MethodArgumentTypeMismatchException -> handleArgumentClassCast(exception, lang)
-            is DataAccessException                 -> handleDataAccess(exception, lang)
-            is EntityNotFoundException             -> handleEntityNotFound(exception, lang)
-            is InvalidFormatException              -> handleInvalidFormat(exception, lang)
-            is JsonProcessingException             -> handleJsonProcessing(exception, lang)
-            is MethodArgumentNotValidException     -> handleMethodArgumentNotValid(exception, lang)
-            is ResponseStatusException             -> handleResponseStatus(exception, lang)
-            else                                   -> handleDefault(exception, lang)
+            is FileNotFoundException               -> handle(exception)
+            is MethodArgumentTypeMismatchException -> handle(exception, lang)
+            is DataAccessException                 -> handle(exception, lang)
+            is EntityNotFoundException             -> handle(exception, lang)
+            is InvalidFormatException              -> handle(exception, lang)
+            is JsonProcessingException             -> handle(exception, lang)
+            is MethodArgumentNotValidException     -> handle(exception, lang)
+            is ResponseStatusException             -> handle(exception)
+            else                                   -> handleDefault(exception)
         }
         // @formatter:on
     }
 
-    private fun handleResponseStatus(
-        ex: ResponseStatusException,
-        lang: Locale
-    ): Pair<HttpStatus, MessageResponse> {
+    private fun handleDefault(ex: Throwable): Pair<HttpStatus, MessageResponse> {
+        log.error("Unhandled error. Please, create proper exception handler for it.", ex)
+        return HttpStatus.INTERNAL_SERVER_ERROR to messageResponse {
+            error {
+                text = "Internal Server Error. Please, contact system administrator."
+                details = listOf(ex.message)
+            }
+        }
+    }
+
+    private fun handle(ex: ResponseStatusException): Pair<HttpStatus, MessageResponse> {
         return ex.status to messageResponse {
             error {
                 text = "Internal Server Error. Please, contact system administrator."
@@ -51,19 +58,7 @@ class ExceptionConverter(private val messages: MessageSource) {
         }
     }
 
-    private fun handleDefault(ex: Throwable, lang: Locale): Pair<HttpStatus, MessageResponse> {
-        log.error("Unhandled error. Please, create proper exception handler for it.", ex)
-        return HttpStatus.INTERNAL_SERVER_ERROR to messageResponse {
-            error {
-                text = "Internal Server Error. Please, contact system administrator."
-            }
-        }
-    }
-
-    private fun handleFileNotFound(
-        ex: FileNotFoundException,
-        lang: Locale
-    ): Pair<HttpStatus, MessageResponse> {
+    private fun handle(ex: FileNotFoundException): Pair<HttpStatus, MessageResponse> {
         return HttpStatus.NOT_FOUND to messageResponse {
             error {
                 code = ErrorCode.FILE_NOT_FOUND
@@ -73,10 +68,7 @@ class ExceptionConverter(private val messages: MessageSource) {
         }
     }
 
-    private fun handleArgumentClassCast(
-        ex: MethodArgumentTypeMismatchException,
-        lang: Locale
-    ): Pair<HttpStatus, MessageResponse> {
+    private fun handle(ex: MethodArgumentTypeMismatchException, lang: Locale): Pair<HttpStatus, MessageResponse> {
         return HttpStatus.BAD_REQUEST to messageResponse {
             error {
                 code = ErrorCode.UNCATEGORIZED
@@ -88,23 +80,17 @@ class ExceptionConverter(private val messages: MessageSource) {
         }
     }
 
-    private fun handleDataAccess(
-        ex: DataAccessException,
-        lang: Locale
-    ): Pair<HttpStatus, MessageResponse> {
+    private fun handle(ex: DataAccessException, lang: Locale): Pair<HttpStatus, MessageResponse> {
         return HttpStatus.NOT_FOUND to messageResponse {
             error {
                 code = ErrorCode.DATA_ACCESS_ERROR
                 text = lang.localize("error.data.uncategorized")
+                details = listOf(ex.message)
             }
         }
     }
 
-    private fun handleEntityNotFound(
-        ex: EntityNotFoundException,
-        lang: Locale
-    ): Pair<HttpStatus, MessageResponse> {
-
+    private fun handle(ex: EntityNotFoundException, lang: Locale): Pair<HttpStatus, MessageResponse> {
         val (entityType, propName, propValue) = ex
 
         return HttpStatus.NOT_FOUND to messageResponse {
@@ -118,11 +104,7 @@ class ExceptionConverter(private val messages: MessageSource) {
         }
     }
 
-    private fun handleInvalidFormat(
-        ex: InvalidFormatException,
-        lang: Locale
-    ): Pair<HttpStatus, MessageResponse> {
-
+    private fun handle(ex: InvalidFormatException, lang: Locale): Pair<HttpStatus, MessageResponse> {
         val parser = ex.processor as JsonParser
 
         return HttpStatus.BAD_REQUEST to messageResponse {
@@ -141,11 +123,7 @@ class ExceptionConverter(private val messages: MessageSource) {
         }
     }
 
-    private fun handleJsonProcessing(
-        ex: JsonProcessingException,
-        lang: Locale
-    ): Pair<HttpStatus, MessageResponse> {
-
+    private fun handle(ex: JsonProcessingException, lang: Locale): Pair<HttpStatus, MessageResponse> {
         val value = when (val processor = ex.processor) {
             is JsonParser -> processor.currentName ?: processor.text
             else -> "[UNKNOWN JSON PROCESSOR]"
@@ -167,10 +145,7 @@ class ExceptionConverter(private val messages: MessageSource) {
         }
     }
 
-    private fun handleMethodArgumentNotValid(
-        ex: MethodArgumentNotValidException,
-        lang: Locale
-    ): Pair<HttpStatus, MessageResponse> {
+    private fun handle(ex: MethodArgumentNotValidException, lang: Locale): Pair<HttpStatus, MessageResponse> {
         return HttpStatus.BAD_REQUEST to messageResponse {
             error {
                 code = ErrorCode.VALIDATION_FAILED

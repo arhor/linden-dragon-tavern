@@ -1,3 +1,5 @@
+@file:Suppress("UNUSED")
+
 package org.arhor.diploma.commons.time
 
 /*

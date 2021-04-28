@@ -6,10 +6,10 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.IntStream
 
-class BitSet32Test {
+internal class BitSet32Test {
 
     @Test
-    fun shouldHaveAllValuesFalse() {
+    fun `should have all values set false by default`() {
         // given
         val bitSet = BitSet32()
 
@@ -23,7 +23,7 @@ class BitSet32Test {
     }
 
     @Test
-    fun shouldHaveAllValuesTrue() {
+    fun `should correctly set all values true`() {
         // given
         val bitSet = BitSet32()
 
@@ -38,9 +38,22 @@ class BitSet32Test {
         }
     }
 
-    @ParameterizedTest
+    @Test
+    fun `should create independent iterators`() {
+        // given
+        val bitSet = BitSet32()
+
+        // when
+        val iterator1 = bitSet.iterator()
+        val iterator2 = bitSet.iterator()
+
+        // then
+        assertThat(iterator1).isNotSameAs(iterator2)
+    }
+
+    @ParameterizedTest(name = "{displayName} should modify only value with {0} index")
     @MethodSource("provideIndexesToTest")
-    fun shouldHaveOnlyOneValuesSet(indexToTest: Int) {
+    fun `BitSet32#set`(indexToTest: Int) {
         // given
         val bitSet = BitSet32()
 
@@ -57,22 +70,9 @@ class BitSet32Test {
         }
     }
 
-    @Test
-    fun shouldHaveSeparateIterators() {
-        // given
-        val bitSet = BitSet32()
-
-        // when
-        val iterator1 = bitSet.iterator()
-        val iterator2 = bitSet.iterator()
-
-        // then
-        assertThat(iterator1).isNotSameAs(iterator2)
-    }
-
-    @ParameterizedTest
+    @ParameterizedTest(name = "{displayName} should correctly create BitSet32 with only {0} index set")
     @MethodSource("provideIndexesToTest")
-    fun shouldCorrectlyCreateBitSetFromNumber(indexToTest: Int) {
+    fun `BitSet32#fromNumber`(indexToTest: Int) {
         // given
         val bitSet1 = BitSet32()
 
@@ -93,6 +93,7 @@ class BitSet32Test {
 
     companion object {
         @JvmStatic
+        @Suppress("UNUSED")
         private fun provideIndexesToTest(): IntStream {
             return IntStream.range(0, BitSet32.CAPACITY)
         }

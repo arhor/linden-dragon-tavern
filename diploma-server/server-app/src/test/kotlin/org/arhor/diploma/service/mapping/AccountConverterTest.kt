@@ -25,8 +25,7 @@ internal class AccountConverterTest {
     lateinit var mapper: Converter<Account, AccountDTO>
 
     @Test
-    fun `mapEntityToDto should convert all fields correctly`(
-        // given
+    fun `should convert all fields correctly`(
         @RandomParameter account: Account
     ) {
         // when
