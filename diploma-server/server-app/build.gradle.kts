@@ -99,19 +99,15 @@ flyway {
 }
 
 tasks {
-    val copyClientIntoTheServer = register("copyClientIntoTheServer") {
+    val copyClientIntoTheServer = register<Copy>("copyClientIntoTheServer") {
         dependsOn(":diploma-client:buildFull")
         mustRunAfter(":diploma-client:buildFull")
 
-        doLast {
-            copy {
-                val clientPrjDir = project(":diploma-client").projectDir.toString()
-                val serverBldDir = project(":diploma-server:server-app").buildDir.toString()
+        val clientPrjDir = project(":diploma-client").projectDir.toString()
+        val serverBldDir = project(":diploma-server:server-app").buildDir.toString()
 
-                from(Paths.get(clientPrjDir, "dist"))
-                into(Paths.get(serverBldDir, "resources", "main", "static"))
-            }
-        }
+        from(Paths.get(clientPrjDir, "dist"))
+        into(Paths.get(serverBldDir, "resources", "main", "static"))
     }
 
     processResources {
