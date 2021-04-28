@@ -51,6 +51,7 @@ class ExceptionConverter(private val messages: MessageSource) {
     }
 
     private fun handle(ex: ResponseStatusException): Pair<HttpStatus, MessageResponse> {
+        log.error("Unhandled error. Please, create proper exception handler for it.", ex)
         return ex.status to messageResponse {
             error {
                 text = "Internal Server Error. Please, contact system administrator."

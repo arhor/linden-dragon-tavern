@@ -23,7 +23,8 @@ idea {
                 file("node_modules"),
                 file("raw_data"),
                 file("dist"),
-                file("dist_electron")
+                file("dist_electron"),
+                file("dll")
             )
         )
     }
