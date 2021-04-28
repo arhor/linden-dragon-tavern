@@ -18,8 +18,7 @@ configurations {
 dependencies {
     kapt("org.springframework:spring-context-indexer")
 
-    implementation(project(":diploma-shared"))
-    implementation(project(":diploma-server:commons"))
+    implementation(projects.diplomaServer.commons)
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -33,7 +32,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
-    testImplementation(project(":diploma-test-utils"))
+    testImplementation(projects.diplomaTestUtils)
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
 }
@@ -57,11 +56,6 @@ tasks {
     }
 
     withType<Test> {
-        useJUnitPlatform {
-            excludeTags("integration-test")
-        }
-        jvmArgs = listOf(
-            "-Dspring.profiles.active=test"
-        )
+        useJUnitPlatform()
     }
 }

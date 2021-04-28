@@ -30,7 +30,7 @@ idea {
 }
 
 dependencies {
-    project(":diploma-shared")
+    projects.diplomaShared
 }
 
 tasks {

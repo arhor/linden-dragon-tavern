@@ -14,7 +14,7 @@ dependencies {
 
     implementation("com.google.code.findbugs:jsr305:${Versions.findbugsJsr305}")
 
-    testImplementation(project(":diploma-test-utils"))
+    testImplementation(projects.diplomaTestUtils)
     testImplementation("org.assertj:assertj-core:${Versions.assertJCore}")
     testImplementation("org.mockito:mockito-core:${Versions.mockitoCore}")
     testImplementation("org.mockito:mockito-junit-jupiter:${Versions.mockitoCore}")

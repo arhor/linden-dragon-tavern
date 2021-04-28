@@ -1,3 +1,5 @@
+import java.nio.file.Paths
+
 plugins {
     id("org.flywaydb.flyway")
     id("org.springframework.boot")
@@ -36,14 +38,13 @@ dependencies {
     kapt("org.springframework:spring-context-indexer")
 
     // application modules MUST NOT be referenced directly in the server-app
-    runtimeOnly(project(":diploma-server:module-dnd"))
-
-    implementation(project(":diploma-shared"))
-    implementation(project(":diploma-server:commons"))
-
+    runtimeOnly(projects.diplomaServer.moduleDnd)
     runtimeOnly("io.r2dbc:r2dbc-postgresql")
     runtimeOnly("io.jsonwebtoken:jjwt-impl:${Versions.jsonWebToken}")
     runtimeOnly("io.jsonwebtoken:jjwt-jackson:${Versions.jsonWebToken}")
+
+    implementation(projects.diplomaShared)
+    implementation(projects.diplomaServer.commons)
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
@@ -69,7 +70,7 @@ dependencies {
 
     testRuntimeOnly("org.postgresql:postgresql")
 
-    testImplementation(project(":diploma-test-utils"))
+    testImplementation(projects.diplomaTestUtils)
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.flywaydb:flyway-core")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -99,21 +100,26 @@ flyway {
 }
 
 tasks {
-    bootRun {
-        jvmArgs = listOf(
-            "-Dspring.profiles.active=default,dev",
-            "-XX:+UseSerialGC",
-            "-XX:MaxRAM=100m",
-            "-Xss512k"
-        )
+    val copyClientIntoTheServer = register("copyClientIntoTheServer") {
+        dependsOn(":diploma-client:buildFull")
+
+        doLast {
+            copy {
+                val clientPrjDir = project(":diploma-client").projectDir.toString()
+                val serverBldDir = project(":diploma-server:server-app").buildDir.toString()
+
+                from(Paths.get(clientPrjDir, "dist"))
+                into(Paths.get(serverBldDir, "resources", "main", "static"))
+            }
+        }
+
+    }
+
+    processResources {
+        dependsOn(copyClientIntoTheServer)
     }
 
     withType<Test> {
-        useJUnitPlatform {
-            excludeTags("integration-test")
-        }
-        jvmArgs = listOf(
-            "-Dspring.profiles.active=test"
-        )
+        useJUnitPlatform()
     }
 }

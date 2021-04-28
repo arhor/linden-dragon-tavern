@@ -1,5 +1,4 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.nio.file.Paths
 
 /*
  * Plugins version configuration. Placed here instead of `settings.gradle` by the following reasons:
@@ -26,7 +25,6 @@ allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
-        jcenter()
         maven { setUrl("https://repo.spring.io/milestone") }
     }
 
@@ -59,21 +57,7 @@ tasks {
         gradleVersion = Versions.gradle
     }
 
-    val copyClientIntoTheServer = register<Copy>("copyClientIntoTheServer") {
-        dependsOn(":diploma-client:buildFull")
-        mustRunAfter(":diploma-client:buildFull")
-
-        val clientPrjDir = project(":diploma-client").projectDir.toString()
-        val serverBldDir = project(":diploma-server:server-app").buildDir.toString()
-
-        from(Paths.get(clientPrjDir, "dist"))
-        into(Paths.get(serverBldDir, "resources", "main", "static"))
-    }
-
     register("stage") {
-        dependsOn(copyClientIntoTheServer)
-        mustRunAfter(copyClientIntoTheServer)
-
-        finalizedBy(":diploma-server:server-app:build")
+        dependsOn(":diploma-server:server-app:build")
     }
 }
