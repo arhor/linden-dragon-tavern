@@ -20,11 +20,11 @@ idea {
     module {
         excludeDirs.addAll(
             listOf(
-                file("node_modules"),
-                file("raw_data"),
-                file("dist"),
-                file("dist_electron"),
-                file("dll")
+                file("$projectDir/node_modules"),
+                file("$projectDir/raw_data"),
+                file("$projectDir/dist"),
+                file("$projectDir/dist_electron"),
+                file("$projectDir/public/dll")
             )
         )
     }

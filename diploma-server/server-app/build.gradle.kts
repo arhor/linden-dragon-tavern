@@ -101,6 +101,7 @@ flyway {
 tasks {
     val copyClientIntoTheServer = register("copyClientIntoTheServer") {
         dependsOn(":diploma-client:buildFull")
+        mustRunAfter(":diploma-client:buildFull")
 
         doLast {
             copy {
@@ -111,7 +112,6 @@ tasks {
                 into(Paths.get(serverBldDir, "resources", "main", "static"))
             }
         }
-
     }
 
     processResources {
