@@ -1,6 +1,5 @@
 package org.arhor.diploma.dnd.data.repository
 
-import org.arhor.diploma.commons.ReloadableResource
 import java.util.function.Predicate
 
 /**
@@ -8,7 +7,7 @@ import java.util.function.Predicate
  * @param D detailed data type which contains all fields
  * @param K identity type
  */
-interface DataProvider<T, D, K> : ReloadableResource {
+interface DataProvider<T, D, K> {
 
     fun getOne(id: K): T
 

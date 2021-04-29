@@ -32,8 +32,6 @@ class DnDRouterConfig {
                 GET(""               , spellController::getSpellList)
                 GET("/{name}"        , spellController::getSpell)
                 GET("/{name}/details", spellController::getSpellDetails)
-
-                POST("reload"        , spellController::reloadDataProvider)
             }
         }
         // @formatter:on

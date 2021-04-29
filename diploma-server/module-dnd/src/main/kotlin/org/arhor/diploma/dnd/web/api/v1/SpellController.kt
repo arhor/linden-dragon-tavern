@@ -5,7 +5,10 @@ import mu.KotlinLogging
 import org.arhor.diploma.dnd.data.model.Spell
 import org.arhor.diploma.dnd.data.repository.SpellProvider
 import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.server.*
+import org.springframework.web.reactive.function.server.ServerRequest
+import org.springframework.web.reactive.function.server.ServerResponse
+import org.springframework.web.reactive.function.server.bodyValueAndAwait
+import org.springframework.web.reactive.function.server.queryParamOrNull
 
 private val logger = KotlinLogging.logger {}
 
@@ -16,11 +19,6 @@ class SpellController(
 
     override val log: KLogger
         get() = logger
-
-    suspend fun reloadDataProvider(request: ServerRequest): ServerResponse {
-        dataProvider.reload()
-        return ServerResponse.ok().buildAndAwait()
-    }
 
     suspend fun getSpellDetails(request: ServerRequest): ServerResponse {
         val name = request.pathVariable("name")
