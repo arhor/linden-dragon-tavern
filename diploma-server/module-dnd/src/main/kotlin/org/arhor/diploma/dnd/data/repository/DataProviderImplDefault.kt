@@ -1,12 +1,10 @@
 package org.arhor.diploma.dnd.data.repository
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import mu.KotlinLogging
 import org.arhor.diploma.commons.Identifiable
 import org.arhor.diploma.commons.data.EntityNotFoundException
 import org.springframework.core.io.Resource
-import org.springframework.core.io.ResourceLoader
 import java.io.Serializable
 import java.util.function.Predicate
 import javax.annotation.PostConstruct
@@ -15,17 +13,16 @@ import kotlin.streams.toList
 private val logger = KotlinLogging.logger {}
 
 abstract class DataProviderImplDefault<T, D, K>(
-    private val resourceLoader: ResourceLoader
+    private val objectMapper: ObjectMapper,
 ) : DataProvider<T, D, K>
     where T : Identifiable<K>,
           D : Identifiable<K>,
           K : Serializable {
 
-    private val objectMapper: ObjectMapper = jacksonObjectMapper()
-
     protected abstract val resourceName: String
-    protected abstract val resourcePath: String
     protected abstract val resourceType: Class<Array<D>>
+
+    protected abstract var resource: Resource
 
     protected var data: Set<D> = emptySet()
 
@@ -86,36 +83,22 @@ abstract class DataProviderImplDefault<T, D, K>(
 
     @PostConstruct
     override fun reload() {
-        try {
-            data = loadData()
-        } catch (e: Throwable) {
-            logger.error("Attempt to reload data-file was failed", e)
-        }
-    }
+        logger.info { "loading data from '${resource.filename}'" }
 
-    private fun loadData(): Set<D> {
-        logger.debug { "loading data from '${resourcePath}'" }
-
-        val resource = try {
-            resourceLoader.getResource(resourcePath)
-        } catch (ex: Exception) {
-            logger.error(ex) { "an error occurred trying to load resource from '${resourcePath}'" }
-            null
-        }
-
-        return if ((resource != null) && resource.isReadable) {
-            readDataSetFromResource(resource)
-        } else {
-            logger.debug { "resource from '${resourcePath}' is not readable" }
-            emptySet()
-        }
-    }
-
-    private fun readDataSetFromResource(resource: Resource): Set<D> {
-        return resource
-            .inputStream
-            .bufferedReader()
-            .use { reader -> objectMapper.createParser(reader).readValueAs(resourceType) }
-            .let { values -> setOf(*values) }
+        data = runCatching {
+            resource.inputStream.bufferedReader().use { reader ->
+                objectMapper
+                    .createParser(reader)
+                    .readValueAs(resourceType)
+            }
+        }.fold(
+            onSuccess = { value: Array<D> ->
+                setOf(*value)
+            },
+            onFailure = { exception: Throwable ->
+                logger.error(exception) { "an exception occurred reading resource from '${resource.filename}'" }
+                emptySet()
+            }
+        )
     }
 }

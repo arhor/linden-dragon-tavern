@@ -1,24 +1,29 @@
 package org.arhor.diploma.dnd.data.repository
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.arhor.diploma.dnd.data.model.Monster
-import org.springframework.core.io.ResourceLoader
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.io.Resource
 import org.springframework.stereotype.Service
 
-private typealias MonsterDataProvider = DataProviderImplDefault<Monster, Monster.Details, String>
-
 @Service
-class MonsterProviderImpl(loader: ResourceLoader) : MonsterProvider, MonsterDataProvider(loader) {
+class MonsterProviderImpl(
+    objectMapper: ObjectMapper,
+) : MonsterProvider,
+    DataProviderImplDefault<Monster, Monster.Details, String>(
+        objectMapper,
+    ) {
+
+    @Value("classpath:dnd/data/5e-SRD-Monsters.json")
+    override lateinit var resource: Resource
 
     override val resourceName get() = "monster"
-    override val resourcePath get() = "classpath:dnd/data/5e-SRD-Monsters.json"
     override val resourceType get() = Array<Monster.Details>::class.java
 
-    override fun shrinkData(details: Monster.Details): Monster {
-        return Monster(
-            name = details.name,
-            size = details.size,
-            type = details.type,
-            challengeRating = details.challengeRating
-        )
-    }
+    override fun shrinkData(details: Monster.Details): Monster = Monster(
+        name = details.name,
+        size = details.size,
+        type = details.type,
+        challengeRating = details.challengeRating
+    )
 }

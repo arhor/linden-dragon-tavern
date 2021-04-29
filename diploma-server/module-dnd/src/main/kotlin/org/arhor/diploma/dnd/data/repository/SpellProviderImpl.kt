@@ -1,23 +1,28 @@
 package org.arhor.diploma.dnd.data.repository
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.arhor.diploma.dnd.data.model.Spell
-import org.springframework.core.io.ResourceLoader
+import org.springframework.beans.factory.annotation.Value
+import org.springframework.core.io.Resource
 import org.springframework.stereotype.Service
 
-private typealias SpellDataProvider = DataProviderImplDefault<Spell, Spell.Details, String>
-
 @Service
-class SpellProviderImpl(loader: ResourceLoader) : SpellProvider, SpellDataProvider(loader) {
+class SpellProviderImpl(
+    objectMapper: ObjectMapper,
+) : SpellProvider,
+    DataProviderImplDefault<Spell, Spell.Details, String>(
+        objectMapper,
+    ) {
+
+    @Value("classpath:dnd/data/5e-SRD-Spells.json")
+    override lateinit var resource: Resource
 
     override val resourceName get() = "spell"
-    override val resourcePath get() = "classpath:dnd/data/5e-SRD-Spells.json"
     override val resourceType get() = Array<Spell.Details>::class.java
 
-    override fun shrinkData(details: Spell.Details): Spell {
-        return Spell(
-            name = details.name,
-            level = details.level,
-            school = details.school
-        )
-    }
+    override fun shrinkData(details: Spell.Details) = Spell(
+        name = details.name,
+        level = details.level,
+        school = details.school
+    )
 }
