@@ -87,9 +87,8 @@ export default {
         },
     },
     mounted() {
-        ['abilities', 'skills'].forEach(
-            (asset) => void this.$store.dispatch(`${asset}/load`),
-        );
+        this.$store.dispatch(`abilities/load`)
+        this.$store.dispatch(`skills/load`)
     },
 };
 </script>
