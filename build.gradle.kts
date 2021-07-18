@@ -42,11 +42,10 @@ allprojects {
             kotlinOptions {
                 freeCompilerArgs = listOf(
                     "-Xjsr305=strict",
-                    "-Xjvm-default=enable"
+                    "-Xjvm-default=all"
                 )
                 jvmTarget = Versions.javaGlobal
                 javaParameters = true
-                useIR = true
             }
         }
     }
@@ -58,6 +57,6 @@ tasks {
     }
 
     register("stage") {
-        dependsOn(":diploma-server:server-app:build")
+        dependsOn(":diploma-server:module-main:build")
     }
 }

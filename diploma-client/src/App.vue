@@ -78,7 +78,7 @@ export default {
     computed: {
         ...mapState(['dark']),
         characterSheetUrl() {
-            return `${SERVER_API_URL}/api/v1/charsheets`;
+            return `${SERVER_API_URL}/api/charsheets`;
         },
     },
     methods: {

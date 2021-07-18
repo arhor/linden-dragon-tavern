@@ -4,15 +4,13 @@ import mu.KLogger
 import mu.KotlinLogging
 import org.arhor.diploma.dnd.data.model.Spell
 import org.arhor.diploma.dnd.data.repository.SpellProvider
-import org.springframework.stereotype.Component
-import org.springframework.web.reactive.function.server.ServerRequest
-import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.bodyValueAndAwait
-import org.springframework.web.reactive.function.server.queryParamOrNull
+import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.*
 
 private val logger = KotlinLogging.logger {}
 
-@Component
+@RestController
+@RequestMapping("/api/v1")
 class SpellController(
     provider: SpellProvider,
 ) : StaticDataController<Spell, Spell.Details, String>(provider, "Spell") {
@@ -20,27 +18,24 @@ class SpellController(
     override val log: KLogger
         get() = logger
 
-    suspend fun getSpellDetails(request: ServerRequest): ServerResponse {
-        val name = request.pathVariable("name")
+    @GetMapping("/{name}/details")
+    suspend fun getSpellDetails(@PathVariable name: String): ResponseEntity<Spell.Details> {
         val result = getEntityDetails(name)
-
-        return ServerResponse.ok().bodyValueAndAwait(result)
+        return ResponseEntity.ok().body(result)
     }
 
-    suspend fun getSpell(request: ServerRequest): ServerResponse {
-        val name = request.pathVariable("name")
-
+    @GetMapping("/{name}")
+    suspend fun getSpell(@PathVariable name: String): ResponseEntity<Spell> {
         val result = getEntity(name)
-
-        return ServerResponse.ok().bodyValueAndAwait(result)
+        return ResponseEntity.ok().body(result)
     }
 
-    suspend fun getSpellList(request: ServerRequest): ServerResponse {
-        val page = request.queryParamOrNull("page")?.toInt()
-        val size = request.queryParamOrNull("size")?.toInt()
-
+    @GetMapping
+    suspend fun getSpellList(
+        @RequestParam(required = false) page: Int?,
+        @RequestParam(required = false) size: Int?,
+    ): ResponseEntity<List<Spell>> {
         val result = getEntityList(page, size)
-
-        return ServerResponse.ok().bodyValueAndAwait(result)
+        return ResponseEntity.ok().body(result)
     }
 }
