@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import abilities from '@/modules/ability/store';
 import auth from '@/modules/auth/store';
+import characterStats from '@/modules/characters/store';
 import maps from '@/modules/maps/store';
 import monsters from '@/modules/monsters/store';
 import skills from '@/modules/skill/store';
@@ -31,6 +32,7 @@ const store = new Vuex.Store({
     },
     modules: {
         abilities,
+        characterStats,
         auth,
         maps,
         monsters,

@@ -2,7 +2,27 @@
     <v-card color="grey lighten-1" height="400px" tile>
         <v-card-text>
             <form>
-                <v-text-field v-model="origin.name" label="Name" @change="emitDataChanges" />
+                <v-select
+                    v-model="race"
+                    :items="races"
+                    label="Race"
+                    required
+                    @change="emitDataChanges"
+                />
+                <v-select
+                    v-model="subRace"
+                    :items="subRaces"
+                    label="SubRace"
+                    required
+                    @change="emitDataChanges"
+                />
+                <v-select
+                    v-model="characterClass"
+                    :items="classes"
+                    label="Class"
+                    required
+                    @change="emitDataChanges"
+                />
                 <v-select
                     v-model="background"
                     :items="backgrounds.map((it) => it.title)"
@@ -26,6 +46,9 @@ export default {
 
     data: () => ({
         background: '',
+        characterClass: '',
+        race: '',
+        subRace: '',
         backgrounds: [
             { title: 'Acolyte', proficiencies: ['Insight', 'Religion'] },
             { title: 'Charlatan', proficiencies: ['Deception', 'Sleight of Hand'] },
@@ -47,6 +70,18 @@ export default {
     computed: {
         proficiencies() {
             return this.backgrounds.find((it) => it.title === this.background)?.proficiencies ?? [];
+        },
+
+        classes() {
+            return this.$store.getters['characterStats/classNames'];
+        },
+
+        races() {
+            return this.$store.getters['characterStats/raceNames'];
+        },
+
+        subRaces() {
+            return this.$store.getters['characterStats/subRaces'](this.race);
         },
 
         stepData() {

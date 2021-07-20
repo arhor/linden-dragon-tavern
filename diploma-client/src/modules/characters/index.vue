@@ -31,5 +31,8 @@ export default {
             this.dialog = true;
         },
     },
+    mounted() {
+        this.$store.dispatch(`characterStats/load`);
+    },
 };
 </script>

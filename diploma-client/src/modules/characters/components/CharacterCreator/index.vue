@@ -76,5 +76,8 @@ export default {
             };
         },
     },
+    mounted() {
+        this.$store.dispatch(`characterStats/load`);
+    },
 };
 </script>
