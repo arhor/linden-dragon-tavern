@@ -3,13 +3,37 @@ import axios from 'axios';
 const mutation = {
     SET_CLASSES: 'SET_CLASSES',
     SET_RACES: 'SET_RACES',
+    SET_ABILITIES: 'SET_ABILITIES',
 };
+
+const abilityModes = {
+    SIMPLE: 'SIMPLE',
+};
+
+const ABILITY_DEFAULT_VALUE = 10;
 
 export default {
     namespaced: true,
     state: {
         allClasses: [],
         allRaces: [],
+        abilities: [
+            { name: 'Strength', value: ABILITY_DEFAULT_VALUE },
+            { name: 'Dexterity', value: ABILITY_DEFAULT_VALUE },
+            { name: 'Constitution', value: ABILITY_DEFAULT_VALUE },
+            { name: 'Intelligence', value: ABILITY_DEFAULT_VALUE },
+            { name: 'Wisdom', value: ABILITY_DEFAULT_VALUE },
+            { name: 'Charisma', value: ABILITY_DEFAULT_VALUE },
+        ],
+        simpleModeMap: {
+            0: 15,
+            1: 14,
+            2: 13,
+            3: 12,
+            4: 10,
+            5: 8,
+        },
+        abilityMode: abilityModes.SIMPLE,
         isStatsLoaded: false,
     },
     getters: {
@@ -39,6 +63,18 @@ export default {
                 }
             }
         },
+        updateAbilities: ({ commit, state }, value) => {
+            const currentAbilityMode = state.abilityMode;
+            let newValue = [];
+            if (currentAbilityMode === abilityModes.SIMPLE) {
+                newValue = value.map((ability, index) => {
+                    const simpleModeValue = state.simpleModeMap[index];
+                    return { ...ability, value: simpleModeValue };
+                });
+            }
+
+            commit(mutation.SET_ABILITIES, newValue);
+        },
     },
     mutations: {
         [mutation.SET_CLASSES]: (state, payload) => {
@@ -46,6 +82,9 @@ export default {
         },
         [mutation.SET_RACES]: (state, payload) => {
             state.allRaces = payload;
+        },
+        [mutation.SET_ABILITIES]: (state, payload) => {
+            state.abilities = payload;
         },
     },
 };

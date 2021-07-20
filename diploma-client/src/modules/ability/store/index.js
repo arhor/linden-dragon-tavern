@@ -25,7 +25,7 @@ export default {
     },
     mutations: {
         [mutation.SET_ABILITIES]: (state, payload) => {
-            state.all = payload;
+            state.allAbilities = payload;
             state.isAbilitiesLoaded = true;
         },
     },
