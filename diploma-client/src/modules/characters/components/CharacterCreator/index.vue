@@ -77,10 +77,7 @@ export default {
 
     methods: {
         handleChanges(changes) {
-            this.character = {
-                ...this.character,
-                ...changes,
-            };
+            this.$store.dispatch('characterStats/updateCharacterStats', changes);
         },
 
         changeStep(nextStepNumber) {

@@ -4,6 +4,7 @@ const mutation = {
     SET_CLASSES: 'SET_CLASSES',
     SET_RACES: 'SET_RACES',
     SET_ABILITIES: 'SET_ABILITIES',
+    SET_CHARACTER_STATS: 'SET_CHARACTER_STATS',
 };
 
 const abilityModes = {
@@ -25,6 +26,21 @@ export default {
             { name: 'Wisdom', value: ABILITY_DEFAULT_VALUE },
             { name: 'Charisma', value: ABILITY_DEFAULT_VALUE },
         ],
+        backgrounds: [
+            { title: 'Acolyte', proficiencies: ['Insight', 'Religion'] },
+            { title: 'Charlatan', proficiencies: ['Deception', 'Sleight of Hand'] },
+            { title: 'Criminal', proficiencies: ['Deception', 'Stealth'] },
+            { title: 'Entertainer', proficiencies: ['Acrobatics', 'Performance'] },
+            { title: 'Folk Hero', proficiencies: ['Animal Handling', 'Survival'] },
+            { title: 'Guild Artisan', proficiencies: ['Insight', 'Persuasion'] },
+            { title: 'Noble', proficiencies: ['History', 'Persuasion'] },
+            { title: 'Hermit', proficiencies: ['Medicine', 'Religion'] },
+            { title: 'Outlander', proficiencies: ['Athletics', 'Survival'] },
+            { title: 'Sage', proficiencies: ['Arcana', 'History'] },
+            { title: 'Sailor', proficiencies: ['Athletics', 'Perception'] },
+            { title: 'Soldier', proficiencies: ['Athletics', 'Intimidation'] },
+            { title: 'Urchin', proficiencies: ['Sleight of Hand', 'Stealth'] },
+        ],
         simpleModeMap: {
             0: 15,
             1: 14,
@@ -33,6 +49,9 @@ export default {
             4: 10,
             5: 8,
         },
+        // TODO implement Character model
+        // character: new Character()
+        character: {},
         abilityMode: abilityModes.SIMPLE,
         isStatsLoaded: false,
     },
@@ -46,6 +65,19 @@ export default {
         subRaces: (state) => (race) => {
             const currentRace = state.allRaces.find(({ name }) => name === race);
             return currentRace?.subraces.map(({ name }) => name).concat(['no subrace']) || [];
+        },
+        classSkills: (state) => {
+            return (
+                state.allClasses.find(({ name }) => name === state.character.characterClass)
+                    ?.proficiency_choices[0].from || []
+            );
+        },
+
+        backgroundProficiencies(state) {
+            return (
+                state.backgrounds.find(({ title }) => title === state.character.background)
+                    ?.proficiencies || []
+            );
         },
     },
     actions: {
@@ -63,6 +95,7 @@ export default {
                 }
             }
         },
+
         updateAbilities: ({ commit, state }, value) => {
             const currentAbilityMode = state.abilityMode;
             let newValue = [];
@@ -75,6 +108,14 @@ export default {
 
             commit(mutation.SET_ABILITIES, newValue);
         },
+
+        updateCharacterStats: ({ commit, state }, changes) => {
+            const stats = {
+                ...state.character,
+                ...changes,
+            };
+            commit(mutation.SET_CHARACTER_STATS, stats);
+        },
     },
     mutations: {
         [mutation.SET_CLASSES]: (state, payload) => {
@@ -85,6 +126,9 @@ export default {
         },
         [mutation.SET_ABILITIES]: (state, payload) => {
             state.abilities = payload;
+        },
+        [mutation.SET_CHARACTER_STATS]: (state, payload) => {
+            state.character = payload;
         },
     },
 };

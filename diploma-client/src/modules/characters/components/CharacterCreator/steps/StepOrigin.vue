@@ -37,39 +37,23 @@
 
 <script>
 import Step from '@/modules/characters/components/CharacterCreator/steps/Step';
-import { Origin } from '@/modules/characters/components/CharacterCreator/model';
 
 export default {
     name: 'StepOrigin',
 
     extends: Step,
 
+    // TODO map vuex state
     data: () => ({
         background: '',
         characterClass: '',
         race: '',
         subRace: '',
-        backgrounds: [
-            { title: 'Acolyte', proficiencies: ['Insight', 'Religion'] },
-            { title: 'Charlatan', proficiencies: ['Deception', 'Sleight of Hand'] },
-            { title: 'Criminal', proficiencies: ['Deception', 'Stealth'] },
-            { title: 'Entertainer', proficiencies: ['Acrobatics', 'Performance'] },
-            { title: 'Folk Hero', proficiencies: ['Animal Handling', 'Survival'] },
-            { title: 'Guild Artisan', proficiencies: ['Insight', 'Persuasion'] },
-            { title: 'Noble', proficiencies: ['History', 'Persuasion'] },
-            { title: 'Hermit', proficiencies: ['Medicine', 'Religion'] },
-            { title: 'Outlander', proficiencies: ['Athletics', 'Survival'] },
-            { title: 'Sage', proficiencies: ['Arcana', 'History'] },
-            { title: 'Sailor', proficiencies: ['Athletics', 'Perception'] },
-            { title: 'Soldier', proficiencies: ['Athletics', 'Intimidation'] },
-            { title: 'Urchin', proficiencies: ['Sleight of Hand', 'Stealth'] },
-        ],
-        origin: new Origin(),
     }),
 
     computed: {
-        proficiencies() {
-            return this.backgrounds.find((it) => it.title === this.background)?.proficiencies ?? [];
+        backgrounds() {
+            return this.$store.state.characterStats.backgrounds;
         },
 
         classes() {
@@ -86,9 +70,10 @@ export default {
 
         stepData() {
             return {
-                origin: this.origin.clone({
-                    proficiencies: this.proficiencies,
-                }),
+                background: this.background,
+                characterClass: this.characterClass,
+                race: this.race,
+                subRace: this.subRace,
             };
         },
     },
