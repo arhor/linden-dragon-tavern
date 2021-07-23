@@ -13,10 +13,6 @@ version = "0.0.1-SNAPSHOT"
 description = "diploma-server:module-main"
 
 configurations {
-    developmentOnly
-    runtimeClasspath {
-        extendsFrom(developmentOnly.get())
-    }
     implementation {
         exclude(module = "spring-boot-starter-tomcat")
     }
@@ -32,18 +28,8 @@ dependencyManagement {
 }
 
 dependencies {
-    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-
     kapt("org.mapstruct:mapstruct-processor:${Versions.mapstruct}")
     kapt("org.springframework:spring-context-indexer")
-
-    // application modules (except for "module-common") MUST NOT be referenced directly in the module-main
-    runtimeOnly(project(":diploma-server:module-dnd"))
-
-    runtimeOnly("io.r2dbc:r2dbc-postgresql")
-    runtimeOnly("org.postgresql:postgresql")
-    runtimeOnly("io.jsonwebtoken:jjwt-impl:${Versions.jsonWebToken}")
-    runtimeOnly("io.jsonwebtoken:jjwt-jackson:${Versions.jsonWebToken}")
 
     implementation(project(":diploma-shared"))
     implementation(project(":diploma-server:module-common"))
@@ -70,7 +56,15 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
-    testRuntimeOnly("org.postgresql:postgresql")
+    // application modules (except for "module-common") MUST NOT be referenced directly in the module-main
+    runtimeOnly(project(":diploma-server:module-dnd"))
+
+    runtimeOnly("io.r2dbc:r2dbc-postgresql")
+    runtimeOnly("org.postgresql:postgresql")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:${Versions.jsonWebToken}")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:${Versions.jsonWebToken}")
+
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
 
     testImplementation(project(":diploma-test-utils"))
     testImplementation("io.projectreactor:reactor-test")
@@ -79,6 +73,8 @@ dependencies {
     testImplementation("org.testcontainers:junit-jupiter")
     testImplementation("org.testcontainers:postgresql")
     testImplementation("org.testcontainers:r2dbc")
+
+    testRuntimeOnly("org.postgresql:postgresql")
 }
 
 java {
@@ -101,17 +97,15 @@ flyway {
 }
 
 tasks {
-    val copyClientIntoTheServer = register<Copy>("copyClientIntoTheServer") {
-//        if (ext.has("staging") && ext.get("staging") == true) {
+    val copyLatestClientBuild = register<Copy>("copyLatestClientBuild") {
         val clientPrjDir = project(":diploma-client").projectDir.toString()
         val serverBldDir = project(":diploma-server:module-main").buildDir.toString()
 
         from(Paths.get(clientPrjDir, "dist"))
         into(Paths.get(serverBldDir, "resources", "main", "static"))
-//        }
     }
 
-    processResources { dependsOn(copyClientIntoTheServer) }
+    processResources { dependsOn(copyLatestClientBuild) }
 
     withType<Test> {
         useJUnitPlatform()

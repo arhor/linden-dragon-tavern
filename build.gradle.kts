@@ -59,9 +59,5 @@ tasks {
     register("stage") {
         dependsOn(":diploma-client:buildFull")
         finalizedBy(":diploma-server:module-main:build")
-
-//        doFirst {
-//            ext["staging"] = true
-//        }
     }
 }

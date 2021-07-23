@@ -30,7 +30,7 @@ const hasAuthorities = createAuthoritiesGuard(store);
 const checkLang = createLangGuard(loadLanguageAsync);
 
 const router = new VueRouter({
-    mode: 'history',
+    mode: 'hash',
     base: process.env.BASE_URL,
     routes: [
         {

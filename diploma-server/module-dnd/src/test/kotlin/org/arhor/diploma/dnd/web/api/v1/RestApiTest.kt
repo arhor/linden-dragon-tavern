@@ -1,6 +1,5 @@
 package org.arhor.diploma.dnd.web.api.v1
 
-import org.arhor.diploma.dnd.web.DnDRouterConfig
 import org.arhor.diploma.dnd.data.repository.MonsterProvider
 import org.arhor.diploma.dnd.data.repository.SpellProvider
 import org.arhor.diploma.dnd.service.CharsheetService
@@ -20,7 +19,6 @@ import org.springframework.test.web.reactive.server.WebTestClient
         CharacterSheetController::class,
         MonsterController::class,
         SpellController::class,
-        DnDRouterConfig::class,
     ]
 )
 internal abstract class RestApiTest {
