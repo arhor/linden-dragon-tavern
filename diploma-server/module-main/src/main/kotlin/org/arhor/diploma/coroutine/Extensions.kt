@@ -10,11 +10,14 @@ import java.nio.ByteBuffer
 import java.nio.channels.AsynchronousFileChannel
 import java.nio.channels.CompletionHandler
 import java.nio.file.Paths
-import kotlin.coroutines.*
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
+import kotlin.coroutines.suspendCoroutine
 
 internal fun <T> lazyAsync(
-    scope: CoroutineScope = GlobalScope,
     context: CoroutineContext = Dispatchers.Unconfined,
+    scope: CoroutineScope = CoroutineScope(context),
     block: suspend CoroutineScope.() -> T
 ): Deferred<T> {
     return scope.async(context, start = LAZY, block)
@@ -37,7 +40,9 @@ fun chunked(fileName: String, chunkSize: Int = DEFAULT_BUFFER_SIZE): Flow<Pair<B
     }
 }
 
+// TODO:
 suspend fun AsynchronousFileChannel.readAsync(buffer: ByteBuffer): Int {
+
     return suspendCoroutine { continuation ->
         read(buffer, 0L, Unit, object : CompletionHandler<Int, Unit> {
 

@@ -19,7 +19,7 @@ class MonsterController(
 
     @GetMapping("/{name}/details")
     suspend fun getMonsterDetails(@PathVariable name: String): Monster.Details {
-        logger.info { "$name is fetched" }
+        logger.debug { "$name is fetched" }
         return getEntityDetails(name)
     }
 

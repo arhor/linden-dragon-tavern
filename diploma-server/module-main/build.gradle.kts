@@ -102,14 +102,13 @@ flyway {
 
 tasks {
     val copyClientIntoTheServer = register<Copy>("copyClientIntoTheServer") {
-        dependsOn(":diploma-client:buildFull")
-        mustRunAfter(":diploma-client:buildFull")
-
+//        if (ext.has("staging") && ext.get("staging") == true) {
         val clientPrjDir = project(":diploma-client").projectDir.toString()
         val serverBldDir = project(":diploma-server:module-main").buildDir.toString()
 
         from(Paths.get(clientPrjDir, "dist"))
         into(Paths.get(serverBldDir, "resources", "main", "static"))
+//        }
     }
 
     processResources { dependsOn(copyClientIntoTheServer) }
