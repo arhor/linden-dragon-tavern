@@ -57,8 +57,6 @@ class DatabaseConfig(private val env: Environment) {
     fun r2dbcProperties(): R2dbcProperties {
         log.debug("Using custom R2DBC config override")
 
-        env.getRequiredProperty("")
-
         val uri = URI(
             checkNotNull(System.getenv(DATABASE_URL)) { "$DATABASE_URL environment variable is missing" }
         )
