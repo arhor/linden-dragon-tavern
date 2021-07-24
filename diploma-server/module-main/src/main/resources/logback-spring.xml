@@ -17,7 +17,7 @@
             </encoder>
         </appender>
 
-        <logger name="org.arhor.diploma" level="DEBUG" />
+        <logger name="org.arhor.diploma" level="DEBUG"/>
     </springProfile>
 
     <springProfile name="heroku">
@@ -30,6 +30,10 @@
             </encoder>
         </appender>
     </springProfile>
+
+    <logger name="javax.activation"        level="WARN"/>
+    <logger name="javax.management.remote" level="WARN"/>
+    <logger name="javax.xml.bind"          level="WARN"/>
 
     <root level="INFO">
         <appender-ref ref="console"/>

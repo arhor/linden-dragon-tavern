@@ -55,12 +55,6 @@ spring:
     ansi:
       enabled: detect
 
-logging:
-  level:
-    javax.activation: WARN
-    javax.management.remote: WARN
-    javax.xml.bind: WARN
-
 security:
   jwt:
     expire: 900000
