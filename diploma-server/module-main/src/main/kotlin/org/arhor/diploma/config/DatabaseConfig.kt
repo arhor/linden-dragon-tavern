@@ -32,7 +32,7 @@ private const val DATABASE_URL = "DATABASE_URL"
 class DatabaseConfig(private val env: Environment) {
 
     @Bean(initMethod = "migrate")
-    @ConditionalOnProperty(prefix = "spring.flyway", name = ["enabled"], havingValue = "true")
+    @ConditionalOnProperty(name = ["spring.flyway.enabled"], havingValue = "true")
     fun flyway(): Flyway {
         log.debug("Configuring flyway instance to apply migrations")
 
