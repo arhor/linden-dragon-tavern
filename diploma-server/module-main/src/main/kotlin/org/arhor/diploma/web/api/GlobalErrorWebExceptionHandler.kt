@@ -190,7 +190,7 @@ class GlobalErrorWebExceptionHandler(
         return HttpStatus.BAD_REQUEST to messageResponse {
             error {
                 code = ErrorCode.VALIDATION_FAILED
-                text = lang.localize("error.validation.failed", ex.target)
+                text = lang.localize("Object validation failed")
                 details = errorMessagesGroupedByField(ex, lang)
             }
         }
@@ -216,7 +216,7 @@ class GlobalErrorWebExceptionHandler(
             .groupBy({ it.field }, { it.defaultMessage })
             .map { (field, messages) ->
                 FieldErrorDetails(
-                    field = lang.localize(field),
+                    field = lang.localize("error.validation.failed", field),
                     messages = messages.filterNotNull()
                 )
             }
