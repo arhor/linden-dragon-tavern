@@ -66,21 +66,21 @@ class GlobalErrorWebExceptionHandler(
     private fun convertToStatusAndResponse(exception: Throwable, lang: Locale): Pair<HttpStatus, MessageResponse> {
         // @formatter:off
         return when (exception) {
-            is FileNotFoundException               -> handle(exception, lang)
-            is MethodArgumentTypeMismatchException -> handle(exception, lang)
-            is DataAccessException                 -> handle(exception, lang)
-            is EntityNotFoundException             -> handle(exception, lang)
-            is InvalidFormatException              -> handle(exception, lang)
-            is JsonProcessingException             -> handle(exception, lang)
-            is MethodArgumentNotValidException     -> handle(exception, lang)
-            is ResponseStatusException             -> handle(exception, lang)
-            is AuthenticationException             -> handle(exception, lang)
-            else                                   -> handleDefault(exception, lang)
+            is FileNotFoundException               -> handleFileNotFoundException(exception)
+            is MethodArgumentTypeMismatchException -> handleMethodArgumentTypeMismatchException(exception, lang)
+            is DataAccessException                 -> handleDataAccessException(exception, lang)
+            is EntityNotFoundException             -> handleEntityNotFoundException(exception, lang)
+            is InvalidFormatException              -> handleInvalidFormatException(exception, lang)
+            is JsonProcessingException             -> handleJsonProcessingException(exception, lang)
+            is MethodArgumentNotValidException     -> handleMethodArgumentNotValidException(exception, lang)
+            is ResponseStatusException             -> handleResponseStatusException(exception)
+            is AuthenticationException             -> handleAuthenticationException(exception, lang)
+            else                                   -> handleDefault(exception)
         }
         // @formatter:on
     }
 
-    private fun handleDefault(ex: Throwable, locale: Locale): Pair<HttpStatus, MessageResponse> {
+    private fun handleDefault(ex: Throwable): Pair<HttpStatus, MessageResponse> {
         log.error("Unhandled error. Please, create proper exception handler for it.", ex)
         return HttpStatus.INTERNAL_SERVER_ERROR to messageResponse {
             error {
@@ -90,7 +90,7 @@ class GlobalErrorWebExceptionHandler(
         }
     }
 
-    private fun handle(ex: ResponseStatusException, locale: Locale): Pair<HttpStatus, MessageResponse> {
+    private fun handleResponseStatusException(ex: ResponseStatusException): Pair<HttpStatus, MessageResponse> {
         log.error("Unhandled error. Please, create proper exception handler for it.", ex)
         return ex.status to messageResponse {
             error {
@@ -99,7 +99,7 @@ class GlobalErrorWebExceptionHandler(
         }
     }
 
-    private fun handle(ex: FileNotFoundException, locale: Locale): Pair<HttpStatus, MessageResponse> {
+    private fun handleFileNotFoundException(ex: FileNotFoundException): Pair<HttpStatus, MessageResponse> {
         return HttpStatus.NOT_FOUND to messageResponse {
             error {
                 code = ErrorCode.FILE_NOT_FOUND
@@ -109,7 +109,7 @@ class GlobalErrorWebExceptionHandler(
         }
     }
 
-    private fun handle(ex: MethodArgumentTypeMismatchException, lang: Locale): Pair<HttpStatus, MessageResponse> {
+    private fun handleMethodArgumentTypeMismatchException(ex: MethodArgumentTypeMismatchException, lang: Locale): Pair<HttpStatus, MessageResponse> {
         return HttpStatus.BAD_REQUEST to messageResponse {
             error {
                 code = ErrorCode.UNCATEGORIZED
@@ -121,7 +121,7 @@ class GlobalErrorWebExceptionHandler(
         }
     }
 
-    private fun handle(ex: DataAccessException, lang: Locale): Pair<HttpStatus, MessageResponse> {
+    private fun handleDataAccessException(ex: DataAccessException, lang: Locale): Pair<HttpStatus, MessageResponse> {
         return HttpStatus.NOT_FOUND to messageResponse {
             error {
                 code = ErrorCode.DATA_ACCESS_ERROR
@@ -131,7 +131,7 @@ class GlobalErrorWebExceptionHandler(
         }
     }
 
-    private fun handle(ex: EntityNotFoundException, lang: Locale): Pair<HttpStatus, MessageResponse> {
+    private fun handleEntityNotFoundException(ex: EntityNotFoundException, lang: Locale): Pair<HttpStatus, MessageResponse> {
         val (entityType, propName, propValue) = ex
 
         return HttpStatus.NOT_FOUND to messageResponse {
@@ -145,7 +145,7 @@ class GlobalErrorWebExceptionHandler(
         }
     }
 
-    private fun handle(ex: InvalidFormatException, lang: Locale): Pair<HttpStatus, MessageResponse> {
+    private fun handleInvalidFormatException(ex: InvalidFormatException, lang: Locale): Pair<HttpStatus, MessageResponse> {
         val parser = ex.processor as JsonParser
 
         return HttpStatus.BAD_REQUEST to messageResponse {
@@ -164,7 +164,7 @@ class GlobalErrorWebExceptionHandler(
         }
     }
 
-    private fun handle(ex: JsonProcessingException, lang: Locale): Pair<HttpStatus, MessageResponse> {
+    private fun handleJsonProcessingException(ex: JsonProcessingException, lang: Locale): Pair<HttpStatus, MessageResponse> {
         val value = when (val processor = ex.processor) {
             is JsonParser -> processor.currentName ?: processor.text
             else -> "[UNKNOWN JSON PROCESSOR]"
@@ -186,18 +186,18 @@ class GlobalErrorWebExceptionHandler(
         }
     }
 
-    private fun handle(ex: MethodArgumentNotValidException, lang: Locale): Pair<HttpStatus, MessageResponse> {
+    private fun handleMethodArgumentNotValidException(ex: MethodArgumentNotValidException, lang: Locale): Pair<HttpStatus, MessageResponse> {
         return HttpStatus.BAD_REQUEST to messageResponse {
             error {
                 code = ErrorCode.VALIDATION_FAILED
-                text = lang.localize("error.validation.failed")
+                text = lang.localize("error.validation.failed", ex.target)
                 details = errorMessagesGroupedByField(ex, lang)
             }
         }
     }
 
-    private fun handle(ex: AuthenticationException, lang: Locale): Pair<HttpStatus, MessageResponse> {
-
+    private fun handleAuthenticationException(ex: AuthenticationException, lang: Locale): Pair<HttpStatus, MessageResponse> {
+        log.error { "Authentication failed: ${ex.message}" }
         return HttpStatus.UNAUTHORIZED to messageResponse {
             error {
                 code = ErrorCode.SECURITY_VIOLATION
