@@ -59,18 +59,43 @@ export default {
         classNames: (state) => {
             return state.allClasses.map(({ name }) => name) || [];
         },
+
         raceNames: (state) => {
             return state.allRaces.map(({ name }) => name) || [];
         },
+
         subRaces: (state) => (race) => {
+            //TODO calc race name from state
             const currentRace = state.allRaces.find(({ name }) => name === race);
             return currentRace?.subraces.map(({ name }) => name).concat(['no subrace']) || [];
         },
+
         classSkills: (state) => {
-            return (
-                state.allClasses.find(({ name }) => name === state.character.characterClass)
-                    ?.proficiency_choices[0].from || []
+            const currentClass = state.allClasses.find(
+                ({ name }) => name === state.character.characterClass,
             );
+            const skills = currentClass?.proficiency_choices?.find(({ type }) => type === 'skill');
+
+            return {
+                skills: skills?.from || [],
+                limit: skills?.choose || 0,
+            };
+        },
+
+        // TODO race dependance reset on change
+        raceAbilityBonusOptions: (state) => {
+            const currentRaceName = state.character.race;
+            const currentRace = state.allRaces.find(({ name }) => name === currentRaceName);
+            return {
+                abilities: currentRace?.ability_bonus_options?.from || [],
+                limit: currentRace?.ability_bonus_options?.choose || 0,
+            };
+        },
+
+        raceAbilityBonuses: (state) => {
+            const currentRaceName = state.character.race;
+            const currentRace = state.allRaces.find(({ name }) => name === currentRaceName);
+            return currentRace?.ability_bonuses || [];
         },
 
         backgroundProficiencies(state) {
@@ -84,6 +109,7 @@ export default {
         load: async ({ commit, state }) => {
             if (!state.isStatsLoaded) {
                 try {
+                    //TODO use api service
                     const classesPromise = axios.get('data/5e-SRD-Classes.json');
                     const racesPromise = axios.get('data/5e-SRD-Races.json');
                     const [classes, races] = await Promise.all([classesPromise, racesPromise]);

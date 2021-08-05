@@ -1,8 +1,8 @@
 <template>
     <v-card color="grey lighten-1" height="400px" tile>
         <v-list shaped>
-            <v-list-item-group v-model="backgroundProficiencies" multiple>
-                <template v-for="({ name }, i) in classSkills">
+            <v-list-item-group v-model="pickedSkills" :max="classSkills.limit" multiple>
+                <template v-for="({ name }, i) in classSkills.skills">
                     <v-list-item
                         :key="`${name}-${i}`"
                         :value="name"
@@ -16,7 +16,8 @@
 
                             <v-list-item-action>
                                 <v-checkbox
-                                    :input-value="active"
+                                    disabled
+                                    :input-value="active || backgroundProficiencies.includes(name)"
                                     color="deep-purple accent-4"
                                 ></v-checkbox>
                             </v-list-item-action>
@@ -46,6 +47,19 @@ export default {
         classSkills() {
             return this.$store.getters['characterStats/classSkills'];
         },
+
+        pickedSkills: {
+            get() {
+                return this.$store.state.characterStats.pickedSkills;
+            },
+            set(value) {
+                this.$store.dispatch('characterStats/updateCharacterStats', {
+                    pickedSkills: value,
+                });
+            },
+        },
     },
+
+    watch: {},
 };
 </script>

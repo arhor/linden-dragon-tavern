@@ -6,7 +6,7 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
             "name": "Animal Handling"
@@ -74,7 +74,7 @@
     "proficiency_choices": [
       {
         "choose": 3,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
             "name": "Acrobatics"
@@ -134,7 +134,7 @@
       },
       {
         "choose": 3,
-        "type": "proficiencies",
+        "type": "musical instruments",
         "from": [
           {
             "name": "Bagpipes"
@@ -219,7 +219,7 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
             "name": "History"
@@ -283,7 +283,7 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
             "name": "Animal Handling"
@@ -386,7 +386,7 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
             "name": "Acrobatics"
@@ -457,7 +457,7 @@
     "proficiency_choices": [
       {
         "choose": 1,
-        "type": "proficiencies",
+        "type": "tools",
         "from": [
           {
             "name": "Alchemist's supplies"
@@ -520,7 +520,7 @@
       },
       {
         "choose": 1,
-        "type": "proficiencies",
+        "type": "musical instruments",
         "from": [
           {
             "name": "Bagpipes"
@@ -556,7 +556,7 @@
       },
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
             "name": "Acrobatics"
@@ -615,7 +615,7 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
             "name": "Athletics"
@@ -682,7 +682,7 @@
     "proficiency_choices": [
       {
         "choose": 3,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
             "name": "Animal Handling"
@@ -758,7 +758,7 @@
     "proficiency_choices": [
       {
         "choose": 4,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
             "name": "Acrobatics"
@@ -847,7 +847,7 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
             "name": "Arcana"
@@ -914,7 +914,7 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
             "name": "Arcana"
@@ -978,7 +978,7 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
             "name": "Arcana"

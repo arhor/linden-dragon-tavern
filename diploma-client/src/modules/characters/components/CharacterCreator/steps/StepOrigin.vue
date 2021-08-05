@@ -76,6 +76,14 @@ export default {
                 subRace: this.subRace,
             };
         },
+
+        watch: {
+            characterClass() {
+                this.$store.dispatch('characterStats/updateCharacterStats', {
+                    pickedSkills: [],
+                });
+            },
+        },
     },
 };
 </script>
