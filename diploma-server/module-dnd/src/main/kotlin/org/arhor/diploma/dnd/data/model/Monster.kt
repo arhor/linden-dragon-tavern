@@ -13,7 +13,6 @@ data class Monster(
     val challengeRating: Double
 ) : Identifiable<String> {
 
-
     override val id: String
         @JsonIgnore
         get() = name

@@ -10,9 +10,10 @@ abstract class StaticDataController<
         T : Identifiable<K>,
         D : Identifiable<K>,
         K : Serializable>(
-    protected val dataProvider: DataProvider<T, D, K>,
+    private val dataProvider: DataProvider<T, D, K>,
     private val resourceName: String
 ) {
+
 
     abstract val log: KLogger
 

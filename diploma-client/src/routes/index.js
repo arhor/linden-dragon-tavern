@@ -108,7 +108,6 @@ const router = new VueRouter({
         {
             path: '*',
             component: () => import('@/components/DndPageNotFound.vue'),
-            beforeEnter: composeGuards(checkLang),
         },
     ],
 });

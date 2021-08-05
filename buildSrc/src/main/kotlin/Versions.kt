@@ -1,7 +1,7 @@
 object Versions {
-    const val gradle              = "7.0"
+    const val gradle              = "7.1.1"
     const val javaGlobal          = "11"
-    const val kotlinLang          = "1.4.32"
+    const val kotlinLang          = "1.5.20"
     const val nodeJS              = "14.16.0"
     const val nodeJSGradlePlugin  = "3.0.1"
     const val assertJCore         = "3.17.2"
@@ -16,6 +16,6 @@ object Versions {
     const val logback             = "1.2.3"
     const val slf4j               = "1.7.30"
     const val kotlinLogging       = "2.0.6"
-    const val springBoot          = "2.4.3"
+    const val springBoot          = "2.5.2"
     const val springDepManagement = "1.0.11.RELEASE"
 }
