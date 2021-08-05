@@ -21,6 +21,13 @@
                         :step="i + 1"
                     >
                         <component :is="step.component" @data-changed="handleChanges" />
+                        <v-btn color="primary" @click="changeStep(i)">
+                            prev
+                        </v-btn>
+
+                        <v-btn color="primary" @click="changeStep(i + 2)">
+                            next
+                        </v-btn>
                     </v-stepper-content>
                 </v-stepper-items>
             </v-col>
@@ -70,11 +77,28 @@ export default {
 
     methods: {
         handleChanges(changes) {
-            this.character = {
-                ...this.character,
-                ...changes,
-            };
+            this.$store.dispatch('characterStats/updateCharacterStats', changes);
         },
+
+        changeStep(nextStepNumber) {
+            if (nextStepNumber > this.stepsQuantity) {
+                this.currentStep = 1;
+            } else if (nextStepNumber <= 0) {
+                this.currentStep = this.stepsQuantity;
+            } else {
+                this.currentStep = nextStepNumber;
+            }
+        },
+    },
+
+    computed: {
+        stepsQuantity() {
+            return this.steps.length;
+        },
+    },
+
+    mounted() {
+        this.$store.dispatch(`characterStats/load`);
     },
 };
 </script>

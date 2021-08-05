@@ -6,25 +6,25 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
-            "name": "Skill: Animal Handling"
+            "name": "Animal Handling"
           },
           {
-            "name": "Skill: Athletics"
+            "name": "Athletics"
           },
           {
-            "name": "Skill: Intimidation"
+            "name": "Intimidation"
           },
           {
-            "name": "Skill: Nature"
+            "name": "Nature"
           },
           {
-            "name": "Skill: Perception"
+            "name": "Perception"
           },
           {
-            "name": "Skill: Survival"
+            "name": "Survival"
           }
         ]
       }
@@ -74,67 +74,67 @@
     "proficiency_choices": [
       {
         "choose": 3,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
-            "name": "Skill: Acrobatics"
+            "name": "Acrobatics"
           },
           {
-            "name": "Skill: Animal Handling"
+            "name": "Animal Handling"
           },
           {
-            "name": "Skill: Arcana"
+            "name": "Arcana"
           },
           {
-            "name": "Skill: Athletics"
+            "name": "Athletics"
           },
           {
-            "name": "Skill: Deception"
+            "name": "Deception"
           },
           {
-            "name": "Skill: History"
+            "name": "History"
           },
           {
-            "name": "Skill: Insight"
+            "name": "Insight"
           },
           {
-            "name": "Skill: Intimidation"
+            "name": "Intimidation"
           },
           {
-            "name": "Skill: Investigation"
+            "name": "Investigation"
           },
           {
-            "name": "Skill: Medicine"
+            "name": "Medicine"
           },
           {
-            "name": "Skill: Nature"
+            "name": "Nature"
           },
           {
-            "name": "Skill: Perception"
+            "name": "Perception"
           },
           {
-            "name": "Skill: Performance"
+            "name": "Performance"
           },
           {
-            "name": "Skill: Persuasion"
+            "name": "Persuasion"
           },
           {
-            "name": "Skill: Religion"
+            "name": "Religion"
           },
           {
-            "name": "Skill: Sleight of Hand"
+            "name": "Sleight of Hand"
           },
           {
-            "name": "Skill: Stealth"
+            "name": "Stealth"
           },
           {
-            "name": "Skill: Survival"
+            "name": "Survival"
           }
         ]
       },
       {
         "choose": 3,
-        "type": "proficiencies",
+        "type": "musical instruments",
         "from": [
           {
             "name": "Bagpipes"
@@ -219,22 +219,22 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
-            "name": "Skill: History"
+            "name": "History"
           },
           {
-            "name": "Skill: Insight"
+            "name": "Insight"
           },
           {
-            "name": "Skill: Medicine"
+            "name": "Medicine"
           },
           {
-            "name": "Skill: Persuasion"
+            "name": "Persuasion"
           },
           {
-            "name": "Skill: Religion"
+            "name": "Religion"
           }
         ]
       }
@@ -283,31 +283,31 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
-            "name": "Skill: Animal Handling"
+            "name": "Animal Handling"
           },
           {
-            "name": "Skill: Arcana"
+            "name": "Arcana"
           },
           {
-            "name": "Skill: Insight"
+            "name": "Insight"
           },
           {
-            "name": "Skill: Medicine"
+            "name": "Medicine"
           },
           {
-            "name": "Skill: Nature"
+            "name": "Nature"
           },
           {
-            "name": "Skill: Perception"
+            "name": "Perception"
           },
           {
-            "name": "Skill: Religion"
+            "name": "Religion"
           },
           {
-            "name": "Skill: Survival"
+            "name": "Survival"
           }
         ]
       }
@@ -386,31 +386,31 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
-            "name": "Skill: Acrobatics"
+            "name": "Acrobatics"
           },
           {
-            "name": "Skill: Animal Handling"
+            "name": "Animal Handling"
           },
           {
-            "name": "Skill: Athletics"
+            "name": "Athletics"
           },
           {
-            "name": "Skill: History"
+            "name": "History"
           },
           {
-            "name": "Skill: Insight"
+            "name": "Insight"
           },
           {
-            "name": "Skill: Intimidation"
+            "name": "Intimidation"
           },
           {
-            "name": "Skill: Perception"
+            "name": "Perception"
           },
           {
-            "name": "Skill: Survival"
+            "name": "Survival"
           }
         ]
       }
@@ -457,7 +457,7 @@
     "proficiency_choices": [
       {
         "choose": 1,
-        "type": "proficiencies",
+        "type": "tools",
         "from": [
           {
             "name": "Alchemist's supplies"
@@ -520,7 +520,7 @@
       },
       {
         "choose": 1,
-        "type": "proficiencies",
+        "type": "musical instruments",
         "from": [
           {
             "name": "Bagpipes"
@@ -556,25 +556,25 @@
       },
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
-            "name": "Skill: Acrobatics"
+            "name": "Acrobatics"
           },
           {
-            "name": "Skill: Athletics"
+            "name": "Athletics"
           },
           {
-            "name": "Skill: History"
+            "name": "History"
           },
           {
-            "name": "Skill: Insight"
+            "name": "Insight"
           },
           {
-            "name": "Skill: Religion"
+            "name": "Religion"
           },
           {
-            "name": "Skill: Stealth"
+            "name": "Stealth"
           }
         ]
       }
@@ -615,25 +615,25 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
-            "name": "Skill: Athletics"
+            "name": "Athletics"
           },
           {
-            "name": "Skill: Insight"
+            "name": "Insight"
           },
           {
-            "name": "Skill: Intimidation"
+            "name": "Intimidation"
           },
           {
-            "name": "Skill: Medicine"
+            "name": "Medicine"
           },
           {
-            "name": "Skill: Persuasion"
+            "name": "Persuasion"
           },
           {
-            "name": "Skill: Religion"
+            "name": "Religion"
           }
         ]
       }
@@ -682,31 +682,31 @@
     "proficiency_choices": [
       {
         "choose": 3,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
-            "name": "Skill: Animal Handling"
+            "name": "Animal Handling"
           },
           {
-            "name": "Skill: Athletics"
+            "name": "Athletics"
           },
           {
-            "name": "Skill: Insight"
+            "name": "Insight"
           },
           {
-            "name": "Skill: Investigation"
+            "name": "Investigation"
           },
           {
-            "name": "Skill: Nature"
+            "name": "Nature"
           },
           {
-            "name": "Skill: Perception"
+            "name": "Perception"
           },
           {
-            "name": "Skill: Stealth"
+            "name": "Stealth"
           },
           {
-            "name": "Skill: Survival"
+            "name": "Survival"
           }
         ]
       }
@@ -758,40 +758,40 @@
     "proficiency_choices": [
       {
         "choose": 4,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
-            "name": "Skill: Acrobatics"
+            "name": "Acrobatics"
           },
           {
-            "name": "Skill: Athletics"
+            "name": "Athletics"
           },
           {
-            "name": "Skill: Deception"
+            "name": "Deception"
           },
           {
-            "name": "Skill: Insight"
+            "name": "Insight"
           },
           {
-            "name": "Skill: Intimidation"
+            "name": "Intimidation"
           },
           {
-            "name": "Skill: Investigation"
+            "name": "Investigation"
           },
           {
-            "name": "Skill: Perception"
+            "name": "Perception"
           },
           {
-            "name": "Skill: Performance"
+            "name": "Performance"
           },
           {
-            "name": "Skill: Persuasion"
+            "name": "Persuasion"
           },
           {
-            "name": "Skill: Sleight of Hand"
+            "name": "Sleight of Hand"
           },
           {
-            "name": "Skill: Stealth"
+            "name": "Stealth"
           }
         ]
       }
@@ -847,25 +847,25 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
-            "name": "Skill: Arcana"
+            "name": "Arcana"
           },
           {
-            "name": "Skill: Deception"
+            "name": "Deception"
           },
           {
-            "name": "Skill: Insight"
+            "name": "Insight"
           },
           {
-            "name": "Skill: Intimidation"
+            "name": "Intimidation"
           },
           {
-            "name": "Skill: Persuasion"
+            "name": "Persuasion"
           },
           {
-            "name": "Skill: Religion"
+            "name": "Religion"
           }
         ]
       }
@@ -914,28 +914,28 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
-            "name": "Skill: Arcana"
+            "name": "Arcana"
           },
           {
-            "name": "Skill: Deception"
+            "name": "Deception"
           },
           {
-            "name": "Skill: History"
+            "name": "History"
           },
           {
-            "name": "Skill: Intimidation"
+            "name": "Intimidation"
           },
           {
-            "name": "Skill: Investigation"
+            "name": "Investigation"
           },
           {
-            "name": "Skill: Nature"
+            "name": "Nature"
           },
           {
-            "name": "Skill: Religion"
+            "name": "Religion"
           }
         ]
       }
@@ -978,25 +978,25 @@
     "proficiency_choices": [
       {
         "choose": 2,
-        "type": "proficiencies",
+        "type": "skill",
         "from": [
           {
-            "name": "Skill: Arcana"
+            "name": "Arcana"
           },
           {
-            "name": "Skill: History"
+            "name": "History"
           },
           {
-            "name": "Skill: Insight"
+            "name": "Insight"
           },
           {
-            "name": "Skill: Investigation"
+            "name": "Investigation"
           },
           {
-            "name": "Skill: Medicine"
+            "name": "Medicine"
           },
           {
-            "name": "Skill: Religion"
+            "name": "Religion"
           }
         ]
       }
