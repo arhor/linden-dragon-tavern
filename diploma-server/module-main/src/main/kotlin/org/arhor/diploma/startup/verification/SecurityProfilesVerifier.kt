@@ -14,7 +14,7 @@ import java.time.LocalDateTime
 
 @Component
 class SecurityProfilesVerifier(
-    private val securityProfileRepository: SecurityProfileRepository
+    private val securityProfileRepository: SecurityProfileRepository,
 ) : Verifiable {
 
     override val priority = Priority.NORMAL
@@ -34,11 +34,7 @@ class SecurityProfilesVerifier(
         val existingRoles = securityProfileRepository.findAllByNames(allRoles).map { it.name }.toList()
 
         val createdProfiles = allRoles.subtract(existingRoles)
-            .map { roleToCreate ->
-                SecurityProfile(name = roleToCreate, isSynthetic = true).apply {
-                    created = LocalDateTime.now()
-                }
-            }
+            .map { roleToCreate -> SecurityProfile(name = roleToCreate, isSynthetic = true) }
             .let { newProfiles -> securityProfileRepository.saveAll(newProfiles) }
 
         return createdProfiles.mapNotNull { it.name }.toList()

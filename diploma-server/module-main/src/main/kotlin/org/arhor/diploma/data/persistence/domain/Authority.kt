@@ -10,7 +10,8 @@ data class Authority(
 
     @Id
     override var id: Long? = null,
-    var name: String? = null
+
+    var name: String?      = null,
 
 ) : DomainObject<Long>() {
 

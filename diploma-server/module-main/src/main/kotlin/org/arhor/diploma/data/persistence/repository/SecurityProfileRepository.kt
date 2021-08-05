@@ -1,6 +1,7 @@
 package org.arhor.diploma.data.persistence.repository
 
 import kotlinx.coroutines.flow.Flow
+import org.arhor.diploma.Role
 import org.arhor.diploma.data.persistence.domain.SecurityProfile
 import org.springframework.data.r2dbc.repository.Query
 import org.springframework.data.repository.kotlin.CoroutineCrudRepository
@@ -15,8 +16,8 @@ interface SecurityProfileRepository : CoroutineCrudRepository<SecurityProfile, L
     suspend fun findAllByNames(names: List<String>): Flow<SecurityProfile>
 
     @Transactional(readOnly = true)
-    @Query("SELECT p.* FROM security_profiles p WHERE p.name = :name")
-    suspend fun findByName(name: String): SecurityProfile?
+    @Query("SELECT p.* FROM security_profiles p WHERE p.name = :#{#role.name}")
+    suspend fun findByRole(role: Role): SecurityProfile
 
     @Transactional(readOnly = true)
     @Query(

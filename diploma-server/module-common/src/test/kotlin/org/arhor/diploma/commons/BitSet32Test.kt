@@ -93,8 +93,7 @@ internal class BitSet32Test {
 
     companion object {
         @JvmStatic
-        @Suppress("UNUSED")
-        private fun provideIndexesToTest(): IntStream {
+        fun provideIndexesToTest(): IntStream {
             return IntStream.range(0, BitSet32.CAPACITY)
         }
     }

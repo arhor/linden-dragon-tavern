@@ -32,10 +32,10 @@ class AccountController(private val service: AccountService) {
         return service.getList(page, size)
     }
 
-    @GetMapping("/{id}")
-    suspend fun getAccount(@PathVariable id: Long): AccountDTO {
-        logger.debug { "fetching account with id: $id" }
-        return service.getAccountById(id)
+    @GetMapping("/{accountId}")
+    suspend fun getAccount(@PathVariable accountId: Long): AccountDTO {
+        logger.debug { "fetching account with id: $accountId" }
+        return service.getOne(accountId)
     }
 
     @PostMapping
@@ -45,7 +45,7 @@ class AccountController(private val service: AccountService) {
     ): ResponseEntity<AccountDTO> {
         logger.debug("creating an account")
 
-        val createdAccount = service.createAccount(account)
+        val createdAccount = service.create(account)
 
         val location = UriComponentsBuilder.fromHttpRequest(request)
             .path("/{id}")
@@ -55,11 +55,11 @@ class AccountController(private val service: AccountService) {
         return ResponseEntity.created(location).body(createdAccount)
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{accountId}")
     @PreAuthorize("isAuthenticated() and hasAuthority('${Authorities.Account.EDIT}')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    suspend fun deleteAccount(@PathVariable id: Long, auth: Authentication?) {
-        val account = service.getAccountById(id)
+    suspend fun deleteAccount(@PathVariable accountId: Long, auth: Authentication?) {
+        val account = service.getOne(accountId)
 
         if (selfRequest(account, auth)) {
             service.delete(account)

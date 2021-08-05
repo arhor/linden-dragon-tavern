@@ -59,7 +59,7 @@ internal class CreatorMixinTest {
         doReturn(testDto).`when`(converter).mapEntityToDto(testEntity)
 
         // when
-        val result: Any = creatorUnderTest.create(testDto)
+        val result = creatorUnderTest.create(testDto)
 
         // then
         Assertions.assertThat(result).isEqualTo(testDto)

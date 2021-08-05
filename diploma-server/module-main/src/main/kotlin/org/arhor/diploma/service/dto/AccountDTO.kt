@@ -6,24 +6,20 @@ import javax.validation.constraints.NotNull
 import javax.validation.constraints.Pattern
 
 data class AccountDTO(
+
     override var id: Long? = null,
 
-    @field:Pattern(regexp = "^$")
+    @field:NotBlank
     var username: String? = null,
 
     @field:NotBlank
-    @field:NotNull
     var password: String? = null,
 
     @field:NotBlank
-    @field:NotNull
     var email: String? = null,
 
-    @field:NotBlank
-    @field:NotNull
     var firstName: String? = null,
 
-    @field:NotBlank
-    @field:NotNull
-    var lastName: String? = null
+    var lastName: String? = null,
+
 ) : Identifiable<Long>

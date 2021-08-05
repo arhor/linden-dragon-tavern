@@ -18,7 +18,13 @@ data class Account(
 
     var password: String? = null,
 
-    var email: String? = null
+    var email: String? = null,
+
+    var firstName: String? = null,
+
+    var lastName: String? = null,
+
+    var profileId: Long? = null
 
 ) : AuditableDomainObject<Long>() {
 

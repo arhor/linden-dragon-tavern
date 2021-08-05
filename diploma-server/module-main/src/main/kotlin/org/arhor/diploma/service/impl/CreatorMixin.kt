@@ -15,16 +15,15 @@ class CreatorMixin<E, D, K>(
               D : Identifiable<K>,
               K : Serializable {
 
-    override suspend fun create(item: D, init: E.() -> Unit): D {
-        item.id?.let {
-            throw IllegalArgumentException("New entity must have $KEY_PROPERTY = null, but passed object has [$it]")
+    override suspend fun create(item: D): D {
+        if (item.id != null) {
+            throw IllegalArgumentException(
+                "New entity must have $KEY_PROPERTY = null, but passed object has [${item.id}]"
+            )
         }
-
-        val newEntity = converter.mapDtoToEntity(item)
-        init(newEntity)
-        val savedEntity = repository.save(newEntity)
-
-        return converter.mapEntityToDto(savedEntity)
+        return converter.mapDtoToEntity(item)
+            .let { repository.save(it) }
+            .let(converter::mapEntityToDto)
     }
 
     companion object {

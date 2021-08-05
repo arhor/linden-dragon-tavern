@@ -1,74 +1,120 @@
 package org.arhor.diploma.service.impl
 
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import org.arhor.diploma.Role
-import org.arhor.diploma.data.persistence.domain.Account
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.reactor.mono
+import org.arhor.diploma.Role.USER
+import org.arhor.diploma.commons.data.EntityNotFoundException
+import org.arhor.diploma.data.persistence.domain.SecurityProfile
 import org.arhor.diploma.data.persistence.repository.AccountRepository
+import org.arhor.diploma.data.persistence.repository.AuthorityRepository
 import org.arhor.diploma.data.persistence.repository.SecurityProfileRepository
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
 import org.arhor.diploma.service.mapping.AccountConverter
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService
+import org.springframework.security.core.userdetails.User
+import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import reactor.core.publisher.Mono
 
 @Service
 @Transactional
 class AccountServiceImpl(
-    private val accRepository: AccountRepository,
-    private val secRepository: SecurityProfileRepository,
+    private val accountRepository: AccountRepository,
+    private val securityProfileRepository: SecurityProfileRepository,
+    private val authorityRepository: AuthorityRepository,
     private val converter: AccountConverter
-) : AccountService {
+) : AccountService, ReactiveUserDetailsService {
 
-    override suspend fun getAccountById(id: Long) = getOne(id)
-
-    override suspend fun getAccounts(page: Int, size: Int) = getList(page, size)
+    override fun findByUsername(username: String): Mono<UserDetails> {
+        return mono {
+            accountRepository.findByUsername(username)?.let { account ->
+                val securityProfile = securityProfileRepository.findByAccountId(account.id!!)
+                val status = !account.isDeleted
+                User(
+                    account.username,
+                    account.password,
+                    status,
+                    status,
+                    status,
+                    status,
+                    securityProfile.authorities()
+                )
+            } ?: throw UsernameNotFoundException(username)
+        }
+    }
 
     @Transactional
-    override suspend fun createAccount(accountDTO: AccountDTO): AccountDTO {
-        accountDTO.username
-            ?.let { username -> accRepository.findByUsername(username) }
-            ?.let { account -> throw RuntimeException("Username '${account.username}' is already taken") }
+    override suspend fun create(item: AccountDTO): AccountDTO {
+        item.username?.takeIf { accountRepository.existsByUsername(it) }?.let {
+            throw RuntimeException("Username '$it' is already taken")
+        }
 
-        val userSecurityProfile = secRepository.findByName(Role.USER.name)
-            ?: throw RuntimeException("Missing security profile: 'USER'")
+        val (userProfileId, _, _) = securityProfileRepository.findByRole(USER)
 
-        return create(accountDTO)
-    }
+        val createdAccount = converter.mapDtoToEntity(item)
+            .apply { profileId = userProfileId }
+            .let { accountRepository.save(it) }
 
-    override suspend fun deleteAccount(id: Long) {
-        delete(id)
-    }
-
-    override suspend fun create(item: AccountDTO, init: Account.() -> Unit): AccountDTO {
-        TODO("Not yet implemented")
+        return converter.mapEntityToDto(createdAccount)
     }
 
     override suspend fun getOne(id: Long): AccountDTO {
-        TODO("Not yet implemented")
+        return accountRepository.findById(id)?.let { converter.mapEntityToDto(it) }
+            ?: throw EntityNotFoundException("Account", "id", id)
     }
 
     override fun getList(): Flow<AccountDTO> {
-        TODO("Not yet implemented")
+        return accountRepository.findAll().map(converter::mapEntityToDto)
     }
 
-    override  fun getList(page: Int, size: Int): Flow<AccountDTO> {
-        return accRepository.findAll().map(converter::mapEntityToDto)
+    override fun getList(page: Int, size: Int): Flow<AccountDTO> {
+        return accountRepository.findAll().drop(page * size).take(size).map(converter::mapEntityToDto)
     }
 
     override suspend fun getTotalSize(): Long {
-        TODO("Not yet implemented")
+        return accountRepository.count()
     }
 
     override suspend fun update(item: AccountDTO): AccountDTO {
-        TODO("Not yet implemented")
+        if (item.id != null) {
+            val id = item.id!!
+            if (accountRepository.existsById(id)) {
+                return converter.mapDtoToEntity(item)
+                    .let { accountRepository.save(it) }
+                    .let(converter::mapEntityToDto)
+            } else {
+                throw EntityNotFoundException("Account", "id", id)
+            }
+        } else {
+            throw IllegalArgumentException("Entity id must not be null")
+        }
     }
 
     override suspend fun delete(id: Long) {
-        TODO("Not yet implemented")
+        if (accountRepository.existsById(id)) {
+            accountRepository.deleteById(id)
+        } else {
+            throw EntityNotFoundException("Account", "id", id)
+        }
     }
 
     override suspend fun delete(item: AccountDTO) {
-        TODO("Not yet implemented")
+        item.id?.let { delete(it) }
+    }
+
+    private suspend fun SecurityProfile?.authorities(): List<GrantedAuthority> {
+        if (this == null) {
+            return emptyList()
+        }
+        return when {
+            isSynthetic -> listOf("ROLE_${name}")
+            else -> authorityRepository.findBySecurityProfileId(id!!)
+                .mapNotNull { it.name }.toList()
+        }.map { SimpleGrantedAuthority(it) }
     }
 }

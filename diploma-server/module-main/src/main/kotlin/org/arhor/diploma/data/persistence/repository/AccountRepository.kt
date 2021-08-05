@@ -34,6 +34,9 @@ interface AccountRepository : CoroutineCrudRepository<Account, Long> {
     @Query("SELECT e.* FROM ${Account.TABLE_NAME} e WHERE e.deleted = false")
     override fun findAll(): Flow<Account>
 
+    @Query("SELECT e.* FROM ${Account.TABLE_NAME} e WHERE e.deleted = false LIMIT :size OFFSET :#{#page * #size}")
+    fun findAll(page: Int, size: Int): Flow<Account>
+
     @Query("SELECT e.* FROM ${Account.TABLE_NAME} e WHERE e.id IN (:ids) AND e.deleted = false")
     override fun findAllById(ids: Iterable<Long>): Flow<Account>
 
@@ -49,6 +52,10 @@ interface AccountRepository : CoroutineCrudRepository<Account, Long> {
 
     override suspend fun existsById(id: Long): Boolean {
         return findById(id) != null
+    }
+
+    suspend fun existsByUsername(username: String): Boolean {
+        return findByUsername(username) != null
     }
 
     override suspend fun deleteAll(entities: Iterable<Account>) {

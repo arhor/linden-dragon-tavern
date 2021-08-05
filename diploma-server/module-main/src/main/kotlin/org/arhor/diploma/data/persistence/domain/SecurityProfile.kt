@@ -12,10 +12,12 @@ import java.time.LocalDateTime
 data class SecurityProfile(
 
     @Id
-    override var id: Long? = null,
-    var name: String?,
+    override var id: Long?   = null,
+
+    var name: String?        = null,
+
     @Column("synthetic")
-    var isSynthetic: Boolean
+    var isSynthetic: Boolean = false,
 
 ) : AuditableDomainObject<Long>() {
 
