@@ -87,8 +87,8 @@ export default {
         },
     },
     mounted() {
-        this.$store.dispatch(`abilities/load`)
-        this.$store.dispatch(`skills/load`)
+        this.$store.dispatch('abilities/load')
+        this.$store.dispatch('skills/load')
     },
 };
 </script>
