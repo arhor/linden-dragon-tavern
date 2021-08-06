@@ -37,11 +37,11 @@
 </template>
 
 <script>
-import { createSearchMixin } from '@/mixins/search-mixin.js';
+import { searchMixin } from '@/mixins/searchMixin.js';
 
 export default {
     name: 'MonsterList',
-    mixins: [createSearchMixin('monsters')],
+    mixins: [searchMixin],
     props: {
         monsters: {
             type: Array,

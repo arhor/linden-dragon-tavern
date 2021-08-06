@@ -34,11 +34,11 @@
 <script>
 import { mapState } from 'vuex';
 
-import { createSearchMixin } from '@/mixins/search-mixin.js';
+import { searchMixin } from '@/mixins/searchMixin.js';
 
 export default {
     name: 'SpellList',
-    mixins: [createSearchMixin('spells')],
+    mixins: [searchMixin],
     data: () => ({
         dialog: false,
         spell: null,
