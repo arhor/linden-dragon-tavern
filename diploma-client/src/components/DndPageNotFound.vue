@@ -1,4 +1,4 @@
-<template>
+<template functional>
     <div>Ups, page not found...</div>
 </template>
 

@@ -30,9 +30,7 @@
                 {{ name }}
             </v-btn>
 
-            <dnd-lang-selector />
-
-            <dnd-download-button :url="characterSheetUrl" />
+            <dnd-download-button url="/api/charsheets" />
 
             <v-btn to="/account" fab dark>
                 <v-icon>mdi-account-circle</v-icon>
@@ -58,13 +56,10 @@ import { mapState } from 'vuex';
 import DndAppSettings from '@/components/DndAppSettings.vue';
 import DndBreadcrumbs from '@/components/DndBreadcrumbs.vue';
 import DndDownloadButton from '@/components/DndDownloadButton.vue';
-import DndLangSelector from '@/components/DndLangSelector';
-
-import { SERVER_API_URL } from '@/api/server-api.js';
 
 export default {
     name: 'App',
-    components: { DndLangSelector, DndDownloadButton, DndBreadcrumbs, DndAppSettings },
+    components: { DndDownloadButton, DndBreadcrumbs, DndAppSettings },
     data: () => ({
         appName: 'D&D Homebrew App',
         displayDrawer: false,
@@ -77,9 +72,6 @@ export default {
     }),
     computed: {
         ...mapState(['dark']),
-        characterSheetUrl() {
-            return `${SERVER_API_URL}/api/charsheets`;
-        },
     },
     methods: {
         displaySettingsPopup() {
@@ -87,8 +79,9 @@ export default {
         },
     },
     mounted() {
-        this.$store.dispatch('abilities/load')
-        this.$store.dispatch('skills/load')
+        this.$store.dispatch('abilities/load');
+        this.$store.dispatch('skills/load');
+        this.$store.dispatch('spells/load');
     },
 };
 </script>

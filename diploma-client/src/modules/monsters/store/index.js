@@ -1,6 +1,9 @@
 import axios from '@/api/BaseService.js';
 import { SERVER_API_URL } from '@/api/server-api.js';
 
+//const API_URL = '/api/v1/monsters';
+//const API_FALLBACK_URL = 'data/5e-SRD-Ability-Scores.json';
+
 const MONSTERS_BASE_URL = `${SERVER_API_URL}/api/v1/monsters`;
 
 const mutation = {

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 private val logger = KotlinLogging.logger {}
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/spells")
 class SpellController(
     provider: SpellProvider,
 ) : StaticDataController<Spell, Spell.Details, String>(provider, "Spell") {

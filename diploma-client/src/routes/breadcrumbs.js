@@ -16,7 +16,7 @@ export const about = new Breadcrumb({
 });
 
 export const monsters = new Breadcrumb({
-    label: 'Monsters',
+    label: 'views.monsters',
     link: '/monsters',
 });
 
@@ -31,7 +31,7 @@ export const newCharacter = new Breadcrumb({
 });
 
 export const spells = new Breadcrumb({
-    label: 'Spells',
+    label: 'views.spells',
     link: '/spells',
 });
 

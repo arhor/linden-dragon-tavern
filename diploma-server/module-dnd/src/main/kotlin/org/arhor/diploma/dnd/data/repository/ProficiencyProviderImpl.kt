@@ -17,7 +17,7 @@ class ProficiencyProviderImpl(
     @Value("classpath:dnd/data/5e-SRD-Proficiencies.json")
     override lateinit var resource: Resource
 
-    override val resourceName get() = "monster"
+    override val resourceName get() = "proficiency"
     override val resourceType get() = Array<Proficiency>::class.java
 
     override fun shrinkData(details: Proficiency): Proficiency = details

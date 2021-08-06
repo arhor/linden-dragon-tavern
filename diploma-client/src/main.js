@@ -13,7 +13,7 @@ import vuetify from '@/plugins/vuetify.js';
 Vue.use(VueCompositionAPI);
 Vue.config.productionTip = false;
 
-window.appController = {
+window['appController'] = {
     main() {
         new Vue({
             i18n,

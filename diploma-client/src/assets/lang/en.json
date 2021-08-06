@@ -3,7 +3,9 @@
         "views": {
             "home": "home",
             "characters": "characters",
-            "newCharacter": "new character"
+            "newCharacter": "new character",
+            "monsters": "monsters",
+            "spells": "spells"
         },
         "name": "Name",
         "str": "str",

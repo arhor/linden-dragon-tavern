@@ -3,7 +3,9 @@
         "views": {
             "home": "главная",
             "characters": "персонажи",
-            "newCharacter": "новый персонаж"
+            "newCharacter": "новый персонаж",
+            "monsters": "монстры",
+            "spells": "заклинания"
         },
         "name": "Имя",
         "str": "сил",

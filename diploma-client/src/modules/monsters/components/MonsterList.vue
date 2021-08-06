@@ -11,6 +11,7 @@
                         label="Search"
                         single-line
                         hide-details
+                        @change="register"
                     />
                 </v-card-title>
                 <v-data-table
@@ -36,8 +37,11 @@
 </template>
 
 <script>
+import { createSearchMixin } from '@/mixins/search-mixin.js';
+
 export default {
     name: 'MonsterList',
+    mixins: [createSearchMixin('monsters')],
     props: {
         monsters: {
             type: Array,
@@ -45,7 +49,6 @@ export default {
         },
     },
     data: () => ({
-        search: '',
         errors: [],
         headers: [
             { text: 'Name', value: 'name' },
