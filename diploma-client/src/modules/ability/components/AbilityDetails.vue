@@ -6,7 +6,7 @@
                     <v-col cols="12">
                         <strong>{{ ability.name }}</strong>
                     </v-col>
-                    <v-col cols="12"> {{ value }} ({{ value | calcBonus }}) </v-col>
+                    <v-col cols="12"> {{ value }} ({{ modifier }}) </v-col>
                 </v-row>
             </v-container>
         </template>
@@ -15,6 +15,8 @@
 </template>
 
 <script>
+import { computed } from '@vue/composition-api';
+
 import sharedLib from '@/lib/diploma-shared.js';
 
 const { Utils } = sharedLib.org.arhor.diploma;
@@ -31,8 +33,10 @@ export default {
             default: 0,
         },
     },
-    filters: {
-        calcBonus: (value) => Utils.calcAbilityModifier(value),
+    setup(props) {
+        return {
+            modifier: computed(() => Utils.calcAbilityModifier(props.value)),
+        };
     },
 };
 </script>
