@@ -80,24 +80,25 @@ export default {
             this.loading = true
 
             try {
-                const { page, itemsPerPage, sortBy, sortDesc } = this.options;
+                const { page, itemsPerPage, sortBy, sortDesc, search } = this.options;
 
                 let requestURL = `${SERVER_API_URL}/api/v1/monsters?page=${page}&size=${itemsPerPage}`;
 
-                if (sortBy[0] !== null && sortBy[0] !== undefined) {
-                    requestURL += `&sortBy=${sortBy[0]}`;
+                if (sortBy?.length > 0) {
+                    requestURL += `&sortBy=${sortBy}`;
                 }
-                if (sortDesc[0] !== null && sortDesc[0] !== undefined) {
-                    requestURL += `&sortDesc=${sortDesc[0]}`;
+                if (sortDesc?.length > 0) {
+                    requestURL += `&sortDesc=${sortDesc}`;
+                }
+                if (search?.length > 0) {
+                  requestURL += `&search=${search}`;
                 }
 
                 const { data } = await axios.get(requestURL);
 
-                this.monstersTest = data;
-                this.totalMonsters = 325;
+                this.monstersTest = data.items;
+                this.totalMonsters = data.total;
                 this.loading = false;
-
-                console.log(this.options);
             } catch (e) {
                 console.error('Failed attempt to fetch monsters list', e);
             }

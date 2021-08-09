@@ -11,7 +11,7 @@ private val logger = KotlinLogging.logger {}
 @RestController
 @RequestMapping("/api/v1/monsters")
 class MonsterController(
-    provider: MonsterProvider,
+    val provider: MonsterProvider,
 ) : StaticDataController<Monster, Monster.Details, String>(provider, "Monster") {
 
     override val log: KLogger
@@ -40,7 +40,16 @@ class MonsterController(
     fun getMonsterList(
         @RequestParam(required = false) page: Int?,
         @RequestParam(required = false) size: Int?,
-    ): List<Monster> {
-        return getEntityList(page, size)
+        @RequestParam(required = false) sortBy: List<String>?,
+        @RequestParam(required = false) sortDesc: List<Boolean>?,
+        @RequestParam(required = false) search: String?,
+    ): PagedModel<Monster> {
+
+        log.debug { "search = $search" }
+
+        return PagedModel(
+            items = getEntityList(page, size),
+            total = provider.count().toLong(),
+        )
     }
 }

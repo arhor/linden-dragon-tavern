@@ -9,6 +9,8 @@ import java.util.function.Predicate
  */
 interface DataProvider<T, D, K> {
 
+    fun count(): Int
+
     fun getOne(id: K): T
 
     fun getDetails(id: K): D

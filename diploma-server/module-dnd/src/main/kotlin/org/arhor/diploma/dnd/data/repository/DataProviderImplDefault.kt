@@ -26,6 +26,10 @@ abstract class DataProviderImplDefault<T, D, K>(
 
     protected abstract fun shrinkData(details: D): T
 
+    override fun count(): Int {
+        return data.size
+    }
+
     override fun getOne(id: K): T {
         return getDetails(id).let(::shrinkData)
     }
