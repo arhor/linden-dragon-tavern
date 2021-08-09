@@ -57,7 +57,7 @@ tasks {
     }
 
     register("stage") {
-        dependsOn(":diploma-client:buildFull")
+        dependsOn(":diploma-client:build")
         finalizedBy(":diploma-server:module-main:build")
     }
 }

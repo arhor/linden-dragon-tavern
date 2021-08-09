@@ -7,7 +7,6 @@ import io.jsonwebtoken.Jwts
 import io.jsonwebtoken.SignatureAlgorithm
 import io.jsonwebtoken.security.Keys
 import mu.KotlinLogging
-import org.arhor.diploma.JwtStruct
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -46,8 +45,8 @@ class JwtProvider(private val objectMapper: ObjectMapper) : TokenProvider {
         val dateExp = Date(dateNow.time + expire)
 
         return Jwts.builder()
-            .claim(JwtStruct.USERNAME, principal.username)
-            .claim(JwtStruct.ROLES, roles)
+            .claim("username", principal.username)
+            .claim("roles", roles)
             .setIssuedAt(dateNow)
             .setExpiration(dateExp)
             .signWith(secret)
@@ -65,7 +64,7 @@ class JwtProvider(private val objectMapper: ObjectMapper) : TokenProvider {
             ?.let {
                 objectMapper
                     .readTree(it)
-                    .findValue(JwtStruct.USERNAME)?.asText()
+                    .findValue("username")?.asText()
             }
     }
 
@@ -83,8 +82,8 @@ class JwtProvider(private val objectMapper: ObjectMapper) : TokenProvider {
         val subject = jwtParser.parseClaimsJws(token).body.subject
         val objectTree = objectMapper.readTree(subject)
 
-        val username = objectTree.findValue(JwtStruct.USERNAME).asText()
-        val roles = objectTree.findValue(JwtStruct.ROLES).map { role -> role.asText() }
+        val username = objectTree.findValue("username").asText()
+        val roles = objectTree.findValue("password").map { role -> role.asText() }
 
         return username to roles
     }

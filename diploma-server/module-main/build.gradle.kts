@@ -31,7 +31,6 @@ dependencies {
     kapt("org.mapstruct:mapstruct-processor:${Versions.mapstruct}")
     kapt("org.springframework:spring-context-indexer")
 
-    implementation(project(":diploma-shared"))
     implementation(project(":diploma-server:module-common"))
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")

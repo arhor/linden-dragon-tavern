@@ -2,7 +2,6 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Home from '@/modules/home';
-import sharedLib from '@/lib/diploma-shared.js';
 import store from '@/store';
 import {
     about,
@@ -22,8 +21,6 @@ import {
 import { loadLanguageAsync } from '@/plugins/i18n';
 
 Vue.use(VueRouter);
-
-const { Account } = sharedLib.org.arhor.diploma.Authorities;
 
 const isLoggedIn = createLoginGuard(store);
 const hasAuthorities = createAuthoritiesGuard(store);
@@ -49,7 +46,7 @@ const router = new VueRouter({
             meta: {
                 breadcrumbs: [home],
             },
-            beforeEnter: composeGuards(isLoggedIn, hasAuthorities(Account.VIEW), checkLang),
+            beforeEnter: composeGuards(isLoggedIn, hasAuthorities('ACCOUNT:VIEW'), checkLang),
         },
         {
             path: '/about',

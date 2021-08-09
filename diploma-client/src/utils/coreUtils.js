@@ -71,3 +71,11 @@ export function isUndefined(value) {
 export function isNull(value) {
     return value === null;
 }
+
+/**
+ * @param {number} value
+ * @return {number}
+ */
+export function int(value) {
+    return value | 0;
+}

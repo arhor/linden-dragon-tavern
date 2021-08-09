@@ -2,7 +2,6 @@ package org.arhor.diploma.web.api.v1
 
 import kotlinx.coroutines.flow.Flow
 import mu.KotlinLogging
-import org.arhor.diploma.Authorities
 import org.arhor.diploma.commons.pagination.DEFAULT_PAGE
 import org.arhor.diploma.commons.pagination.DEFAULT_SIZE
 import org.arhor.diploma.service.AccountService
@@ -56,7 +55,7 @@ class AccountController(private val service: AccountService) {
     }
 
     @DeleteMapping("/{accountId}")
-    @PreAuthorize("isAuthenticated() and hasAuthority('${Authorities.Account.EDIT}')")
+    @PreAuthorize("isAuthenticated() and hasAuthority('ACCOUNT:EDIT')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     suspend fun deleteAccount(@PathVariable accountId: Long, auth: Authentication?) {
         val account = service.getOne(accountId)

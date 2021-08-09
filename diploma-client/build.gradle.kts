@@ -24,31 +24,12 @@ idea {
                 file("$projectDir/raw_data"),
                 file("$projectDir/dist"),
                 file("$projectDir/dist_electron"),
-                file("$projectDir/public/dll")
             )
         )
     }
 }
 
-dependencies {
-    projects.diplomaShared
-}
-
 tasks {
-    val injectSharedLib = register("injectSharedLib") {
-        dependsOn(":diploma-shared:build")
-
-        doLast {
-            copy {
-                val sharedBldDir = project(":diploma-shared").buildDir.toString()
-                val clientPrjDir = project(":diploma-client").projectDir.toString()
-
-                from(Paths.get(sharedBldDir, "compiled-js"))
-                into(Paths.get(clientPrjDir, "src", "lib"))
-            }
-        }
-    }
-
     val test = register<NpmTask>("test") {
         dependsOn(npmInstall)
         group = "verification"
@@ -57,54 +38,11 @@ tasks {
         args.set(listOf("run", "test:unit"))
     }
 
-    val dll = register<NpmTask>("dll") {
-        dependsOn(npmInstall)
-        group = "build"
-        description = "Builds vendors bundle"
-        workingDir.fileValue(projectDir)
-        args.set(listOf("run", "dll"))
-    }
-
-    val build = register<NpmTask>("build") {
-        dependsOn(npmInstall, injectSharedLib, test)
+    register<NpmTask>("build") {
+        dependsOn(npmInstall, test)
         group = "build"
         description = "Builds production version of the app client"
         workingDir.fileValue(projectDir)
         args.set(listOf("run", "build"))
-    }
-
-    register("buildFull") {
-        group = "build"
-        description = "Builds dll and sources"
-        dependsOn(dll)
-        finalizedBy(build)
-    }
-
-    register<NpmTask>("clientStart") {
-        dependsOn(npmInstall, injectSharedLib)
-        description = "Starts client development server"
-        workingDir.fileValue(projectDir)
-        args.set(listOf("run", "serve"))
-    }
-
-    register<NpmTask>("npmAudit") {
-        workingDir.fileValue(projectDir)
-        args.set(listOf("audit"))
-    }
-
-    register<NpmTask>("npmAuditFix") {
-        workingDir.fileValue(projectDir)
-        args.set(listOf("audit", "fix"))
-    }
-
-    register<NpxTask>("updateBrowsersList") {
-        workingDir.fileValue(projectDir)
-        command.set("browserslist@latest")
-        args.set(listOf("--update-db"))
-    }
-
-    register<NodeTask>("scrap") {
-        dependsOn(npmInstall)
-        script.fileValue(file("scripts/dungeon_su_scrapper.js"))
     }
 }

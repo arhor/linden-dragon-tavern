@@ -39,8 +39,6 @@ internal class SpaWebFilterTest {
             "/css/chunk-6c1c7df0.457609c4.css",
             "/css/chunk-vendors.1efe0f61.css",
             "/js/chunk-2d0a465b.ddfdb17a.js",
-            "/js/kotlin.0cbda7ad.dll.js",
-            "/js/vue.0cbda7ad.dll.js",
             "/pics/maps/Barovia/baroviaregion.png",
             "/img/logo.3be58095.svg",
             "/fonts/materialdesignicons-webfont.7a44ea19.woff2",

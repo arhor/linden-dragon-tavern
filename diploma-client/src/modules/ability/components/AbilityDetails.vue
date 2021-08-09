@@ -16,10 +16,7 @@
 
 <script>
 import { computed } from '@vue/composition-api';
-
-import sharedLib from '@/lib/diploma-shared.js';
-
-const { Utils } = sharedLib.org.arhor.diploma;
+import { int } from '@/utils/coreUtils';
 
 export default {
     name: 'AbilityDetails',
@@ -34,8 +31,13 @@ export default {
         },
     },
     setup(props) {
+        const calcAbilityModifier = (value) => {
+            const modifier = int((int(int(value) - 10)) / 2);
+            return `${modifier < 0 ? '-' : '+'}${modifier}`;
+        };
+
         return {
-            modifier: computed(() => Utils.calcAbilityModifier(props.value)),
+            modifier: computed(() => calcAbilityModifier(props.value)),
         };
     },
 };

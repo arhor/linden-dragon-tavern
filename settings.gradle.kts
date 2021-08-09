@@ -12,7 +12,6 @@ include(
     ":diploma-server:module-common",
     ":diploma-server:module-dnd",
     ":diploma-server:module-main",
-    ":diploma-shared",
     ":diploma-test-utils"
 )
 

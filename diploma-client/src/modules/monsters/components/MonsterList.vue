@@ -77,7 +77,7 @@ export default {
             this.$emit('show-monster-details', monsterName);
         },
         async getDataFromApi() {
-            this.loading = true
+            this.loading = true;
 
             try {
                 const { page, itemsPerPage, sortBy, sortDesc, search } = this.options;
@@ -91,7 +91,7 @@ export default {
                     requestURL += `&sortDesc=${sortDesc}`;
                 }
                 if (search?.length > 0) {
-                  requestURL += `&search=${search}`;
+                    requestURL += `&search=${search}`;
                 }
 
                 const { data } = await axios.get(requestURL);
