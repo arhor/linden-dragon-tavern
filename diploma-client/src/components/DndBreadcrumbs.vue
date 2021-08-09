@@ -26,12 +26,10 @@ export default {
         },
     },
     watch: {
-        $route() {
-            this.updateBreadcrumbs();
+        $route: {
+            handler: 'updateBreadcrumbs',
+            immediate: true,
         },
-    },
-    mounted() {
-        this.updateBreadcrumbs();
     },
 };
 </script>

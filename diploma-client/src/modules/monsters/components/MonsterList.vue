@@ -17,8 +17,11 @@
                 <v-data-table
                     class="elevation-1"
                     :headers="headers"
-                    :items="monsters"
+                    :items="monstersTest"
                     :search="search"
+                    :options.sync="options"
+                    :server-items-length="totalMonsters"
+                    :loading="loading"
                     @click:row="showDetails"
                 >
                     <template
@@ -37,6 +40,8 @@
 </template>
 
 <script>
+import axios from '@/api/BaseService.js';
+import { SERVER_API_URL } from '@/api/server-api.js';
 import { searchMixin } from '@/mixins/searchMixin.js';
 
 export default {
@@ -50,6 +55,10 @@ export default {
     },
     data: () => ({
         errors: [],
+        totalMonsters: 0,
+        monstersTest: [],
+        loading: true,
+        options: {},
         headers: [
             { text: 'Name', value: 'name' },
             { text: 'Size', value: 'size' },
@@ -57,9 +66,41 @@ export default {
             { text: 'CR', value: 'challengeRating' },
         ],
     }),
+    watch: {
+        options: {
+            handler: 'getDataFromApi',
+            deep: true,
+        },
+    },
     methods: {
         showDetails(monsterName) {
             this.$emit('show-monster-details', monsterName);
+        },
+        async getDataFromApi() {
+            this.loading = true
+
+            try {
+                const { page, itemsPerPage, sortBy, sortDesc } = this.options;
+
+                let requestURL = `${SERVER_API_URL}/api/v1/monsters?page=${page}&size=${itemsPerPage}`;
+
+                if (sortBy[0] !== null && sortBy[0] !== undefined) {
+                    requestURL += `&sortBy=${sortBy[0]}`;
+                }
+                if (sortDesc[0] !== null && sortDesc[0] !== undefined) {
+                    requestURL += `&sortDesc=${sortDesc[0]}`;
+                }
+
+                const { data } = await axios.get(requestURL);
+
+                this.monstersTest = data;
+                this.totalMonsters = 325;
+                this.loading = false;
+
+                console.log(this.options);
+            } catch (e) {
+                console.error('Failed attempt to fetch monsters list', e);
+            }
         },
     },
 };

@@ -52,7 +52,7 @@ abstract class StaticDataController<
     }
 
     protected fun getEntityList(page: Int?, size: Int?): List<T> {
-        return if ((page == null) and (size == null)) {
+        return if (((page == null) && (size == null)) || size == -1) {
             log.debug { "fetching all $resourceName list" }
             dataProvider.getList()
         } else {
