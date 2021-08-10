@@ -31,13 +31,11 @@ export default {
         },
     },
     setup(props) {
-        const calcAbilityModifier = (value) => {
-            const modifier = int((int(int(value) - 10)) / 2);
-            return `${modifier < 0 ? '-' : '+'}${modifier}`;
-        };
-
         return {
-            modifier: computed(() => calcAbilityModifier(props.value)),
+            modifier: computed(() => {
+                const modifier = int(int(int(props.value) - 10) / 2);
+                return `${modifier < 0 ? '-' : '+'}${modifier}`;
+            }),
         };
     },
 };

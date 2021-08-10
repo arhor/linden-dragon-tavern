@@ -1,10 +1,6 @@
 import axios from '@/api/BaseService.js';
-import { SERVER_API_URL } from '@/api/server-api.js';
 
-//const API_URL = '/api/v1/monsters';
-//const API_FALLBACK_URL = 'data/5e-SRD-Ability-Scores.json';
-
-const MONSTERS_BASE_URL = `${SERVER_API_URL}/api/v1/monsters`;
+const MONSTERS_BASE_URL = `/api/v1/monsters`;
 
 const mutation = {
     SET_MONSTERS: 'SET_MONSTERS',
@@ -15,10 +11,10 @@ const mutation = {
 export default {
     namespaced: true,
     state: {
-        allMonsters: [],
+        items: [],
+        total: 0,
         monsterDetailsCache: [],
         currentMonster: null,
-        isModuleLoaded: false,
     },
     getters: {
         getMonsterDetailsFromCache: (state) => (name) => {
@@ -26,17 +22,29 @@ export default {
         },
     },
     actions: {
-        load: async ({ commit, state }) => {
-            if (!state.isModuleLoaded) {
-                try {
-                    const { data } = await axios.get(MONSTERS_BASE_URL);
-                    commit(mutation.SET_MONSTERS, data);
-                } catch (error) {
-                    console.error(error);
+        loadMonstersPage: async ({ commit }, { page, itemsPerPage, sortBy, sortDesc, search }) => {
+            try {
+                const query = new URLSearchParams();
+
+                query.set('page', page);
+                query.set('size', itemsPerPage);
+
+                if (sortBy?.length > 0) {
+                    query.set('sortBy', sortBy);
                 }
+                if (sortDesc?.length > 0) {
+                    query.set('sortDesc', sortDesc);
+                }
+                if (search?.length > 0) {
+                    query.set('search', search);
+                }
+
+                const { data } = await axios.get(`${MONSTERS_BASE_URL}?${query.toString()}`);
+                commit(mutation.SET_MONSTERS, data);
+            } catch (e) {
+                console.error('Failed attempt to fetch monsters list', e);
             }
         },
-
         loadDetails: async ({ commit, getters: { getMonsterDetailsFromCache } }, name) => {
             const cachedDetails = getMonsterDetailsFromCache(name);
 
@@ -55,22 +63,22 @@ export default {
         },
     },
     mutations: {
-        [mutation.SET_MONSTERS]: (state, payload) => {
-            state.allMonsters = payload;
-            state.isModuleLoaded = true;
+        [mutation.SET_MONSTERS]: (state, { items, total }) => {
+            state.items = items;
+            state.total = total;
         },
-        [mutation.SET_MONSTER_DETAILS]: (state, payload) => {
-            if (state.currentMonster?.name !== payload?.name) {
-                state.currentMonster = payload;
+        [mutation.SET_MONSTER_DETAILS]: (state, monster) => {
+            if (state.currentMonster?.name !== monster?.name) {
+                state.currentMonster = monster;
             }
         },
-        [mutation.CACHE_MONSTER_DETAILS]: (state, payload) => {
+        [mutation.CACHE_MONSTER_DETAILS]: (state, monster) => {
             const isAlreadyCached = state.monsterDetailsCache
-                .map((monster) => monster.name)
-                .includes(payload.name);
+                .map((it) => it.name)
+                .includes(monster.name);
 
             if (!isAlreadyCached) {
-                state.monsterDetailsCache.push(payload);
+                state.monsterDetailsCache.push(monster);
             }
         },
     },

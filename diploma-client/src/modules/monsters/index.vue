@@ -1,6 +1,11 @@
 <template>
     <div>
-        <monster-list :monsters="allMonsters" @show-monster-details="loadMonsterDetails" />
+        <monster-list
+            :items="items"
+            :total="total"
+            @show-monster-details="loadMonsterDetails"
+            @get-monsters-page="loadMonstersPage"
+        />
         <v-dialog v-model="dialog" max-width="800">
             <monster-details :monster="currentMonster" />
         </v-dialog>
@@ -22,17 +27,14 @@ export default {
         dialog: false,
     }),
     computed: {
-        ...mapState('monsters', ['allMonsters', 'currentMonster']),
+        ...mapState('monsters', ['items', 'total', 'currentMonster']),
     },
     methods: {
-        ...mapActions('monsters', ['load', 'loadDetails']),
+        ...mapActions('monsters', ['loadMonstersPage', 'loadDetails']),
         async loadMonsterDetails({ name }) {
             await this.loadDetails(name);
             this.dialog = true;
         },
-    },
-    mounted() {
-        this.load();
     },
 };
 </script>

@@ -11,17 +11,15 @@
                         label="Search"
                         single-line
                         hide-details
-                        @change="register"
                     />
                 </v-card-title>
                 <v-data-table
                     class="elevation-1"
                     :headers="headers"
-                    :items="monstersTest"
+                    :items="items"
                     :search="search"
                     :options.sync="options"
-                    :server-items-length="totalMonsters"
-                    :loading="loading"
+                    :server-items-length="total"
                     @click:row="showDetails"
                 >
                     <template
@@ -40,24 +38,22 @@
 </template>
 
 <script>
-import axios from '@/api/BaseService.js';
-import { SERVER_API_URL } from '@/api/server-api.js';
 import { searchMixin } from '@/mixins/searchMixin.js';
 
 export default {
     name: 'MonsterList',
     mixins: [searchMixin],
     props: {
-        monsters: {
+        items: {
             type: Array,
+            required: true,
+        },
+        total: {
+            type: Number,
             required: true,
         },
     },
     data: () => ({
-        errors: [],
-        totalMonsters: 0,
-        monstersTest: [],
-        loading: true,
         options: {},
         headers: [
             { text: 'Name', value: 'name' },
@@ -68,7 +64,7 @@ export default {
     }),
     watch: {
         options: {
-            handler: 'getDataFromApi',
+            handler: 'getMonstersPage',
             deep: true,
         },
     },
@@ -76,32 +72,8 @@ export default {
         showDetails(monsterName) {
             this.$emit('show-monster-details', monsterName);
         },
-        async getDataFromApi() {
-            this.loading = true;
-
-            try {
-                const { page, itemsPerPage, sortBy, sortDesc, search } = this.options;
-
-                let requestURL = `${SERVER_API_URL}/api/v1/monsters?page=${page}&size=${itemsPerPage}`;
-
-                if (sortBy?.length > 0) {
-                    requestURL += `&sortBy=${sortBy}`;
-                }
-                if (sortDesc?.length > 0) {
-                    requestURL += `&sortDesc=${sortDesc}`;
-                }
-                if (search?.length > 0) {
-                    requestURL += `&search=${search}`;
-                }
-
-                const { data } = await axios.get(requestURL);
-
-                this.monstersTest = data.items;
-                this.totalMonsters = data.total;
-                this.loading = false;
-            } catch (e) {
-                console.error('Failed attempt to fetch monsters list', e);
-            }
+        getMonstersPage() {
+            this.$emit('get-monsters-page', this.options);
         },
     },
 };
