@@ -12,12 +12,12 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig
 class MonsterReaderTest {
 
     @Autowired
-    private lateinit var service: MonsterProvider
+    private lateinit var service: MonsterRepository
 
     @Test
     fun fetchAllMonsters() {
         // when
-        val monsters = service.getList()
+        val monsters = service.getPage()
 
         // then
         assertThat(monsters)

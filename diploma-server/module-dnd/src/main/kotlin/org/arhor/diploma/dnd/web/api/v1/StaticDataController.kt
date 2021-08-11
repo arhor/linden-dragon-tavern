@@ -2,64 +2,60 @@ package org.arhor.diploma.dnd.web.api.v1
 
 import mu.KLogger
 import org.arhor.diploma.commons.*
-import org.arhor.diploma.dnd.data.repository.DataProvider
+import org.arhor.diploma.dnd.data.repository.DataRepository
 import java.io.Serializable
-import java.util.function.Predicate
 
-abstract class StaticDataController<
-        T : Identifiable<K>,
-        D : Identifiable<K>,
-        K : Serializable>(
-    private val dataProvider: DataProvider<T, D, K>,
-    private val resourceName: String
-) {
-
+abstract class StaticDataController<T, K>(
+    private val dataRepository: DataRepository<T, K>,
+    private val resourceName: String,
+) where T : Identifiable<K>,
+        K : Serializable {
 
     abstract val log: KLogger
 
-    protected fun getEntityDetails(name: K): D {
+    protected fun getEntityDetails(name: K): T {
         log.debug { "fetching $resourceName details by name: $name" }
-        return dataProvider.getDetails(name)
+        return dataRepository.findById(name)
     }
 
-    protected fun getEntityDetailsList(page: Int?, size: Int?): List<D> {
+    protected fun getEntityDetailsList(page: Int?, size: Int?): Page<T> {
         return if ((page == null) && (size == null)) {
             log.debug { "fetching all $resourceName details list" }
-            dataProvider.getDetailsList()
+            dataRepository.getPage()
         } else {
             val safePage = page.minBound(DEFAULT_PAGE)
             val safeSize = size.maxBound(DEFAULT_SIZE)
             log.debug { "fetching $resourceName details list: page $safePage, size $safeSize" }
-            dataProvider.getDetailsList(safePage, safeSize)
+            dataRepository.getPage(safePage, safeSize)
         }
     }
 
-    protected fun getEntityDetailsList(page: Int?, size: Int?, query: Predicate<D>): List<D> {
+    protected fun getEntityDetailsList(page: Int?, size: Int?, query: (T) -> Boolean): Page<T> {
         return if ((page == null) and (size == null)) {
             log.debug { "fetching all $resourceName details list" }
-            dataProvider.getDetailsList(query)
+            dataRepository.getPage(query)
         } else {
             val safePage = page.minBound(DEFAULT_PAGE)
             val safeSize = size.maxBound(DEFAULT_SIZE)
             log.debug { "fetching $resourceName details list: page $safePage, size $safeSize" }
-            dataProvider.getDetailsList(safePage, safeSize)
+            dataRepository.getPage(safePage, safeSize)
         }
     }
 
     protected fun getEntity(name: K): T {
         log.debug { "fetching $resourceName by name: $name" }
-        return dataProvider.getOne(name)
+        return dataRepository.findById(name)
     }
 
-    protected fun getEntityList(page: Int?, size: Int?): List<T> {
+    protected fun getEntityList(page: Int?, size: Int?): Page<T> {
         return if (((page == null) && (size == null)) || size == -1) {
             log.debug { "fetching all $resourceName list" }
-            dataProvider.getList()
+            dataRepository.getPage()
         } else {
             val safePage = page.minBound(DEFAULT_PAGE)
             val safeSize = size.maxBound(DEFAULT_SIZE)
             log.debug { "fetching $resourceName list: page $safePage, size $safeSize" }
-            dataProvider.getList(safePage, safeSize)
+            dataRepository.getPage(safePage, safeSize)
         }
     }
 }

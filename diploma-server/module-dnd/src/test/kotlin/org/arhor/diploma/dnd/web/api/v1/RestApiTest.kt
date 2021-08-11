@@ -1,7 +1,7 @@
 package org.arhor.diploma.dnd.web.api.v1
 
-import org.arhor.diploma.dnd.data.repository.MonsterProvider
-import org.arhor.diploma.dnd.data.repository.SpellProvider
+import org.arhor.diploma.dnd.data.repository.MonsterRepository
+import org.arhor.diploma.dnd.data.repository.SpellRepository
 import org.arhor.diploma.dnd.service.CharsheetService
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.junit.jupiter.MockitoExtension
@@ -30,8 +30,8 @@ internal abstract class RestApiTest {
     protected lateinit var service: CharsheetService
 
     @MockBean
-    protected lateinit var monsterProvider: MonsterProvider
+    protected lateinit var monsterProvider: MonsterRepository
 
     @MockBean
-    protected lateinit var spellProvider: SpellProvider
+    protected lateinit var spellProvider: SpellRepository
 }

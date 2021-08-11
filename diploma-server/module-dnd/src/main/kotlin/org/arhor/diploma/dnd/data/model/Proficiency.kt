@@ -15,7 +15,6 @@ class Proficiency(
     val races: List<String>,
 ) : Identifiable<String> {
 
-    override val id: String
-        @JsonIgnore
-        get() = name
+    @get:JsonIgnore
+    override val id: String = name
 }

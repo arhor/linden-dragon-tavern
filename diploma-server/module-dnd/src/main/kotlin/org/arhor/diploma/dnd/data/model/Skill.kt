@@ -11,7 +11,6 @@ data class Skill(
     var abilityScore: String?
 ) : Identifiable<String> {
 
-    override val id: String?
-        @JsonIgnore
-        get() = name
+    @get:JsonIgnore
+    override val id: String? = name
 }

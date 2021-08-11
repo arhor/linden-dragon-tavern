@@ -6,44 +6,31 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonInclude.Include.NON_NULL
 import org.arhor.diploma.commons.Identifiable
 
+@JsonInclude(NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class Monster(
-    val name: String,
-    val size: String,
-    val type: String,
-    val challengeRating: Double
+    val name: String? = null,
+    val size: String? = null,
+    val type: String? = null,
+    val subtype: String? = null,
+    val alignment: String? = null,
+    val armorClass: Int? = null,
+    val hitPoints: String? = null,
+    val speed: List<String>? = null,
+    val abilities: Abilities? = null,
+    val skills: Skills? = null,
+    val damageVulnerabilities: List<String>? = null,
+    val damageResistances: List<String>? = null,
+    val damageImmunities: List<String>? = null,
+    val conditionImmunities: List<String>? = null,
+    val senses: List<String>? = null,
+    val languages: List<String>? = null,
+    val challengeRating: Double,
+    val specialAbilities: List<SpecialAbility>? = null,
+    val actions: List<Action>? = null,
+    val legendaryActions: List<Action>? = null,
 ) : Identifiable<String> {
 
-    override val id: String
-        @JsonIgnore
-        get() = name
-
-    @JsonInclude(NON_NULL)
-    @JsonIgnoreProperties(ignoreUnknown = true)
-    data class Details(
-        val name: String,
-        val size: String,
-        val type: String,
-        val subtype: String?,
-        val alignment: String,
-        val armorClass: Int,
-        val hitPoints: String,
-        val speed: List<String>,
-        val abilities: Abilities,
-        val skills: Skills,
-        val damageVulnerabilities: List<String>?,
-        val damageResistances: List<String>?,
-        val damageImmunities: List<String>?,
-        val conditionImmunities: List<String>?,
-        val senses: List<String>,
-        val languages: List<String>?,
-        val challengeRating: Double,
-        val specialAbilities: List<SpecialAbility>?,
-        val actions: List<Action>?,
-        val legendaryActions: List<Action>?
-    ) : Identifiable<String> {
-
-        override val id: String
-            @JsonIgnore
-            get() = name
-    }
+    @get:JsonIgnore
+    override val id: String? = name
 }

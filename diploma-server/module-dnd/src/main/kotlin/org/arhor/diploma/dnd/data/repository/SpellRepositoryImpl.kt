@@ -7,22 +7,13 @@ import org.springframework.core.io.Resource
 import org.springframework.stereotype.Service
 
 @Service
-class SpellProviderImpl(
+class SpellRepositoryImpl(
     objectMapper: ObjectMapper,
-) : SpellProvider,
-    DataProviderImplDefault<Spell, Spell.Details, String>(
-        objectMapper,
-    ) {
+) : SpellRepository, DataRepositoryImplDefault<Spell, String>(objectMapper) {
 
     @Value("classpath:dnd/data/5e-SRD-Spells.json")
     override lateinit var resource: Resource
 
     override val resourceName get() = "spell"
-    override val resourceType get() = Array<Spell.Details>::class.java
-
-    override fun shrinkData(details: Spell.Details) = Spell(
-        name = details.name,
-        level = details.level,
-        school = details.school
-    )
+    override val resourceType get() = Array<Spell>::class.java
 }

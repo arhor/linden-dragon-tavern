@@ -7,18 +7,13 @@ import org.springframework.core.io.Resource
 import org.springframework.stereotype.Service
 
 @Service
-class ProficiencyProviderImpl(
+class ProficiencyRepositoryImpl(
     objectMapper: ObjectMapper,
-) : ProficiencyProvider,
-    DataProviderImplDefault<Proficiency, Proficiency, String>(
-        objectMapper,
-    ) {
+) : ProficiencyRepository, DataRepositoryImplDefault<Proficiency, String>(objectMapper) {
 
     @Value("classpath:dnd/data/5e-SRD-Proficiencies.json")
     override lateinit var resource: Resource
 
     override val resourceName get() = "proficiency"
     override val resourceType get() = Array<Proficiency>::class.java
-
-    override fun shrinkData(details: Proficiency): Proficiency = details
 }

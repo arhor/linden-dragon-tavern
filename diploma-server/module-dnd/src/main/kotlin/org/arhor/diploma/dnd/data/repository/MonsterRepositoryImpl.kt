@@ -7,23 +7,13 @@ import org.springframework.core.io.Resource
 import org.springframework.stereotype.Service
 
 @Service
-class MonsterProviderImpl(
+class MonsterRepositoryImpl(
     objectMapper: ObjectMapper,
-) : MonsterProvider,
-    DataProviderImplDefault<Monster, Monster.Details, String>(
-        objectMapper,
-    ) {
+) : MonsterRepository, DataRepositoryImplDefault<Monster, String>(objectMapper) {
 
     @Value("classpath:dnd/data/5e-SRD-Monsters.json")
     override lateinit var resource: Resource
 
     override val resourceName get() = "monster"
-    override val resourceType get() = Array<Monster.Details>::class.java
-
-    override fun shrinkData(details: Monster.Details): Monster = Monster(
-        name = details.name,
-        size = details.size,
-        type = details.type,
-        challengeRating = details.challengeRating
-    )
+    override val resourceType get() = Array<Monster>::class.java
 }

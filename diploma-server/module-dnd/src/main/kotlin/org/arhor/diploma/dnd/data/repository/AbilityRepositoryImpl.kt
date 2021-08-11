@@ -7,18 +7,13 @@ import org.springframework.core.io.Resource
 import org.springframework.stereotype.Service
 
 @Service
-class AbilityProviderImpl(
+class AbilityRepositoryImpl(
     objectMapper: ObjectMapper,
-) : AbilityProvider,
-    DataProviderImplDefault<Ability, Ability, String>(
-        objectMapper,
-    ) {
+) : AbilityRepository, DataRepositoryImplDefault<Ability, String>(objectMapper) {
 
     @Value("classpath:dnd/data/5e-SRD-Ability-Scores.json")
     override lateinit var resource: Resource
 
     override val resourceName get() = "ability"
     override val resourceType get() = Array<Ability>::class.java
-
-    override fun shrinkData(details: Ability): Ability = details
 }

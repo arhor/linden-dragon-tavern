@@ -19,9 +19,9 @@ internal class MonsterHandlerTest : RestApiTest() {
         // then
         response
             .expectStatus().isOk
-            .expectBody().json("[]")
+            .expectBody().json("""{ "items": [], "total": 0 }""")
 
-        verify(monsterProvider).getList()
+        verify(monsterProvider).getPage()
     }
 
     @Test
@@ -36,9 +36,9 @@ internal class MonsterHandlerTest : RestApiTest() {
         // then
         response
             .expectStatus().isOk
-            .expectBody().json("[]")
+            .expectBody().json("""{ "items": [], "total": 0 }""")
 
-        verify(monsterProvider).getList(page, size)
+        verify(monsterProvider).getPage(page, size)
     }
 
     @Test
@@ -51,7 +51,7 @@ internal class MonsterHandlerTest : RestApiTest() {
             .expectStatus().isOk
             .expectBody().json("[]")
 
-        verify(monsterProvider).getDetailsList()
+        verify(monsterProvider).getPage()
     }
 
     @Test
@@ -68,19 +68,19 @@ internal class MonsterHandlerTest : RestApiTest() {
             .expectStatus().isOk
             .expectBody().json("[]")
 
-        verify(monsterProvider).getDetailsList(page, size)
+        verify(monsterProvider).getPage(page, size)
     }
 
     @Test
     fun `should return an expected monster object`() {
         // given
-        val name = "Ancient Red Dragon"
-        val expectedMonster = Monster(name, "large", "dragon", 20.0)
+        val expectedMonster =
+            Monster(name = "Ancient Red Dragon", size = "large", type = "dragon", challengeRating = 20.0)
 
-        `when`(monsterProvider.getOne(name)).thenReturn(expectedMonster)
+        `when`(monsterProvider.findById(expectedMonster.name!!)).thenReturn(expectedMonster)
 
         // when
-        val response = http.get().uri("/api/v1/monsters/${name}").exchange()
+        val response = http.get().uri("/api/v1/monsters/${expectedMonster.name}").exchange()
 
         // then
         response
