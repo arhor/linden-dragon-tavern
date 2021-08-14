@@ -1,6 +1,5 @@
 package org.arhor.diploma.dnd.web.api.v1
 
-import mu.KLogger
 import mu.KLogging
 import org.arhor.diploma.commons.DEFAULT_PAGE
 import org.arhor.diploma.commons.DEFAULT_SIZE
@@ -12,25 +11,11 @@ import org.springframework.web.bind.annotation.*
 @RestController
 @RequestMapping("/api/v1/monsters")
 class MonsterController(
-    val repository: MonsterRepository,
-) : StaticDataController<Monster, String>(repository, "Monster") {
+    private val repository: MonsterRepository,
+) : StaticDataController<Monster, String>(repository) {
 
-    override val log: KLogger
-        get() = logger
-
-    @GetMapping("/{name}/details")
-    suspend fun getMonsterDetails(@PathVariable name: String): Monster {
-        logger.debug { "$name is fetched" }
-        return getEntityDetails(name)
-    }
-
-    @GetMapping("/details")
-    fun getMonsterDetailsList(
-        @RequestParam(required = false) page: Int?,
-        @RequestParam(required = false) size: Int?,
-    ): Page<Monster> {
-        return getEntityDetailsList(page, size)
-    }
+    override val log = logger
+    override val resourceName = "Monster"
 
     @GetMapping("/{name}")
     fun getMonster(@PathVariable name: String): Monster {
@@ -46,7 +31,7 @@ class MonsterController(
         @RequestParam(required = false) search: String?,
     ): Page<Monster> {
 
-        val query = search?.let(::monsterNameLike)
+        val query = search?.let(Monster::nameLike)
 
         return if (shouldFindAllEntities(page, size)) {
             if (query == null) {
@@ -63,13 +48,14 @@ class MonsterController(
         }
     }
 
-    private fun monsterNameLike(search: String): (Monster) -> Boolean {
-        return { it.name?.contains(search, ignoreCase = true) == true }
-    }
-
     private fun shouldFindAllEntities(page: Int?, size: Int?): Boolean {
         return ((page == null) && (size == null)) || (size == -1)
     }
 
     companion object : KLogging()
+}
+
+data class Jopa(val bulki: Int = 0) {
+
+    constructor() : this(0)
 }

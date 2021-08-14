@@ -11,7 +11,7 @@ class SpellService extends BaseService {
     }
 
     async getSpellByName(name) {
-        const { data } = await axios.get(`/api/v1/spells/${name}/details`);
+        const { data } = await axios.get(`/api/v1/spells/${name}`);
         return data;
     }
 }

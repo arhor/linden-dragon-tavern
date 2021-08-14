@@ -1,22 +1,23 @@
 package org.arhor.diploma.dnd.web.api.v1
 
 import mu.KLogger
-import mu.KotlinLogging
+import mu.KLogging
 import org.arhor.diploma.commons.Page
 import org.arhor.diploma.dnd.data.model.Ability
 import org.arhor.diploma.dnd.data.repository.AbilityRepository
 import org.springframework.web.bind.annotation.*
 
-private val logger = KotlinLogging.logger {}
-
 @RestController
 @RequestMapping("/api/v1/abilities")
 class AbilityController(
-    provider: AbilityRepository,
-) : StaticDataController<Ability, String>(provider, "Ability") {
+    repository: AbilityRepository,
+) : StaticDataController<Ability, String>(repository) {
 
     override val log: KLogger
         get() = logger
+
+    override val resourceName: String
+        get() = "Ability"
 
     @GetMapping("/{name}")
     fun getAbility(@PathVariable name: String): Ability {
@@ -30,4 +31,6 @@ class AbilityController(
     ): Page<Ability> {
         return getEntityList(page, size)
     }
+
+    companion object : KLogging()
 }

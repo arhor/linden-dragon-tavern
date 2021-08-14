@@ -33,4 +33,11 @@ data class Monster(
 
     @get:JsonIgnore
     override val id: String? = name
+
+    companion object {
+        @JvmStatic
+        fun nameLike(search: String): (Monster) -> Boolean {
+            return { it.name?.contains(search, ignoreCase = true) == true }
+        }
+    }
 }

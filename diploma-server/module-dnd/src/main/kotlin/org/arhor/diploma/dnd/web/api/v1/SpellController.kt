@@ -1,27 +1,17 @@
 package org.arhor.diploma.dnd.web.api.v1
 
-import mu.KLogger
-import mu.KotlinLogging
+import mu.KLogging
 import org.arhor.diploma.commons.Page
 import org.arhor.diploma.dnd.data.model.Spell
 import org.arhor.diploma.dnd.data.repository.SpellRepository
 import org.springframework.web.bind.annotation.*
 
-private val logger = KotlinLogging.logger {}
-
 @RestController
 @RequestMapping("/api/v1/spells")
-class SpellController(
-    provider: SpellRepository,
-) : StaticDataController<Spell, String>(provider, "Spell") {
+class SpellController(repository: SpellRepository) : StaticDataController<Spell, String>(repository) {
 
-    override val log: KLogger
-        get() = logger
-
-    @GetMapping("/{name}/details")
-    suspend fun getSpellDetails(@PathVariable name: String): Spell {
-        return getEntityDetails(name)
-    }
+    override val log = logger
+    override val resourceName = "Spell"
 
     @GetMapping("/{name}")
     suspend fun getSpell(@PathVariable name: String): Spell {
@@ -35,4 +25,6 @@ class SpellController(
     ): Page<Spell> {
         return getEntityList(page, size)
     }
+
+    companion object : KLogging()
 }

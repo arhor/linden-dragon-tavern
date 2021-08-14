@@ -54,7 +54,7 @@ export default {
             }
 
             try {
-                const { data } = await axios.get(`${MONSTERS_BASE_URL}/${name}/details`);
+                const { data } = await axios.get(`${MONSTERS_BASE_URL}/${name}`);
                 commit(mutation.CACHE_MONSTER_DETAILS, data);
                 commit(mutation.SET_MONSTER_DETAILS, data);
             } catch (error) {

@@ -42,36 +42,6 @@ internal class MonsterHandlerTest : RestApiTest() {
     }
 
     @Test
-    fun `should return an empty JSON array and call getDetailsList method without args`() {
-        // when
-        val response = http.get().uri("/api/v1/monsters/details").exchange()
-
-        // then
-        response
-            .expectStatus().isOk
-            .expectBody().json("[]")
-
-        verify(monsterProvider).getPage()
-    }
-
-    @Test
-    fun `should return an empty JSON array and call getDetailsList method with page and size args`() {
-        // given
-        val page = 5
-        val size = 5
-
-        // when
-        val response = http.get().uri("/api/v1/monsters/details?page=${page}&size=${size}").exchange()
-
-        // then
-        response
-            .expectStatus().isOk
-            .expectBody().json("[]")
-
-        verify(monsterProvider).getPage(page, size)
-    }
-
-    @Test
     fun `should return an expected monster object`() {
         // given
         val expectedMonster =

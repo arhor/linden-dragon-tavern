@@ -6,41 +6,13 @@ import org.arhor.diploma.dnd.data.repository.DataRepository
 import java.io.Serializable
 
 abstract class StaticDataController<T, K>(
+    @JvmField
     private val dataRepository: DataRepository<T, K>,
-    private val resourceName: String,
 ) where T : Identifiable<K>,
         K : Serializable {
 
-    abstract val log: KLogger
-
-    protected fun getEntityDetails(name: K): T {
-        log.debug { "fetching $resourceName details by name: $name" }
-        return dataRepository.findById(name)
-    }
-
-    protected fun getEntityDetailsList(page: Int?, size: Int?): Page<T> {
-        return if ((page == null) && (size == null)) {
-            log.debug { "fetching all $resourceName details list" }
-            dataRepository.getPage()
-        } else {
-            val safePage = page.minBound(DEFAULT_PAGE)
-            val safeSize = size.maxBound(DEFAULT_SIZE)
-            log.debug { "fetching $resourceName details list: page $safePage, size $safeSize" }
-            dataRepository.getPage(safePage, safeSize)
-        }
-    }
-
-    protected fun getEntityDetailsList(page: Int?, size: Int?, query: (T) -> Boolean): Page<T> {
-        return if ((page == null) and (size == null)) {
-            log.debug { "fetching all $resourceName details list" }
-            dataRepository.getPage(query)
-        } else {
-            val safePage = page.minBound(DEFAULT_PAGE)
-            val safeSize = size.maxBound(DEFAULT_SIZE)
-            log.debug { "fetching $resourceName details list: page $safePage, size $safeSize" }
-            dataRepository.getPage(safePage, safeSize)
-        }
-    }
+    protected abstract val resourceName: String
+    protected abstract val log: KLogger
 
     protected fun getEntity(name: K): T {
         log.debug { "fetching $resourceName by name: $name" }
