@@ -3,6 +3,7 @@ import VueCompositionAPI from '@vue/composition-api';
 
 import '@/assets/style/main.scss';
 import '@/plugins/cookies.js';
+import '@/plugins/sse.js';
 
 import App from '@/App.vue';
 import i18n from '@/plugins/i18n.js';

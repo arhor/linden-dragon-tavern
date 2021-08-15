@@ -57,6 +57,8 @@ import DndAppSettings from '@/components/DndAppSettings.vue';
 import DndBreadcrumbs from '@/components/DndBreadcrumbs.vue';
 import DndDownloadButton from '@/components/DndDownloadButton.vue';
 
+let sseClient;
+
 export default {
     name: 'App',
     components: { DndDownloadButton, DndBreadcrumbs, DndAppSettings },
@@ -82,6 +84,41 @@ export default {
         this.$store.dispatch('abilities/load');
         this.$store.dispatch('skills/load');
         this.$store.dispatch('spells/load');
+
+        console.log('trying to subscribe on SSE notifications...');
+
+        sseClient = this.$sse.create('/api/notifications/123-456-789/stream');
+
+        // Catch any errors (ie. lost connections, etc.)
+        sseClient.on('error', (e) => {
+            console.error('lost connection or failed to parse!', e);
+
+            // If this error is due to an unexpected disconnection, EventSource will
+            // automatically attempt to reconnect indefinitely. You will _not_ need to
+            // re-add your handlers.
+        });
+
+        sseClient.on('message', (it) => console.log('simple message', it));
+        sseClient.on('periodic-event', (it) => console.log('notification-event', it));
+
+        sseClient
+            .connect()
+            .then((sse) => {
+                console.log('We\'re connected!', sse);
+            })
+            .catch((err) => {
+                // When this error is caught, it means the initial connection to the
+                // events server failed.  No automatic attempts to reconnect will be made.
+                console.error('Failed to connect to server', err);
+            });
+    },
+    beforeDestroy() {
+        // Make sure to close the connection with the events server
+        // when the component is destroyed, or we'll have ghost connections!
+        sseClient.disconnect();
+
+        // Alternatively, we could have added the `sse: { cleanup: true }` option to our component,
+        // and the SSEManager would have automatically disconnected during beforeDestroy.
     },
 };
 </script>

@@ -11,10 +11,13 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/api/v1/proficiencies")
 class ProficiencyController(
     repository: ProficiencyRepository,
-) : StaticDataController<Proficiency, String>(repository, "Proficiency") {
+) : StaticDataController<Proficiency, String>(repository) {
 
     override val log: KLogger
         get() = logger
+
+    override val resourceName: String
+        get() = "Proficiency"
 
     @GetMapping("/{name}")
     fun getProficiency(@PathVariable name: String): Proficiency {
