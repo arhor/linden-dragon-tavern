@@ -87,7 +87,7 @@ export default {
 
         console.log('trying to subscribe on SSE notifications...');
 
-        sseClient = this.$sse.create('/api/notifications/123-456-789/stream');
+        sseClient = this.$sse.create({ url: '/api/notifications/stream', format: 'json' });
 
         // Catch any errors (ie. lost connections, etc.)
         sseClient.on('error', (e) => {
@@ -99,12 +99,12 @@ export default {
         });
 
         sseClient.on('message', (it) => console.log('simple message', it));
-        sseClient.on('periodic-event', (it) => console.log('notification-event', it));
+        sseClient.on('notification-event', (it) => console.log('notification-event', it));
 
         sseClient
             .connect()
             .then((sse) => {
-                console.log('We\'re connected!', sse);
+                console.log("We're connected!", sse);
             })
             .catch((err) => {
                 // When this error is caught, it means the initial connection to the
