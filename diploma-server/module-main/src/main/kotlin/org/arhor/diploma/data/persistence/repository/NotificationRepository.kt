@@ -10,9 +10,13 @@ import java.util.*
 @Repository
 interface NotificationRepository : CoroutineCrudRepository<Notification, UUID> {
 
-    @Query("DELETE FROM ${Notification.TABLE_NAME} WHERE status = :status")
-    suspend fun deleteAllByStatus(status: Notification.Status)
-
-    @Query("SELECT n.* FROM ${Notification.TABLE_NAME} n WHERE account_id IN (:accountIds)")
-    fun findAllByAccountIds(accountIds: MutableCollection<Long>): Flow<Notification>
+    @Query(
+        """
+        SELECT n.*
+        FROM ${Notification.TABLE_NAME} n
+        WHERE n.account_id IN (:accountIds)
+        FOR UPDATE SKIP LOCKED
+        """
+    )
+    fun findAllByAccountIdsWithLock(accountIds: Iterable<Long>): Flow<Notification>
 }

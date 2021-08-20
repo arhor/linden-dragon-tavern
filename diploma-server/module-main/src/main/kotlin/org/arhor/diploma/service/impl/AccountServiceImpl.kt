@@ -1,52 +1,26 @@
 package org.arhor.diploma.service.impl
 
-import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.reactor.mono
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.drop
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.take
 import org.arhor.diploma.Role.USER
 import org.arhor.diploma.commons.data.EntityNotFoundException
-import org.arhor.diploma.data.persistence.domain.SecurityProfile
 import org.arhor.diploma.data.persistence.repository.AccountRepository
-import org.arhor.diploma.data.persistence.repository.AuthorityRepository
 import org.arhor.diploma.data.persistence.repository.SecurityProfileRepository
 import org.arhor.diploma.service.AccountService
 import org.arhor.diploma.service.dto.AccountDTO
 import org.arhor.diploma.service.mapping.AccountConverter
-import org.springframework.security.core.GrantedAuthority
-import org.springframework.security.core.authority.SimpleGrantedAuthority
-import org.springframework.security.core.userdetails.ReactiveUserDetailsService
-import org.springframework.security.core.userdetails.User
-import org.springframework.security.core.userdetails.UserDetails
-import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import reactor.core.publisher.Mono
 
 @Service
 @Transactional
 class AccountServiceImpl(
     private val accountRepository: AccountRepository,
     private val securityProfileRepository: SecurityProfileRepository,
-    private val authorityRepository: AuthorityRepository,
-    private val converter: AccountConverter
-) : AccountService, ReactiveUserDetailsService {
-
-    override fun findByUsername(username: String): Mono<UserDetails> {
-        return mono {
-            accountRepository.findByUsername(username)?.let { account ->
-                val securityProfile = securityProfileRepository.findByAccountId(account.id!!)
-                val status = !account.isDeleted
-                User(
-                    account.username,
-                    account.password,
-                    status,
-                    status,
-                    status,
-                    status,
-                    securityProfile.authorities()
-                )
-            } ?: throw UsernameNotFoundException(username)
-        }
-    }
+    private val converter: AccountConverter,
+) : AccountService {
 
     @Transactional
     override suspend fun create(item: AccountDTO): AccountDTO {
@@ -105,16 +79,5 @@ class AccountServiceImpl(
 
     override suspend fun delete(item: AccountDTO) {
         item.id?.let { delete(it) }
-    }
-
-    private suspend fun SecurityProfile?.authorities(): List<GrantedAuthority> {
-        if (this == null) {
-            return emptyList()
-        }
-        return when {
-            isSynthetic -> listOf("ROLE_${name}")
-            else -> authorityRepository.findBySecurityProfileId(id!!)
-                .mapNotNull { it.name }.toList()
-        }.map { SimpleGrantedAuthority(it) }
     }
 }

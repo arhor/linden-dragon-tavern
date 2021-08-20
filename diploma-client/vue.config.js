@@ -12,9 +12,9 @@ module.exports = {
             '^/api': {
                 target: 'http://localhost:5000',
                 ws: true,
-                changeOrigin: true
-            }
-        }
+                changeOrigin: true,
+            },
+        },
     },
 
     configureWebpack: {
@@ -23,5 +23,9 @@ module.exports = {
                 '@': path.resolve(__dirname, './src'),
             },
         },
+    },
+
+    css: {
+        extract: { ignoreOrder: true },
     },
 };

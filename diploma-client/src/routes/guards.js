@@ -23,7 +23,9 @@ export function composeGuards(...guards) {
 
 export const createLoginGuard = (store) => {
     return (to, from, next) => {
-        if (store.getters['auth/isLoggedIn'] ?? false) {
+        const getter = store.getters['auth/isLoggedIn'];
+        console.debug('GUARD: ', getter);
+        if (getter ?? false) {
             next();
         } else {
             next({ path: '/' });
@@ -33,11 +35,11 @@ export const createLoginGuard = (store) => {
 
 export const createAuthoritiesGuard = (store) => (...requiredAuthorities) => {
     return (to, from, next) => {
-        const grantedAuthorities = store.getters['auth/grantedAuthorities'] ?? [];
+        const authorityNames = store.getters['auth/authorityNames'] ?? [];
 
         let hasAccess = true;
-        for (let authority of requiredAuthorities) {
-            if (!grantedAuthorities.includes(authority)) {
+        for (let requiredAuthority of requiredAuthorities) {
+            if (!authorityNames.includes(requiredAuthority)) {
                 hasAccess = false;
                 break;
             }

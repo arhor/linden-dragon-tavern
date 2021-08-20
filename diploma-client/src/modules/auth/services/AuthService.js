@@ -1,38 +1,22 @@
-import axios, { BaseService } from '@/api/BaseService.js';
-import { parseJWT } from '@/utils/coreUtils.js';
-
-const convertResponseToAuthModel = (data) => {
-    const {
-        sub: { accessToken, tokenType },
-    } = parseJWT(data);
-
-    return { accessToken, tokenType };
-};
+import { BaseService } from '@/api/BaseService.js';
 
 class AuthService extends BaseService {
     constructor({ baseUrl }) {
         super({ baseUrl });
     }
 
-    async signIn({ username, password }) {
-        const { data } = await axios.post('/auth/sign-in', {
-            username,
-            password,
+    async login({ username, password }) {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: {
+                Authorization: `Basic ${btoa(`${username}:${password}`)}`,
+            },
         });
-        return convertResponseToAuthModel(data);
+        return await response.json();
     }
 
-    async signUp({ username, password }) {
-        const { data } = await axios.post('/auth/register', {
-            username,
-            password,
-        });
-        return convertResponseToAuthModel(data);
-    }
-
-    async refresh() {
-        const { data } = await axios.get('/auth/refresh');
-        return convertResponseToAuthModel(data);
+    async logout() {
+        await fetch('/api/logout', { method: 'POST' });
     }
 }
 

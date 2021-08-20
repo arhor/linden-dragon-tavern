@@ -1,5 +1,5 @@
 <template>
-    <dnd-sign-in v-if="isSignIn" @sign-up="status = 'sign-up'" />
+    <dnd-sign-in v-if="isSignIn" @sign-up="status = 'sign-up'" @logged-in="$emit('logged-in')" />
     <dnd-sign-up v-else @sign-in="status = 'sign-in'" />
 </template>
 

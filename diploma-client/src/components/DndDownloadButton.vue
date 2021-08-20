@@ -1,5 +1,10 @@
 <template functional>
-    <v-btn @click.stop="$options.download(props.url)">Download charsheet</v-btn>
+    <v-list-item link @click.stop="$options.download(props.url)">
+        <v-list-item-icon>
+            <v-icon>mdi-download-circle-outline</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>Download charsheet</v-list-item-title>
+    </v-list-item>
 </template>
 
 <script>

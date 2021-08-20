@@ -1,12 +1,12 @@
 package org.arhor.diploma.service
 
-import org.arhor.diploma.data.persistence.domain.Notification
+import org.arhor.diploma.service.dto.NotificationDTO
 import org.springframework.http.codec.ServerSentEvent
 import reactor.core.publisher.Flux
 
 interface NotificationService {
 
-    fun subscribeForNotifications(accountId: Long): Flux<ServerSentEvent<Notification>>
+    suspend fun subscribeForNotifications(subscriberUsername: String): Flux<ServerSentEvent<NotificationDTO>>
 
-    suspend fun sendNotification(accountId: Long, notification: Notification)
+    suspend fun persistNotification(accountId: Long, notification: NotificationDTO)
 }

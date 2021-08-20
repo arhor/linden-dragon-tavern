@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import Home from '@/modules/home';
-import store from '@/store';
+// import store from '@/store';
 import {
     about,
     characters,
@@ -14,16 +14,16 @@ import {
 } from '@/routes/breadcrumbs.js';
 import {
     composeGuards,
-    createAuthoritiesGuard,
+    // createAuthoritiesGuard,
     createLangGuard,
-    createLoginGuard,
+    // createLoginGuard,
 } from '@/routes/guards.js';
 import { loadLanguageAsync } from '@/plugins/i18n';
 
 Vue.use(VueRouter);
 
-const isLoggedIn = createLoginGuard(store);
-const hasAuthorities = createAuthoritiesGuard(store);
+// const isLoggedIn = createLoginGuard(store);
+// const hasAuthorities = createAuthoritiesGuard(store);
 const checkLang = createLangGuard(loadLanguageAsync);
 
 const router = new VueRouter({
@@ -40,22 +40,13 @@ const router = new VueRouter({
             beforeEnter: composeGuards(checkLang),
         },
         {
-            path: '/account',
-            name: 'account',
-            component: () => import('@/modules/auth'),
-            meta: {
-                breadcrumbs: [home],
-            },
-            beforeEnter: composeGuards(isLoggedIn, hasAuthorities('ACCOUNT:VIEW'), checkLang),
-        },
-        {
             path: '/about',
             name: 'about',
             component: () => import('@/modules/about'),
             meta: {
                 breadcrumbs: [about],
             },
-            beforeEnter: composeGuards(checkLang),
+            // beforeEnter: composeGuards(isLoggedIn, hasAuthorities('ROLE_ADMIN')),
         },
         {
             path: '/monsters',

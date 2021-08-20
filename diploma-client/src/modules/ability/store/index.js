@@ -19,7 +19,7 @@ export default {
             if (!state.isAbilitiesLoaded) {
                 try {
                     const { data } = await axios.get(API_URL);
-                    commit(mutation.SET_ABILITIES, data);
+                    commit(mutation.SET_ABILITIES, data.items);
                 } catch (apiError) {
                     console.error('Unable to load abilities list.', apiError);
                     if (process.env.NODE_ENV === 'development') {

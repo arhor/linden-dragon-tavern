@@ -2,7 +2,6 @@ package org.arhor.diploma.config
 
 import mu.KotlinLogging
 import org.arhor.diploma.commons.time.MINUTE
-import org.arhor.diploma.commons.time.SECOND
 import org.arhor.diploma.data.persistence.domain.Account
 import org.springframework.cache.annotation.CacheEvict
 import org.springframework.cache.annotation.EnableCaching
@@ -21,7 +20,7 @@ class CacheConfig {
      * Scheduled task to clear account caches every 5 minutes.
      */
     @CacheEvict(allEntries = true, value = [Account.CACHE])
-    @Scheduled(fixedDelay = 5 * MINUTE, initialDelay = SECOND)
+    @Scheduled(fixedDelay = 5 * MINUTE, initialDelay = 5 * MINUTE)
     fun accountCacheEvict() {
         logger.debug { "Flush [${Account.CACHE}] cache(s)" }
     }
