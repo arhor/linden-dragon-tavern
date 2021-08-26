@@ -1,7 +1,7 @@
-<template functional>
-    <v-row v-if="$options.notEmpty(props.items)">
+<template>
+    <v-row v-if="notEmpty(items)">
         <v-col cols="12" class="text-xs-left">
-            <strong v-if="props.title">{{ props.title + ':' }}</strong> {{ props.items.join(', ') }}
+            <strong v-if="title">{{ title + ':' }}</strong> {{ items.join(', ') }}
         </v-col>
     </v-row>
 </template>
@@ -22,6 +22,8 @@ export default {
             default: () => [],
         },
     },
-    notEmpty: (items) => refExists(items) && !isEmptyArray(items),
+    methods: {
+        notEmpty: (items) => refExists(items) && !isEmptyArray(items),
+    },
 };
 </script>

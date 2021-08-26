@@ -22,6 +22,9 @@ class MonsterReaderTest {
         // then
         assertThat(monsters)
             .isNotNull
+
+        assertThat(monsters.items)
+            .isNotNull
             .isNotEmpty
     }
 }

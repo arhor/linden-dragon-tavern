@@ -19,6 +19,7 @@ dependencies {
     kapt("org.springframework:spring-context-indexer")
 
     implementation(project(":diploma-server:module-common"))
+    implementation("cz.jirutka.rsql:rsql-parser:2.1.0")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core")

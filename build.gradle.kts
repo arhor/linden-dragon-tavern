@@ -42,7 +42,8 @@ allprojects {
             kotlinOptions {
                 freeCompilerArgs = listOf(
                     "-Xjsr305=strict",
-                    "-Xjvm-default=all"
+                    "-Xjvm-default=all",
+                    "-Xopt-in=kotlin.RequiresOptIn"
                 )
                 jvmTarget = Versions.javaGlobal
                 javaParameters = true

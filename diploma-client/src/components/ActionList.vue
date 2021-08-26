@@ -1,6 +1,6 @@
-<template functional>
+<template>
     <v-row>
-        <v-col v-for="{ name, desc } in props.actions" :key="name" cols="12">
+        <v-col v-for="{ name, desc } in actions" :key="name" cols="12">
             <strong>{{ name }}</strong>
             : {{ desc }}
         </v-col>

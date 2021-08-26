@@ -1,5 +1,7 @@
 package org.arhor.diploma.dnd.web.api.v1
 
+import cz.jirutka.rsql.parser.RSQLParser
+import cz.jirutka.rsql.parser.ast.*
 import mu.KLogging
 import org.arhor.diploma.commons.DEFAULT_PAGE
 import org.arhor.diploma.commons.DEFAULT_SIZE
@@ -8,10 +10,12 @@ import org.arhor.diploma.dnd.data.model.Monster
 import org.arhor.diploma.dnd.data.repository.MonsterRepository
 import org.springframework.web.bind.annotation.*
 
+
 @RestController
 @RequestMapping("/api/v1/monsters")
 class MonsterController(
     private val repository: MonsterRepository,
+    private val rsqlToSQLConverter: RSQLToSQLConverter,
 ) : StaticDataController<Monster, String>(repository) {
 
     override val log = logger
@@ -30,6 +34,10 @@ class MonsterController(
         @RequestParam(required = false) sortDesc: List<Boolean>?,
         @RequestParam(required = false) search: String?,
     ): Page<Monster> {
+
+        val rsqlQueryRootNode = RSQLParser().parse(search)
+
+        val predicate = rsqlQueryRootNode.accept(rsqlToSQLConverter)
 
         val query = search?.let(Monster::nameLike)
 
@@ -53,9 +61,4 @@ class MonsterController(
     }
 
     companion object : KLogging()
-}
-
-data class Jopa(val bulki: Int = 0) {
-
-    constructor() : this(0)
 }

@@ -35,7 +35,7 @@
                 {{ appName }}
             </v-toolbar-title>
 
-            <v-chip v-if="authenticated" class="ma-5">Logged in as: {{username}}</v-chip>
+            <v-chip v-if="authenticated" class="ma-5">Logged in as: {{ username }}</v-chip>
 
             <v-spacer />
 

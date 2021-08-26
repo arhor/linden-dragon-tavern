@@ -43,6 +43,6 @@ class SpaWebFilter : WebFilter {
         private const val INDEX_PAGE_PATH = "/index.html"
         private const val SERVER_ROOT_PATH = "/"
         private val VALID_SERVER_API_PATHS: Array<out String> = arrayOf("/api", "/actuator")
-        private val PATH_WITHOUT_NESTED_ELEMENTS = "[^\\\\.]*".toRegex()
+        private val PATH_WITHOUT_NESTED_ELEMENTS = Regex("[^\\\\.]*")
     }
 }

@@ -1,5 +1,5 @@
-<template functional>
-    <v-list-item link @click.stop="$options.download(props.url)">
+<template>
+    <v-list-item link @click.stop="download(url)">
         <v-list-item-icon>
             <v-icon>mdi-download-circle-outline</v-icon>
         </v-list-item-icon>
@@ -21,22 +21,24 @@ export default {
             required: true,
         },
     },
-    download: async (fileURL) => {
-        const { data, headers } = await axios.get(fileURL, { responseType: 'blob' });
-        const contentDisposition = deserialize(headers['content-disposition']);
-        const filename = contentDisposition['filename'] ?? 'charsheet.pdf';
+    methods: {
+        download: async (fileURL) => {
+            const { data, headers } = await axios.get(fileURL, { responseType: 'blob' });
+            const contentDisposition = deserialize(headers['content-disposition']);
+            const filename = contentDisposition['filename'] ?? 'charsheet.pdf';
 
-        useObjectURL(data, (url) => {
-            const link = document.createElement('a');
+            useObjectURL(data, (url) => {
+                const link = document.createElement('a');
 
-            link.setAttribute('href', url);
-            link.setAttribute('download', filename);
+                link.setAttribute('href', url);
+                link.setAttribute('download', filename);
 
-            document.body.appendChild(link);
+                document.body.appendChild(link);
 
-            link.click();
-            link.remove();
-        });
+                link.click();
+                link.remove();
+            });
+        },
     },
 };
 </script>
