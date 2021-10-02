@@ -1,7 +1,7 @@
 object Versions {
-    const val gradle              = "7.1.1"
+    const val gradle              = "7.2"
     const val javaGlobal          = "11"
-    const val kotlinLang          = "1.5.20"
+    const val kotlinLang          = "1.5.30"
     const val nodeJS              = "14.17.4"
     const val nodeJSGradlePlugin  = "3.0.1"
     const val assertJCore         = "3.17.2"

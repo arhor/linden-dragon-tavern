@@ -21,6 +21,9 @@ spring:
   application:
     name: diploma-server
 
+  aop:
+    proxy-target-class: false
+
   profiles:
     active: ${SPRING_ACTIVE_PROFILES:dev}
 

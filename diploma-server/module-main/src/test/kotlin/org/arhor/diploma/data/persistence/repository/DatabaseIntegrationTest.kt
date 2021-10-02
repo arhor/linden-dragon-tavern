@@ -11,8 +11,6 @@ import org.testcontainers.containers.PostgreSQLContainer
 import org.testcontainers.junit.jupiter.Container
 import org.testcontainers.junit.jupiter.Testcontainers
 
-private typealias PostgresContainer = PostgreSQLContainer<*>
-
 @DataR2dbcTest
 @Testcontainers(disabledWithoutDocker = true)
 @ExtendWith(RandomParameter.Resolver::class)
@@ -22,7 +20,7 @@ abstract class DatabaseIntegrationTest {
     companion object {
         @JvmStatic
         @Container
-        private val db = PostgresContainer("postgres:11.7")
+        private val db = PostgreSQLContainer<Nothing>("postgres:11.7")
 
         @JvmStatic
         @DynamicPropertySource

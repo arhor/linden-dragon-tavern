@@ -1,8 +1,9 @@
 package org.arhor.diploma.commons;
 
-import javax.annotation.Nonnull;
 import java.util.function.Function;
 import java.util.function.Supplier;
+
+import javax.annotation.Nonnull;
 
 final class NaiveLazy<T> extends AbstractLazy<T> {
 
@@ -11,13 +12,13 @@ final class NaiveLazy<T> extends AbstractLazy<T> {
     }
 
     @Override
-    public final T get() {
+    public T get() {
         return computed ? value : compute();
     }
 
     @Nonnull
     @Override
     public <R> NaiveLazy<R> map(@Nonnull final Function<T, R> f) {
-        return new NaiveLazy<>(() -> f.apply(this.get()));
+        return new NaiveLazy<>(() -> f.apply(get()));
     }
 }

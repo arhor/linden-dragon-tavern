@@ -29,7 +29,7 @@ describe('signed', () => {
         const result = stringUtils.signed(number);
 
         // then
-        expect(result).toEqual(`-${number}`);
+        expect(result).toEqual(`${number}`);
     });
 });
 

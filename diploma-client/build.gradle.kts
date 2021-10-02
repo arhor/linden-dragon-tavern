@@ -1,7 +1,4 @@
 import com.github.gradle.node.npm.task.NpmTask
-import com.github.gradle.node.npm.task.NpxTask
-import com.github.gradle.node.task.NodeTask
-import java.nio.file.Paths
 
 plugins {
     id("com.github.node-gradle.node")

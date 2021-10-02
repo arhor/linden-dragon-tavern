@@ -56,7 +56,6 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("org.springframework.session:spring-session-core")
 
-
     // application modules (except for "module-common") MUST NOT be referenced directly in the module-main
     runtimeOnly(project(":diploma-server:module-dnd"))
 

@@ -1,13 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import abilities from '@/modules/ability/store';
-import auth from '@/modules/auth/store';
-import characterStats from '@/modules/characters/store';
-import maps from '@/modules/maps/store';
-import monsters from '@/modules/monsters/store';
-import skills from '@/modules/skill/store';
-import spells from '@/modules/spells/store';
+import abilities from '@/views/ability/store';
+import auth from '@/views/auth/store';
+import characterStats from '@/views/characters/store';
+import maps from '@/views/maps/store';
+import monsters from '@/views/monsters/store';
+import skills from '@/views/skill/store';
+import spells from '@/views/spells/store';
 
 Vue.use(Vuex);
 

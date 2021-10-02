@@ -1,12 +1,15 @@
 package org.arhor.diploma.commons;
 
 import javax.annotation.Nonnull;
+
+import java.util.Optional;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+@SuppressWarnings("unused")
 @FunctionalInterface
 public interface RichSupplier<T> extends Supplier<T> {
 
@@ -32,5 +35,9 @@ public interface RichSupplier<T> extends Supplier<T> {
     @Nonnull
     default Stream<T> stream() {
         return Stream.generate(this);
+    }
+
+    default Optional<T> optional() {
+        return  Optional.ofNullable(get());
     }
 }

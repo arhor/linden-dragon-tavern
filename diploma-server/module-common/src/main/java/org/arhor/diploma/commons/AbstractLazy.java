@@ -20,7 +20,7 @@ abstract class AbstractLazy<T> implements Lazy<T> {
     }
 
     @Override
-    public final boolean isComputed() {
+    public boolean isComputed() {
         return computed;
     }
 

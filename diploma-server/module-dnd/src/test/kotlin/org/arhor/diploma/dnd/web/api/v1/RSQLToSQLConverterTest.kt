@@ -11,7 +11,7 @@ internal class RSQLToSQLConverterTest {
         val query = "(firstName=='Str[Max]';lastName=='Str[Buryshynets]'),age>='Num[3,0]'"
 
         // when
-        val predicate = RSQLParser().parse(query).accept(RSQLToSQLConverter())
+        val predicate = RSQLParser().parse(query).accept(RSQLToSQLConverterUnsafe())
 
         // then
         println(predicate)

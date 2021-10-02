@@ -1,7 +1,7 @@
 package org.arhor.diploma.web.api.v1
 
 import kotlinx.coroutines.flow.Flow
-import mu.KotlinLogging
+import mu.KLogging
 import org.arhor.diploma.commons.pagination.DEFAULT_PAGE
 import org.arhor.diploma.commons.pagination.DEFAULT_SIZE
 import org.arhor.diploma.service.AccountService
@@ -15,8 +15,6 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.util.UriComponentsBuilder
 import javax.validation.Valid
-
-private val logger = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping("/api/v1/accounts")
@@ -70,4 +68,6 @@ class AccountController(private val service: AccountService) {
     private fun selfRequest(account: AccountDTO, auth: Authentication?): Boolean {
         return account.username == (auth?.principal as UserDetails?)?.username
     }
+
+    companion object : KLogging()
 }

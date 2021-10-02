@@ -1,12 +1,15 @@
 <template>
     <div class="counter">
-        <div v-if="modifier" class="counter_modifier">{{ modifier }}</div>
-        <span class="counter_type">{{ processType(type) }}</span>
-        <span class="counter_count">{{ count }}</span>
+        <div v-if="modifier" class="modifier">{{ modifier }}</div>
+        <span class="type">{{ typeDisplayName }}</span>
+        <span class="count">{{ count }}</span>
     </div>
 </template>
 
 <script>
+import { computed } from '@vue/composition-api';
+import { calculateModifier, minifyAbilityName } from '@/utils/abilityUtils';
+
 export default {
     name: 'MainAbilityCounter',
 
@@ -19,15 +22,13 @@ export default {
             type: Number,
             required: true,
         },
-        modifier: {
-            type: String,
-        },
     },
 
-    methods: {
-        processType(type) {
-            return type.toUpperCase().slice(0, 3);
-        },
+    setup(props) {
+        return {
+            typeDisplayName: computed(() => minifyAbilityName(props.type)),
+            modifier: computed(() => calculateModifier(props.count)),
+        };
     },
 };
 </script>
@@ -42,7 +43,7 @@ export default {
     color: #eadeb8;
 }
 
-.counter_type::before {
+.counter .type::before {
     content: '';
     display: block;
     height: 45px;
@@ -55,11 +56,11 @@ export default {
     margin-top: -3px;
 }
 
-.counter_count {
+.counter .count {
     color: white;
 }
 
-.counter_modifier {
+.counter .modifier {
     background: no-repeat url('~@/assets/svg/horns.svg') bottom;
     width: 50px;
     height: 35px;

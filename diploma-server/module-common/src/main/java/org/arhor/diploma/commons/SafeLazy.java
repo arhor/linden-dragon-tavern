@@ -9,23 +9,34 @@ final class SafeLazy<T> extends AbstractLazy<T> {
     @Nonnull
     private final Object lock = new Object();
 
+    private volatile boolean safeComputed;
+
     SafeLazy(@Nonnull Supplier<T> source) {
         super(source);
     }
 
     @Override
-    public final T get() {
-        if (!computed) {
+    public T get() {
+        if (!safeComputed) {
             synchronized (lock) {
-                return compute();
+                if (!safeComputed) {
+                    final T value = compute();
+                    safeComputed = true;
+                    return value;
+                }
             }
         }
         return value;
     }
 
+    @Override
+    public boolean isComputed() {
+        return safeComputed;
+    }
+
     @Nonnull
     @Override
     public <R> Lazy<R> map(@Nonnull final Function<T, R> f) {
-        return new SafeLazy<>(() -> f.apply(this.get()));
+        return new SafeLazy<>(() -> f.apply(get()));
     }
 }

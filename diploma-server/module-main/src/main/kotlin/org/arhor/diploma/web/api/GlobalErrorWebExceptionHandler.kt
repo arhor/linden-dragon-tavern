@@ -3,7 +3,7 @@ package org.arhor.diploma.web.api
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
-import mu.KotlinLogging
+import mu.KLogging
 import org.arhor.diploma.commons.data.DataAccessException
 import org.arhor.diploma.commons.data.EntityNotFoundException
 import org.arhor.diploma.web.error.ErrorCode
@@ -27,8 +27,6 @@ import org.springframework.web.reactive.function.server.*
 import org.springframework.web.server.ResponseStatusException
 import java.io.FileNotFoundException
 import java.util.*
-
-private val log = KotlinLogging.logger {}
 
 @Component
 @Order(-2)
@@ -81,7 +79,7 @@ class GlobalErrorWebExceptionHandler(
     }
 
     private fun handleDefault(ex: Throwable): Pair<HttpStatus, MessageResponse> {
-        log.error("Unhandled error. Please, create proper exception handler for it.", ex)
+        logger.error("Unhandled error. Please, create proper exception handler for it.", ex)
         return HttpStatus.INTERNAL_SERVER_ERROR to messageResponse {
             error {
                 text = "Internal Server Error. Please, contact system administrator."
@@ -91,7 +89,7 @@ class GlobalErrorWebExceptionHandler(
     }
 
     private fun handleResponseStatusException(ex: ResponseStatusException): Pair<HttpStatus, MessageResponse> {
-        log.error("Unhandled error. Please, create proper exception handler for it.", ex)
+        logger.error("Unhandled error. Please, create proper exception handler for it.", ex)
         return ex.status to messageResponse {
             error {
                 text = "Internal Server Error. Please, contact system administrator."
@@ -215,7 +213,7 @@ class GlobalErrorWebExceptionHandler(
         ex: AuthenticationException,
         lang: Locale
     ): Pair<HttpStatus, MessageResponse> {
-        log.error { "Authentication failed: ${ex.message}" }
+        logger.error { "Authentication failed: ${ex.message}" }
         return HttpStatus.UNAUTHORIZED to messageResponse {
             error {
                 code = ErrorCode.SECURITY_VIOLATION
@@ -250,4 +248,6 @@ class GlobalErrorWebExceptionHandler(
     }
 
     private data class FieldErrorDetails(val field: String, val messages: List<String>)
+
+    companion object : KLogging()
 }

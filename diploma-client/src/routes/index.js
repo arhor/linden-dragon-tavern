@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
-import Home from '@/modules/home';
+import Home from '@/views/home';
 // import store from '@/store';
 import {
     about,
@@ -42,7 +42,7 @@ const router = new VueRouter({
         {
             path: '/about',
             name: 'about',
-            component: () => import('@/modules/about'),
+            component: () => import('@/views/about'),
             meta: {
                 breadcrumbs: [about],
             },
@@ -51,7 +51,7 @@ const router = new VueRouter({
         {
             path: '/monsters',
             name: 'monsters',
-            component: () => import('@/modules/monsters'),
+            component: () => import('@/views/monsters'),
             meta: {
                 breadcrumbs: [home, monsters],
             },
@@ -60,7 +60,7 @@ const router = new VueRouter({
         {
             path: '/characters',
             name: 'characters',
-            component: () => import('@/modules/characters'),
+            component: () => import('@/views/characters'),
             meta: {
                 breadcrumbs: [home, characters],
             },
@@ -69,7 +69,7 @@ const router = new VueRouter({
         {
             path: '/new-character',
             name: 'newCharacter',
-            component: () => import('@/modules/characters/components/CharacterCreator'),
+            component: () => import('@/views/characters/components/CharacterCreator'),
             meta: {
                 breadcrumbs: [home, characters, newCharacter],
             },
@@ -78,7 +78,7 @@ const router = new VueRouter({
         {
             path: '/spells',
             name: 'spells',
-            component: () => import('@/modules/spells'),
+            component: () => import('@/views/spells'),
             meta: {
                 breadcrumbs: [home, spells],
             },
@@ -87,7 +87,7 @@ const router = new VueRouter({
         {
             path: '/maps',
             name: 'maps',
-            component: () => import('@/modules/maps'),
+            component: () => import('@/views/maps'),
             meta: {
                 breadcrumbs: [home, maps],
             },

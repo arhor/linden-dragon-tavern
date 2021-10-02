@@ -48,7 +48,7 @@
         </v-app-bar>
 
         <v-main>
-            <DndBreadcrumbs />
+            <Breadcrumbs />
             <v-container fluid>
                 <router-view />
             </v-container>
@@ -69,15 +69,15 @@
 import { mapState } from 'vuex';
 
 import DndAppSettings from '@/components/DndAppSettings.vue';
-import DndBreadcrumbs from '@/components/DndBreadcrumbs.vue';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import DndDownloadButton from '@/components/DndDownloadButton.vue';
 import DndNotification from '@/components/DndNotification.vue';
 
-import Auth from '@/modules/auth';
+import Auth from '@/views/auth';
 
 export default {
     name: 'App',
-    components: { DndDownloadButton, DndBreadcrumbs, DndAppSettings, DndNotification, Auth },
+    components: { DndDownloadButton, Breadcrumbs, DndAppSettings, DndNotification, Auth },
     data: () => ({
         appName: 'D&D Homebrew App',
         displayDrawer: false,
@@ -99,7 +99,7 @@ export default {
         async signOut() {
             await this.$store.dispatch('auth/signOut');
             this.$router.push('/');
-        }
+        },
     },
     mounted() {
         this.$store.dispatch('abilities/load');

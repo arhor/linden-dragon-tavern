@@ -3,10 +3,10 @@ export function renderLinebreaksHTML(text) {
     return text?.replace(/(\n)|(\r\n)/g, '<br/>');
 }
 
-/** @param {number} value */
-export function signed(value) {
-    const num = value || 0;
-    return `${num >= 0 ? '+' : '-'}${num}`;
+/** @param {number} number */
+export function signed(number = 0) {
+    const sign = number >= 0 ? '+' : '';
+    return `${sign}${number}`;
 }
 
 /** @param {string} [str] */
@@ -37,8 +37,8 @@ export function serialize(obj) {
 export function deserialize(str) {
     const result = {};
     const entries = str?.split(';') ?? [];
-    for (let i = 0; i < entries.length; i++) {
-        const entry = entries[i];
+
+    for (const entry of entries) {
         if (entry === '') {
             continue;
         }
