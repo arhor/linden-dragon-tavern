@@ -7,16 +7,8 @@
                     <v-spacer />
                     <v-btn to="/new-character" text>+ New Character</v-btn>
                 </v-card-title>
-                <v-data-table
-                    class="elevation-1"
-                    :headers="headers"
-                    :items="characters"
-                    @click:row="showDetails"
-                >
-                    <template
-                        v-slot:items="{ item: { id, name, classes } }"
-                        @click.stop="showDetails(id)"
-                    >
+                <v-data-table class="elevation-1" :headers="headers" :items="characters" @click:row="showDetails">
+                    <template v-slot:items="{ item: { id, name, classes } }" @click.stop="showDetails(id)">
                         <td>{{ name }}</td>
                         <td>{{ classes.join(', ') }}</td>
                     </template>

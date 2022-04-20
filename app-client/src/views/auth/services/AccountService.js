@@ -1,4 +1,4 @@
-import axios, {BaseService} from '@/api/BaseService.js';
+import axios, { BaseService } from '@/api/BaseService.js';
 
 class AccountService extends BaseService {
     constructor({ baseUrl }) {

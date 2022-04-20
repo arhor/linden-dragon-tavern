@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import {mapActions, mapState} from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
 import MonsterDetails from '@/views/monsters/components/MonsterDetails.vue';
 import MonsterList from '@/views/monsters/components/MonsterList.vue';

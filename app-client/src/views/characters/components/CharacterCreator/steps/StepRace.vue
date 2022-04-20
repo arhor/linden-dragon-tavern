@@ -2,17 +2,9 @@
     <div>
         <v-card color="grey lighten-1" height="400px" tile>
             <v-list shaped>
-                <v-list-item-group
-                    v-model="pickedRaceAbilities"
-                    :max="raceAbilityBonusOptions.limit"
-                    multiple
-                >
+                <v-list-item-group v-model="pickedRaceAbilities" :max="raceAbilityBonusOptions.limit" multiple>
                     <template v-for="{ name } in raceAbilityBonusOptions.abilities">
-                        <v-list-item
-                            :key="name"
-                            :value="name"
-                            active-class="deep-purple--text text--accent-4"
-                        >
+                        <v-list-item :key="name" :value="name" active-class="deep-purple--text text--accent-4">
                             <template v-slot:default="{ active }">
                                 <v-list-item-content>
                                     <v-list-item-title v-text="name"></v-list-item-title>

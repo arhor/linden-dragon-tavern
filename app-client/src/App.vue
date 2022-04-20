@@ -1,14 +1,6 @@
 <template>
     <v-app :dark="dark">
-        <v-navigation-drawer
-            v-model="displayDrawer"
-            mini-variant
-            temporary
-            absolute
-            overflow
-            :dark="dark"
-            app
-        >
+        <v-navigation-drawer v-model="displayDrawer" mini-variant temporary absolute overflow :dark="dark" app>
             <v-list nav dense>
                 <v-list-item link @click.stop="displaySettingsPopup">
                     <v-list-item-icon>
@@ -66,7 +58,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from 'vuex';
 
 import Breadcrumbs from '@/components/Breadcrumbs';
 import DndAppSettings from '@/components/DndAppSettings.vue';

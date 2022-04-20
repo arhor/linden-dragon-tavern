@@ -6,7 +6,7 @@
 
 <script>
 import Step from '@/views/characters/components/CharacterCreator/steps/Step';
-import {Abilities} from '@/views/characters/components/CharacterCreator/model';
+import { Abilities } from '@/views/characters/components/CharacterCreator/model';
 
 export default {
     name: 'StepAbilities',

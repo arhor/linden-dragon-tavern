@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import {computed} from '@vue/composition-api';
-import {calculateModifier, minifyAbilityName} from '@/utils/abilityUtils';
+import { computed } from '@vue/composition-api';
+import { calculateModifier, minifyAbilityName } from '@/utils/abilityUtils';
 
 export default {
     name: 'MainAbilityCounter',

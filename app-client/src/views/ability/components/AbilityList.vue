@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from 'vuex';
 
 import AbilityDetails from '@/views/ability/components/AbilityDetails.vue';
 

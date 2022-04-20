@@ -5,13 +5,7 @@
                 <v-card-title>
                     Monsters
                     <v-spacer />
-                    <v-text-field
-                        v-model="search"
-                        append-icon="mdi-magnify"
-                        label="Search"
-                        single-line
-                        hide-details
-                    />
+                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details />
                 </v-card-title>
                 <v-data-table
                     class="elevation-1"
@@ -38,7 +32,7 @@
 </template>
 
 <script>
-import {searchMixin} from '@/mixins/searchMixin.js';
+import { searchMixin } from '@/mixins/searchMixin.js';
 
 export default {
     name: 'MonsterList',

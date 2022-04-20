@@ -3,9 +3,9 @@ import VueRouter from 'vue-router';
 
 import Home from '@/views/home';
 // import store from '@/store';
-import {about, characters, home, maps, monsters, newCharacter, spells,} from '@/routes/breadcrumbs.js';
-import {composeGuards, createLangGuard,} from '@/routes/guards.js';
-import {loadLanguageAsync} from '@/plugins/i18n';
+import { about, characters, home, maps, monsters, newCharacter, spells } from '@/routes/breadcrumbs.js';
+import { composeGuards, createLangGuard } from '@/routes/guards.js';
+import { loadLanguageAsync } from '@/plugins/i18n';
 
 Vue.use(VueRouter);
 

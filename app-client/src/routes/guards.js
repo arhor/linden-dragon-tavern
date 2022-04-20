@@ -1,4 +1,4 @@
-import {isUndefined} from '@/utils/coreUtils';
+import { isUndefined } from '@/utils/coreUtils';
 
 /**
  * @see https://github.com/atanas-dev/vue-router-multiguard

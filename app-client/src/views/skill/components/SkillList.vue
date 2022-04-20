@@ -3,10 +3,10 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from 'vuex';
 
 import DndCommaSeparatedList from '@/components/DndCommaSeparatedList.vue';
-import {replaceSpacesWithUnderscore, signed} from '@/utils/stringUtils.js';
+import { replaceSpacesWithUnderscore, signed } from '@/utils/stringUtils.js';
 
 export default {
     name: 'SkillList',

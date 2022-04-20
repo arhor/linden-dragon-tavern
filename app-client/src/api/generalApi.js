@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-import {SERVER_API_URL} from '@/api/server-api.js';
-import {requestInterceptor} from '@/api/interceptors';
+import { SERVER_API_URL } from '@/api/server-api.js';
+import { requestInterceptor } from '@/api/interceptors';
 
 const generalApi = axios.create({
     baseURL: SERVER_API_URL,

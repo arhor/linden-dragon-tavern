@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import {calculateModifier} from '@/utils/abilityUtils';
-import {computed} from '@vue/composition-api';
+import { calculateModifier } from '@/utils/abilityUtils';
+import { computed } from '@vue/composition-api';
 
 export default {
     name: 'AbilityDetails',

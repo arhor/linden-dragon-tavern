@@ -11,23 +11,13 @@
             <v-row>
                 <v-menu rounded="lg" offset-y>
                     <template v-slot:activator="{ attrs, on }">
-                        <v-btn
-                            color="deep-purple accent-4"
-                            class="white--text ma-5"
-                            v-bind="attrs"
-                            v-on="on"
-                        >
+                        <v-btn color="deep-purple accent-4" class="white--text ma-5" v-bind="attrs" v-on="on">
                             language
                         </v-btn>
                     </template>
 
                     <v-list>
-                        <v-list-item
-                            v-for="item in items"
-                            :key="item"
-                            link
-                            @click="switchLang(item)"
-                        >
+                        <v-list-item v-for="item in items" :key="item" link @click="switchLang(item)">
                             <v-list-item-title v-text="item" />
                         </v-list-item>
                     </v-list>
@@ -43,9 +33,9 @@
 </template>
 
 <script>
-import {mapActions, mapState} from 'vuex';
+import { mapActions, mapState } from 'vuex';
 
-import {loadLanguageAsync} from '@/plugins/i18n';
+import { loadLanguageAsync } from '@/plugins/i18n';
 
 export default {
     name: 'DndAppSettings',

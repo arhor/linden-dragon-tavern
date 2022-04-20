@@ -16,9 +16,7 @@
             <v-divider />
 
             <v-row>
-                <v-col cols="12" class="text-xs-left">
-                    Armor class: {{ monster.armorClass }}
-                </v-col>
+                <v-col cols="12" class="text-xs-left"> Armor class: {{ monster.armorClass }} </v-col>
                 <v-col cols="12" class="text-xs-left"> Hit points: {{ monster.hitPoints }} </v-col>
                 <v-col cols="12" class="text-xs-left"> Speed: {{ monster.speed.join(',') }} </v-col>
             </v-row>
@@ -29,19 +27,10 @@
 
             <v-divider />
 
-            <dnd-comma-separated-list
-                title="Damage vulnerabilities"
-                :items="monster.damageVulnerabilities"
-            />
-            <dnd-comma-separated-list
-                title="Damage resistances"
-                :items="monster.damageResistances"
-            />
+            <dnd-comma-separated-list title="Damage vulnerabilities" :items="monster.damageVulnerabilities" />
+            <dnd-comma-separated-list title="Damage resistances" :items="monster.damageResistances" />
             <dnd-comma-separated-list title="Damage immunities" :items="monster.damageImmunities" />
-            <dnd-comma-separated-list
-                title="Condition immunities"
-                :items="monster.conditionImmunities"
-            />
+            <dnd-comma-separated-list title="Condition immunities" :items="monster.conditionImmunities" />
 
             <skill-list :creature="monster" />
 

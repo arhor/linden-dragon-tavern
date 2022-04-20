@@ -1,4 +1,4 @@
-import {generateUUID} from '@/utils/coreUtils.js';
+import { generateUUID } from '@/utils/coreUtils.js';
 
 export const CSRF_TOKEN = generateUUID();
 

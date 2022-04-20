@@ -2,9 +2,9 @@ import Vue from 'vue';
 import VueI18n from 'vue-i18n';
 import axios from 'axios';
 
-import {default as EN} from '@/assets/lang/en.json';
-import {default as RU} from '@/assets/lang/ru.json';
-import {refExists} from '@/utils/coreUtils';
+import { default as EN } from '@/assets/lang/en.json';
+import { default as RU } from '@/assets/lang/ru.json';
+import { refExists } from '@/utils/coreUtils';
 
 Vue.use(VueI18n);
 
@@ -28,9 +28,7 @@ export async function loadLanguageAsync(lang) {
     if (i18n.locale !== lang) {
         if (!loadedLanguages.includes(lang)) {
             // TODO: fix the issue with lazy lang-pack loading
-            const data = await import(
-                /* webpackChunkName: "lang-[request]" */ `@/assets/lang/${lang}.json`
-            );
+            const data = await import(/* webpackChunkName: "lang-[request]" */ `@/assets/lang/${lang}.json`);
             i18n.setLocaleMessage(lang, data.default);
             loadedLanguages.push(lang);
         }

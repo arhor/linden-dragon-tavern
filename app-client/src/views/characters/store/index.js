@@ -71,9 +71,7 @@ export default {
         },
 
         classSkills: (state) => {
-            const currentClass = state.allClasses.find(
-                ({ name }) => name === state.character.characterClass,
-            );
+            const currentClass = state.allClasses.find(({ name }) => name === state.character.characterClass);
             const skills = currentClass?.proficiency_choices?.find(({ type }) => type === 'skill');
 
             return {
@@ -99,10 +97,7 @@ export default {
         },
 
         backgroundProficiencies(state) {
-            return (
-                state.backgrounds.find(({ title }) => title === state.character.background)
-                    ?.proficiencies || []
-            );
+            return state.backgrounds.find(({ title }) => title === state.character.background)?.proficiencies || [];
         },
     },
     actions: {

@@ -1,4 +1,4 @@
-import axios, {BaseService} from '@/api/BaseService.js';
+import axios, { BaseService } from '@/api/BaseService.js';
 
 class SpellService extends BaseService {
     constructor({ baseUrl }) {

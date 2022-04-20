@@ -1,4 +1,4 @@
-import {BaseService} from '@/api/BaseService.js';
+import { BaseService } from '@/api/BaseService.js';
 
 class AuthService extends BaseService {
     constructor({ baseUrl }) {

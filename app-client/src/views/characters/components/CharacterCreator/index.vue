@@ -15,11 +15,7 @@
             </v-col>
             <v-col cols="8">
                 <v-stepper-items>
-                    <v-stepper-content
-                        v-for="(step, i) in steps"
-                        :key="`step-${i + 1}`"
-                        :step="i + 1"
-                    >
+                    <v-stepper-content v-for="(step, i) in steps" :key="`step-${i + 1}`" :step="i + 1">
                         <component :is="step.component" @data-changed="handleChanges" />
                         <v-btn color="primary" @click="changeStep(i)">
                             prev
@@ -37,7 +33,7 @@
 
 <script>
 import CharacterInfo from '@/views/characters/components/CharacterCreator/CharacterInfo.vue';
-import {Abilities, Class, Origin, Race, Skills,} from '@/views/characters/components/CharacterCreator/model';
+import { Abilities, Class, Origin, Race, Skills } from '@/views/characters/components/CharacterCreator/model';
 import {
     StepAbilities,
     StepClass,

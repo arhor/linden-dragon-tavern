@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
-import {refExists} from '@/utils/coreUtils';
+import { mapState } from 'vuex';
+import { refExists } from '@/utils/coreUtils';
 
 const NOTIFICATION_CLIENT_OPTIONS = Object.freeze({
     url: '/api/notifications/stream',

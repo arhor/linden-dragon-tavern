@@ -73,9 +73,7 @@ export default {
             }
         },
         [mutation.CACHE_MONSTER_DETAILS]: (state, monster) => {
-            const isAlreadyCached = state.monsterDetailsCache
-                .map((it) => it.name)
-                .includes(monster.name);
+            const isAlreadyCached = state.monsterDetailsCache.map((it) => it.name).includes(monster.name);
 
             if (!isAlreadyCached) {
                 state.monsterDetailsCache.push(monster);

@@ -1,5 +1,5 @@
 import authService from '@/views/auth/services/AuthService.js';
-import {useLocalStoragePlugin} from '@/utils/storeUtils.js';
+import { useLocalStoragePlugin } from '@/utils/storeUtils.js';
 
 const mutation = {
     SET_SESSION_DATA: 'SET_SESSION_DATA',

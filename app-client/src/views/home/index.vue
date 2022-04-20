@@ -18,11 +18,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            v-for="{ name, path, status } in modules"
-                            :key="name"
-                            @click.stop="navigateTo(path)"
-                        >
+                        <tr v-for="{ name, path, status } in modules" :key="name" @click.stop="navigateTo(path)">
                             <td>{{ name }}</td>
                             <td>{{ status }}</td>
                         </tr>

@@ -83,14 +83,11 @@ describe('deserialize', () => {
         expect(result).toHaveProperty('timeout', '10');
     });
 
-    test.each([[''], [';;;'], [null], [undefined]])(
-        'should return empty object for "%s"',
-        (string) => {
-            // when
-            const result = stringUtils.deserialize(string);
+    test.each([[''], [';;;'], [null], [undefined]])('should return empty object for "%s"', (string) => {
+        // when
+        const result = stringUtils.deserialize(string);
 
-            // then
-            expect(result).toEqual({});
-        },
-    );
+        // then
+        expect(result).toEqual({});
+    });
 });

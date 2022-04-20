@@ -38,9 +38,7 @@ export default {
                     (v) => !!v || 'Username is required',
                     (v) => (v && v.length >= 6) || 'Username must be longer than 6 characters',
                     (v) => (v && v.length <= 20) || 'Username must be less than 20 characters',
-                    (v) =>
-                        /^[a-zA-Z0-9]{6,20}$/.test(v) ||
-                        'username must contain only letters and numbers',
+                    (v) => /^[a-zA-Z0-9]{6,20}$/.test(v) || 'username must contain only letters and numbers',
                 ],
             },
         },
@@ -60,10 +58,7 @@ export default {
             props: {
                 label: 'E-mail',
                 required: true,
-                rules: [
-                    (v) => !!v || 'E-mail is required',
-                    (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-                ],
+                rules: [(v) => !!v || 'E-mail is required', (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'],
             },
         },
         firstName: {

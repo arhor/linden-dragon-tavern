@@ -12,12 +12,7 @@
                         <v-text-field v-model="username" label="Username" required />
                     </v-col>
                     <v-col cols="12">
-                        <v-text-field
-                            v-model="password"
-                            label="Password"
-                            required
-                            type="password"
-                        />
+                        <v-text-field v-model="password" label="Password" required type="password" />
                     </v-col>
                 </v-row>
             </v-container>

@@ -1,7 +1,8 @@
 <template>
     <v-row>
         <v-col v-for="({ name, desc }, i) in actions" :key="name" cols="12">
-            <b>{{ name }}</b>{{ `: ${desc}${isLastAction(i) ? ', ' : ''}` }}
+            <b>{{ name }}</b
+            >{{ `: ${desc}${isLastAction(i) ? ', ' : ''}` }}
         </v-col>
     </v-row>
 </template>
@@ -19,8 +20,8 @@ export default {
 
     methods: {
         isLastAction(index) {
-            return index < this.actions.length - 1
-        }
+            return index < this.actions.length - 1;
+        },
     },
 };
 </script>

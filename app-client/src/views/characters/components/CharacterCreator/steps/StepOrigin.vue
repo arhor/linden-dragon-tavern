@@ -2,27 +2,9 @@
     <v-card color="grey lighten-1" height="400px" tile>
         <v-card-text>
             <form>
-                <v-select
-                    v-model="race"
-                    :items="races"
-                    label="Race"
-                    required
-                    @change="emitDataChanges"
-                />
-                <v-select
-                    v-model="subRace"
-                    :items="subRaces"
-                    label="SubRace"
-                    required
-                    @change="emitDataChanges"
-                />
-                <v-select
-                    v-model="characterClass"
-                    :items="classes"
-                    label="Class"
-                    required
-                    @change="emitDataChanges"
-                />
+                <v-select v-model="race" :items="races" label="Race" required @change="emitDataChanges" />
+                <v-select v-model="subRace" :items="subRaces" label="SubRace" required @change="emitDataChanges" />
+                <v-select v-model="characterClass" :items="classes" label="Class" required @change="emitDataChanges" />
                 <v-select
                     v-model="background"
                     :items="backgrounds.map((it) => it.title)"

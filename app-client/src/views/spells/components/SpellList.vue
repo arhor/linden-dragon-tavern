@@ -5,13 +5,7 @@
                 <v-card-title>
                     Spells
                     <v-spacer />
-                    <v-text-field
-                        v-model="search"
-                        append-icon="mdi-magnify"
-                        label="Search"
-                        single-line
-                        hide-details
-                    />
+                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details />
                 </v-card-title>
                 <v-data-table
                     class="elevation-1"
@@ -32,9 +26,9 @@
 </template>
 
 <script>
-import {mapState} from 'vuex';
+import { mapState } from 'vuex';
 
-import {searchMixin} from '@/mixins/searchMixin.js';
+import { searchMixin } from '@/mixins/searchMixin.js';
 
 export default {
     name: 'SpellList',

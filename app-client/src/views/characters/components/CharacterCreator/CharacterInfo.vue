@@ -21,10 +21,10 @@
 </template>
 
 <script>
-import {computed} from '@vue/composition-api';
+import { computed } from '@vue/composition-api';
 
 import AbilityPoint from '@/views/characters/components/CharacterCreator/AbilityPoint';
-import {Abilities, Class, Origin, Race, Skills,} from '@/views/characters/components/CharacterCreator/model';
+import { Abilities, Class, Origin, Race, Skills } from '@/views/characters/components/CharacterCreator/model';
 
 export default {
     name: 'CharacterInfo',
