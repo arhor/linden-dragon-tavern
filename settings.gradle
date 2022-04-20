@@ -1,0 +1,36 @@
+// @formatter:off
+pluginManagement {
+    plugins {
+        id "org.flywaydb.flyway"                 version settings["app.version.flyway"]
+        id "org.springframework.boot"            version settings["app.version.springBoot"]
+        id "io.spring.dependency-management"     version settings["app.version.springDependencyManagement"]
+        id "com.github.node-gradle.node"         version settings["app.version.nodeGradlePlugin"]
+        id "io.freefair.lombok"                  version settings["app.version.lombok"]
+        id "org.jetbrains.kotlin.kapt"           version settings["app.version.kotlin"]
+        id "org.jetbrains.kotlin.jvm"            version settings["app.version.kotlin"]
+        id "org.jetbrains.kotlin.plugin.noarg"   version settings["app.version.kotlin"]
+        id "org.jetbrains.kotlin.plugin.allopen" version settings["app.version.kotlin"]
+        id "org.jetbrains.kotlin.plugin.spring"  version settings["app.version.kotlin"]
+        id "org.jetbrains.kotlin.plugin.jpa"     version settings["app.version.kotlin"]
+    }
+}
+
+rootProject.name = "linden-dragon-tavern"
+
+include ":app-client"
+include ":app-server:module-common"
+include ":app-server:module-dnd"
+include ":app-server:module-main"
+include ":app-server:module-test-utils"
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            this.properties
+                .findAll { it.key.startsWith "app.version." }
+                .collectEntries { [it.key - "app.version.", it.value] }
+                .each { version (it.key, it.value) }
+        }
+    }
+}
+// @formatter:on

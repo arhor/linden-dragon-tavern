@@ -1,0 +1,11 @@
+plugins {
+    id "java-library"
+}
+
+dependencies {
+    implementation "ch.qos.logback:logback-core:${property("app.version.logback")}"
+    implementation "ch.qos.logback:logback-classic:${property("app.version.logback")}"
+    implementation "org.slf4j:slf4j-api:${property("app.version.slf4j")}"
+    implementation "org.assertj:assertj-core:${property("app.version.assertJCore")}"
+    implementation "org.junit.jupiter:junit-jupiter-api:${property("app.version.junitJupiter")}"
+}

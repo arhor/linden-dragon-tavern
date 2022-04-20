@@ -1,0 +1,76 @@
+plugins {
+    id "org.flywaydb.flyway"
+    id "org.springframework.boot"
+    id "io.spring.dependency-management"
+    id "org.jetbrains.kotlin.jvm"
+    id "org.jetbrains.kotlin.kapt"
+    id "org.jetbrains.kotlin.plugin.spring"
+}
+
+configurations {
+    implementation {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.testcontainers:testcontainers-bom:${property("app.version.testcontainers")}"
+    }
+}
+
+dependencies {
+    kapt "org.mapstruct:mapstruct-processor:${property("app.version.mapstruct")}"
+    kapt "org.springframework:spring-context-indexer"
+    kapt "org.springframework.boot:spring-boot-configuration-processor"
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    implementation project(":app-server:module-common")
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin"
+    implementation "io.github.microutils:kotlin-logging-jvm:${property("app.version.kotlinLogging")}"
+    implementation "io.jsonwebtoken:jjwt-api:${property("app.version.jsonWebToken")}"
+    implementation "org.flywaydb:flyway-core"
+
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-aop"
+    implementation "org.springframework.boot:spring-boot-starter-cache"
+    implementation "org.springframework.boot:spring-boot-starter-data-jdbc"
+    implementation "org.springframework.boot:spring-boot-starter-oauth2-client"
+    implementation "org.springframework.boot:spring-boot-starter-security"
+    implementation "org.springframework.boot:spring-boot-starter-undertow"
+    implementation "org.springframework.boot:spring-boot-starter-validation"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.session:spring-session-core"
+
+    compileOnly "org.mapstruct:mapstruct:${property("app.version.mapstruct")}"
+
+    runtimeOnly project(":app-server:module-dnd")
+    runtimeOnly "org.postgresql:postgresql"
+    runtimeOnly "io.jsonwebtoken:jjwt-impl:${property("app.version.jsonWebToken")}"
+    runtimeOnly "io.jsonwebtoken:jjwt-jackson:${property("app.version.jsonWebToken")}"
+
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+
+    testImplementation project(":app-server:module-test-utils")
+    testImplementation "com.tngtech.archunit:archunit-junit5:${libs.versions.archunit.get()}"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.springframework.security:spring-security-test"
+    testImplementation "org.testcontainers:junit-jupiter"
+    testImplementation "org.testcontainers:postgresql"
+
+    testRuntimeOnly "org.postgresql:postgresql"
+}
+
+flyway {
+    url = env.getRequired("JDBC_DATABASE_URL")
+    user = env.getRequired("JDBC_DATABASE_USERNAME")
+    password = env.getRequired("JDBC_DATABASE_PASSWORD")
+
+    driver = "org.postgresql.Driver"
+    encoding = "UTF-8"
+    locations = ["classpath:db/migration"]
+    baselineVersion = "0.0"
+    baselineOnMigrate = true
+}

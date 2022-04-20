@@ -1,0 +1,13 @@
+services:
+  linden-dragon-tavern-db:
+    image: postgres:12
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT}:${POSTGRES_PORT}"
+    env_file:
+      - .env
+
+volumes:
+  db-data:
+    driver: local

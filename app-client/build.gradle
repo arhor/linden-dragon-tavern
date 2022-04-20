@@ -1,0 +1,48 @@
+import com.github.gradle.node.npm.task.NpmTask
+import com.github.gradle.node.npm.task.NpxTask
+
+plugins {
+    id "com.github.node-gradle.node"
+    id "idea"
+}
+
+description = "app-client"
+
+node {
+    version = property("app.version.node")
+    download = true
+}
+
+idea {
+    module {
+        excludeDirs.addAll(
+            files(
+                "$projectDir/node_modules",
+                "$projectDir/raw_data",
+                "$projectDir/dist",
+                "$projectDir/dist_electron",
+            )
+        )
+    }
+}
+
+task updateBrowserlist(type: NpxTask, dependsOn: [npmInstall]) {
+    description = "Updates Browserslist"
+    workingDir.fileValue(projectDir)
+    command.set("browserslist@latest")
+    args = ["--update-db"]
+}
+
+task test(type: NpmTask, dependsOn: [updateBrowserlist]) {
+    group = "verification"
+    description = "Runs JS tests in client project"
+    workingDir.fileValue(projectDir)
+    args = ["run", "test:unit"]
+}
+
+task build(type: NpmTask, dependsOn: [test]) {
+    group = "build"
+    description = "Builds production version of the app client"
+    workingDir.fileValue(projectDir)
+    args = ["run", "build"]
+}
