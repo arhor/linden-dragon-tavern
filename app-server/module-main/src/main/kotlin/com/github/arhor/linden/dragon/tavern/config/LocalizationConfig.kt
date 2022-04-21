@@ -1,5 +1,6 @@
 package com.github.arhor.linden.dragon.tavern.config
 
+import org.springframework.boot.autoconfigure.web.WebProperties
 import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -10,10 +11,11 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
 class LocalizationConfig {
 
     @Bean
-    fun errorMessages(): MessageSource {
+    fun messages(webProperties: WebProperties): MessageSource {
         return ReloadableResourceBundleMessageSource().apply {
             setBasename("classpath:messages")
             setDefaultEncoding("UTF-8")
+            setDefaultLocale(checkNotNull(webProperties.locale) { "spring.web.locale cannot be null" })
         }
     }
 
