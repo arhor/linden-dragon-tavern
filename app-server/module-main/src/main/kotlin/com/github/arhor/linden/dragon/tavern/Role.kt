@@ -6,5 +6,6 @@ enum class Role(val persistent: Boolean = true) {
     ANONYMOUS(false),
     ;
 
-    fun prefixed(): String = "ROLE_${toString()}"
+    val prefixed: String
+        get() = "ROLE_$name"
 }

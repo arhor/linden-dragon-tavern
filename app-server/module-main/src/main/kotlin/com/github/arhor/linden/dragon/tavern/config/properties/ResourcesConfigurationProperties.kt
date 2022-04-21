@@ -5,9 +5,14 @@ import org.springframework.boot.context.properties.ConstructorBinding
 
 @ConstructorBinding
 @ConfigurationProperties("configuration.resources")
-data class ResourcesConfigurationProperties(val patterns: List<String>, val locations: List<String>) {
+class ResourcesConfigurationProperties(
+    /**
+     * Path patterns for the static resources.
+     */
+    val patterns: Array<out String>,
 
-    fun patterns(): Array<String> = patterns.toTypedArray()
-
-    fun locations(): Array<String> = locations.toTypedArray()
-}
+    /**
+     * Locations to lookup for the static resources.
+     */
+    val locations: Array<out String>,
+)

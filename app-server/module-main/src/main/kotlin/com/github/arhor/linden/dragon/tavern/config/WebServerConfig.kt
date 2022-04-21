@@ -29,7 +29,7 @@ class WebServerConfig(
     }
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
-        registry.addResourceHandler(*resources.patterns()).addResourceLocations(*resources.locations())
+        registry.addResourceHandler(*resources.patterns).addResourceLocations(*resources.locations)
     }
 
     override fun addArgumentResolvers(resolvers: MutableList<HandlerMethodArgumentResolver>) {

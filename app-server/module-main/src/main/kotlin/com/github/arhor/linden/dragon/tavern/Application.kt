@@ -8,11 +8,13 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 
 @SpringBootApplication(proxyBeanMethods = false)
-@ConfigurationPropertiesScan
+@ConfigurationPropertiesScan("com.github.arhor.linden.dragon.tavern.config")
 class Application(private val startupTasks: List<StartupTask>) : ApplicationRunner {
 
     override fun run(args: ApplicationArguments) {
-        startupTasks.forEach(StartupTask::execute)
+        for (task in startupTasks) {
+            task.execute()
+        }
     }
 }
 
