@@ -1,13 +1,11 @@
 package com.github.arhor.linden.dragon.tavern.web.error
 
 import com.github.arhor.linden.dragon.tavern.config.LocalizationConfig
-import com.github.arhor.linden.dragon.tavern.config.LocalizationConfig.Companion.ERROR_MESSAGES_BEAN
 import com.github.arhor.linden.dragon.tavern.web.error.temp.ErrorCode
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.MessageSource
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig
 import java.util.Locale
@@ -16,8 +14,7 @@ import java.util.Locale
 internal class ErrorCodeTest {
 
     @Autowired
-    @Qualifier(ERROR_MESSAGES_BEAN)
-    private lateinit var errorMessages: MessageSource
+    private lateinit var messages: MessageSource
 
     @EnumSource(ErrorCode::class)
     @ParameterizedTest(name = "should have localization for {arguments} error code")
@@ -28,7 +25,7 @@ internal class ErrorCodeTest {
         val locale = Locale.ENGLISH
 
         // when
-        val message = errorMessages.getMessage(label, args, locale)
+        val message = messages.getMessage(label, args, locale)
 
         // then
         assertThat(message)

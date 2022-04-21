@@ -1,8 +1,10 @@
 server:
   port: ${PORT:5000}
+
   error:
     whitelabel:
       enabled: false
+
   compression:
     enabled: true
     mime-types:
@@ -18,25 +20,31 @@ server:
 spring:
   application:
     name: linden-dragon-tavern-server
+
   aop:
     proxy-target-class: false
+
   main:
     allow-bean-definition-overriding: true
+
   web:
     locale: en
     resources:
       add-mappings: false
+
   profiles:
     active: ${SPRING_ACTIVE_PROFILES:dev}
+
   jmx:
     enabled: false
+
   mvc:
     throw-exception-if-no-handler-found: true
-  messages:
-    basename: messages
+
   sql:
     init:
       platform: postgres
+
   datasource:
     driverClassName: org.postgresql.Driver
     url: ${JDBC_DATABASE_URL}
@@ -44,6 +52,7 @@ spring:
     password: ${JDBC_DATABASE_PASSWORD}
     hikari:
       auto-commit: false
+
   flyway:
     url: ${spring.datasource.url}
     user: ${spring.datasource.username}
@@ -51,8 +60,10 @@ spring:
     enabled: true
     baseline-on-migrate: true
     baseline-version: 0.0
+
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+
   output:
     ansi:
       enabled: detect

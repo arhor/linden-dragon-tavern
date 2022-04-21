@@ -1,6 +1,5 @@
 package com.github.arhor.linden.dragon.tavern.config
 
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.MessageSource
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -10,22 +9,18 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean
 @Configuration(proxyBeanMethods = false)
 class LocalizationConfig {
 
-    @Bean(ERROR_MESSAGES_BEAN)
+    @Bean
     fun errorMessages(): MessageSource {
         return ReloadableResourceBundleMessageSource().apply {
-            setBasename("classpath:error-messages")
+            setBasename("classpath:messages")
             setDefaultEncoding("UTF-8")
         }
     }
 
     @Bean
-    fun getValidator(@Qualifier(ERROR_MESSAGES_BEAN) errorMessages: MessageSource): LocalValidatorFactoryBean {
+    fun getValidator(messages: MessageSource): LocalValidatorFactoryBean {
         return LocalValidatorFactoryBean().apply {
-            setValidationMessageSource(errorMessages)
+            setValidationMessageSource(messages)
         }
-    }
-
-    companion object {
-        const val ERROR_MESSAGES_BEAN = "errorMessages"
     }
 }

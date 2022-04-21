@@ -1,10 +1,8 @@
 package com.github.arhor.linden.dragon.tavern.web.error.temp
 
-import com.github.arhor.linden.dragon.tavern.config.LocalizationConfig.Companion.ERROR_MESSAGES_BEAN
 import com.github.arhor.linden.dragon.tavern.infrastructure.context.CurrentRequestContext
 import com.github.arhor.linden.dragon.tavern.service.TimeService
 import mu.KLogging
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.context.MessageSource
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.AccessDeniedException
@@ -24,7 +22,6 @@ import java.util.TimeZone
 
 @RestControllerAdvice
 class GlobalExceptionHandler(
-    @Qualifier(ERROR_MESSAGES_BEAN)
     private val messages: MessageSource,
     private val timeService: TimeService,
     private val currentRequestContext: CurrentRequestContext,
