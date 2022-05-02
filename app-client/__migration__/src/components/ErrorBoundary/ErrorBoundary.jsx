@@ -1,11 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import StatelessWidget, { SIZE, TYPE } from '@/components/StatelessWidget';
 
 const DEFAULT_TITLE = 'Ups, something went wrong...';
 const DEFAULT_DESCRIPTION = 'Please, contact system administrator if you have nothing else to do';
 
-const ErrorView = ({ title, description }) => {
+ErrorView.propTypes = {
+    title: PropTypes.string,
+    description: PropTypes.string,
+};
+
+function ErrorView({ title, description }) {
     return (
         <StatelessWidget
             type={TYPE.PAGE}
@@ -14,7 +20,7 @@ const ErrorView = ({ title, description }) => {
             description={description}
         />
     );
-};
+}
 
 class ErrorBoundary extends React.Component {
     static propTypes = {

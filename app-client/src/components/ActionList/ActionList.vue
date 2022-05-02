@@ -1,8 +1,7 @@
 <template>
     <v-row>
         <v-col v-for="({ name, desc }, i) in actions" :key="name" cols="12">
-            <b>{{ name }}</b
-            >{{ `: ${desc}${isLastAction(i) ? ', ' : ''}` }}
+            <b>{{ name }}</b>{{ `: ${desc}${isLastAction(i) ? ', ' : ''}` }}
         </v-col>
     </v-row>
 </template>

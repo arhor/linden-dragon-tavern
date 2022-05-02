@@ -1,6 +1,8 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
+
 import { calculateModifier, minifyAbilityName } from '@/utils/abilityUtils.js';
+
 import styles from '@/components/MainAbilityCounter/MainAbilityCounter.module.css';
 
 /**

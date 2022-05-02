@@ -1,10 +1,11 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+
 import MainAbilityCounter, { ABILITY } from '@/components/MainAbilityCounter/MainAbilityCounter.jsx';
 
 describe('MainAbilityCounter component', () => {
     test('should render without crashing', () => {
-        render(<MainAbilityCounter />);
+        render(<MainAbilityCounter name={ABILITY.CHA} value={30}/>);
     });
 
     test('should display correct ability name and modifier', () => {

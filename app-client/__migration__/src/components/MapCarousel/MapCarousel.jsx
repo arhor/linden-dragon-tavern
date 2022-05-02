@@ -26,7 +26,10 @@ const ITEMS = Object.freeze([
     },
 ]);
 
-
+/**
+ * @param {string} src 
+ * @returns {string}
+ */
 const enrich = (src) => `${src}?w=164&h=164&fit=crop&auto=format`;
 
 function MapCarousel() {

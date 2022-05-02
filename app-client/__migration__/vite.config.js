@@ -2,11 +2,12 @@
 /// <reference types="vite/client" />
 
 import react from '@vitejs/plugin-react';
+import eslint from 'vite-plugin-eslint';
 import { defineConfig } from 'vite';
 import { URL, fileURLToPath } from 'url';
 
 export default defineConfig({
-    plugins: [react()],
+    plugins: [react(), eslint()],
     resolve: {
         alias: {
             '@': fileURLToPath(new URL('src', import.meta.url)),

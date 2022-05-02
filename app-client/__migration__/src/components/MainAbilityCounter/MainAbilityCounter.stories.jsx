@@ -1,4 +1,5 @@
 import React from 'react';
+
 import MainAbilityCounter, { ABILITY } from '@/components/MainAbilityCounter/MainAbilityCounter.jsx';
 
 export default {
