@@ -1,22 +1,17 @@
 module.exports = {
     root: true,
-
     env: {
         node: true,
     },
-
-    settings: {
-        'import/resolver': 'webpack',
-    },
-
-    extends: ['plugin:vue/essential', 'eslint:recommended', '@vue/prettier'],
-
+    extends: [
+        "plugin:vue/essential",
+        "eslint:recommended",
+        "plugin:prettier/recommended",
+    ],
     parserOptions: {
-        parser: 'babel-eslint',
+        parser: '@babel/eslint-parser',
     },
-
-    plugins: ['sort-imports-es6-autofix'],
-
+    plugins: [ 'sort-imports-es6-autofix' ],
     rules: {
         'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
         'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
@@ -30,7 +25,7 @@ module.exports = {
             'error',
             {
                 props: true,
-                ignorePropertyModificationsFor: ['state'],
+                ignorePropertyModificationsFor: [ 'state' ],
             },
         ],
         'sort-imports-es6-autofix/sort-imports-es6': [
@@ -38,14 +33,13 @@ module.exports = {
             {
                 ignoreCase: false,
                 ignoreMemberSort: false,
-                memberSyntaxSortOrder: ['none', 'single', 'multiple', 'all'],
+                memberSyntaxSortOrder: [ 'none', 'single', 'multiple', 'all' ],
             },
         ],
     },
-
     overrides: [
         {
-            files: ['**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)'],
+            files: [ '**/__tests__/*.{j,t}s?(x)', '**/tests/unit/**/*.spec.{j,t}s?(x)' ],
             env: {
                 jest: true,
             },

@@ -14,14 +14,10 @@ import vuetify from '@/plugins/vuetify.js';
 Vue.use(VueCompositionAPI);
 Vue.config.productionTip = false;
 
-window['appController'] = {
-    main() {
-        new Vue({
-            i18n,
-            vuetify,
-            router,
-            store,
-            render: (h) => h(App),
-        }).$mount('#app');
-    },
-};
+new Vue({
+    i18n,
+    vuetify,
+    router,
+    store,
+    render: (h) => h(App),
+}).$mount('#app');

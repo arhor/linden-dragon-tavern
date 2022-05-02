@@ -5,22 +5,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width,initial-scale=1.0" />
         <link rel="icon" href="<%= BASE_URL %>favicon.ico" />
-        <title>dnd-homebrew-app</title>
+        <title><%= htmlWebpackPlugin.options.title %></title>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@mdi/font@latest/css/materialdesignicons.min.css">
-        <script>
-            void (ctx => {
-                'use strict';
-                let startupTime = 0;
-                const timer = setInterval(() => {
-                    if (startupTime >= 1 && ctx.hasOwnProperty('appController')) {
-                        ctx.appController.main();
-                        clearInterval(timer);
-                    }
-                    startupTime += 0.5;
-                }, 500);
-            })(window);
-        </script>
     </head>
     <body>
         <noscript>You need to enable JavaScript to run this app.</noscript>

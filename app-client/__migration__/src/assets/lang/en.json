@@ -1,0 +1,16 @@
+{
+    "views": {
+        "home": "home",
+        "characters": "characters",
+        "newCharacter": "new character",
+        "monsters": "monsters",
+        "spells": "spells"
+    },
+    "name": "Name",
+    "str": "str",
+    "dex": "dex",
+    "con": "con",
+    "int": "int",
+    "wis": "wis",
+    "cha": "cha"
+}

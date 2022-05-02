@@ -1,12 +1,8 @@
 const path = require('path');
+const { defineConfig } = require('@vue/cli-service');
 
-module.exports = {
-    publicPath: './',
-
+module.exports = defineConfig({
     transpileDependencies: ['vuetify'],
-
-    productionSourceMap: true,
-
     devServer: {
         proxy: {
             '^/api': {
@@ -16,16 +12,14 @@ module.exports = {
             },
         },
     },
-
     configureWebpack: {
         resolve: {
             alias: {
-                '@': path.resolve(__dirname, './src'),
+                '@': path.resolve(__dirname, 'src'),
             },
         },
     },
-
     css: {
         extract: { ignoreOrder: true },
     },
-};
+});

@@ -1,17 +1,14 @@
 import * as coreUtils from '@/utils/coreUtils.js';
 
 describe('isUndefined', () => {
-    test.each`
-        argument     | expected
-        ${0}         | ${false}
-        ${''}        | ${false}
-        ${[]}        | ${false}
-        ${{}}        | ${false}
-        ${false}     | ${false}
-        ${null}      | ${false}
-        ${undefined} | ${true}
-        ${void 0}    | ${true}
-    `('should return "$expected" for "$argument"', ({ argument, expected }) => {
+    test.each([
+        ['strength'     , 'STR'],
+        [ 'dexterity'   , 'DEX'],
+        ['constitution' , 'CON'],
+        ['intelligence' , 'INT'],
+        ['wisdom'       , 'WIS'],
+        ['charisma'     , 'CHA'],
+    ])('should return "$expected" for "$argument"', ({ argument, expected }) => {
         // when
         const result = coreUtils.isUndefined(argument);
 
