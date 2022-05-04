@@ -1,2 +1,2 @@
-export { default } from '@/pages/Home/Home.component.jsx';
-export * from '@/pages/Home/Home.component.jsx';
+export { default } from '@/pages/Home/Home.jsx';
+export * from '@/pages/Home/Home.jsx';

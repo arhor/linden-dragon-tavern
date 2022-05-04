@@ -1,4 +1,5 @@
 import React from 'react';
+
 import ActionList from '@/components/ActionList/ActionList.jsx';
 
 export default {

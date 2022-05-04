@@ -1,5 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+
 import ActionList from '@/components/ActionList/ActionList.jsx';
 
 describe('ActionList component', () => {

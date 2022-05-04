@@ -1,3 +1,5 @@
+import React from 'react';
+
 import StatelessWidget, { SIZE, TYPE } from '@/components/StatelessWidget';
 
 function Home() {

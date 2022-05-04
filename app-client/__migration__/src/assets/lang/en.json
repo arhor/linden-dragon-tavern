@@ -1,11 +1,10 @@
 {
-    "views": {
-        "home": "home",
-        "characters": "characters",
-        "newCharacter": "new character",
-        "monsters": "monsters",
-        "spells": "spells"
-    },
+    "home": "home",
+    "about": "about",
+    "characters": "characters",
+    "newCharacter": "new character",
+    "monsters": "monsters",
+    "spells": "spells",
     "name": "Name",
     "str": "str",
     "dex": "dex",
