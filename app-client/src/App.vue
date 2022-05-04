@@ -90,7 +90,7 @@ export default {
         },
         async signOut() {
             await this.$store.dispatch('auth/signOut');
-            this.$router.push('/');
+            await this.$router.push('/');
         },
     },
     mounted() {

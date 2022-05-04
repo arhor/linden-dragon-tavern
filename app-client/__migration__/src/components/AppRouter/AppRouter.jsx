@@ -1,13 +1,13 @@
 import React, { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router';
 
-import Home from '@/pages/Home';
 import Loader from '@/components/Loader';
 
+const Home = lazy(() => import('@/pages/Home'));
 const About = lazy(() => import('@/pages/About'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
-function AppRouterView() {
+function AppRouter() {
     return (
         <Suspense fallback={<Loader />}>
             <Routes>
@@ -19,4 +19,4 @@ function AppRouterView() {
     );
 }
 
-export default AppRouterView;
+export default AppRouter;

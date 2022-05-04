@@ -1,32 +1,43 @@
-/** @param {string} [text] */
+/**
+ * @param {string} [text]
+ * @returns {string | null}
+ */
 export function renderLinebreaksHTML(text) {
     return text?.replace(/(\n)|(\r\n)/g, '<br/>');
 }
 
-/** @param {number} number */
+/**
+ * @param {number} number
+ * @returns {string}
+ */
 export function signed(number = 0) {
     const sign = number >= 0 ? '+' : '';
     return `${sign}${number}`;
 }
 
-/** @param {string} [str] */
+/**
+ * @param {string} [str]
+ * @returns {string}
+ */
 export function replaceSpacesWithUnderscore(str) {
     return str?.replace(/ /g, '_')?.toLowerCase() ?? '';
 }
 
 /**
- * @param {object} [obj]
+ * @param {object} [data]
  * @param {string} [separator]
  * @return {string}
  */
-export function serialize(obj, separator = ';') {
+export function serialize(data, separator = ';') {
     let result = '';
-    for (const [name, value] of Object.entries(obj ?? {})) {
-        result += name;
-        if (value !== true && value !== 'true') {
-            result += `=${value}`;
+    if (data) {
+        for (const [name, value] of Object.entries(data)) {
+            result += name;
+            if (value !== true && value !== 'true') {
+                result += `=${value}`;
+            }
+            result += separator;
         }
-        result += separator;
     }
     return result;
 }

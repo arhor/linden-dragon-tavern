@@ -11,7 +11,6 @@ ActionList.propTypes = {
 
 function ActionList({ actions = [] }) {
     const lastActionIndex = actions.length - 1;
-
     return (
         <div data-testid="action-list-container">
             {actions.map(({ name, desc }, i) => (

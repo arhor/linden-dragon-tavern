@@ -1,5 +1,6 @@
 import React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
+import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from '@mui/material/styles';
 
@@ -14,7 +15,9 @@ function App() {
             <CssBaseline />
             <ErrorBoundary>
                 <Provider store={store}>
-                    <AppLayout />
+                    <BrowserRouter>
+                        <AppLayout />
+                    </BrowserRouter>
                 </Provider>
             </ErrorBoundary>
         </ThemeProvider>

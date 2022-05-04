@@ -11,11 +11,11 @@
 // import MenuItem from '@material-ui/core/MenuItem';
 // import { useSelector } from 'react-redux';
 // import { isAuthenticated } from '@/store/user';
-// import { onSignInClick, onSignUpClick } from '@/components/NavBar/handlers';
+// import { onSignInClick, onSignUpClick } from '@/components/AppNavBar/handlers';
 
 // const eligibleItem = (item) => !item.hasOwnProperty('condition') || item.condition;
 
-// const NavBar = ({ menuItems }) => {
+// const AppNavBar = ({ menuItems }) => {
 //     const authenticated = true; //useSelector(isAuthenticated);
 
 //     return (
@@ -122,7 +122,7 @@
 //     );
 // };
 
-// export default NavBar;
+// export default AppNavBar;
 
 import React from 'react';
 import AppBar from '@mui/material/AppBar';
@@ -132,7 +132,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-function NavBar() {
+function AppNavBar() {
     return (
         <AppBar position="static">
             <Toolbar>
@@ -148,4 +148,4 @@ function NavBar() {
     );
 }
 
-export default NavBar;
+export default AppNavBar;

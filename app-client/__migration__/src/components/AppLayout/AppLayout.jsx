@@ -1,20 +1,19 @@
 import React from 'react';
 import Container from '@mui/material/Container';
-import { BrowserRouter } from 'react-router-dom';
 
 import AppBreadcrumbs from '@/components/AppBreadcrumbs/AppBreadcrumbs.jsx';
-import AppRouterView from '@/components/AppRouterView';
-import NavBar from '@/components/NavBar';
+import AppNavBar from '@/components/AppNavBar';
+import AppRouter from '@/components/AppRouter';
 
 function AppLayout() {
     return (
-        <BrowserRouter>
-            <NavBar />
+        <>
+            <AppNavBar />
             <Container component="main">
                 <AppBreadcrumbs />
-                <AppRouterView />
+                <AppRouter />
             </Container>
-        </BrowserRouter>
+        </>
     );
 }
 
