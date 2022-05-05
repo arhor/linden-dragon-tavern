@@ -31,11 +31,19 @@
       }
     ]
   },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "overrides": [
     {
       "files": ["**/*.test.{j,t}s?(x)"],
       "env": {
         "jest": true
+      },
+      "rules": {
+        "no-console": "off"
       }
     }
   ]

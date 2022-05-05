@@ -78,7 +78,7 @@ StatelessWidget.propTypes = {
 
 function StatelessWidget({
     type = TYPE.PAGE,
-    size = SIZE.MEDIUM,
+    size = SIZE.LARGE,
     padding = 2,
     image,
     title,
