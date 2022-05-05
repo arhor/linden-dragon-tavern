@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {  } from 'react';
 import { Navigate } from 'react-router';
 import { observer } from 'mobx-react';
 
@@ -11,16 +11,23 @@ import { useStore } from '@/store';
  * @returns {(props: any) => JSX.Element}
  */
 export default function withSecurity(Component, authorities = []) {
-    function SecuredComponent() {
+    /**
+     * @param {any} props 
+     * @returns {JSX.Element}
+     */
+    function SecuredComponent(props) {
         const { user } = useStore();
         if (user.authenticated) {
             return user.hasAuthorities(authorities) ? (
-                <Component/>
+                <Component {...props} />
             ) : (
                 <StatelessWidget title="Access denied" description="You are not authorized to access this page."/>
             );
         }
         return <Navigate to={{ pathname: '/login' }}/>;
     }
+    SecuredComponent.displayName = `Secured$${
+        Component['name'] ?? Component['displayName'] ?? 'Component'
+    }`;
     return observer(SecuredComponent);
 }
