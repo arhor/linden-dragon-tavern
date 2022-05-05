@@ -5,6 +5,11 @@ import { observer } from 'mobx-react';
 import StatelessWidget from '@/components/StatelessWidget';
 import { useStore } from '@/store';
 
+/**
+ * @param {(props: any) => JSX.Element} Component 
+ * @param {string[]} authorities 
+ * @returns {(props: any) => JSX.Element}
+ */
 export default function withSecurity(Component, authorities = []) {
     function SecuredComponent() {
         const { user } = useStore();
