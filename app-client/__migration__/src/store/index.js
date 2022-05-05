@@ -1,11 +1,13 @@
-import { configureStore } from '@reduxjs/toolkit';
-import user from '@/store/user';
+import { createContext, useContext } from 'react';
 
-const store = configureStore({
-    reducer: {
-        user,
-    },
-    devTools: process.env.NODE_ENV === 'development',
+import AppStore from '@/store/app';
+import UserStore from '@/store/user';
+
+export const store = Object.freeze({
+    app: new AppStore(),
+    user: new UserStore(),
 });
 
-export default store;
+export const StoreContext = createContext(store);
+
+export const useStore = () => useContext(StoreContext);

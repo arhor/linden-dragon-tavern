@@ -1,30 +1,41 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { USER, INITIAL_STATE } from '@/store/user/user.model.js';
+import { makeAutoObservable } from 'mobx';
 
-const userSlice = createSlice({
-    name: 'user',
-    initialState: {
-        ...INITIAL_STATE,
-    },
-    reducers: {
-        resetState: (state) => {
-            for (const [prop, initialValue] of Object.entries(INITIAL_STATE)) {
-                state[prop] = initialValue;
+export default class UserStore {
+    /** @type {boolean} */
+    authenticated = false;
+
+    /** @type {string[]} */
+    authorities = [];
+
+    constructor() {
+        makeAutoObservable(this, null, { autoBind: true });
+    }
+
+    /**
+     * @param {boolean} authenticated
+     */
+    setAuthenticated(authenticated) {
+        this.authenticated = authenticated;
+    }
+
+    /**
+     * @param {string[]} authorities
+     */
+    setAuthorities(authorities) {
+        this.authorities = authorities;
+    }
+
+    /**
+     * @param {string[]} [authorities]
+     * @returns {boolean}
+     */
+    hasAuthorities(authorities = []) {
+        if (this.authorities.length !== 0) {
+            if (authorities.length === 0) {
+                return true;
             }
-        },
-        setProp: (state, action) => {
-            const { prop, value } = action.payload;
-            if (Object.keys(USER).includes(prop)) {
-                state[prop] = value ?? INITIAL_STATE[prop];
-            }
-        },
-    },
-});
-
-export default userSlice.reducer;
-
-export const { resetState, setProp } = userSlice.actions;
-
-export const isAuthenticated = (state) => state[USER.AUTHENTICATED];
-
-export const getAuthorities = (state) => state[USER.AUTHORITIES];
+            return authorities.every((auth) => this.authorities.includes(auth));
+        }
+        return authorities.length === 0;
+    }
+}

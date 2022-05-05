@@ -1,42 +1,25 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { observer } from 'mobx-react';
 
 import ErrorBoundary from '@/components/ErrorBoundary';
 import StatelessWidget, { TYPE, SIZE } from '@/components/StatelessWidget';
-import { isAuthenticated, getAuthorities } from '@/store/user';
+import { useStore } from '@/store';
 
-/**
- * @param {string[]} [authorities] 
- * @param {string[]} [requireAuthorities] 
- * @returns {boolean}
- */
-const checkAuthorities = (authorities = [], requireAuthorities = []) => {
-    if (authorities.length !== 0) {
-        if (requireAuthorities.length === 0) {
-            return true;
-        }
-        return requireAuthorities.some((auth) => authorities.includes(auth));
-    }
-    return requireAuthorities.length === 0;
+SecuredRoute.propTypes = {
+    Component: PropTypes.elementType.isRequired,
+    authorities: PropTypes.arrayOf(PropTypes.string)
 };
 
-function SecuredRoute({ component, authorities = [], ...rest }) {
-    if (component === null || component === void 0) {
-        throw new Error(
-            `A component needs to be specified for private route for path ${rest.path}`
-        );
-    }
+function SecuredRoute({ Component, authorities = [], ...rest }) {
+    const { user } = useStore();
 
-    const userAuthenticated = useSelector(isAuthenticated);
-    const userAuthorities = useSelector(getAuthorities);
-
-    const renderWithRedirect = (props) => {
-        if (userAuthenticated) {
-            return checkAuthorities(userAuthorities, authorities) ? (
+    return <Route {...rest} render={(props) => {
+        if (user.authenticated) {
+            return user.hasAuthorities(authorities) ? (
                 <ErrorBoundary>
-                    {/* @ts-ignore */}
-                    <component {...props} />
+                    <Component {...props} />
                 </ErrorBoundary>
             ) : (
                 <StatelessWidget
@@ -46,19 +29,18 @@ function SecuredRoute({ component, authorities = [], ...rest }) {
                     description="You are not authorized to access this page."
                 />
             );
+        } else {
+            return (
+                <Redirect
+                    to={{
+                        pathname: '/login',
+                        search: props.location.search,
+                        state: { from: props.location },
+                    }}
+                />
+            );
         }
-        return (
-            <Redirect
-                to={{
-                    pathname: '/login',
-                    search: props.location.search,
-                    state: { from: props.location },
-                }}
-            />
-        );
-    };
+    }} />;
+}
 
-    return <Route {...rest} render={renderWithRedirect} />;
-};
-
-export default SecuredRoute;
+export default observer(SecuredRoute);
