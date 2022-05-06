@@ -1,8 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
+import PropTypes from 'prop-types';
 
 CreatureDetails.propTypes = {
     creature: PropTypes.object.isRequired,

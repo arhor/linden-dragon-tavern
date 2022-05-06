@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { render, screen } from '@testing-library/react';
 
 import MainAbilityCounter, { ABILITY } from '@/components/MainAbilityCounter/MainAbilityCounter.jsx';

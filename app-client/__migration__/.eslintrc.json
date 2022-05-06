@@ -1,50 +1,95 @@
 {
-  "root": true,
-  "env": {
-    "node": true,
-    "browser": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
-  ],
-  "parserOptions": {
-    "sourceType": "module",
-    "ecmaVersion": "latest",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
-  "rules": {
-    "no-console": [
-      "error",
-      {
-        "allow": ["error"]
-      }
+    "root": true,
+    "env": {
+        "node": true,
+        "browser": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:import/recommended"
     ],
-    "no-debugger": "error",
-    "no-param-reassign": [
-      "error",
-      {
-        "props": true,
-        "ignorePropertyModificationsFor": ["state"]
-      }
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": "latest",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "rules": {
+        "no-console": [
+            "error",
+            {
+                "allow": [
+                    "error"
+                ]
+            }
+        ],
+        "no-debugger": "error",
+        "no-param-reassign": [
+            "error",
+            {
+                "props": true,
+                "ignorePropertyModificationsFor": [
+                    "state"
+                ]
+            }
+        ],
+        "import/export": "off",
+        "import/default": "off",
+        "import/namespace": "off",
+        "import/no-named-as-default": "off",
+        "import/no-named-as-default-member": "off",
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal"
+                ],
+                "pathGroups": [
+                    {
+                        "pattern": "react",
+                        "group": "external",
+                        "position": "before"
+                    }
+                ],
+                "pathGroupsExcludedImportTypes": [
+                    "react"
+                ],
+                "newlines-between": "always",
+                "alphabetize": {
+                    "order": "asc",
+                    "caseInsensitive": true
+                }
+            }
+        ]
+    },
+    "settings": {
+        "react": {
+            "version": "detect"
+        },
+        "import/resolver": {
+            "alias": {
+                "map": [
+                    ["@", "./src"]
+                ],
+                "extensions": [".js", ".jsx"]
+            }
+        }
+    },
+    "overrides": [
+        {
+            "files": [
+                "**/*.test.{js,jsx}"
+            ],
+            "env": {
+                "jest": true
+            },
+            "rules": {
+                "no-console": "off"
+            }
+        }
     ]
-  },
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
-  },
-  "overrides": [
-    {
-      "files": ["**/*.test.{j,t}s?(x)"],
-      "env": {
-        "jest": true
-      },
-      "rules": {
-        "no-console": "off"
-      }
-    }
-  ]
 }

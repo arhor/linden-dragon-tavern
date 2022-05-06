@@ -1,4 +1,5 @@
 import React from 'react';
+
 import StatelessWidget from '@/components/StatelessWidget/StatelessWidget.jsx';
 
 export default {

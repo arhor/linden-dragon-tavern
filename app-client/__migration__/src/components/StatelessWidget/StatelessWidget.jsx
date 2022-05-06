@@ -1,6 +1,7 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
 import { Box, Typography } from '@mui/material';
+import PropTypes from 'prop-types';
 
 /**
  * @readonly

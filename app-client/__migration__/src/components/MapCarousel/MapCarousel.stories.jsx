@@ -1,4 +1,5 @@
 import React from 'react';
+
 import MapCarousel from '@/components/MapCarousel/MapCarousel.jsx';
 
 export default {

@@ -1,4 +1,5 @@
 import React, { lazy, Suspense } from 'react';
+
 import { Route, Routes } from 'react-router';
 
 import Loader from '@/components/Loader';
