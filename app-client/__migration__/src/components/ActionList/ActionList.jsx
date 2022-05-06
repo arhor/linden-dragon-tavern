@@ -1,7 +1,8 @@
 import React from 'react';
 
-import Box from '@mui/material/Box';
 import PropTypes from 'prop-types';
+
+import Box from '@mui/material/Box';
 
 ActionList.propTypes = {
     actions: PropTypes.arrayOf(PropTypes.shape({

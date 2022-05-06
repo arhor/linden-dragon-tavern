@@ -1,11 +1,13 @@
 import React from 'react';
 
+import log from 'loglevel';
+import PropTypes from 'prop-types';
+
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import PropTypes from 'prop-types';
 
 const ERROR_MSG_DIALOG = `\
 Dialogs should contain a maximum of two actions. \
@@ -33,7 +35,7 @@ function AlertDialog({
     acknowledgementAction,
 }) {
     if ((dismissiveAction || confirmingAction) && acknowledgementAction) {
-        console.error(ERROR_MSG_DIALOG);
+        log.error(ERROR_MSG_DIALOG);
         return null;
     }
 

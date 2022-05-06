@@ -4,10 +4,12 @@
         "node": true,
         "browser": true
     },
+    "plugins": [
+        "import"
+    ],
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended",
-        "plugin:import/recommended"
+        "plugin:react/recommended"
     ],
     "parserOptions": {
         "sourceType": "module",
@@ -17,29 +19,12 @@
         }
     },
     "rules": {
-        "no-console": [
-            "error",
-            {
-                "allow": [
-                    "error"
-                ]
-            }
-        ],
+        "no-console": "error",
         "no-debugger": "error",
-        "no-param-reassign": [
-            "error",
-            {
-                "props": true,
-                "ignorePropertyModificationsFor": [
-                    "state"
-                ]
-            }
-        ],
-        "import/export": "off",
-        "import/default": "off",
-        "import/namespace": "off",
-        "import/no-named-as-default": "off",
-        "import/no-named-as-default-member": "off",
+        "no-param-reassign": "error",
+        "import/no-unresolved": "error",
+        "import/named": "error",
+        "import/no-duplicates": "warn",
         "import/order": [
             "error",
             {
@@ -53,6 +38,11 @@
                         "pattern": "react",
                         "group": "external",
                         "position": "before"
+                    },
+                    {
+                        "pattern": "@mui/**",
+                        "group": "external",
+                        "position": "after"
                     }
                 ],
                 "pathGroupsExcludedImportTypes": [
@@ -73,11 +63,21 @@
         "import/resolver": {
             "alias": {
                 "map": [
-                    ["@", "./src"]
+                    [
+                        "@",
+                        "./src"
+                    ]
                 ],
-                "extensions": [".js", ".jsx"]
+                "extensions": [
+                    ".js",
+                    ".jsx"
+                ]
             }
-        }
+        },
+        "import/extensions": [
+            ".js",
+            ".jsx"
+        ]
     },
     "overrides": [
         {
