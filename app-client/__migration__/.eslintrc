@@ -61,29 +61,21 @@
             "version": "detect"
         },
         "import/resolver": {
+            "node": {
+                "extensions": [".js", ".jsx"]
+            },
             "alias": {
+                "extensions": [".js", ".jsx"],
                 "map": [
-                    [
-                        "@",
-                        "./src"
-                    ]
-                ],
-                "extensions": [
-                    ".js",
-                    ".jsx"
+                    ["@", "./src"]
                 ]
             }
         },
-        "import/extensions": [
-            ".js",
-            ".jsx"
-        ]
+        "import/extensions": [".js", ".jsx"]
     },
     "overrides": [
         {
-            "files": [
-                "**/*.test.{js,jsx}"
-            ],
+            "files": ["**/*.test.{js,jsx}"],
             "env": {
                 "jest": true
             },

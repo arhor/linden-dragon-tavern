@@ -1,17 +1,17 @@
 import React from 'react';
 
-import { observer } from 'mobx-react';
-
 import Container from '@mui/material/Container';
 
 import AppBreadcrumbs from '@/components/AppBreadcrumbs/AppBreadcrumbs.jsx';
 import AppNavBar from '@/components/AppNavBar';
+import AppNotifier from '@/components/AppNotifier';
 import AppRouter from '@/components/AppRouter';
 
 function AppLayout() {
     return (
         <>
             <AppNavBar />
+            <AppNotifier />
             <Container component="main">
                 <AppBreadcrumbs />
                 <AppRouter />
@@ -20,4 +20,4 @@ function AppLayout() {
     );
 }
 
-export default observer(AppLayout);
+export default AppLayout;

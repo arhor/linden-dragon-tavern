@@ -5,5 +5,7 @@
     "endOfLine": "crlf",
     "semi": true,
     "tabWidth": 4,
-    "trailingComma": "all"
+    "trailingComma": "all",
+    "bracketSpacing": true,
+    "bracketSameLine": false
 }

@@ -1,2 +1,2 @@
-export { default } from '@/store/app/app.store.js';
-export * from '@/store/app/app.store.js';
+export { default } from '@/store/app/AppStore.js';
+export * from '@/store/app/AppStore.js';

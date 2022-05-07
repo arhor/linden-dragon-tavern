@@ -1,7 +1,10 @@
 import { makeAutoObservable } from 'mobx';
 
 export default class UserStore {
+    /** @type {boolean} */
     authenticated = false;
+
+    /** @type {string[]} */
     authorities = [];
 
     constructor() {

@@ -1,10 +1,12 @@
-const axios = require('axios');
-const cheerio = require('cheerio');
-const fs = require('fs');
+import fs from 'fs';
+
+import axios from 'axios';
+import cheerio from 'cheerio';
+import log from 'loglevel';
 
 const BASE_URL = 'https://dungeon.su';
 
-(async function() {
+(async function () {
     try {
         const { data } = await axios.get(`${BASE_URL}/bestiary`);
 
@@ -15,7 +17,7 @@ const BASE_URL = 'https://dungeon.su';
             .not('.first-letter')
             .get();
 
-        console.info('monster links parsing started');
+        log.info('monster links parsing started');
 
         const progress = new ProgressLogger(elements.length);
 
@@ -35,11 +37,11 @@ const BASE_URL = 'https://dungeon.su';
                 result.push(monsterInfo);
             }
         }
-        console.info('monster links parsing finished');
+        log.info('monster links parsing finished');
 
         persist(result);
     } catch (error) {
-        console.error(error);
+        log.error(error);
     }
 })();
 
@@ -56,12 +58,12 @@ function parseMonsterInfo(html, index) {
 
     const params = $('ul.params');
 
-    const [size, type, alignment] =
-        params
-            .find('li.size-type-alignment')
-            .text()
-            .split(',')
-            .map((param) => param.trim()) || [];
+    const [ size, type, alignment ] =
+    params
+        .find('li.size-type-alignment')
+        .text()
+        .split(',')
+        .map((param) => param.trim()) || [];
 
     const ac = findOne(params, 'Класс доспеха:');
     const hitPoints = findOne(params, 'Хиты:');
@@ -185,35 +187,35 @@ class ProgressLogger {
     }
 
     _consoleWriter(msg) {
-        console.log(msg);
+        log.log(msg);
     }
 
     _isTerminalAvailable() {
         return Boolean(
             process &&
-                process.stdout &&
-                process.stdout.clearLine &&
-                process.stdout.cursorTo &&
-                process.stdout.write,
+            process.stdout &&
+            process.stdout.clearLine &&
+            process.stdout.cursorTo &&
+            process.stdout.write,
         );
     }
 }
 
+// eslint-disable-next-line no-undef
+const mappings = new Map([
+    [ 'СИЛ', 'STR' ],
+    [ 'ЛОВ', 'DEX' ],
+    [ 'ТЕЛ', 'CON' ],
+    [ 'ИНТ', 'INT' ],
+    [ 'МДР', 'WIS' ],
+    [ 'ХАР', 'CHA' ],
+]);
+
 function abilityAbbrToEng(abbr) {
-    switch (abbr) {
-        case 'СИЛ':
-            return 'STR';
-        case 'ЛОВ':
-            return 'DEX';
-        case 'ТЕЛ':
-            return 'CON';
-        case 'ИНТ':
-            return 'INT';
-        case 'МДР':
-            return 'WIS';
-        case 'ХАР':
-            return 'CHA';
-        default:
-            throw new Error('illegal argument: ' + abbr);
+    const value = mappings.get(abbr);
+    if (value) {
+        return value;
+    } else {
+        throw new Error('illegal argument: ' + abbr);
     }
 }
