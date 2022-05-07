@@ -10,7 +10,7 @@ import { calculateModifier, minifyAbilityName } from '@/utils/abilityUtils.js';
  * @readonly
  * @enum {string}
  */
- export const ABILITY = {
+export const ABILITY = {
     STR: 'Strength',
     DEX: 'Dexterity',
     CON: 'Constitution',
@@ -19,10 +19,10 @@ import { calculateModifier, minifyAbilityName } from '@/utils/abilityUtils.js';
     CHA: 'Charisma',
 };
 
-MainAbilityCounter.propTypes = {
+process.env.NODE_ENV !== 'production' ? MainAbilityCounter.propTypes = {
     name: PropTypes.oneOf(Object.values(ABILITY)).isRequired,
     value: PropTypes.number.isRequired,
-};
+} : void 0;
 
 function MainAbilityCounter({ name, value }) {
     const typeDisplayName = minifyAbilityName(name);

@@ -68,7 +68,7 @@ function determineBoxStyle(type, padding) {
     }
 }
 
-StatelessWidget.propTypes = {
+process.env.NODE_ENV !== 'production' ? StatelessWidget.propTypes = {
     type: PropTypes.oneOf(Object.values(TYPE)),
     size: PropTypes.oneOf(Object.values(SIZE)),
     padding: PropTypes.number,
@@ -76,7 +76,7 @@ StatelessWidget.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
     button: PropTypes.element,
-};
+} : void 0;
 
 function StatelessWidget({
     type = TYPE.PAGE,

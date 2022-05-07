@@ -7,10 +7,10 @@ import StatelessWidget, { SIZE, TYPE } from '@/components/StatelessWidget';
 const DEFAULT_TITLE = 'Ups, something went wrong...';
 const DEFAULT_DESCRIPTION = 'Please, contact system administrator if you have nothing else to do';
 
-ErrorView.propTypes = {
+process.env.NODE_ENV !== 'production' ? ErrorView.propTypes = {
     title: PropTypes.string,
     description: PropTypes.string,
-};
+} : void 0;
 
 function ErrorView({ title, description }) {
     return (

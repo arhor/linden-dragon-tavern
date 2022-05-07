@@ -4,12 +4,12 @@ import PropTypes from 'prop-types';
 
 import Box from '@mui/material/Box';
 
-ActionList.propTypes = {
+process.env.NODE_ENV !== 'production' ? ActionList.propTypes = {
     actions: PropTypes.arrayOf(PropTypes.shape({
         name: PropTypes.string.isRequired,
         desc: PropTypes.string.isRequired,
     })),
-};
+} : void 0;
 
 function ActionList({ actions = [] }) {
     const lastActionIndex = actions.length - 1;

@@ -17,14 +17,14 @@ Providing a third action such as �Learn more� is not recommended as it navig
 https://material.io/design/components/dialogs.html#actions.
 `;
 
-AlertDialog.propTypes = {
+process.env.NODE_ENV !== 'production' ? AlertDialog.propTypes = {
     dialogProps: PropTypes.object.isRequired,
     title: PropTypes.string,
     contentText: PropTypes.string.isRequired,
     dismissiveAction: PropTypes.element,
     confirmingAction: PropTypes.element,
     acknowledgementAction: PropTypes.element,
-};
+} : void 0;
 
 function AlertDialog({
     dialogProps,
