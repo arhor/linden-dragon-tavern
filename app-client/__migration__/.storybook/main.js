@@ -3,7 +3,7 @@ const path = require('path');
 /**
  * @type {import('@storybook/builder-vite').StorybookViteConfig}
  */
-module.exports = {
+const config = {
     framework: '@storybook/react',
     core: {
         builder: '@storybook/builder-vite',
@@ -17,7 +17,10 @@ module.exports = {
         '@storybook/addon-essentials',
         '@storybook/addon-interactions',
     ],
-    viteFinal: (config) => ({
+    features: {
+        storyStoreV7: true,
+    },
+    viteFinal: async (config) => ({
         ...config,
         resolve: {
             alias: {
@@ -26,3 +29,5 @@ module.exports = {
         },
     }),
 };
+
+module.exports = config;

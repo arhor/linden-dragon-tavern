@@ -11,6 +11,7 @@
         "eslint:recommended",
         "plugin:react/recommended"
     ],
+    "parser": "@typescript-eslint/parser",
     "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": "latest",
@@ -18,6 +19,9 @@
             "jsx": true
         }
     },
+    "ignorePatterns": [
+        "vite.config.ts"
+    ],
     "rules": {
         "no-console": "error",
         "no-debugger": "error",
@@ -61,21 +65,17 @@
             "version": "detect"
         },
         "import/resolver": {
-            "node": {
-                "extensions": [".js", ".jsx"]
-            },
-            "alias": {
-                "extensions": [".js", ".jsx"],
-                "map": [
-                    ["@", "./src"]
+            "typescript": {
+                "project": [
+                    "tsconfig.json"
                 ]
             }
         },
-        "import/extensions": [".js", ".jsx"]
+        "import/extensions": [".js", ".jsx", ".ts", ".tsx"]
     },
     "overrides": [
         {
-            "files": ["**/*.test.{js,jsx}"],
+            "files": ["**/*.test.{js,jsx,ts,tsx}"],
             "env": {
                 "jest": true
             },
