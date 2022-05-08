@@ -1,8 +1,8 @@
-import React from 'react';
+import { ReactElement } from 'react';
 
 import log from 'loglevel';
 
-import Dialog from '@mui/material/Dialog';
+import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -16,21 +16,23 @@ Providing a third action such as �Learn more� is not recommended as it navig
 https://material.io/design/components/dialogs.html#actions.
 `;
 
-const AlertDialog: React.FC<{
-    dialogProps: any;
+type AlertDialogProps = {
+    dialogProps: DialogProps;
     title?: string;
     contentText: string;
-    dismissiveAction?: React.ReactElement;
-    confirmingAction?: React.ReactElement;
-    acknowledgementAction?: React.ReactElement;
-}> = ({
+    dismissiveAction?: ReactElement;
+    confirmingAction?: ReactElement;
+    acknowledgementAction?: ReactElement;
+};
+
+const AlertDialog = ({
     dialogProps,
     title,
     contentText,
     dismissiveAction,
     confirmingAction,
     acknowledgementAction,
-}) => {
+}: AlertDialogProps) => {
     if ((dismissiveAction || confirmingAction) && acknowledgementAction) {
         log.error(ERROR_MSG_DIALOG);
         return null;

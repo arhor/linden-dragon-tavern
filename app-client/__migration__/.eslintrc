@@ -1,87 +1,86 @@
 {
-    "root": true,
-    "env": {
-        "node": true,
-        "browser": true
-    },
-    "plugins": [
-        "import"
-    ],
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended"
-    ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "sourceType": "module",
-        "ecmaVersion": "latest",
-        "ecmaFeatures": {
-            "jsx": true
+  "root": true,
+  "env": {
+    "node": true,
+    "browser": true
+  },
+  "plugins": [
+    "import",
+    "react",
+    "@typescript-eslint"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "sourceType": "module",
+    "ecmaVersion": "latest",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "ignorePatterns": [
+    "vite.config.ts"
+  ],
+  "rules": {
+    "no-console": "error",
+    "no-debugger": "error",
+    "no-param-reassign": "error",
+    "react/react-in-jsx-scope": "off",
+    "import/no-unresolved": "error",
+    "import/named": "error",
+    "import/no-duplicates": "warn",
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@mui/**",
+            "group": "external",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": [
+          "react"
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
         }
-    },
-    "ignorePatterns": [
-        "vite.config.ts"
-    ],
-    "rules": {
-        "no-console": "error",
-        "no-debugger": "error",
-        "no-param-reassign": "error",
-        "import/no-unresolved": "error",
-        "import/named": "error",
-        "import/no-duplicates": "warn",
-        "import/order": [
-            "error",
-            {
-                "groups": [
-                    "builtin",
-                    "external",
-                    "internal"
-                ],
-                "pathGroups": [
-                    {
-                        "pattern": "react",
-                        "group": "external",
-                        "position": "before"
-                    },
-                    {
-                        "pattern": "@mui/**",
-                        "group": "external",
-                        "position": "after"
-                    }
-                ],
-                "pathGroupsExcludedImportTypes": [
-                    "react"
-                ],
-                "newlines-between": "always",
-                "alphabetize": {
-                    "order": "asc",
-                    "caseInsensitive": true
-                }
-            }
-        ]
-    },
-    "settings": {
-        "react": {
-            "version": "detect"
-        },
-        "import/resolver": {
-            "typescript": {
-                "project": [
-                    "tsconfig.json"
-                ]
-            }
-        },
-        "import/extensions": [".js", ".jsx", ".ts", ".tsx"]
-    },
-    "overrides": [
-        {
-            "files": ["**/*.test.{js,jsx,ts,tsx}"],
-            "env": {
-                "jest": true
-            },
-            "rules": {
-                "no-console": "off"
-            }
-        }
+      }
     ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    },
+    "import/resolver": {
+      "typescript": {
+        "project": "tsconfig.json"
+      }
+    },
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.test.{js,jsx,ts,tsx}"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 }

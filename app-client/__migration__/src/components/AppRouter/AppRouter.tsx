@@ -8,7 +8,7 @@ const Home = lazy(() => import('@/pages/Home'));
 const About = lazy(() => import('@/pages/About'));
 const NotFound = lazy(() => import('@/pages/NotFound'));
 
-const AppRouter: React.FC = () => (
+const AppRouter = () => (
     <Suspense fallback={<Loader />}>
         <Routes>
             <Route path="/" element={<Home />} />

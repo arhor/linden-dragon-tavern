@@ -1,14 +1,16 @@
-import React from 'react';
+import { Component, ErrorInfo, ReactNode } from 'react';
 
 import StatelessWidget from '@/components/StatelessWidget';
 
 const DEFAULT_TITLE = 'Ups, something went wrong...';
 const DEFAULT_DESCRIPTION = 'Please, contact system administrator if you have nothing else to do';
 
-const ErrorView: React.FC<{
+type ErrorViewProps = {
     title?: string;
     description?: string;
-}> = ({ title, description }) => (
+};
+
+const ErrorView = ({ title, description }: ErrorViewProps) => (
     <StatelessWidget
         type="page"
         size="large"
@@ -17,15 +19,26 @@ const ErrorView: React.FC<{
     />
 );
 
-class ErrorBoundary extends React.Component<{}, {
+type ErrorBoundaryProps = {
+    children: ReactNode;
+}
+
+type ErrorBoundaryState = {
     error: Error | null;
-    errorInfo: React.ErrorInfo | null;
-}> {
+    errorInfo: ErrorInfo | null;
+};
+
+class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+    state: ErrorBoundaryState = {
+        error: null,
+        errorInfo: null,
+    };
+
     static getDerivedStateFromError(error: Error) {
         return { error };
     }
 
-    componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    componentDidCatch(error: Error, errorInfo: ErrorInfo) {
         this.setState({ error, errorInfo });
     }
 

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { SnackbarProvider } from 'notistack';
 import { BrowserRouter } from 'react-router-dom';
 
@@ -11,7 +9,7 @@ import ErrorBoundary from '@/components/ErrorBoundary';
 import { StoreProvider } from '@/store';
 import theme from '@/theme';
 
-const App: React.FC = () => (
+const App = () => (
     <ThemeProvider theme={theme}>
         <CssBaseline />
         <ErrorBoundary>

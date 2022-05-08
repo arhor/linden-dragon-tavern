@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 
@@ -7,11 +5,11 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
-const MUIRouterLink: React.FC<any> = (props) => (
+const MUIRouterLink = (props: any) => (
     <Link {...props} component={RouterLink} underline="hover" color="inherit" />
 );
 
-const AppBreadcrumbs: React.FC = () => {
+const AppBreadcrumbs = () => {
     const { t } = useTranslation();
     const location = useLocation();
     const pathnames = location.pathname.split('/').filter((x) => x);

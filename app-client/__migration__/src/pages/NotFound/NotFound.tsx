@@ -1,5 +1,3 @@
-import React from 'react';
-
 import StatelessWidget from '@/components/StatelessWidget';
 
 function NotFound() {

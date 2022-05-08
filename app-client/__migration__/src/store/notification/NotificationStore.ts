@@ -2,10 +2,13 @@ import { action, makeObservable, observable } from 'mobx';
 
 import { generateUUID } from '@/utils/coreUtils';
 
-type NotificationItem = {
-    id?: string;
+type Notification = {
     message: string;
     level: 'default' | 'error' | 'success' | 'warning' | 'info';
+};
+
+type NotificationItem = Notification & {
+    id: string;
 };
 
 export default class NotificationStore {
@@ -19,7 +22,7 @@ export default class NotificationStore {
         });
     }
 
-    enqueue(item: NotificationItem) {
+    enqueue(item: Notification) {
         this.items.push({
             id: generateUUID(),
             ...item,
@@ -28,7 +31,7 @@ export default class NotificationStore {
 
     remove(...ids: string[]) {
         if (ids?.length > 0) {
-            this.items = this.items.filter(item => !ids.includes(item.id!));
+            this.items = this.items.filter(item => !ids.includes(item.id));
         }
     }
 }

@@ -1,16 +1,14 @@
-import React from 'react';
-
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-type Creature = {
-    name: string;
+type CreatureDetailsProps = {
+    creature: {
+        name: string;
+    };
 };
 
-const CreatureDetails: React.FC<{
-    creature: Creature;
-}> = ({ creature }) => (
+const CreatureDetails = ({ creature }: CreatureDetailsProps) => (
     <Card>
         <CardContent>
             <Typography gutterBottom variant="h5" component="div">

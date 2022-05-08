@@ -1,21 +1,21 @@
-import React from 'react';
-
 import styles from '@/components/MainAbilityCounter/MainAbilityCounter.module.css';
 import { calculateModifier, minifyAbilityName } from '@/utils/abilityUtils';
 
 export enum Ability {
-    STR = 'Strength ===',
-    DEX = 'Dexterity +++',
+    STR = 'Strength',
+    DEX = 'Dexterity',
     CON = 'Constitution',
     INT = 'Intelligence',
     WIS = 'Wisdom',
     CHA = 'Charisma',
 }
 
-const MainAbilityCounter: React.FC<{
+type MainAbilityCounterProps = {
     name: Ability;
     value: number;
-}> = ({ name, value }) => {
+};
+
+const MainAbilityCounter = ({ name, value }: MainAbilityCounterProps) => {
     const typeDisplayName = minifyAbilityName(name);
     const modifier = calculateModifier(value);
 

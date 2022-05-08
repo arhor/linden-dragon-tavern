@@ -6,16 +6,16 @@ import { useSnackbar } from 'notistack';
 
 import { useStore } from '@/store';
 
-const AppNotifier: React.FC = () => {
+const AppNotifier = () => {
     const { notification } = useStore();
     const { enqueueSnackbar } = useSnackbar();
 
     useEffect(() => autorun(() => {
         const displayed: string[] = [];
         notification.items.forEach(({ id, level, message }) => {
-            if (!displayed.includes(id!)) {
+            if (!displayed.includes(id)) {
                 enqueueSnackbar(message, { variant: level });
-                displayed.push(id!);
+                displayed.push(id);
             }
         });
         notification.remove(...displayed);

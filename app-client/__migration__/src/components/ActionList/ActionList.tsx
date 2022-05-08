@@ -1,10 +1,13 @@
-import React from 'react';
-
 import Box from '@mui/material/Box';
 
-const ActionList: React.FC<{
-    actions?: Array<{ name: string, desc: string }>;
-}> = ({ actions = [] }) => {
+type ActionListProps = {
+    actions?: Array<{
+        name: string;
+        desc: string;
+    }>;
+};
+
+const ActionList = ({ actions = [] }: ActionListProps) => {
     const lastActionIndex = actions.length - 1;
     return (
         <div data-testid="action-list-container">

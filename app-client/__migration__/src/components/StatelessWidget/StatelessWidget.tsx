@@ -1,4 +1,4 @@
-import React from 'react';
+import { ReactElement } from 'react';
 
 import { Box, Typography } from '@mui/material';
 import { SxProps } from "@mui/system";
@@ -55,23 +55,25 @@ function determineBoxStyle(type: Type, padding: number): SxProps {
     }
 }
 
-const StatelessWidget: React.FC<{
+type StatelessWidgetProps = {
     type?: Type;
     size?: Size;
     padding?: number;
-    image?: React.ReactElement;
+    image?: ReactElement;
     title?: string;
     description?: string;
-    button?: React.ReactElement;
-}> = ({
-          type = 'page',
-          size = 'large',
-          padding = 2,
-          image,
-          title,
-          description,
-          button,
-      }) => {
+    button?: ReactElement;
+};
+
+const StatelessWidget = ({
+    type = 'page',
+    size = 'large',
+    padding = 2,
+    image,
+    title,
+    description,
+    button,
+}: StatelessWidgetProps) => {
     const boxStyle = determineBoxStyle(type, padding);
     const { imageWidth, imageHeight, variant } = determineWidgetParams(size);
 

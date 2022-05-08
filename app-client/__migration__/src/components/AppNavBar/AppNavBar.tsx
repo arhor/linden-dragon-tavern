@@ -124,8 +124,6 @@
 
 // export default AppNavBar;
 
-import React from 'react';
-
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -133,7 +131,7 @@ import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-const AppNavBar: React.FC = () => (
+const AppNavBar = () => (
     <AppBar position="static">
         <Toolbar>
             <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>

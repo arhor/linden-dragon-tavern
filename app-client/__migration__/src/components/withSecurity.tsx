@@ -1,4 +1,4 @@
-import React from 'react';
+import { ComponentType } from 'react';
 
 import { observer } from 'mobx-react';
 import { Navigate } from 'react-router';
@@ -6,7 +6,7 @@ import { Navigate } from 'react-router';
 import StatelessWidget from '@/components/StatelessWidget';
 import { useStore } from '@/store';
 
-export default function withSecurity<T>(WrappedComponent: React.ComponentType<T>, authorities: string[]) {
+export default function withSecurity<T>(WrappedComponent: ComponentType<T>, authorities: string[]) {
     const SecuredComponent = (props: T) => {
         const { user } = useStore();
         if (user.authenticated) {
