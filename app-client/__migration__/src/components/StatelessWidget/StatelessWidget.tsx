@@ -3,14 +3,16 @@ import { ReactElement } from 'react';
 import { Box, Typography } from '@mui/material';
 import { SxProps } from "@mui/system";
 
-export type Type = 'page' | 'card';
+type Type = 'page' | 'card';
 
-export type Size = 'small' | 'medium' | 'large';
+type Size = 'small' | 'medium' | 'large';
+
+type Variant = 'h4' | 'h5' | 'h6';
 
 function determineWidgetParams(size: Size): {
     imageWidth: number,
     imageHeight: number,
-    variant: 'h4' | 'h5' | 'h6',
+    variant: Variant,
 } {
     switch (size) {
         case 'small':
