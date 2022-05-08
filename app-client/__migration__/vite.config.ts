@@ -1,6 +1,3 @@
-/// <reference types="vitest" />
-/// <reference types="vite/client" />
-
 import { URL, fileURLToPath } from 'url';
 
 import react from '@vitejs/plugin-react';
