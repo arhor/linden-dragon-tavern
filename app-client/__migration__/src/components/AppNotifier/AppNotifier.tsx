@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { autorun } from 'mobx';
 import { observer } from 'mobx-react';

@@ -16,7 +16,7 @@ Providing a third action such as �Learn more� is not recommended as it navig
 https://material.io/design/components/dialogs.html#actions.
 `;
 
-type AlertDialogProps = {
+export type Props = {
     dialogProps: DialogProps;
     title?: string;
     contentText: string;
@@ -32,7 +32,7 @@ const AlertDialog = ({
     dismissiveAction,
     confirmingAction,
     acknowledgementAction,
-}: AlertDialogProps) => {
+}: Props) => {
     if ((dismissiveAction || confirmingAction) && acknowledgementAction) {
         log.error(ERROR_MSG_DIALOG);
         return null;

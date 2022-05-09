@@ -1,10 +1,17 @@
-import Box from '@mui/material/Box';
+import { useTranslation } from 'react-i18next';
+
 import CircularProgress from '@mui/material/CircularProgress';
 
-const Loader = () => (
-    <Box sx={{ display: 'flex' }}>
-        <CircularProgress />
-    </Box>
-);
+import StatelessWidget from '@/components/StatelessWidget';
+
+const Loader = () => {
+    const { t } = useTranslation();
+    return (
+        <StatelessWidget
+            image={<CircularProgress />}
+            title={`${t('loading')}...`}
+        />
+    );
+};
 
 export default Loader;

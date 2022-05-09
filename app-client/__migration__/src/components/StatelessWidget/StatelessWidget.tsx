@@ -57,7 +57,7 @@ function determineBoxStyle(type: Type, padding: number): SxProps {
     }
 }
 
-type StatelessWidgetProps = {
+export type Props = {
     type?: Type;
     size?: Size;
     padding?: number;
@@ -75,7 +75,7 @@ const StatelessWidget = ({
     title,
     description,
     button,
-}: StatelessWidgetProps) => {
+}: Props) => {
     const boxStyle = determineBoxStyle(type, padding);
     const { imageWidth, imageHeight, variant } = determineWidgetParams(size);
 

@@ -1,13 +1,13 @@
 import Box from '@mui/material/Box';
 
-type ActionListProps = {
+export type Props = {
     actions?: Array<{
         name: string;
         desc: string;
     }>;
 };
 
-const ActionList = ({ actions = [] }: ActionListProps) => {
+const ActionList = ({ actions = [] }: Props) => {
     const lastActionIndex = actions.length - 1;
     return (
         <div data-testid="action-list-container">

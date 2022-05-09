@@ -2,13 +2,13 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 
-type CreatureDetailsProps = {
+export type Props = {
     creature: {
         name: string;
     };
 };
 
-const CreatureDetails = ({ creature }: CreatureDetailsProps) => (
+const CreatureDetails = ({ creature }: Props) => (
     <Card>
         <CardContent>
             <Typography gutterBottom variant="h5" component="div">

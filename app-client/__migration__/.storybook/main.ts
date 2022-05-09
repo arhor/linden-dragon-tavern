@@ -1,9 +1,8 @@
-const path = require('path');
+import * as path from 'path';
 
-/**
- * @type {import('@storybook/builder-vite').StorybookViteConfig}
- */
-const config = {
+import { StorybookViteConfig } from '@storybook/builder-vite';
+
+const config: StorybookViteConfig = {
     framework: '@storybook/react',
     core: {
         builder: '@storybook/builder-vite',
@@ -30,4 +29,4 @@ const config = {
     }),
 };
 
-module.exports = config;
+export default config;

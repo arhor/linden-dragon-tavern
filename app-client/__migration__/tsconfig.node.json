@@ -3,6 +3,7 @@
     "composite": true,
     "module": "ESNext",
     "moduleResolution": "Node",
+    "esModuleInterop": true,
     "types": ["vite/client", "vitest"]
   },
   "include": ["vite.config.ts"]

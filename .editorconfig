@@ -169,7 +169,7 @@ ij_javascript_while_brace_force = never
 ij_javascript_while_on_new_line = false
 ij_javascript_wrap_comments = false
 
-[{*.json,.eslintrc,.prettierrc}]
+[{*.json,.eslintrc,.prettierrc,.babelrc}]
 indent_size = 2
 ij_json_keep_line_breaks = true
 ij_json_space_after_colon = true

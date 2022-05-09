@@ -18,8 +18,8 @@ export default function withSecurity<T>(WrappedComponent: ComponentType<T>, auth
         }
         return <Navigate to={{ pathname: '/login' }} />;
     };
-    SecuredComponent.displayName = `Secured$${
+    SecuredComponent.displayName = `withSecurity(${
         WrappedComponent.displayName || WrappedComponent.name || 'Component'
-    }`;
+    })`;
     return observer(SecuredComponent);
 }

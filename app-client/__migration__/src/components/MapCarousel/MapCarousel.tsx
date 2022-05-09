@@ -29,11 +29,14 @@ const enrich = (src: string): string => `${src}?w=164&h=164&fit=crop&auto=format
 
 const MapCarousel = () => (
     <ImageList sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-        {ITEMS.map(({ src, title }) => (
-            <ImageListItem key={src}>
-                <img src={enrich(src)} srcSet={`${enrich(src)}&dpr=2 2x`} alt={title} loading="lazy" />
-            </ImageListItem>
-        ))}
+        {ITEMS.map(({ src, title }) => {
+            const enrichedSrc = enrich(src);
+            return (
+                <ImageListItem key={src}>
+                    <img src={enrichedSrc} srcSet={`${enrichedSrc}&dpr=2 2x`} alt={title} loading="lazy" />
+                </ImageListItem>
+            );
+        })}
     </ImageList>
 );
 

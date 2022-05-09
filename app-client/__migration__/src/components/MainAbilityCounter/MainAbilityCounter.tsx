@@ -10,12 +10,12 @@ export enum Ability {
     CHA = 'Charisma',
 }
 
-type MainAbilityCounterProps = {
+export type Props = {
     name: Ability;
     value: number;
 };
 
-const MainAbilityCounter = ({ name, value }: MainAbilityCounterProps) => {
+const MainAbilityCounter = ({ name, value }: Props) => {
     const typeDisplayName = minifyAbilityName(name);
     const modifier = calculateModifier(value);
 

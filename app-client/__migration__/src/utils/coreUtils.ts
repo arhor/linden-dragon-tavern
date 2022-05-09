@@ -43,3 +43,7 @@ export function isUndefined(value: any | undefined | null): boolean {
 export function isNull(value: any | undefined | null): boolean {
     return value === null;
 }
+
+export function delay(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+}

@@ -5,10 +5,6 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 
-const MUIRouterLink = (props: any) => (
-    <Link {...props} component={RouterLink} underline="hover" color="inherit" />
-);
-
 const AppBreadcrumbs = () => {
     const { t } = useTranslation();
     const location = useLocation();
@@ -17,9 +13,9 @@ const AppBreadcrumbs = () => {
 
     return (
         <Breadcrumbs>
-            <MUIRouterLink to="/">
+            <Link to="/" component={RouterLink} underline="hover" color="inherit">
                 {t('home').toUpperCase()}
-            </MUIRouterLink>
+            </Link>
             {pathnames.map((value, index) => {
                 const last = index === lastPathnameIndex;
                 const to = `/${pathnames.slice(0, index + 1).join('/')}`;
@@ -30,9 +26,9 @@ const AppBreadcrumbs = () => {
                         {translatedValue}
                     </Typography>
                 ) : (
-                    <MUIRouterLink to={to} key={to}>
+                    <Link to={to} key={to} component={RouterLink} underline="hover" color="inherit">
                         {translatedValue}
-                    </MUIRouterLink>
+                    </Link>
                 );
             })}
         </Breadcrumbs>
