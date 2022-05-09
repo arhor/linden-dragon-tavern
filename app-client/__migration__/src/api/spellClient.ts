@@ -1,11 +1,11 @@
-import axios from '@/api/client.js';
+import client from '@/api/client.js';
 
 const basePath = '/spells';
 
 export async function getAllSpells() {
-    return (await axios.get(basePath)).data.items;
+    return (await client.get(basePath)).data.items;
 }
 
 export async function getSpellByName(name: string) {
-    return (await axios.get(`${basePath}/${name}`)).data;
+    return (await client.get(`${basePath}/${name}`)).data;
 }

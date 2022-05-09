@@ -25,7 +25,7 @@ export default class SpellStore {
                 this.loaded = true;
             });
         } catch (e) {
-            log.error(e);
+            log.error('Unable to load spells.', e);
         }
     }
 }

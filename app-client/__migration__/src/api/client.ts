@@ -3,7 +3,7 @@ import axios from 'axios';
 import { requestInterceptor } from '@/api/interceptors';
 
 const client = axios.create({
-    baseURL: '/api/v1',
+    baseURL: '/api',
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',

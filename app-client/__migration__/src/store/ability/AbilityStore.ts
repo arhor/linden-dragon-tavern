@@ -24,8 +24,8 @@ export default class AbilityStore {
                 this.items = abilities;
                 this.loaded = true;
             });
-        } catch (apiError) {
-            log.error('Unable to load abilities.', apiError);
+        } catch (e) {
+            log.error('Unable to load abilities.', e);
         }
     }
 }

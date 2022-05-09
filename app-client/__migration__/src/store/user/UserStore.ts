@@ -1,6 +1,9 @@
-import { action, observable, makeObservable } from 'mobx';
+import { action, observable, makeObservable, runInAction } from 'mobx';
+
+import { login, logout } from '@/api/userClient';
 
 export default class UserStore {
+    username: string | null = null;
     authenticated = false;
     authorities: string[] = [];
 
@@ -19,6 +22,34 @@ export default class UserStore {
 
     setAuthorities(authorities: string[]) {
         this.authorities = authorities;
+    }
+
+    setSessionData(username: string, authorities: string[]) {
+        this.username = username;
+        this.authorities = authorities;
+        this.authenticated = true;
+    }
+
+    invalidateSession() {
+        this.username = null;
+        this.authorities = [];
+        this.authenticated = false;
+    }
+
+    async signIn(username: string, password: string): Promise<boolean> {
+        try {
+            const authorities = await login(username, password);
+            runInAction(() => this.setSessionData(username, authorities));
+            return true;
+        } catch (e) {
+            runInAction(this.invalidateSession);
+            return false;
+        }
+    }
+
+    async signOut() {
+        await logout();
+        runInAction(this.invalidateSession);
     }
 
     hasAuthorities(authorities: string[]): boolean {
