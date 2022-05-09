@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-unused-vars,no-undef
 export function useObjectURL(data: BufferSource, urlConsumer: (arg: string) => void) {
     const blob = new Blob([data]);
     const url = window.URL.createObjectURL(blob);

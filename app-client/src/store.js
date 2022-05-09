@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
-import abilities from '@/views/ability/store';
 import auth from '@/views/auth/store';
 import characterStats from '@/views/characters/store';
 import maps from '@/views/maps/store';
@@ -31,7 +30,6 @@ const store = new Vuex.Store({
         },
     },
     modules: {
-        abilities,
         characterStats,
         auth,
         maps,

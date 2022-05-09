@@ -1,24 +1,12 @@
-import { createContext, useContext, ReactNode } from 'react';
+import { createContext, ReactNode, useContext } from 'react';
 
-import AppStore from '@/store/app';
-import NotificationStore from '@/store/notification';
-import UserStore from '@/store/user';
+import { createStore, RootStore } from '@/store/RootStore';
 
-export const store = Object.freeze({
-    app: new AppStore(),
-    notification: new NotificationStore(),
-    user: new UserStore(),
-});
+const StoreContext = createContext<Readonly<RootStore>>({} as RootStore);
 
-const StoreContext = createContext(store);
-
-type StoreProviderProps = {
-    children: ReactNode;
-};
-
-export const StoreProvider = ({ children }: StoreProviderProps) => (
-    <StoreContext.Provider value={store}>
-        {children}
+export const StoreProvider = (props: { children: ReactNode }) => (
+    <StoreContext.Provider value={createStore()}>
+        {props.children}
     </StoreContext.Provider>
 );
 
