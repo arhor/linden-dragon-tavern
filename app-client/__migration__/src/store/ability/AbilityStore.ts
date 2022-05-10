@@ -1,30 +1,27 @@
 import log from 'loglevel';
-import { action, makeObservable, observable, runInAction } from 'mobx';
+import { flow, makeObservable, observable } from 'mobx';
 
-import { getAllAbilities } from '@/api/abilityClient';
+import { Ability, getAllAbilities } from '@/api/abilityClient';
 
 export default class AbilityStore {
-    items: any[] = [];
+    items: Ability[] = [];
     loaded = false;
 
     constructor() {
         makeObservable(this, {
             items: observable,
             loaded: observable,
-            load: action.bound,
+            load: flow.bound,
         });
     }
 
-    async load() {
+    * load(): Generator<Promise<Ability[]>, void, Ability[]> {
         if (this.loaded) {
             return;
         }
         try {
-            const abilities = await getAllAbilities();
-            runInAction(() => {
-                this.items = abilities;
-                this.loaded = true;
-            });
+            this.items = yield getAllAbilities();
+            this.loaded = true;
         } catch (e) {
             log.error('Unable to load abilities.', e);
         }
