@@ -16,21 +16,21 @@ export default class UserStore {
         });
     }
 
-    setAuthenticated(authenticated: boolean) {
+    setAuthenticated(authenticated: boolean): void {
         this.authenticated = authenticated;
     }
 
-    setAuthorities(authorities: string[]) {
+    setAuthorities(authorities: string[]): void {
         this.authorities = authorities;
     }
 
-    setSessionData(username: string, authorities: string[]) {
+    setSessionData(username: string, authorities: string[]): void {
         this.username = username;
         this.authorities = authorities;
         this.authenticated = true;
     }
 
-    invalidateSession() {
+    invalidateSession(): void {
         this.username = null;
         this.authorities = [];
         this.authenticated = false;
@@ -38,7 +38,7 @@ export default class UserStore {
 
     async signIn(username: string, password: string): Promise<boolean> {
         try {
-            const authorities = await login(username, password);
+            const { authorities } = await login(username, password);
             runInAction(() => this.setSessionData(username, authorities));
             return true;
         } catch (e) {
@@ -47,7 +47,7 @@ export default class UserStore {
         }
     }
 
-    async signOut() {
+    async signOut(): Promise<void> {
         await logout();
         runInAction(this.invalidateSession);
     }

@@ -1,6 +1,7 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
-import { getAllAbilities } from '@/api/abilityClient';
 import log from 'loglevel';
+import { action, makeObservable, observable, runInAction } from 'mobx';
+
+import { getAllAbilities } from '@/api/abilityClient';
 
 export default class AbilityStore {
     items: any[] = [];

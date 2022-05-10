@@ -1,6 +1,7 @@
-import { action, makeObservable, observable, runInAction } from 'mobx';
-import { getAllSpells } from '@/api/spellClient';
 import log from 'loglevel';
+import { action, makeObservable, observable, runInAction } from 'mobx';
+
+import { getAllSpells } from '@/api/spellClient';
 
 export default class SpellStore {
     items: any[] = [];

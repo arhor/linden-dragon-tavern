@@ -1,6 +1,10 @@
 import client from '@/api/client.js';
 
-export async function login(username: string, password: string) {
+export type User = {
+    authorities: string[];
+};
+
+export async function login(username: string, password: string): Promise<User> {
     const { data } = await client.post('/api/login', null, {
         headers: {
             Authorization: `Basic ${btoa(`${username}:${password}`)}`,
@@ -9,6 +13,6 @@ export async function login(username: string, password: string) {
     return data;
 }
 
-export async function logout() {
+export async function logout(): Promise<void> {
     await client.post('/api/logout');
 }

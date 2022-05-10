@@ -1,8 +1,8 @@
-import AbilityStore from "@/store/ability";
-import AppStore from "@/store/app";
-import NotificationStore from "@/store/notification";
-import SpellStore from "@/store/spell";
-import UserStore from "@/store/user";
+import AbilityStore from '@/store/ability';
+import AppStore from '@/store/app';
+import NotificationStore from '@/store/notification';
+import SpellStore from '@/store/spell';
+import UserStore from '@/store/user';
 
 export type RootStore = {
     ability: AbilityStore;
