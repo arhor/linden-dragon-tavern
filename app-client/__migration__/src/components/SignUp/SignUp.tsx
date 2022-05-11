@@ -1,15 +1,21 @@
 import { Field, Form, Formik } from 'formik';
 import { TextField } from 'formik-mui';
+import { FormikHelpers } from 'formik/dist/types';
 
 import { Button, LinearProgress } from '@mui/material';
 
+import { REG_EXP_ALPHANUMERIC, REG_EXP_EMAIL } from '@/utils/patterns';
 import { defineValidator } from '@/utils/validationUtils';
 
-export type Props = {
-    onSwitch: () => void;
+type Values = {
+    username: string,
+    password: string,
+    email: string,
+    firstName: string,
+    lastName: string,
 };
 
-const validator = defineValidator({
+const validator = defineValidator<Values>({
     username: [
         (v) => !!v
             || 'Username is required',
@@ -17,7 +23,7 @@ const validator = defineValidator({
             || 'Username must be longer than 6 characters',
         (v) => (v && v.length <= 20)
             || 'Username must be less than 20 characters',
-        (v) => (v && /^[a-zA-Z0-9]*$/.test(v))
+        (v) => (v && REG_EXP_ALPHANUMERIC.test(v))
             || 'username must contain only letters and numbers',
     ],
     password: [
@@ -29,7 +35,7 @@ const validator = defineValidator({
     email: [
         (v) => !!v
             || 'E-mail is required',
-        (v) => (v && /.+@.+\..+/.test(v))
+        (v) => (v && REG_EXP_EMAIL.test(v))
             || 'E-mail must be valid'
     ],
     firstName: [
@@ -42,60 +48,39 @@ const validator = defineValidator({
     ],
 });
 
+export type Props = {
+    onSwitch: () => void;
+};
+
 const SignUp = ({ onSwitch }: Props) => {
+    const initialValues: Values = {
+        username: '',
+        password: '',
+        email: '',
+        firstName: '',
+        lastName: '',
+    };
+    
+    const handleSubmit = (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
+        setTimeout(() => {
+            setSubmitting(false);
+            alert(JSON.stringify(values, null, 2));
+        }, 3000);
+    };
+    
     return (
-        <Formik
-            initialValues={{
-                username: '',
-                password: '',
-                email: '',
-                firstName: '',
-                lastName: '',
-            }}
-            validate={(values) => validator(values)}
-            onSubmit={(values, { setSubmitting }) => {
-                setTimeout(() => {
-                    setSubmitting(false);
-                    alert(JSON.stringify(values, null, 2));
-                }, 3000);
-            }}
-        >
+        <Formik initialValues={initialValues} onSubmit={handleSubmit} validate={validator}>
             {({ submitForm, isSubmitting }) => (
                 <Form>
-                    <Field
-                        component={TextField}
-                        name="username"
-                        type="text"
-                        label="Username"
-                    />
+                    <Field component={TextField} name="username" type="text" label="Username" />
                     <br />
-                    <Field
-                        component={TextField}
-                        type="password"
-                        label="Password"
-                        name="password"
-                    />
+                    <Field component={TextField} type="password" label="Password" name="password" />
                     <br />
-                    <Field
-                        component={TextField}
-                        name="email"
-                        type="email"
-                        label="Email"
-                    />
+                    <Field component={TextField} name="email" type="email" label="Email" />
                     <br />
-                    <Field
-                        component={TextField}
-                        name="firstName"
-                        type="text"
-                        label="First Name"
-                    />
+                    <Field component={TextField} name="firstName" type="text" label="First Name" />
                     <br />
-                    <Field
-                        component={TextField}
-                        name="lastName"
-                        type="text"
-                        label="Last Name"
-                    />
+                    <Field component={TextField} name="lastName" type="text" label="Last Name" />
                     <br />
                     {isSubmitting && <LinearProgress />}
                     <br />

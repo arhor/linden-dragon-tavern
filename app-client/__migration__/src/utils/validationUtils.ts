@@ -1,20 +1,29 @@
 import { Optional } from '@/utils/coreUtils';
 
-export type Rule<T> = (v: Optional<T>) => true | string;
+export type ValidationRule<T> = (v: Optional<T>) => true | string;
 
-export type ValidationRules = { [key: string]: (Rule<string>)[] };
+export type ValidationRules<T> = Partial<{ [P in keyof T]: ValidationRule<T[P]>[] }>;
 
-export const defineValidator = (rules: ValidationRules) => (values: object) => {
-    const errors: { [key: string]: string } = {}
+export type ValidationErrors<T> = Partial<{ [P in keyof T]: string }>;
 
-    for (const [name, value] of Object.entries(values)) {
-        const currentRules = rules[name];
-        if (currentRules) {
-            for (const rule of currentRules) {
-                const result = rule(value);
-                if (result !== true) {
-                    errors[name] = result;
-                    break;
+export type ValidationFunction<T> = (values: T) => ValidationErrors<T>
+
+export const defineValidator = <T>(rules: ValidationRules<T>): ValidationFunction<T> => (values: T) => {
+    const errors = {} as ValidationErrors<T>;
+
+    if (values) {
+        for (const name in values) {
+            const currentRules = rules[name] as Optional<ValidationRule<T[Extract<keyof T, string>]>[]>;
+
+            if (currentRules) {
+                for (const rule of currentRules) {
+                    const value = values[name];
+                    const result = rule(value);
+
+                    if (result !== true) {
+                        errors[name] = result;
+                        break;
+                    }
                 }
             }
         }
