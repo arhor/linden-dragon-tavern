@@ -1,3 +1,5 @@
+export type Optional<T> = T | null | undefined;
+
 export function useObjectURL(data: BufferSource, urlConsumer: (arg: string) => void) {
     const blob = new Blob([data]);
     const url = window.URL.createObjectURL(blob);
@@ -31,15 +33,15 @@ export function generateUUID(): string {
     });
 }
 
-export function refExists(obj: any | undefined | null): boolean {
+export function refExists<T>(obj: Optional<T>): boolean {
     return !(isUndefined(obj) || isNull(obj));
 }
 
-export function isUndefined(value: any | undefined | null): boolean {
+export function isUndefined<T>(value: Optional<T>): boolean {
     return value === void 0;
 }
 
-export function isNull(value: any | undefined | null): boolean {
+export function isNull<T>(value: Optional<T>): boolean {
     return value === null;
 }
 
