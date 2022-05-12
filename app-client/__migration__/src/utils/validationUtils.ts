@@ -13,7 +13,9 @@ export const defineValidator = <T>(rules: ValidationRules<T>): ValidationFunctio
 
     if (values) {
         for (const name in values) {
-            const currentRules = rules[name] as Optional<ValidationRule<T[Extract<keyof T, string>]>[]>;
+            type Test<T> = Optional<ValidationRule<T[keyof T]>[]>;
+
+            const currentRules = rules[name] as Optional<ValidationRule<T[keyof T]>[]>;
 
             if (currentRules) {
                 for (const rule of currentRules) {
