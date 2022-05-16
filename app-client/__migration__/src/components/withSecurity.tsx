@@ -1,5 +1,6 @@
 import { ComponentType } from 'react';
 
+import { computed } from 'mobx';
 import { observer } from 'mobx-react';
 import { Navigate } from 'react-router';
 
@@ -9,8 +10,11 @@ import { useStore } from '@/store';
 export default function withSecurity<T>(WrappedComponent: ComponentType<T>, authorities: string[]) {
     const SecuredComponent = (props: T) => {
         const { user } = useStore();
+
         if (user.authenticated) {
-            return user.hasAuthorities(authorities) ? (
+            const hasAccess = computed(() => authorities.every((it) => user.authorities.includes(it)));
+
+            return hasAccess ? (
                 <WrappedComponent {...props} />
             ) : (
                 <StatelessWidget title="Access denied" description="You are not authorized to access this page." />

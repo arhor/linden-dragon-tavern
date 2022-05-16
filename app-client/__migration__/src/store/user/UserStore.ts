@@ -8,11 +8,16 @@ export default class UserStore {
     authorities: string[] = [];
 
     constructor() {
-        makeObservable(this, {
+        makeObservable(this, { 
+            username: observable,
             authenticated: observable,
             authorities: observable,
             setAuthenticated: action.bound,
             setAuthorities: action.bound,
+            setSessionData: action.bound,
+            invalidateSession: action.bound,
+            signIn: action.bound,
+            signOut: action.bound,
         });
     }
 
@@ -50,15 +55,5 @@ export default class UserStore {
     async signOut(): Promise<void> {
         await logout();
         runInAction(this.invalidateSession);
-    }
-
-    hasAuthorities(authorities: string[]): boolean {
-        if (this.authorities.length !== 0) {
-            if (authorities.length === 0) {
-                return true;
-            }
-            return authorities.every((auth) => this.authorities.includes(auth));
-        }
-        return authorities.length === 0;
     }
 }
