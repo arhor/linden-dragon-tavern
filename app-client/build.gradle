@@ -11,6 +11,10 @@ description = "app-client"
 node {
     version = property("app.version.node")
     download = true
+
+    workDir = file("${rootDir}/.gradle/nodejs")
+    npmWorkDir = file("${rootDir}/.gradle/npm")
+    yarnWorkDir = file("${rootDir}/.gradle/yarn")
 }
 
 idea {
@@ -24,21 +28,26 @@ idea {
     }
 }
 
-task updateBrowserlist(type: NpxTask, dependsOn: [npmInstall]) {
+task copyGeneratedModel(type: Copy, dependsOn: ":app-schema:build") {
+    from "${project(":app-schema").buildDir}/generated/sources/js2ts"
+    into "${projectDir}/src/generated"
+}
+
+task updateBrowserlist(type: NpxTask, dependsOn: npmInstall) {
     description = "Updates Browserslist"
     workingDir.fileValue(projectDir)
     command.set("browserslist@latest")
     args = ["--update-db"]
 }
 
-task test(type: NpmTask, dependsOn: [updateBrowserlist]) {
+task test(type: NpmTask, dependsOn: [updateBrowserlist, copyGeneratedModel]) {
     group = "verification"
     description = "Runs JS tests in client project"
     workingDir.fileValue(projectDir)
     args = ["run", "test:unit"]
 }
 
-task build(type: NpmTask, dependsOn: [test]) {
+task build(type: NpmTask, dependsOn: test) {
     group = "build"
     description = "Builds production version of the app client"
     workingDir.fileValue(projectDir)

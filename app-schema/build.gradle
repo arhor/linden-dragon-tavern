@@ -7,6 +7,15 @@ plugins {
     id "com.github.node-gradle.node"
 }
 
+node {
+    version = property("app.version.node")
+    download = true
+
+    workDir = file("${rootDir}/.gradle/nodejs")
+    npmWorkDir = file("${rootDir}/.gradle/npm")
+    yarnWorkDir = file("${rootDir}/.gradle/yarn")
+}
+
 idea {
     module {
         excludeDirs += files(
@@ -23,9 +32,17 @@ dependencies {
     compileOnly "com.fasterxml.jackson.core:jackson-databind:${property("app.version.jackson")}"
 }
 
-task buildTS(type: NpmTask) {
+jsonSchema2Pojo {
+    targetPackage = "com.github.arhor.linden.dragon.tavern.model"
+}
+
+task generateJsonSchema2TypeScript(type: NpmTask, dependsOn: npmInstall) {
     group = "build"
     description = "Builds d.ts files according to the provided schemas"
     workingDir.fileValue(projectDir)
     args = ["run", "build"]
+}
+
+build {
+    dependsOn generateJsonSchema2TypeScript
 }
