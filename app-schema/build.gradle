@@ -1,3 +1,5 @@
+import com.github.gradle.node.npm.task.NpmTask
+
 plugins {
     id "idea"
     id "java-library"
@@ -19,4 +21,11 @@ repositories {
 
 dependencies {
     compileOnly "com.fasterxml.jackson.core:jackson-databind:${property("app.version.jackson")}"
+}
+
+task buildTS(type: NpmTask) {
+    group = "build"
+    description = "Builds d.ts files according to the provided schemas"
+    workingDir.fileValue(projectDir)
+    args = ["run", "build"]
 }
