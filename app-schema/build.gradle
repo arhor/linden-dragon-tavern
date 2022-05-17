@@ -29,11 +29,20 @@ repositories {
 }
 
 dependencies {
-    compileOnly "com.fasterxml.jackson.core:jackson-databind:${property("app.version.jackson")}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${property("app.version.jackson")}"
+    implementation "javax.validation:validation-api:2.0.1.Final"
+    implementation "com.google.code.findbugs:jsr305:${property("app.version.findbugsJsr305")}"
 }
 
 jsonSchema2Pojo {
+    targetVersion = "17"
     targetPackage = "com.github.arhor.linden.dragon.tavern.model"
+    removeOldOutput = true
+    includeGetters = false
+    includeSetters = false
+    includeDynamicAccessors = false
+    includeJsr303Annotations = true
+    includeJsr305Annotations = true
 }
 
 task generateJsonSchema2TypeScript(type: NpmTask, dependsOn: npmInstall) {

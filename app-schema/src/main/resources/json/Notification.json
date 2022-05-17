@@ -2,12 +2,12 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "properties": {
-    "username": {
+    "type": {
       "type": "string"
     },
-    "password": {
+    "message": {
       "type": "string"
     }
   },
-  "required": ["username", "password"]
+  "additionalProperties": false
 }
