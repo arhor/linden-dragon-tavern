@@ -15,13 +15,11 @@ node {
 
 idea {
     module {
-        excludeDirs.addAll(
-            files(
-                "$projectDir/node_modules",
-                "$projectDir/raw_data",
-                "$projectDir/dist",
-                "$projectDir/dist_electron",
-            )
+        excludeDirs += files(
+            "$projectDir/node_modules",
+            "$projectDir/raw_data",
+            "$projectDir/dist",
+            "$projectDir/dist_electron",
         )
     }
 }

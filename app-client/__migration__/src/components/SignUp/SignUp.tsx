@@ -4,7 +4,7 @@ import { FormikHelpers } from 'formik/dist/types';
 
 import { Button, LinearProgress } from '@mui/material';
 
-import { Values, validator } from './model';
+import { Values, validator } from '@/components/SignUp/model';
 
 export type Props = {
     onSwitch: () => void;

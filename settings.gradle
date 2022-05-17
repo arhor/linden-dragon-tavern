@@ -12,12 +12,14 @@ pluginManagement {
         id "org.jetbrains.kotlin.plugin.allopen" version settings["app.version.kotlin"]
         id "org.jetbrains.kotlin.plugin.spring"  version settings["app.version.kotlin"]
         id "org.jetbrains.kotlin.plugin.jpa"     version settings["app.version.kotlin"]
+        id "org.jsonschema2dataclass"            version settings["app.version.json2pojo"]
     }
 }
 
 rootProject.name = "linden-dragon-tavern"
 
 include ":app-client"
+include ":app-schema"
 include ":app-server:module-common"
 include ":app-server:module-dnd"
 include ":app-server:module-main"
