@@ -19,7 +19,7 @@ pluginManagement {
 rootProject.name = "linden-dragon-tavern"
 
 include ":app-client"
-include ":app-schema"
+include ":app-model"
 include ":app-server:module-common"
 include ":app-server:module-dnd"
 include ":app-server:module-main"

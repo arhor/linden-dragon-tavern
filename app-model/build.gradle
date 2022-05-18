@@ -38,11 +38,12 @@ jsonSchema2Pojo {
     targetVersion = "17"
     targetPackage = "com.github.arhor.linden.dragon.tavern.model"
     removeOldOutput = true
-    includeGetters = false
-    includeSetters = false
-    includeDynamicAccessors = false
     includeJsr303Annotations = true
     includeJsr305Annotations = true
+    includeDynamicAccessors = true
+    includeSetters = true
+    includeGetters = true
+    useOptionalForGetters = true
 }
 
 task generateJsonSchema2TypeScript(type: NpmTask, dependsOn: npmInstall) {

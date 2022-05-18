@@ -28,8 +28,8 @@ idea {
     }
 }
 
-task copyGeneratedModel(type: Copy, dependsOn: ":app-schema:build") {
-    from "${project(":app-schema").buildDir}/generated/sources/js2ts"
+task copyGeneratedModel(type: Copy, dependsOn: ":app-model:build") {
+    from "${project(":app-model").buildDir}/generated/sources/js2ts"
     into "${projectDir}/src/generated"
 }
 
