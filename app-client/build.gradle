@@ -48,7 +48,7 @@ task updateBrowserlist(type: NpxTask, dependsOn: npmInstall) {
 task test(type: NpmTask, dependsOn: [updateBrowserlist, copyGeneratedModel]) {
     group = "verification"
     workingDir.fileValue(projectDir)
-    args = ["run", "test:unit"]
+    args = ["run", "test"]
 }
 
 task build(type: NpmTask, dependsOn: test) {
