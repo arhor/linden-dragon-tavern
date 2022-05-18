@@ -1,6 +1,11 @@
 {
   "name": "linden-dragon-tavern-client",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "private": true,
+  "author": {
+    "name": "Maksim Buryshynets",
+    "email": "arhor18@gmail.com"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -12,7 +17,8 @@
     "coverage": "vitest run --coverage",
     "format": "prettier --write \"src/**/*.+(js|jsx|json|css|md|html)\"",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "fetchData": "node ./scripts/dungeon_su_scrapper.js"
   },
   "dependencies": {
     "@emotion/react": "^11.9.0",
@@ -54,6 +60,7 @@
     "@vitejs/plugin-react": "^1.3.0",
     "@vitest/ui": "latest",
     "babel-loader": "^8.2.5",
+    "cheerio": "^1.0.0-rc.3",
     "eslint": "^8.14.0",
     "eslint-import-resolver-typescript": "^2.7.1",
     "eslint-plugin-import": "^2.26.0",

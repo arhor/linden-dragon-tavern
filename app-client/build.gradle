@@ -28,13 +28,18 @@ idea {
     }
 }
 
-task copyGeneratedModel(type: Copy, dependsOn: ":app-model:build") {
+def generatedSourcesDir = "src/generated"
+
+task clearGeneratedModel(type: Delete) {
+    delete generatedSourcesDir
+}
+
+task copyGeneratedModel(type: Copy, dependsOn: [clearGeneratedModel, ":app-model:build"]) {
     from "${project(":app-model").buildDir}/generated/sources/js2ts"
-    into "${projectDir}/src/generated"
+    into "${projectDir}/${generatedSourcesDir}"
 }
 
 task updateBrowserlist(type: NpxTask, dependsOn: npmInstall) {
-    description = "Updates Browserslist"
     workingDir.fileValue(projectDir)
     command.set("browserslist@latest")
     args = ["--update-db"]
@@ -42,14 +47,12 @@ task updateBrowserlist(type: NpxTask, dependsOn: npmInstall) {
 
 task test(type: NpmTask, dependsOn: [updateBrowserlist, copyGeneratedModel]) {
     group = "verification"
-    description = "Runs JS tests in client project"
     workingDir.fileValue(projectDir)
     args = ["run", "test:unit"]
 }
 
 task build(type: NpmTask, dependsOn: test) {
     group = "build"
-    description = "Builds production version of the app client"
     workingDir.fileValue(projectDir)
     args = ["run", "build"]
 }
