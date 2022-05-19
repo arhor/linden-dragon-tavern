@@ -1,6 +1,6 @@
 import { ComponentStoryObj } from '@storybook/react';
 
-import SignUp from '@/components/SignUp/SignUp';
+import SignUp from '@/pages/SignUp/SignUp';
 
 export default {
     title: 'Library/SignUp',

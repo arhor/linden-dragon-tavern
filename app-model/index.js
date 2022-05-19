@@ -1,5 +1,10 @@
-import { existsSync, lstatSync, mkdirSync, readdirSync, writeFileSync } from 'fs';
+import { existsSync, lstatSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'fs';
 import { compileFromFile } from 'json-schema-to-typescript';
+
+const RESOURCES_ROOT = 'src/main/resources/json';
+const GENERATED_DIST = 'build/generated/sources/js2ts';
+
+rmSync(GENERATED_DIST, { recursive: true });
 
 (async function main({ source, target }) {
     if (existsSync(source)) {
@@ -11,7 +16,7 @@ import { compileFromFile } from 'json-schema-to-typescript';
 
             if (stats.isFile()) {
                 if (file.endsWith('.json')) {
-                    const ts = await compileFromFile(fileFullPath);
+                    const ts = await compileFromFile(fileFullPath, { cwd: source });
                     const entityName = file.replace('.json', '');
 
                     if (!existsSync(target)) {
@@ -25,6 +30,6 @@ import { compileFromFile } from 'json-schema-to-typescript';
         }
     }
 })({
-    source: 'src/main/resources/json',
-    target: 'build/generated/sources/js2ts'
+    source: RESOURCES_ROOT,
+    target: GENERATED_DIST,
 });
