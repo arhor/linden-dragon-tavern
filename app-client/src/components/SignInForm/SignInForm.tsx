@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 
 import { useStore } from '@/store';
 
-const SignIn = () => {
+const SignInForm = () => {
     const [error, setError] = useState('');
 
     const { user } = useStore();
@@ -97,4 +97,4 @@ const SignIn = () => {
     );
 };
 
-export default SignIn;
+export default SignInForm;

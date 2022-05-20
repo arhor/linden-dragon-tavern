@@ -15,7 +15,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
-import dev.arhor.simple.todo.service.event.UserLoadedEvent;
+import com.github.arhor.linden.dragon.tavern.service.event.UserLoadedEvent;
 
 @ExtendWith(MockitoExtension.class)
 class DelegatingOAuth2UserServiceImplTest {

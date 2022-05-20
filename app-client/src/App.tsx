@@ -1,27 +1,23 @@
 import { SnackbarProvider } from 'notistack';
-import { BrowserRouter } from 'react-router-dom';
 
 import CssBaseline from '@mui/material/CssBaseline';
-import { ThemeProvider } from '@mui/material/styles';
 
-import AppLayout from '@/components/AppLayout';
+import AppRouter from '@/AppRouter';
+import AppThemeProvider from '@/AppThemeProvider';
 import ErrorBoundary from '@/components/ErrorBoundary';
 import { StoreProvider } from '@/store';
-import theme from '@/theme';
 
 const App = () => (
-    <ThemeProvider theme={theme}>
+    <AppThemeProvider>
         <CssBaseline />
         <ErrorBoundary>
             <StoreProvider>
                 <SnackbarProvider>
-                    <BrowserRouter>
-                        <AppLayout />
-                    </BrowserRouter>
+                    <AppRouter />
                 </SnackbarProvider>
             </StoreProvider>
         </ErrorBoundary>
-    </ThemeProvider>
+    </AppThemeProvider>
 );
 
 export default App;

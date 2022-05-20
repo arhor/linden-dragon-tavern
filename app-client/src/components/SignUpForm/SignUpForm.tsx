@@ -40,7 +40,7 @@ const validator = defineValidator<SignUpRequest>({
     ],
 });
 
-const SignUp = () => {
+const SignUpForm = () => {
     const initialValues: SignUpRequest = {
         email: '',
         password: '',
@@ -173,4 +173,4 @@ const SignUp = () => {
     );
 };
 
-export default SignUp;
+export default SignUpForm;

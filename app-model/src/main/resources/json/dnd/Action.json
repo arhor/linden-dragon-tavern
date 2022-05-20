@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Action",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "string"
+    },
+    "attackBonus": {
+      "type": "integer"
+    },
+    "damageBonus": {
+      "type": "integer"
+    },
+    "damageDice": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name",
+    "desc"
+  ],
+  "additionalProperties": false
+}

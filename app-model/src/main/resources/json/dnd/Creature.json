@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Creature",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "size": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "subtype": {
+      "type": "string"
+    },
+    "alignment": {
+      "type": "string"
+    },
+    "armorClass": {
+      "type": "integer"
+    },
+    "hitPoints": {
+      "type": "string"
+    },
+    "speed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "abilities": {
+      "$ref": "#/definitions/abilities"
+    },
+    "skills": {
+      "type": "array",
+      "items": {
+        "$ref": "Skill.json"
+      }
+    },
+    "damageVulnerabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "damageResistances": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "damageImmunities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "conditionImmunities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "senses": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "languages": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "challengeRating": {
+      "type": "number"
+    },
+    "specialAbilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "desc": {
+            "type": "string"
+          },
+          "damageDice": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "desc"
+        ]
+      }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "$ref": "Action.json"
+      }
+    },
+    "legendaryActions": {
+      "type": "array",
+      "items": {
+        "$ref": "Action.json"
+      }
+    }
+  },
+  "required": [
+    "name",
+    "size",
+    "type",
+    "alignment",
+    "armorClass",
+    "hitPoints",
+    "speed",
+    "abilities",
+    "skills",
+    "senses",
+    "challengeRating"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "abilities": {
+      "type": "object",
+      "properties": {
+        "STR": {
+          "type": "integer"
+        },
+        "DEX": {
+          "type": "integer"
+        },
+        "CON": {
+          "type": "integer"
+        },
+        "INT": {
+          "type": "integer"
+        },
+        "WIS": {
+          "type": "integer"
+        },
+        "CHA": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "STR",
+        "DEX",
+        "CON",
+        "INT",
+        "WIS",
+        "CHA"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

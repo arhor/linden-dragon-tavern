@@ -20,12 +20,6 @@ subprojects {
 
     group = "com.github.arhor"
 
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        maven { setUrl("https://repo.spring.io/milestone") }
-    }
-
     configurations {
         testImplementation {
             exclude module: "junit-vintage-engine"
@@ -102,6 +96,10 @@ subprojects {
     tasks.withType(Test) {
         useJUnitPlatform()
     }
+}
+
+jacoco {
+    toolVersion = libs.versions.jacoco.get()
 }
 
 task jacocoTestReportRoot(type: JacocoReport, group: "verification") {

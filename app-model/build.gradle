@@ -24,10 +24,6 @@ idea {
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
     implementation "com.fasterxml.jackson.core:jackson-databind:${property("app.version.jackson")}"
     implementation "javax.validation:validation-api:2.0.1.Final"

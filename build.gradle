@@ -10,6 +10,14 @@ wrapper {
     gradleVersion = libs.versions.gradle.get()
 }
 
+allprojects {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { setUrl("https://repo.spring.io/milestone") }
+    }
+}
+
 task stage(type: Jar, dependsOn: [":app-client:build", ":app-server:module-main:build"]) {
     group = "build"
     description = "Created composite Jar file including client and server part"
