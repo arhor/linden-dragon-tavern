@@ -1,5 +1,4 @@
-// eslint-disable-next-line no-unused-vars
-type UnaryOperator<T> = (arg: T) => T;
+export type UnaryOperator<T> = (arg: T) => T;
 
 export function identity<T>(value: T): T {
     return value;

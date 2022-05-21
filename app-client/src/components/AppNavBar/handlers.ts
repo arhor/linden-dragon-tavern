@@ -1,7 +1,7 @@
-export const onSignUpClick = () => {
+export function onSignUpClick() {
     // TODO: implement
-};
+}
 
-export const onSignInClick = () => {
+export function onSignInClick() {
     // TODO: implement
-};
+}
