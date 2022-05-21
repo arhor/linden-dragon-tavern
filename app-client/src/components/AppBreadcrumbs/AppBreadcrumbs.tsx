@@ -8,8 +8,8 @@ import Typography from '@mui/material/Typography';
 const AppBreadcrumbs = () => {
     const { t } = useTranslation();
     const location = useLocation();
-    const pathnames = ['', ...location.pathname.split('/').filter((x) => x)];
-    const lastPathnameIndex = pathnames.length - 1;
+    const pathnames = location.pathname.split('/').filter((x) => x);
+    const lastPathnameIndex = pathnames.unshift('') - 1;
 
     return (
         <Breadcrumbs separator=">">
