@@ -8,20 +8,16 @@ import Typography from '@mui/material/Typography';
 const AppBreadcrumbs = () => {
     const { t } = useTranslation();
     const location = useLocation();
-    const pathnames = location.pathname.split('/').filter((x) => x);
+    const pathnames = ['', ...location.pathname.split('/').filter((x) => x)];
     const lastPathnameIndex = pathnames.length - 1;
 
     return (
-        <Breadcrumbs>
-            <Link to="/" component={RouterLink} underline="hover" color="inherit">
-                {t('home').toUpperCase()}
-            </Link>
+        <Breadcrumbs separator=">">
             {pathnames.map((value, index) => {
-                const last = index === lastPathnameIndex;
                 const to = `/${pathnames.slice(0, index + 1).join('/')}`;
-                const translatedValue = t(value).toUpperCase();
+                const translatedValue = t(value || 'home').toUpperCase();
 
-                return last ? (
+                return (index === lastPathnameIndex) ? (
                     <Typography color="text.primary" key={to}>
                         {translatedValue}
                     </Typography>

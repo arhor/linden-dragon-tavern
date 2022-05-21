@@ -1,5 +1,7 @@
 import { FormEvent, useState } from 'react';
 
+import { Link as RouterLink } from 'react-router-dom';
+
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
@@ -80,14 +82,9 @@ const SignInForm = () => {
                     Sign In
                 </Button>
                 {error && <div>{error}</div>}
-                <Grid container>
-                    <Grid item xs>
-                        <Link href="#" variant="body2">
-                            Forgot password?
-                        </Link>
-                    </Grid>
+                <Grid container justifyContent="flex-end">
                     <Grid item>
-                        <Link href="#" variant="body2">
+                        <Link to="/sign-up" component={RouterLink} variant="body2">
                             {"Don't have an account? Sign Up"}
                         </Link>
                     </Grid>

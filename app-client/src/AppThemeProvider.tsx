@@ -3,14 +3,14 @@ import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 import { useMediaQuery } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-export type AppThemeControl = {
+type AppThemeControl = {
     toggleColorMode: () => void;
 };
 
-const AppThemeContext = createContext({} as AppThemeControl);
+const AppThemeControlContext = createContext({} as AppThemeControl);
 
-export function useAppTheme(): AppThemeControl {
-    return useContext(AppThemeContext);
+export function useAppThemeControl(): AppThemeControl {
+    return useContext(AppThemeControlContext);
 }
 
 function determineColorMode(shouldUseDarkTheme: boolean) {
@@ -34,11 +34,11 @@ const AppThemeProvider = (props: { children: ReactNode }) => {
         },
     };
     return (
-        <AppThemeContext.Provider value={appThemeControl}>
+        <AppThemeControlContext.Provider value={appThemeControl}>
             <ThemeProvider theme={theme}>
                 {props.children}
             </ThemeProvider>
-        </AppThemeContext.Provider>
+        </AppThemeControlContext.Provider>
     );
 };
 

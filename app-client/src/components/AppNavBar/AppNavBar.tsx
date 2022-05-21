@@ -13,8 +13,6 @@
 // import { isAuthenticated } from '@/store/user';
 // import { onSignInClick, onSignUpClick } from '@/components/AppNavBar/handlers';
 
-// const eligibleItem = (item) => !item.hasOwnProperty('condition') || item.condition;
-
 // const AppNavBar = ({ menuItems }) => {
 //     const authenticated = true; //useSelector(isAuthenticated);
 
@@ -121,8 +119,8 @@
 //         </AppBar>
 //     );
 // };
-
-// export default AppNavBar;
+import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -134,11 +132,18 @@ import { useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-import { useAppTheme } from '@/AppThemeProvider';
+import { useAppThemeControl } from '@/AppThemeProvider';
+import { APP_NAME } from '@/utils/contants';
 
 const AppNavBar = () => {
+    const { toggleColorMode } = useAppThemeControl();
     const theme = useTheme();
-    const appTheme = useAppTheme();
+    const navigate = useNavigate();
+    const { t } = useTranslation();
+
+    const handleSignInButton = () => {
+        navigate('/sign-in');
+    };
 
     return (
         <AppBar position="static">
@@ -147,12 +152,14 @@ const AppNavBar = () => {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    Linden Dragon Tavern
+                    {t(APP_NAME)}
                 </Typography>
-                <IconButton color="inherit" onClick={appTheme.toggleColorMode}>
+                <IconButton color="inherit" onClick={toggleColorMode}>
                     {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>
-                <Button color="inherit">Login</Button>
+                <Button color="inherit" onClick={handleSignInButton}>
+                    {t('Sign-In')}
+                </Button>
             </Toolbar>
         </AppBar>
     );
