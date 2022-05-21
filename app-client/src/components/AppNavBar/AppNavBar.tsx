@@ -124,25 +124,38 @@
 
 // export default AppNavBar;
 
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import { useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
-const AppNavBar = () => (
-    <AppBar position="static">
-        <Toolbar>
-            <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-                <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                Linden Dragon Tavern
-            </Typography>
-            <Button color="inherit">Login</Button>
-        </Toolbar>
-    </AppBar>
-);
+import { useAppTheme } from '@/AppThemeProvider';
+
+const AppNavBar = () => {
+    const theme = useTheme();
+    const appTheme = useAppTheme();
+
+    return (
+        <AppBar position="static">
+            <Toolbar>
+                <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
+                    <MenuIcon />
+                </IconButton>
+                <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    Linden Dragon Tavern
+                </Typography>
+                <IconButton color="inherit" onClick={appTheme.toggleColorMode}>
+                    {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                </IconButton>
+                <Button color="inherit">Login</Button>
+            </Toolbar>
+        </AppBar>
+    );
+};
 
 export default AppNavBar;

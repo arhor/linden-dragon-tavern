@@ -10,4 +10,6 @@ export const StoreProvider = (props: { children: ReactNode }) => (
     </StoreContext.Provider>
 );
 
-export const useStore = () => useContext(StoreContext);
+export function useStore() {
+    return useContext(StoreContext);
+}

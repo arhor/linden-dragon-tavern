@@ -3,42 +3,43 @@ import { createContext, ReactNode, useContext, useMemo, useState } from 'react';
 import { useMediaQuery } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
-type ColorMode = {
+export type AppThemeControl = {
     toggleColorMode: () => void;
 };
 
-const ColorModeContext = createContext<ColorMode>({ toggleColorMode: () => void 0 });
+const AppThemeContext = createContext({} as AppThemeControl);
+
+export function useAppTheme(): AppThemeControl {
+    return useContext(AppThemeContext);
+}
+
+function determineColorMode(shouldUseDarkTheme: boolean) {
+    return shouldUseDarkTheme ? 'dark' : 'light';
+}
 
 const AppThemeProvider = (props: { children: ReactNode }) => {
-    const shouldUseDarkTheme = useMediaQuery('(prefers-color-scheme: dark)');
-    const [mode, setMode] = useState<'light' | 'dark'>(shouldUseDarkTheme ? 'light' : 'light');
-
-    const colorMode = useMemo(
-        () => ({
-            toggleColorMode: () => {
-                setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-            },
-        }),
-        []
-    );
+    const [colorMode, setColorMode] = useState<'light' | 'dark'>();
+    const darkThemePreferred = useMediaQuery('(prefers-color-scheme: dark)');
     const theme = useMemo(
         () => createTheme({
             palette: {
-                mode,
+                mode: colorMode ?? determineColorMode(darkThemePreferred),
             },
         }),
-        [mode]
+        [darkThemePreferred, colorMode]
     );
-
+    const appThemeControl: AppThemeControl = {
+        toggleColorMode: () => {
+            setColorMode((prev) => determineColorMode(prev === 'light'));
+        },
+    };
     return (
-        <ColorModeContext.Provider value={colorMode}>
+        <AppThemeContext.Provider value={appThemeControl}>
             <ThemeProvider theme={theme}>
                 {props.children}
             </ThemeProvider>
-        </ColorModeContext.Provider>
+        </AppThemeContext.Provider>
     );
 };
 
 export default AppThemeProvider;
-
-export const useColorMode = () => useContext(ColorModeContext);
