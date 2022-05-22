@@ -45,14 +45,13 @@ await (async function main({ source, target }) {
                     mkdirSync(target, { recursive: true });
 
                     const entityName = file.replace('.json', '');
-                    const [ firstLine, ...restOfTheFile ] = compiledSchema.split(/\r?\n/).filter(element => element);
+                    const [ firstLine, ...restOfTheFile ] = compiledSchema.split(/\r?\n/);
 
                     writeFileSync(`${target}/${entityName}.d.ts`, [
                         firstLine,
                         ...dependencies.map(path => `import { ${path.replace(/[./]/g, '')} } from '${path}';`),
                         '',
                         ...restOfTheFile,
-                        '',
                     ].join('\n'));
                 }
             } else if (stats.isDirectory()) {
