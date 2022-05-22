@@ -36,7 +36,8 @@
     "skills": {
       "type": "array",
       "items": {
-        "$ref": "Skill.json"
+        "$ref": "Skill.json",
+        "tsType": "Skill"
       }
     },
     "damageVulnerabilities": {
@@ -102,13 +103,15 @@
     "actions": {
       "type": "array",
       "items": {
-        "$ref": "Action.json"
+        "$ref": "Action.json",
+        "tsType": "Action"
       }
     },
     "legendaryActions": {
       "type": "array",
       "items": {
-        "$ref": "Action.json"
+        "$ref": "Action.json",
+        "tsType": "Action"
       }
     }
   },

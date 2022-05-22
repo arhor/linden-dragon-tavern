@@ -1,12 +1,13 @@
 import { existsSync, lstatSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'fs';
 import { compileFromFile } from 'json-schema-to-typescript';
+import path from 'path';
 
 const RESOURCES_ROOT = 'src/main/resources/json';
 const GENERATED_DIST = 'build/generated/sources/js2ts';
 
-rmSync(GENERATED_DIST, { recursive: true });
+rmSync(GENERATED_DIST, { force: true, recursive: true });
 
-(async function main({ source, target }) {
+await (async function main({ source, target }) {
     if (existsSync(source)) {
         const files = readdirSync(source);
 
@@ -16,13 +17,43 @@ rmSync(GENERATED_DIST, { recursive: true });
 
             if (stats.isFile()) {
                 if (file.endsWith('.json')) {
-                    const ts = await compileFromFile(fileFullPath, { cwd: source });
-                    const entityName = file.replace('.json', '');
+                    const dependencies = [];
+                    const compiledSchema = await compileFromFile(fileFullPath, {
+                        cwd: source,
+                        $refOptions: {
+                            resolve: {
+                                file: {
+                                    read: ({ url, extension }) => {
+                                        if (extension === '.json') {
+                                            const importPath =
+                                                path.relative(source, url)
+                                                    .split(path.sep)
+                                                    .join(path.posix.sep)
+                                                    .replace(extension, '');
+                                            dependencies.push(
+                                                importPath.startsWith('../')
+                                                    ? importPath
+                                                    : `./${importPath}`
+                                            );
+                                        }
+                                        return '{ "name": "test" }';
+                                    }
+                                },
+                            },
+                        },
+                    });
+                    mkdirSync(target, { recursive: true });
 
-                    if (!existsSync(target)) {
-                        mkdirSync(target, { recursive: true });
-                    }
-                    writeFileSync(`${target}/${entityName}.d.ts`, ts);
+                    const entityName = file.replace('.json', '');
+                    const [ firstLine, ...restOfTheFile ] = compiledSchema.split(/\r?\n/).filter(element => element);
+
+                    writeFileSync(`${target}/${entityName}.d.ts`, [
+                        firstLine,
+                        ...dependencies.map(path => `import { ${path.replace(/[./]/g, '')} } from '${path}';`),
+                        '',
+                        ...restOfTheFile,
+                        '',
+                    ].join('\n'));
                 }
             } else if (stats.isDirectory()) {
                 await main({ source: fileFullPath, target: `${target}/${file}` });
