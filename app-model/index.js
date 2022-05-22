@@ -36,7 +36,7 @@ await (async function main({ source, target }) {
                                                     : `./${importPath}`
                                             );
                                         }
-                                        return '{ "name": "test" }';
+                                        return '{}';
                                     }
                                 },
                             },
