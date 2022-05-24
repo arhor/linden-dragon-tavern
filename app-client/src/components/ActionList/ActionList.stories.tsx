@@ -1,6 +1,6 @@
 import { ComponentStoryObj } from '@storybook/react';
 
-import ActionList from '@/components/ActionList/ActionList';
+import ActionList from '@/components/ActionList';
 
 export default {
     title: 'Library/ActionList',

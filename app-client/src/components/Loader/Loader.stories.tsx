@@ -1,6 +1,6 @@
 import { ComponentStoryObj } from '@storybook/react';
 
-import Loader from '@/components/Loader/Loader';
+import Loader from '@/components/Loader';
 
 export default {
     title: 'Library/Loader',

@@ -44,6 +44,18 @@ await (async function main({ source, target }) {
                     },
                 });
 
+                dependencies.sort((prev, next) => {
+                    const prevPath = prev.path.toUpperCase();
+                    const nextPath = next.path.toUpperCase();
+                    if (prevPath < nextPath) {
+                        return -1;
+                    }
+                    if (prevPath > nextPath) {
+                        return 1;
+                    }
+                    return 0;
+                });
+
                 const [ firstLine, ...restOfTheFile ] = compiledSchema.split(/\r?\n/);
 
                 const fileContent = [

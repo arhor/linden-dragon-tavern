@@ -5,9 +5,7 @@ import { defineConfig, loadEnv } from 'vite';
 import eslint from 'vite-plugin-eslint';
 
 export default defineConfig(({ mode }) => {
-    const resolvePath = (path: string) => fileURLToPath(new URL(path, import.meta.url));
-
-    const rootProjectDir = resolvePath('..');
+    const rootProjectDir = fileURLToPath(new URL('..', import.meta.url));
     const variablePrefixes = [''];
 
     process.env = { ...loadEnv(mode, rootProjectDir, variablePrefixes) };
@@ -16,7 +14,7 @@ export default defineConfig(({ mode }) => {
         plugins: [react(), eslint()],
         resolve: {
             alias: {
-                '@': resolvePath('src'),
+                '@': fileURLToPath(new URL('src', import.meta.url)),
             },
         },
         server: {
