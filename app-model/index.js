@@ -9,53 +9,21 @@ rmSync(GENERATED_DIST, { force: true, recursive: true });
 
 await (async function main({ source, target }) {
     if (existsSync(source)) {
-        const files = readdirSync(source);
+        const filenames = readdirSync(source);
 
-        for (const file of files) {
-            const fileFullPath = `${source}/${file}`;
-            const stats = lstatSync(fileFullPath);
+        for (const filename of filenames) {
+            const filepath = path.join(source, filename);
+            const stats = lstatSync(filepath);
 
             if (stats.isFile()) {
-                if (file.endsWith('.json')) {
-                    const dependencies = [];
-                    const compiledSchema = await compileFromFile(fileFullPath, {
-                        cwd: source,
-                        $refOptions: {
-                            resolve: {
-                                file: {
-                                    read: ({ url, extension }) => {
-                                        if (extension === '.json') {
-                                            const importPath =
-                                                path.relative(source, url)
-                                                    .split(path.sep)
-                                                    .join(path.posix.sep)
-                                                    .replace(extension, '');
-                                            dependencies.push(
-                                                importPath.startsWith('../')
-                                                    ? importPath
-                                                    : `./${importPath}`
-                                            );
-                                        }
-                                        return '{}';
-                                    }
-                                },
-                            },
-                        },
-                    });
-                    mkdirSync(target, { recursive: true });
+                const { name } = path.parse(filepath);
+                const destinationFilename = path.join(target, `${name}.d.ts`);
+                const compiledSchema = await compileFromFileWithDeps(source, filepath);
 
-                    const entityName = file.replace('.json', '');
-                    const [ firstLine, ...restOfTheFile ] = compiledSchema.split(/\r?\n/);
-
-                    writeFileSync(`${target}/${entityName}.d.ts`, [
-                        firstLine,
-                        ...dependencies.map(path => `import { ${path.replace(/[./]/g, '')} } from '${path}';`),
-                        '',
-                        ...restOfTheFile,
-                    ].join('\n'));
-                }
+                mkdirSync(target, { recursive: true });
+                writeFileSync(destinationFilename, compiledSchema);
             } else if (stats.isDirectory()) {
-                await main({ source: fileFullPath, target: `${target}/${file}` });
+                await main({ source: filepath, target: path.join(target, filename) });
             }
         }
     }
@@ -63,3 +31,40 @@ await (async function main({ source, target }) {
     source: RESOURCES_ROOT,
     target: GENERATED_DIST,
 });
+
+async function compileFromFileWithDeps(source, filepath) {
+    const dependencies = [];
+    debugger;
+    const compiledSchema = await compileFromFile(filepath, {
+        cwd: source,
+        $refOptions: {
+            resolve: {
+                file: {
+                    read: ({ url, extension }) => {
+                        const importPath =
+                            path.relative(source, url)
+                                .split(path.sep)
+                                .join(path.posix.sep)
+                                .replace(extension, '');
+                        const importName = path.parse(url).name;
+
+                        dependencies.push({
+                            path: `${importPath.startsWith('..') ? '' : './'}${importPath}`,
+                            name: importName
+                        });
+                        return `{ "tsType": "${importName}" }`;
+                    },
+                },
+            },
+        },
+    });
+
+    const [ firstLine, ...restOfTheFile ] = compiledSchema.split(/\r?\n/);
+
+    return [
+        firstLine,
+        ...dependencies.map(({ name, path }) => `import { ${name} } from '${path}';`),
+        '',
+        ...restOfTheFile,
+    ].join('\n');
+}

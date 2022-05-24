@@ -26,7 +26,7 @@ const AppThemeProvider = (props: { children: ReactNode }) => {
                 mode: colorMode ?? determineColorMode(darkThemePreferred),
             },
         }),
-        [darkThemePreferred, colorMode]
+        [colorMode, darkThemePreferred]
     );
     const appThemeControl: AppThemeControl = {
         toggleColorMode: () => {

@@ -1,7 +1,7 @@
 import fs from 'fs';
 
 import axios from 'axios';
-import cheerio from 'cheerio';
+import { load } from 'cheerio';
 import log from 'loglevel';
 
 const BASE_URL = 'https://dungeon.su';
@@ -11,7 +11,7 @@ const BASE_URL = 'https://dungeon.su';
         const { data } = await axios.get(`${BASE_URL}/bestiary`);
 
         const result = [];
-        const $ = cheerio.load(data);
+        const $ = load(data);
 
         const elements = $('ul.list-of-items li')
             .not('.first-letter')
@@ -52,7 +52,7 @@ function persist(data) {
 }
 
 function parseMonsterInfo(html, index) {
-    const $ = cheerio.load(html);
+    const $ = load(html);
 
     const title = $('.card-title a.item-link').text();
 
