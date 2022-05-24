@@ -18,10 +18,43 @@ await (async function main({ source, target }) {
             if (stats.isFile()) {
                 const { name } = path.parse(filepath);
                 const destinationFilename = path.join(target, `${name}.d.ts`);
-                const compiledSchema = await compileFromFileWithDeps(source, filepath);
+
+                const dependencies = [];
+                const compiledSchema = await compileFromFile(filepath, {
+                    cwd: source,
+                    $refOptions: {
+                        resolve: {
+                            file: {
+                                read: ({ url, extension }) => {
+                                    const importPath =
+                                        path.relative(source, url)
+                                            .split(path.sep)
+                                            .join(path.posix.sep)
+                                            .replace(extension, '');
+                                    const importName = path.parse(url).name;
+
+                                    dependencies.push({
+                                        path: `${importPath.startsWith('..') ? '' : './'}${importPath}`,
+                                        name: importName
+                                    });
+                                    return `{ "tsType": "${importName}" }`;
+                                },
+                            },
+                        },
+                    },
+                });
+
+                const [ firstLine, ...restOfTheFile ] = compiledSchema.split(/\r?\n/);
+
+                const fileContent = [
+                    firstLine,
+                    ...dependencies.map(({ name, path }) => `import { ${name} } from '${path}';`),
+                    '',
+                    ...restOfTheFile,
+                ].join('\n');
 
                 mkdirSync(target, { recursive: true });
-                writeFileSync(destinationFilename, compiledSchema);
+                writeFileSync(destinationFilename, fileContent);
             } else if (stats.isDirectory()) {
                 await main({ source: filepath, target: path.join(target, filename) });
             }
@@ -31,40 +64,3 @@ await (async function main({ source, target }) {
     source: RESOURCES_ROOT,
     target: GENERATED_DIST,
 });
-
-async function compileFromFileWithDeps(source, filepath) {
-    const dependencies = [];
-    debugger;
-    const compiledSchema = await compileFromFile(filepath, {
-        cwd: source,
-        $refOptions: {
-            resolve: {
-                file: {
-                    read: ({ url, extension }) => {
-                        const importPath =
-                            path.relative(source, url)
-                                .split(path.sep)
-                                .join(path.posix.sep)
-                                .replace(extension, '');
-                        const importName = path.parse(url).name;
-
-                        dependencies.push({
-                            path: `${importPath.startsWith('..') ? '' : './'}${importPath}`,
-                            name: importName
-                        });
-                        return `{ "tsType": "${importName}" }`;
-                    },
-                },
-            },
-        },
-    });
-
-    const [ firstLine, ...restOfTheFile ] = compiledSchema.split(/\r?\n/);
-
-    return [
-        firstLine,
-        ...dependencies.map(({ name, path }) => `import { ${name} } from '${path}';`),
-        '',
-        ...restOfTheFile,
-    ].join('\n');
-}
