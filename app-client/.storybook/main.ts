@@ -1,8 +1,8 @@
-import * as path from 'path';
+import path from 'path';
 
 import { StorybookViteConfig } from '@storybook/builder-vite';
 
-const config: StorybookViteConfig = {
+export default {
     framework: '@storybook/react',
     core: {
         builder: '@storybook/builder-vite',
@@ -18,8 +18,10 @@ const config: StorybookViteConfig = {
     ],
     features: {
         storyStoreV7: true,
+        emotionAlias: true,
+        modernInlineRendering: true,
     },
-    viteFinal: async (config) => ({
+    viteFinal: config => ({
         ...config,
         resolve: {
             alias: {
@@ -27,6 +29,4 @@ const config: StorybookViteConfig = {
             },
         },
     }),
-};
-
-export default config;
+} as StorybookViteConfig;

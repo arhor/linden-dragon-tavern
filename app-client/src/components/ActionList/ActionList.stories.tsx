@@ -1,11 +1,11 @@
-import { ComponentStoryObj } from '@storybook/react';
+import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
 
 import ActionList from '@/components/ActionList';
 
 export default {
     title: 'Library/ActionList',
     component: ActionList,
-};
+} as ComponentMeta<typeof ActionList>;
 
 export const Default: ComponentStoryObj<typeof ActionList> = {
     args: {

@@ -5,7 +5,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import { Creature } from '@/generated/dnd/Creature';
 
 export type Props = {
-    items: Partial<Creature>[];
+    items: Pick<Creature, 'name' | 'size' | 'type' | 'alignment'>[];
 };
 
 const CreatureList = ({ items }: Props) => {
@@ -37,7 +37,6 @@ const CreatureList = ({ items }: Props) => {
                 columns={columns}
                 pageSize={5}
                 rowsPerPageOptions={[5]}
-                checkboxSelection
             />
         </div>
     );
