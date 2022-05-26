@@ -8,12 +8,14 @@ plugins {
 }
 
 node {
-    version = property("app.version.node")
+    version = libs.versions.node.get()
     download = true
 
-    workDir = file("${rootDir}/.gradle/nodejs")
-    npmWorkDir = file("${rootDir}/.gradle/npm")
-    yarnWorkDir = file("${rootDir}/.gradle/yarn")
+    def rootGradleDir = "${rootDir}/.gradle"
+
+    workDir = file("${rootGradleDir}/nodejs")
+    npmWorkDir = file("${rootGradleDir}/npm")
+    yarnWorkDir = file("${rootGradleDir}/yarn")
 }
 
 idea {
@@ -25,9 +27,9 @@ idea {
 }
 
 dependencies {
-    implementation "com.fasterxml.jackson.core:jackson-databind:${property("app.version.jackson")}"
-    implementation "javax.validation:validation-api:2.0.1.Final"
-    implementation "com.google.code.findbugs:jsr305:${property("app.version.findbugsJsr305")}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${libs.versions.jackson.get()}"
+    implementation "javax.validation:validation-api:${libs.versions.javaxValidation.get()}"
+    implementation "com.google.code.findbugs:jsr305:${libs.versions.findbugsJsr305.get()}"
 }
 
 jsonSchema2Pojo {

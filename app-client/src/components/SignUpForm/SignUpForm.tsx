@@ -72,8 +72,6 @@ const SignUpForm = () => {
             <Formik initialValues={initialValues} onSubmit={handleSubmit} validate={validator}>
                 {({ submitForm, isSubmitting }) => (
                     <Form>
-
-
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <Field

@@ -13,18 +13,22 @@ const CreatureList = ({ items }: Props) => {
 
     const columns: GridColDef[] = [
         {
+            flex: 0.25,
             field: 'name',
             headerName: t('Name'),
         },
         {
+            flex: 0.25,
             field: 'size',
             headerName: t('Size'),
         },
         {
+            flex: 0.25,
             field: 'type',
             headerName: t('Type'),
         },
         {
+            flex: 0.25,
             field: 'alignment',
             headerName: t('Alignment'),
         },

@@ -7,7 +7,9 @@
       "type": "string"
     },
     "message": {
-      "type": "string"
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 50
     }
   },
   "additionalProperties": false
