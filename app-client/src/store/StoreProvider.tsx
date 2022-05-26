@@ -2,10 +2,12 @@ import { createContext, ReactNode, useContext } from 'react';
 
 import { createStore, RootStore } from '@/store/RootStore';
 
-const StoreContext = createContext<Readonly<RootStore>>({} as RootStore);
+export const store = createStore();
+
+export const StoreContext = createContext<Readonly<RootStore>>(store);
 
 export const StoreProvider = (props: { children: ReactNode }) => (
-    <StoreContext.Provider value={createStore()}>
+    <StoreContext.Provider value={store}>
         {props.children}
     </StoreContext.Provider>
 );

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping("/v1/monsters")
+@RequestMapping("/v1/creatures")
 class MonsterController(
     private val repository: MonsterRepository,
     private val rsqlToSQLConverter: RSQLToSQLConverterUnsafe,

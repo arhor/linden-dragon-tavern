@@ -10,6 +10,7 @@ import SignIn from '@/pages/SignIn';
 import SignUp from '@/pages/SignUp';
 
 const About = lazy(() => import('@/pages/About'));
+const Creatures = lazy(() => import('@/pages/Creatures'));
 
 const AppRouter = () => (
     <Router>
@@ -18,6 +19,7 @@ const AppRouter = () => (
                 <Route path="/" element={<AppLayout content={<Outlet />} />}>
                     <Route index element={<Home />} />
                     <Route path="/about" element={<About />} />
+                    <Route path="/creatures" element={<Creatures />} />
                     <Route path="/sign-in" element={<SignIn />} />
                     <Route path="/sign-up" element={<SignUp />} />
                 </Route>

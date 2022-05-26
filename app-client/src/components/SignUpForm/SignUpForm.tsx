@@ -69,33 +69,15 @@ const SignUpForm = () => {
             <Typography component="h1" variant="h5">
                 Sign up
             </Typography>
-            <Formik initialValues={initialValues} onSubmit={handleSubmit} validate={validator}>
+            <Formik
+                initialValues={initialValues}
+                onSubmit={handleSubmit}
+                validate={validator}
+                validateOnBlur={false}
+            >
                 {({ submitForm, isSubmitting }) => (
                     <Form>
                         <Grid container spacing={2}>
-                            <Grid item xs={12} sm={6}>
-                                <Field
-                                    component={TextField}
-                                    autoComplete="given-name"
-                                    name="firstName"
-                                    required
-                                    fullWidth
-                                    id="firstName"
-                                    label="First Name"
-                                    autoFocus
-                                />
-                            </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <Field
-                                    component={TextField}
-                                    required
-                                    fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
-                                    autoComplete="family-name"
-                                />
-                            </Grid>
                             <Grid item xs={12}>
                                 <Field
                                     component={TextField}
@@ -119,6 +101,24 @@ const SignUpForm = () => {
                                     autoComplete="new-password"
                                 />
                             </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Field
+                                    component={TextField}
+                                    id="firstName"
+                                    name="firstName"
+                                    label="First Name"
+                                    fullWidth
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <Field
+                                    component={TextField}
+                                    id="lastName"
+                                    name="lastName"
+                                    label="Last Name"
+                                    fullWidth
+                                />
+                            </Grid>
                         </Grid>
                         <Button
                             type="submit"
@@ -132,6 +132,7 @@ const SignUpForm = () => {
                         {isSubmitting && <LinearProgress />}
                         <Grid container justifyContent="flex-end">
                             <Grid item>
+                                {/* FIXME: validation on-blur prevents link from work on 1st click */}
                                 <Link to="/sign-in" component={RouterLink} variant="body2">
                                     Already have an account? Sign in
                                 </Link>

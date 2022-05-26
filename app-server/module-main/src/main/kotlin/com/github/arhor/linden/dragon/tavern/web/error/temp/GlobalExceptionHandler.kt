@@ -75,17 +75,27 @@ class GlobalExceptionHandler(
         exception: NoHandlerFoundException,
         locale: Locale,
         timeZone: TimeZone,
-        requestURI: URI,
-    ): Any = if (requestURI.toString().startsWith("/api/")) {
-        handleErrorCode(
-            ErrorCode.HANDLER_NOT_FOUND,
-            locale,
-            timeZone,
-            exception.httpMethod,
-            exception.requestURL,
-        )
-    } else {
-        ModelAndView("forward:/")
+    ): Any = when {
+        exception.requestURL == "/" -> {
+            handleErrorCode(
+                ErrorCode.HANDLER_NOT_FOUND_DEFAULT,
+                locale,
+                timeZone,
+            )
+        }
+        exception.requestURL.startsWith("/api/") -> {
+            handleErrorCode(
+                ErrorCode.HANDLER_NOT_FOUND,
+                locale,
+                timeZone,
+                exception.httpMethod,
+                exception.requestURL,
+            )
+        }
+        else -> {
+            @Suppress("SpringMVCViewInspection")
+            ModelAndView("forward:/")
+        }
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
@@ -120,7 +130,7 @@ class GlobalExceptionHandler(
         timeZone: TimeZone,
         vararg args: Any?,
     ): ApiError {
-        return handleErrorCode(error, locale, timeZone, emptyList(), args)
+        return handleErrorCode(error, locale, timeZone, emptyList(), *args)
     }
 
     private fun handleErrorCode(

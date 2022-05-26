@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 
 import StatelessWidget from '@/components/StatelessWidget';
 
-function NotFound() {
+const NotFound = () => {
     const navigate = useNavigate();
     const { t } = useTranslation();
 
@@ -26,6 +26,6 @@ function NotFound() {
             }
         />
     );
-}
+};
 
 export default NotFound;

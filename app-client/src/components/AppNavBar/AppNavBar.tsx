@@ -145,6 +145,10 @@ const AppNavBar = () => {
         navigate('/sign-in');
     };
 
+    const handleCreaturesButton = () => {
+        navigate('/creatures');
+    };
+
     return (
         <AppBar position="static">
             <Toolbar>
@@ -159,6 +163,9 @@ const AppNavBar = () => {
                 </IconButton>
                 <Button color="inherit" onClick={handleSignInButton}>
                     {t('Sign-In')}
+                </Button>
+                <Button color="inherit" onClick={handleCreaturesButton}>
+                    {t('Creatures')}
                 </Button>
             </Toolbar>
         </AppBar>
