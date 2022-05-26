@@ -1,4 +1,4 @@
-import { signed } from '@/utils/stringUtils';
+import { signed } from '@/utils/string-utils';
 
 const ABILITY_NAME_START = 0;
 const ABILITY_NAME_LENGTH = 3;

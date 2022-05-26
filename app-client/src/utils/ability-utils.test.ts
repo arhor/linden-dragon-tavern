@@ -1,4 +1,4 @@
-import * as abilityUtils from '@/utils/abilityUtils';
+import * as abilityUtils from '@/utils/ability-utils';
 
 describe('minifyAbilityName', () => {
     test.each([

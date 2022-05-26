@@ -1,5 +1,5 @@
 import styles from '@/components/MainAbilityCounter/MainAbilityCounter.module.css';
-import { calculateModifier, minifyAbilityName } from '@/utils/abilityUtils';
+import { calculateModifier, minifyAbilityName } from '@/utils/ability-utils';
 
 export enum Ability {
     STR = 'Strength',

@@ -3,8 +3,8 @@ import React, { MouseEventHandler } from 'react';
 import Button from '@mui/material/Button';
 
 import client from '@/api/client';
-import { useObjectURL } from '@/utils/coreUtils.js';
-import { deserialize } from '@/utils/stringUtils.js';
+import { useObjectURL } from '@/utils/coreUtils';
+import { deserialize } from '@/utils/string-utils';
 
 export type Props = {
     url: string;

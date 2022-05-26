@@ -1,19 +1,13 @@
 import { ComponentMeta, ComponentStoryObj } from '@storybook/react';
-import { MemoryRouter } from 'react-router';
 
 import SignInForm from '@/components/SignInForm';
-
-const SignInFormWithRouter = () => (
-    <MemoryRouter>
-        <SignInForm />
-    </MemoryRouter>
-);
+import { withMemoryRouter } from '@/utils/dev/router-utils';
 
 export default {
     title: 'Library/SignInForm',
-    component: SignInFormWithRouter,
-} as ComponentMeta<typeof SignInFormWithRouter>;
+    component: withMemoryRouter(SignInForm),
+} as ComponentMeta<typeof SignInForm>;
 
-export const Default: ComponentStoryObj<typeof SignInFormWithRouter> = {
+export const Default: ComponentStoryObj<typeof SignInForm> = {
     args: {},
 };
