@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 
-import { generateUUID } from '@/utils/coreUtils.js';
+import { generateUUID } from '@/utils/core-utils';
 
 export const CSRF_TOKEN = generateUUID();
 

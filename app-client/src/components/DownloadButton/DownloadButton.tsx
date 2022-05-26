@@ -3,7 +3,7 @@ import React, { MouseEventHandler } from 'react';
 import Button from '@mui/material/Button';
 
 import client from '@/api/client';
-import { useObjectURL } from '@/utils/coreUtils';
+import { useObjectURL } from '@/utils/core-utils';
 import { deserialize } from '@/utils/string-utils';
 
 export type Props = {

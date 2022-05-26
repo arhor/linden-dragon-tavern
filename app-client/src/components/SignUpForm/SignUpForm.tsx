@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 
 import { SignUpRequest } from '@/generated/SignUpRequest';
 import { REG_EXP_EMAIL } from '@/utils/patterns';
-import { defineValidator } from '@/utils/validationUtils';
+import { defineValidator } from '@/utils/validation-utils';
 
 const validator = defineValidator<SignUpRequest>({
     email: [

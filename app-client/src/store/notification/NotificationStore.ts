@@ -1,6 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 
-import { generateUUID } from '@/utils/coreUtils';
+import { generateUUID } from '@/utils/core-utils';
 
 type Notification = {
     message: string;

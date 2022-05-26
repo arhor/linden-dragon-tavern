@@ -1,4 +1,4 @@
-import React from 'react';
+import { StrictMode } from 'react';
 
 import ReactDOM from 'react-dom';
 
@@ -7,8 +7,8 @@ import '@/config/i18n';
 import '@/config/logging';
 
 ReactDOM.render(
-    <React.StrictMode>
+    <StrictMode>
         <App />
-    </React.StrictMode>,
+    </StrictMode>,
     document.getElementById('root'),
 );

@@ -1,4 +1,4 @@
-import * as coreUtils from '@/utils/coreUtils';
+import * as coreUtils from '@/utils/core-utils';
 
 describe('isUndefined', () => {
     test.each([

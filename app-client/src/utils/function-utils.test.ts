@@ -1,4 +1,4 @@
-import * as functionUtils from '@/utils/functionUtils';
+import * as functionUtils from '@/utils/function-utils';
 
 describe('identity', () => {
     test('should return argument as is', () => {
