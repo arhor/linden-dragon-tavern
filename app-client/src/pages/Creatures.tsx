@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import log from 'loglevel';
 import { observer } from 'mobx-react';
 
-import { getAllCreatures } from "@/api/creatureClient";
+import { getAllCreatures } from '@/api/creatureClient';
 import CreatureList from '@/components/CreatureList';
 import { Creature } from '@/generated/dnd/Creature';
 import { useStore } from '@/store';
@@ -16,7 +16,6 @@ const Creatures = () => {
         log.error(message, error);
         notification.enqueue({ level: 'error', message: message });
     };
-
 
     useEffect(
         () => {
