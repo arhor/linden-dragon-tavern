@@ -1,5 +1,7 @@
 import { ReactNode } from 'react';
 
+import { observer } from 'mobx-react';
+
 import Container from '@mui/material/Container';
 
 import AppBreadcrumbs from '@/components/AppBreadcrumbs';
@@ -21,4 +23,4 @@ const AppLayout = ({ content }: Props) => (
     </>
 );
 
-export default AppLayout;
+export default observer(AppLayout);

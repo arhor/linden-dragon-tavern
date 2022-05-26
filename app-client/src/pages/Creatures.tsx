@@ -1,19 +1,32 @@
 import { useEffect, useState } from 'react';
 
+import log from 'loglevel';
+import { observer } from 'mobx-react';
+
 import { getAllCreatures } from "@/api/creatureClient";
 import CreatureList from '@/components/CreatureList';
 import { Creature } from '@/generated/dnd/Creature';
+import { useStore } from '@/store';
 
-const About = () => {
-    const [creatures, setCreatures] = useState<Creature[]>([])
+const Creatures = () => {
+    const { notification } = useStore();
+    const [creatures, setCreatures] = useState<Creature[]>([]);
+
+    const handleError = (message: string, error: unknown) => {
+        log.error(message, error);
+        notification.enqueue({ level: 'error', message: message });
+    };
+
 
     useEffect(
         () => {
-            getAllCreatures().then(creatures => {
-                if (creatures) {
-                    setCreatures(creatures);
-                }
-            });
+            getAllCreatures()
+                .then(items => {
+                    setCreatures(items);
+                })
+                .catch(error => {
+                    handleError('Cannot retrieve creatures list', error);
+                });
         },
         []
     );
@@ -23,4 +36,4 @@ const About = () => {
     );
 };
 
-export default About;
+export default observer(Creatures);

@@ -1,18 +1,18 @@
 import { action, makeObservable, observable } from 'mobx';
 
-import { generateUUID } from '@/utils/core-utils';
+import { generateUUID, Optional } from '@/utils/core-utils';
 
 type Notification = {
     message: string;
     level: 'default' | 'error' | 'success' | 'warning' | 'info';
+    timeout?: Optional<number>,
 };
 
-type NotificationItem = Notification & {
-    id: string;
-};
+type NotificationId = string | number;
 
 export default class NotificationStore {
-    items: NotificationItem[] = [];
+
+    items: (Notification & { id: NotificationId })[] = [];
 
     constructor() {
         makeObservable(this, {
@@ -29,8 +29,8 @@ export default class NotificationStore {
         });
     }
 
-    remove(...ids: string[]) {
-        if (ids?.length > 0) {
+    remove(ids: NotificationId[]) {
+        if (ids.length > 0) {
             this.items = this.items.filter(item => !ids.includes(item.id));
         }
     }

@@ -12,14 +12,12 @@ const AppNotifier = () => {
 
     useEffect(
         () => autorun(() => {
-            const displayed: string[] = [];
-            notification.items.forEach(({ id, level, message }) => {
-                if (!displayed.includes(id)) {
-                    enqueueSnackbar(message, { variant: level });
-                    displayed.push(id);
-                }
-            });
-            notification.remove(...displayed);
+            const enqueued = notification.items.map((item) => enqueueSnackbar(item.message, {
+                key: item.id,
+                variant: item.level,
+                autoHideDuration: item.timeout,
+            }));
+            notification.remove(enqueued);
         }),
         []
     );
