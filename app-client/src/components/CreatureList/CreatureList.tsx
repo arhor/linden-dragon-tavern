@@ -35,14 +35,12 @@ const CreatureList = ({ items }: Props) => {
     ];
 
     return (
-        <div style={{ height: 400, width: '100%' }}>
-            <DataGrid
-                rows={items.map((item) => ({ id: item.name, ...item }))}
-                columns={columns}
-                pageSize={5}
-                rowsPerPageOptions={[5]}
-            />
-        </div>
+        <DataGrid
+            rows={items.map((item) => ({ id: item.name, ...item }))}
+            columns={columns}
+            pageSize={5}
+            rowsPerPageOptions={[5]}
+        />
     );
 };
 

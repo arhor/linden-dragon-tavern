@@ -9,16 +9,16 @@ import AppNavBar from '@/components/AppNavBar';
 import AppNotifier from '@/components/AppNotifier';
 
 export type Props = {
-    content: ReactNode
+    children: ReactNode
 };
 
-const AppLayout = ({ content }: Props) => (
+const AppLayout = ({ children }: Props) => (
     <>
         <AppNavBar />
         <AppNotifier />
         <Container component="main">
             <AppBreadcrumbs />
-            {content}
+            {children}
         </Container>
     </>
 );

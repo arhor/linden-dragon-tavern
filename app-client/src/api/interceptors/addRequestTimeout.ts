@@ -4,7 +4,7 @@ import log from 'loglevel';
 const DEFAULT_TIMEOUT = 10_000;
 
 const timeouts: ReadonlyMap<string, number> = new Map([
-    ['api/v1/creatures', 1_000],
+    ['/api/v1/creatures', 1_000],
 ]);
 
 export default function addRequestTimeout(config: AxiosRequestConfig): AxiosRequestConfig {
