@@ -4,10 +4,17 @@ import { generateUUID } from '@/utils/core-utils';
 
 export const CSRF_TOKEN = generateUUID();
 
-export function addCsrfToken(config: AxiosRequestConfig): AxiosRequestConfig {
+const SAFE_METHODS: Readonly<Record<string, boolean>> = {
+    GET: true,
+    HEAD: true,
+    OPTIONS: true,
+    TRACE: true,
+};
+
+export default function addCsrfToken(config: AxiosRequestConfig): AxiosRequestConfig {
     const requestMethod = config.method?.toUpperCase();
 
-    if (requestMethod && ['GET', 'HEAD', 'OPTIONS', 'TRACE'].includes(requestMethod)) {
+    if (requestMethod && SAFE_METHODS[requestMethod]) {
         return config;
     }
 
@@ -16,7 +23,7 @@ export function addCsrfToken(config: AxiosRequestConfig): AxiosRequestConfig {
     return {
         headers: {
             ...headers,
-            'x-csrf-token': CSRF_TOKEN,
+            'X-XSRF-TOKEN': CSRF_TOKEN,
         },
         ...restConfig,
     };
