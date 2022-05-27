@@ -5,17 +5,17 @@ plugins {
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-reflect"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1"
-    implementation "org.slf4j:slf4j-api:${property("app.version.slf4j")}"
-    implementation "io.github.microutils:kotlin-logging-jvm:${property("app.version.kotlinLogging")}"
-    implementation "com.google.code.findbugs:jsr305:${property("app.version.findbugsJsr305")}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${libs.versions.kotlinCoroutines.get()}"
+    implementation "org.slf4j:slf4j-api:${libs.versions.slf4j.get()}"
+    implementation "io.github.microutils:kotlin-logging-jvm:${libs.versions.kotlinLogging.get()}"
+    implementation "com.google.code.findbugs:jsr305:${libs.versions.findbugsJsr305.get()}"
 
     testImplementation project(":app-server:module-test-utils")
-    testImplementation "org.assertj:assertj-core:${property("app.version.assertJCore")}"
-    testImplementation "org.mockito:mockito-core:${property("app.version.mockitoCore")}"
-    testImplementation "org.mockito:mockito-junit-jupiter:${property("app.version.mockitoCore")}"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:${property("app.version.junitJupiter")}"
-    testImplementation "org.junit.jupiter:junit-jupiter-api:${property("app.version.junitJupiter")}"
+    testImplementation "org.assertj:assertj-core:${libs.versions.assertJCore.get()}"
+    testImplementation "org.mockito:mockito-core:${libs.versions.mockitoCore.get()}"
+    testImplementation "org.mockito:mockito-junit-jupiter:${libs.versions.mockitoCore.get()}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${libs.versions.junitJupiter.get()}"
+    testImplementation "org.junit.jupiter:junit-jupiter-api:${libs.versions.junitJupiter.get()}"
 
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${property("app.version.junitJupiter")}"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${libs.versions.junitJupiter.get()}"
 }
